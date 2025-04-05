@@ -270,7 +270,7 @@ void ButtonScanner::_camera1Display(cv::Mat frame)
     qDebug() << "Camera 1 frame count: " << ++frameCount;
 
     auto& globalStruct = GlobalStruct::getInstance();
-    auto& modelEngine = globalStruct.modelEnginePtr;
+    auto& modelEngine = globalStruct.modelEnginePtr1;
 
     // 使用std::async执行耗时任务
     std::future<cv::Mat> resultFuture = std::async(std::launch::async, longRunningTask, frame);
@@ -304,7 +304,7 @@ void ButtonScanner::_camera2Display(cv::Mat frame)
     qDebug() << "Camera 2 frame count: " << ++frameCount;
 
     auto& globalStruct = GlobalStruct::getInstance();
-    auto& modelEngine = globalStruct.modelEnginePtr;
+    auto& modelEngine = globalStruct.modelEnginePtr2;
 
     // 使用std::async执行耗时任务
     std::future<cv::Mat> resultFuture = std::async(std::launch::async, longRunningTask, frame);
@@ -338,7 +338,7 @@ void ButtonScanner::_camera3Display(cv::Mat frame)
     qDebug() << "Camera 3 frame count: " << ++frameCount;
 
     auto& globalStruct = GlobalStruct::getInstance();
-    auto& modelEngine = globalStruct.modelEnginePtr;
+    auto& modelEngine = globalStruct.modelEnginePtr3;
 
     // 使用std::async执行耗时任务
     std::future<cv::Mat> resultFuture = std::async(std::launch::async, longRunningTask, frame);
@@ -372,7 +372,7 @@ void ButtonScanner::_camera4Display(cv::Mat frame)
     qDebug() << "Camera 4 frame count: " << ++frameCount;
 
     auto& globalStruct = GlobalStruct::getInstance();
-    auto& modelEngine = globalStruct.modelEnginePtr;
+    auto& modelEngine = globalStruct.modelEnginePtr4;
 
     // 使用std::async执行耗时任务
     std::future<cv::Mat> resultFuture = std::async(std::launch::async, longRunningTask, frame);

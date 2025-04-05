@@ -19,7 +19,13 @@ class GlobalStruct
 public:
     std::unique_ptr<zwy::scc::Motion> motionPtr;
 
-    std::unique_ptr<rw::ime::ModelEngine> modelEnginePtr;
+    std::unique_ptr<rw::ime::ModelEngine> modelEnginePtr1;
+
+    std::unique_ptr<rw::ime::ModelEngine> modelEnginePtr2;
+
+    std::unique_ptr<rw::ime::ModelEngine> modelEnginePtr3;
+
+    std::unique_ptr<rw::ime::ModelEngine> modelEnginePtr4;
    
 public:
     static GlobalStruct& getInstance()
