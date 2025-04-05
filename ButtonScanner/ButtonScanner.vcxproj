@@ -66,7 +66,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\hoec\include;$(SolutionDir)\scc\include;$(SolutionDir)\ime\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\ZMotion\include;$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\hoec\include;$(SolutionDir)\scc\include;$(SolutionDir)\ime\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -80,7 +80,7 @@ xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\ZMotion\dll\*.dll" "$(OutDir)"</Comma
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\hoec\include;$(SolutionDir)\scc\include;$(SolutionDir)\ime\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\ZMotion\include;$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\hoec\include;$(SolutionDir)\scc\include;$(SolutionDir)\ime\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -136,9 +136,11 @@ xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\ZMotion\dll\*.dll" "$(OutDir)"</Comma
     <ClCompile Include="ButtonScanner.cpp" />
     <ClCompile Include="DlgProduceLineSet.cpp" />
     <ClCompile Include="DlgProductSet.cpp" />
+    <ClCompile Include="GlobalStruct.cpp" />
     <ClCompile Include="main.cpp" />
     <QtMoc Include="DlgProductSet.h" />
     <QtMoc Include="DlgProduceLineSet.h" />
+    <ClInclude Include="GlobalStruct.h" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>

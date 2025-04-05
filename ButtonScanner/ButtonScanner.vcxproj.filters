@@ -55,6 +55,9 @@
     <ClCompile Include="DlgProduceLineSet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GlobalStruct.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DlgProductSet.h">
@@ -76,5 +79,10 @@
     <Library Include="..\ThirdLibrary\MVS\Libraries\windows64\MvCameraControl.lib">
       <Filter>lib</Filter>
     </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GlobalStruct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

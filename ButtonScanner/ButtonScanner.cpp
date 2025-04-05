@@ -7,6 +7,7 @@
 #include"rqw_CameraObjectThread.hpp"
 #include"hoec_CameraException.hpp"
 
+#include"GlobalStruct.h"
 
 #include<qdebug>
 
@@ -18,6 +19,7 @@ ButtonScanner::ButtonScanner(QWidget *parent)
 
     build_ui();
     build_connect();
+    build_Motion();
 
     build_camera();
     start_monitor();
@@ -215,12 +217,13 @@ void ButtonScanner::start_monitor()
 //初始化运动控制卡
 void ButtonScanner::build_Motion()
 {
+    //这里获取全局变量
+    auto& globalStruct = GlobalStruct::getInstance();
 
+    //获取Zmotion
+    auto &motionPtr = globalStruct.motionPtr;
 
-
-
-
-
+    //下面通过motionPtr进行操作
 }
 
 QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
