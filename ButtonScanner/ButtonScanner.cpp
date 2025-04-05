@@ -7,6 +7,7 @@
 #include"rqw_CameraObjectThread.hpp"
 #include"hoec_CameraException.hpp"
 
+
 #include<qdebug>
 
 ButtonScanner::ButtonScanner(QWidget *parent)
@@ -114,7 +115,7 @@ void ButtonScanner::build_camera()
             {
                 _camera2 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
                 _camera2->initCamera(cameraMetaData2, rw::rqw::CameraObjectTrigger::Hardware);
-                QObject::connect(_camera2.get(), &rw::rqw::CameraPassiveThread::frameCaptured, this, &ButtonScanner::_camera1Display, Qt::DirectConnection);
+                QObject::connect(_camera2.get(), &rw::rqw::CameraPassiveThread::frameCaptured, this, &ButtonScanner::_camera2Display, Qt::DirectConnection);
             }
             catch (const std::exception&)
             {
@@ -132,7 +133,7 @@ void ButtonScanner::build_camera()
             {
                 _camera3 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
                 _camera3->initCamera(cameraMetaData3, rw::rqw::CameraObjectTrigger::Hardware);
-                QObject::connect(_camera3.get(), &rw::rqw::CameraPassiveThread::frameCaptured, this, &ButtonScanner::_camera1Display, Qt::DirectConnection);
+                QObject::connect(_camera3.get(), &rw::rqw::CameraPassiveThread::frameCaptured, this, &ButtonScanner::_camera3Display, Qt::DirectConnection);
             }
             catch (const std::exception&)
             {
@@ -148,7 +149,7 @@ void ButtonScanner::build_camera()
             {
                 _camera4 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
                 _camera4->initCamera(cameraMetaData4, rw::rqw::CameraObjectTrigger::Hardware);
-                QObject::connect(_camera4.get(), &rw::rqw::CameraPassiveThread::frameCaptured, this, &ButtonScanner::_camera1Display, Qt::DirectConnection);
+                QObject::connect(_camera4.get(), &rw::rqw::CameraPassiveThread::frameCaptured, this, &ButtonScanner::_camera4Display, Qt::DirectConnection);
             }
             catch (const std::exception&)
             {
@@ -211,6 +212,16 @@ void ButtonScanner::start_monitor()
         }
     }
 }
+//初始化运动控制卡
+void ButtonScanner::build_Motion()
+{
+
+
+
+
+
+
+}
 
 QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
 {
@@ -230,6 +241,9 @@ QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
 
 }
 
+
+
+
 void ButtonScanner::_camera1Display(cv::Mat frame)
 {
     qDebug() << "Camera 1 frame captured.";
@@ -242,7 +256,39 @@ void ButtonScanner::_camera1Display(cv::Mat frame)
     }
 
 }
-
+void ButtonScanner::_camera2Display(cv::Mat frame)
+{
+    qDebug() << "Camera 1 frame captured.";
+    QImage image = cvMatToQImage(frame);
+    if (!image.isNull()) {
+        ui->label_imgDisplay_2->setPixmap(QPixmap::fromImage(image));
+    }
+    else {
+        qDebug() << "Failed to convert cv::Mat to QImage in label_imgDisplay slots";
+    }
+}
+void ButtonScanner::_camera3Display(cv::Mat frame)
+{
+    qDebug() << "Camera 1 frame captured.";
+    QImage image = cvMatToQImage(frame);
+    if (!image.isNull()) {
+        ui->label_imgDisplay_3->setPixmap(QPixmap::fromImage(image));
+    }
+    else {
+        qDebug() << "Failed to convert cv::Mat to QImage in label_imgDisplay slots";
+    }
+}
+void ButtonScanner::_camera4Display(cv::Mat frame)
+{
+    qDebug() << "Camera 1 frame captured.";
+    QImage image = cvMatToQImage(frame);
+    if (!image.isNull()) {
+        ui->label_imgDisplay_4->setPixmap(QPixmap::fromImage(image));
+    }
+    else {
+        qDebug() << "Failed to convert cv::Mat to QImage in label_imgDisplay slots";
+    }
+}
 void ButtonScanner::pbtn_set_clicked()
 {
     DlgProduceLineSet dlgProduceLineSet;

@@ -42,6 +42,26 @@ private:
 private:
     void build_camera();
     void start_monitor();
+    //初始化运动控制卡
+    void build_Motion();
+
+    //实时监控运动控制卡状态（掉线重连）
+
+
+
+    //实时监控相机链接状态（掉线重连）
+
+
+
+    //开启线程实施监控皮带运动位置
+
+
+
+    //开启线程监控运动控制卡io点并且做出相应的逻辑
+
+
+
+
 
 private:
     Ui::ButtonScannerClass *ui;
@@ -51,6 +71,9 @@ private:
 
 private slots:
     void _camera1Display(cv::Mat frame);
+    void _camera2Display(cv::Mat frame);
+    void _camera3Display(cv::Mat frame);
+    void _camera4Display(cv::Mat frame);
 
 private slots:
     void pbtn_exit_clicked();
