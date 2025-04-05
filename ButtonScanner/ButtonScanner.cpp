@@ -246,11 +246,30 @@ QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
 
 
 
-
 void ButtonScanner::_camera1Display(cv::Mat frame)
 {
+  
+    // 记录开始时间
+    static auto lastCallTime = std::chrono::steady_clock::now();
+    auto currentCallTime = std::chrono::steady_clock::now();
+    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
+    lastCallTime = currentCallTime;
+
+    qDebug() << "Time since last camera 1 call: " << timeDiff << " ms";
+
+    static size_t frameCount = 0;
+    qDebug() << "Camera 1 frame count: " << ++frameCount;
+
+    auto& globalStruct = GlobalStruct::getInstance();
+    auto& modelEngine = globalStruct.modelEnginePtr;
+
+    cv::Mat result;
+    cv::Mat mask;
+    std::vector<rw::ime::ProcessRectanglesResult> resultOcr;
+    modelEngine->ProcessMask(frame, result, mask, resultOcr);
+
     qDebug() << "Camera 1 frame captured.";
-    QImage image = cvMatToQImage(frame);
+    QImage image = cvMatToQImage(result);
     if (!image.isNull()) {
         ui->label_imgDisplay->setPixmap(QPixmap::fromImage(image));
     }
@@ -261,7 +280,25 @@ void ButtonScanner::_camera1Display(cv::Mat frame)
 }
 void ButtonScanner::_camera2Display(cv::Mat frame)
 {
-    qDebug() << "Camera 1 frame captured.";
+    // 记录开始时间
+    static auto lastCallTime = std::chrono::steady_clock::now();
+    auto currentCallTime = std::chrono::steady_clock::now();
+    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
+    lastCallTime = currentCallTime;
+
+    qDebug() << "Time since last camera 2 call: " << timeDiff << " ms";
+    static size_t frameCount = 0;
+    qDebug() << "Camera 2 frame count: " << ++frameCount;
+
+    auto& globalStruct = GlobalStruct::getInstance();
+    auto& modelEngine = globalStruct.modelEnginePtr;
+
+    cv::Mat result;
+    cv::Mat mask;
+    std::vector<rw::ime::ProcessRectanglesResult> resultOcr;
+    modelEngine->ProcessMask(frame, result, mask, resultOcr);
+
+    qDebug() << "Camera 2 frame captured.";
     QImage image = cvMatToQImage(frame);
     if (!image.isNull()) {
         ui->label_imgDisplay_2->setPixmap(QPixmap::fromImage(image));
@@ -272,7 +309,25 @@ void ButtonScanner::_camera2Display(cv::Mat frame)
 }
 void ButtonScanner::_camera3Display(cv::Mat frame)
 {
-    qDebug() << "Camera 1 frame captured.";
+    // 记录开始时间
+    static auto lastCallTime = std::chrono::steady_clock::now();
+    auto currentCallTime = std::chrono::steady_clock::now();
+    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
+    lastCallTime = currentCallTime;
+
+    qDebug() << "Time since last camera 3 call: " << timeDiff << " ms";
+    static size_t frameCount = 0;
+    qDebug() << "Camera 3 frame count: " << ++frameCount;
+
+    auto& globalStruct = GlobalStruct::getInstance();
+    auto& modelEngine = globalStruct.modelEnginePtr;
+
+    cv::Mat result;
+    cv::Mat mask;
+    std::vector<rw::ime::ProcessRectanglesResult> resultOcr;
+    modelEngine->ProcessMask(frame, result, mask, resultOcr);
+
+    qDebug() << "Camera 3 frame captured.";
     QImage image = cvMatToQImage(frame);
     if (!image.isNull()) {
         ui->label_imgDisplay_3->setPixmap(QPixmap::fromImage(image));
@@ -283,7 +338,25 @@ void ButtonScanner::_camera3Display(cv::Mat frame)
 }
 void ButtonScanner::_camera4Display(cv::Mat frame)
 {
-    qDebug() << "Camera 1 frame captured.";
+    // 记录开始时间
+    static auto lastCallTime = std::chrono::steady_clock::now();
+    auto currentCallTime = std::chrono::steady_clock::now();
+    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
+    lastCallTime = currentCallTime;
+
+    qDebug() << "Time since last camera 4 call: " << timeDiff << " ms";
+    static size_t frameCount = 0;
+    qDebug() << "Camera 4 frame count: " << ++frameCount;
+
+    auto& globalStruct = GlobalStruct::getInstance();
+    auto& modelEngine = globalStruct.modelEnginePtr;
+
+    cv::Mat result;
+    cv::Mat mask;
+    std::vector<rw::ime::ProcessRectanglesResult> resultOcr;
+    modelEngine->ProcessMask(frame, result, mask, resultOcr);
+
+    qDebug() << "Camera 4 frame captured.";
     QImage image = cvMatToQImage(frame);
     if (!image.isNull()) {
         ui->label_imgDisplay_4->setPixmap(QPixmap::fromImage(image));
