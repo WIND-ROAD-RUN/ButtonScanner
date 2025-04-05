@@ -66,7 +66,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\hoec\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\hoec\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>D:\Workplace\rep\ButtonScanner\ThirdLibrary\MVS\Libraries\windows64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -76,7 +76,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\hoec\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\hoec\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>D:\Workplace\rep\ButtonScanner\ThirdLibrary\MVS\Libraries\windows64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
