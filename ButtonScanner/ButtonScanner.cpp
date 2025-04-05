@@ -11,6 +11,8 @@
 
 #include<qdebug>
 #include<QtConcurrent>
+#include <future>
+
 ButtonScanner::ButtonScanner(QWidget* parent)
     : QMainWindow(parent)
     , ui(new Ui::ButtonScannerClass())
@@ -246,19 +248,8 @@ QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
 
 
 
-#include <future>
 
-// Define the longRunningTask function
-cv::Mat longRunningTask(const cv::Mat& frame) {
-    // Simulate a long-running task
-    cv::Mat result = frame.clone();
-    // Perform some processing on the frame
-    // ...
-    return result;
-}
-
-void ButtonScanner::_camera1Display(cv::Mat frame)
-{
+cv::Mat longRunningTask1(const cv::Mat& frame) {
     static auto lastCallTime = std::chrono::steady_clock::now();
     auto currentCallTime = std::chrono::steady_clock::now();
     auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
@@ -266,6 +257,88 @@ void ButtonScanner::_camera1Display(cv::Mat frame)
 
     qDebug() << "Time since last camera 1 call: " << timeDiff << " ms";
 
+    cv::Mat result = frame.clone();
+    auto& globalStruct = GlobalStruct::getInstance();
+    auto& modelEngine = globalStruct.modelEnginePtr1;
+
+    cv::Mat ResultMat;
+    cv::Mat MaskMat;
+    std::vector<rw::ime::ProcessRectanglesResult> resultRectangles;
+
+    modelEngine->ProcessMask(result, ResultMat, MaskMat, resultRectangles);
+
+
+    return ResultMat;
+}
+
+cv::Mat longRunningTask2(const cv::Mat& frame) {
+    static auto lastCallTime = std::chrono::steady_clock::now();
+    auto currentCallTime = std::chrono::steady_clock::now();
+    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
+    lastCallTime = currentCallTime;
+
+    qDebug() << "Time since last camera 2 call: " << timeDiff << " ms";
+
+    cv::Mat result = frame.clone();
+    auto& globalStruct = GlobalStruct::getInstance();
+    auto& modelEngine = globalStruct.modelEnginePtr2;
+
+    cv::Mat ResultMat;
+    cv::Mat MaskMat;
+    std::vector<rw::ime::ProcessRectanglesResult> resultRectangles;
+
+    modelEngine->ProcessMask(result, ResultMat, MaskMat, resultRectangles);
+
+
+    return ResultMat;
+}
+
+cv::Mat longRunningTask3(const cv::Mat& frame) {
+    static auto lastCallTime = std::chrono::steady_clock::now();
+    auto currentCallTime = std::chrono::steady_clock::now();
+    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
+    lastCallTime = currentCallTime;
+
+    qDebug() << "Time since last camera 3 call: " << timeDiff << " ms";
+
+    cv::Mat result = frame.clone();
+    auto& globalStruct = GlobalStruct::getInstance();
+    auto& modelEngine = globalStruct.modelEnginePtr3;
+
+    cv::Mat ResultMat;
+    cv::Mat MaskMat;
+    std::vector<rw::ime::ProcessRectanglesResult> resultRectangles;
+
+    modelEngine->ProcessMask(result, ResultMat, MaskMat, resultRectangles);
+
+
+    return ResultMat;
+}
+
+cv::Mat longRunningTask4(const cv::Mat& frame) {
+    static auto lastCallTime = std::chrono::steady_clock::now();
+    auto currentCallTime = std::chrono::steady_clock::now();
+    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
+    lastCallTime = currentCallTime;
+
+    qDebug() << "Time since last camera 4 call: " << timeDiff << " ms";
+
+    cv::Mat result = frame.clone();
+    auto& globalStruct = GlobalStruct::getInstance();
+    auto& modelEngine = globalStruct.modelEnginePtr4;
+
+    cv::Mat ResultMat;
+    cv::Mat MaskMat;
+    std::vector<rw::ime::ProcessRectanglesResult> resultRectangles;
+
+    modelEngine->ProcessMask(result, ResultMat, MaskMat, resultRectangles);
+
+
+    return ResultMat;
+}
+
+void ButtonScanner::_camera1Display(cv::Mat frame)
+{
     static size_t frameCount = 0;
     qDebug() << "Camera 1 frame count: " << ++frameCount;
 
@@ -273,7 +346,7 @@ void ButtonScanner::_camera1Display(cv::Mat frame)
     auto& modelEngine = globalStruct.modelEnginePtr1;
 
     // 使用std::async执行耗时任务
-    std::future<cv::Mat> resultFuture = std::async(std::launch::async, longRunningTask, frame);
+    std::future<cv::Mat> resultFuture = std::async(std::launch::async, longRunningTask1, frame);
 
     // 获取任务结果（阻塞直到任务完成）
     cv::Mat result = resultFuture.get();
@@ -293,13 +366,6 @@ void ButtonScanner::_camera1Display(cv::Mat frame)
 }
 void ButtonScanner::_camera2Display(cv::Mat frame)
 {
-    static auto lastCallTime = std::chrono::steady_clock::now();
-    auto currentCallTime = std::chrono::steady_clock::now();
-    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
-    lastCallTime = currentCallTime;
-
-    qDebug() << "Time since last camera 2 call: " << timeDiff << " ms";
-
     static size_t frameCount = 0;
     qDebug() << "Camera 2 frame count: " << ++frameCount;
 
@@ -307,7 +373,7 @@ void ButtonScanner::_camera2Display(cv::Mat frame)
     auto& modelEngine = globalStruct.modelEnginePtr2;
 
     // 使用std::async执行耗时任务
-    std::future<cv::Mat> resultFuture = std::async(std::launch::async, longRunningTask, frame);
+    std::future<cv::Mat> resultFuture = std::async(std::launch::async, longRunningTask2, frame);
 
     // 获取任务结果（阻塞直到任务完成）
     cv::Mat result = resultFuture.get();
@@ -327,13 +393,6 @@ void ButtonScanner::_camera2Display(cv::Mat frame)
 }
 void ButtonScanner::_camera3Display(cv::Mat frame)
 {
-    static auto lastCallTime = std::chrono::steady_clock::now();
-    auto currentCallTime = std::chrono::steady_clock::now();
-    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
-    lastCallTime = currentCallTime;
-
-    qDebug() << "Time since last camera 3 call: " << timeDiff << " ms";
-
     static size_t frameCount = 0;
     qDebug() << "Camera 3 frame count: " << ++frameCount;
 
@@ -341,7 +400,7 @@ void ButtonScanner::_camera3Display(cv::Mat frame)
     auto& modelEngine = globalStruct.modelEnginePtr3;
 
     // 使用std::async执行耗时任务
-    std::future<cv::Mat> resultFuture = std::async(std::launch::async, longRunningTask, frame);
+    std::future<cv::Mat> resultFuture = std::async(std::launch::async, longRunningTask3, frame);
 
     // 获取任务结果（阻塞直到任务完成）
     cv::Mat result = resultFuture.get();
@@ -361,13 +420,6 @@ void ButtonScanner::_camera3Display(cv::Mat frame)
 }
 void ButtonScanner::_camera4Display(cv::Mat frame)
 {
-    static auto lastCallTime = std::chrono::steady_clock::now();
-    auto currentCallTime = std::chrono::steady_clock::now();
-    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
-    lastCallTime = currentCallTime;
-
-    qDebug() << "Time since last camera 1 call: " << timeDiff << " ms";
-
     static size_t frameCount = 0;
     qDebug() << "Camera 4 frame count: " << ++frameCount;
 
@@ -375,7 +427,7 @@ void ButtonScanner::_camera4Display(cv::Mat frame)
     auto& modelEngine = globalStruct.modelEnginePtr4;
 
     // 使用std::async执行耗时任务
-    std::future<cv::Mat> resultFuture = std::async(std::launch::async, longRunningTask, frame);
+    std::future<cv::Mat> resultFuture = std::async(std::launch::async, longRunningTask4, frame);
 
     // 获取任务结果（阻塞直到任务完成）
     cv::Mat result = resultFuture.get();
