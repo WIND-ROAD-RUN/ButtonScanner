@@ -69,11 +69,12 @@
       <AdditionalIncludeDirectories>$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\hoec\include;$(SolutionDir)\ime\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>MvCameraControl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>MvCameraControl.lib;zauxdll.lib;zmotion.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6\dll\*.dll" "$(OutDir)"</Command>
+      <Command>xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6\dll\*.dll" "$(OutDir)"
+xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\ZMotion\dll\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -82,11 +83,12 @@
       <AdditionalIncludeDirectories>$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\hoec\include;$(SolutionDir)\ime\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>MvCameraControl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>MvCameraControl.lib;zauxdll.lib;zmotion.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6\dll\*.dll" "$(OutDir)"</Command>
+      <Command>xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6\dll\*.dll" "$(OutDir)"
+xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\ZMotion\dll\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -157,6 +159,9 @@
     </ProjectReference>
     <ProjectReference Include="..\rqw\rqw.vcxproj">
       <Project>{3057a7d1-a581-4f2c-a364-682f1c5a276e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\scc\scc.vcxproj">
+      <Project>{8ddd6baf-f0c8-4316-9f7a-2d6cd16e4e09}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
