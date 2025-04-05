@@ -10,8 +10,8 @@
 #include"GlobalStruct.h"
 
 #include<qdebug>
-
-ButtonScanner::ButtonScanner(QWidget *parent)
+#include<QtConcurrent>
+ButtonScanner::ButtonScanner(QWidget* parent)
     : QMainWindow(parent)
     , ui(new Ui::ButtonScannerClass())
 {
@@ -50,7 +50,7 @@ void ButtonScanner::build_ui()
 
 void ButtonScanner::build_connect()
 {
-    QObject::connect(ui->pbtn_exit,&QPushButton::clicked,this, &ButtonScanner::pbtn_exit_clicked);
+    QObject::connect(ui->pbtn_exit, &QPushButton::clicked, this, &ButtonScanner::pbtn_exit_clicked);
 
     QObject::connect(ui->pbtn_set, &QPushButton::clicked, this, &ButtonScanner::pbtn_set_clicked);
 
@@ -106,7 +106,7 @@ void ButtonScanner::build_camera()
         }
     }
 
-    
+
 
     {
         QString cameraIp2 = "12";
@@ -163,7 +163,7 @@ void ButtonScanner::build_camera()
 
 
 
-    
+
 }
 
 void ButtonScanner::start_monitor()
@@ -221,7 +221,7 @@ void ButtonScanner::build_Motion()
     auto& globalStruct = GlobalStruct::getInstance();
 
     //获取Zmotion
-    auto &motionPtr = globalStruct.motionPtr;
+    auto& motionPtr = globalStruct.motionPtr;
 
     //下面通过motionPtr进行操作
 }
@@ -246,51 +246,152 @@ QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
 
 
 
+#include <future>
+
+// Define the longRunningTask function
+cv::Mat longRunningTask(const cv::Mat& frame) {
+    // Simulate a long-running task
+    cv::Mat result = frame.clone();
+    // Perform some processing on the frame
+    // ...
+    return result;
+}
 
 void ButtonScanner::_camera1Display(cv::Mat frame)
 {
-    qDebug() << "Camera 1 frame captured.";
-    QImage image = cvMatToQImage(frame);
-    if (!image.isNull()) {
-        ui->label_imgDisplay->setPixmap(QPixmap::fromImage(image));
-    }
-    else {
-        qDebug() << "Failed to convert cv::Mat to QImage in label_imgDisplay slots";
-    }
+    static auto lastCallTime = std::chrono::steady_clock::now();
+    auto currentCallTime = std::chrono::steady_clock::now();
+    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
+    lastCallTime = currentCallTime;
 
+    qDebug() << "Time since last camera 1 call: " << timeDiff << " ms";
+
+    static size_t frameCount = 0;
+    qDebug() << "Camera 1 frame count: " << ++frameCount;
+
+    auto& globalStruct = GlobalStruct::getInstance();
+    auto& modelEngine = globalStruct.modelEnginePtr;
+
+    // 使用std::async执行耗时任务
+    std::future<cv::Mat> resultFuture = std::async(std::launch::async, longRunningTask, frame);
+
+    // 获取任务结果（阻塞直到任务完成）
+    cv::Mat result = resultFuture.get();
+
+    qDebug() << "Camera 1 frame captured.";
+
+    // 使用QMetaObject::invokeMethod在主线程中更新UI
+    QMetaObject::invokeMethod(this, [this, result]() {
+        QImage image = cvMatToQImage(result);
+        if (!image.isNull()) {
+            ui->label_imgDisplay->setPixmap(QPixmap::fromImage(image));
+        }
+        else {
+            qDebug() << "Failed to convert cv::Mat to QImage in label_imgDisplay slots";
+        }
+    }, Qt::QueuedConnection);
 }
 void ButtonScanner::_camera2Display(cv::Mat frame)
 {
+    static auto lastCallTime = std::chrono::steady_clock::now();
+    auto currentCallTime = std::chrono::steady_clock::now();
+    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
+    lastCallTime = currentCallTime;
+
+    qDebug() << "Time since last camera 2 call: " << timeDiff << " ms";
+
+    static size_t frameCount = 0;
+    qDebug() << "Camera 2 frame count: " << ++frameCount;
+
+    auto& globalStruct = GlobalStruct::getInstance();
+    auto& modelEngine = globalStruct.modelEnginePtr;
+
+    // 使用std::async执行耗时任务
+    std::future<cv::Mat> resultFuture = std::async(std::launch::async, longRunningTask, frame);
+
+    // 获取任务结果（阻塞直到任务完成）
+    cv::Mat result = resultFuture.get();
+
     qDebug() << "Camera 1 frame captured.";
-    QImage image = cvMatToQImage(frame);
-    if (!image.isNull()) {
-        ui->label_imgDisplay_2->setPixmap(QPixmap::fromImage(image));
-    }
-    else {
-        qDebug() << "Failed to convert cv::Mat to QImage in label_imgDisplay slots";
-    }
+
+    // 使用QMetaObject::invokeMethod在主线程中更新UI
+    QMetaObject::invokeMethod(this, [this, result]() {
+        QImage image = cvMatToQImage(result);
+        if (!image.isNull()) {
+            ui->label_imgDisplay_2->setPixmap(QPixmap::fromImage(image));
+        }
+        else {
+            qDebug() << "Failed to convert cv::Mat to QImage in label_imgDisplay slots";
+        }
+        }, Qt::QueuedConnection);
 }
 void ButtonScanner::_camera3Display(cv::Mat frame)
 {
-    qDebug() << "Camera 1 frame captured.";
-    QImage image = cvMatToQImage(frame);
-    if (!image.isNull()) {
-        ui->label_imgDisplay_3->setPixmap(QPixmap::fromImage(image));
-    }
-    else {
-        qDebug() << "Failed to convert cv::Mat to QImage in label_imgDisplay slots";
-    }
+    static auto lastCallTime = std::chrono::steady_clock::now();
+    auto currentCallTime = std::chrono::steady_clock::now();
+    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
+    lastCallTime = currentCallTime;
+
+    qDebug() << "Time since last camera 3 call: " << timeDiff << " ms";
+
+    static size_t frameCount = 0;
+    qDebug() << "Camera 3 frame count: " << ++frameCount;
+
+    auto& globalStruct = GlobalStruct::getInstance();
+    auto& modelEngine = globalStruct.modelEnginePtr;
+
+    // 使用std::async执行耗时任务
+    std::future<cv::Mat> resultFuture = std::async(std::launch::async, longRunningTask, frame);
+
+    // 获取任务结果（阻塞直到任务完成）
+    cv::Mat result = resultFuture.get();
+
+    qDebug() << "Camera 3 frame captured.";
+
+    // 使用QMetaObject::invokeMethod在主线程中更新UI
+    QMetaObject::invokeMethod(this, [this, result]() {
+        QImage image = cvMatToQImage(result);
+        if (!image.isNull()) {
+            ui->label_imgDisplay_3->setPixmap(QPixmap::fromImage(image));
+        }
+        else {
+            qDebug() << "Failed to convert cv::Mat to QImage in label_imgDisplay slots";
+        }
+        }, Qt::QueuedConnection);
 }
 void ButtonScanner::_camera4Display(cv::Mat frame)
 {
-    qDebug() << "Camera 1 frame captured.";
-    QImage image = cvMatToQImage(frame);
-    if (!image.isNull()) {
-        ui->label_imgDisplay_4->setPixmap(QPixmap::fromImage(image));
-    }
-    else {
-        qDebug() << "Failed to convert cv::Mat to QImage in label_imgDisplay slots";
-    }
+    static auto lastCallTime = std::chrono::steady_clock::now();
+    auto currentCallTime = std::chrono::steady_clock::now();
+    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
+    lastCallTime = currentCallTime;
+
+    qDebug() << "Time since last camera 1 call: " << timeDiff << " ms";
+
+    static size_t frameCount = 0;
+    qDebug() << "Camera 4 frame count: " << ++frameCount;
+
+    auto& globalStruct = GlobalStruct::getInstance();
+    auto& modelEngine = globalStruct.modelEnginePtr;
+
+    // 使用std::async执行耗时任务
+    std::future<cv::Mat> resultFuture = std::async(std::launch::async, longRunningTask, frame);
+
+    // 获取任务结果（阻塞直到任务完成）
+    cv::Mat result = resultFuture.get();
+
+    qDebug() << "Camera 4 frame captured.";
+
+    // 使用QMetaObject::invokeMethod在主线程中更新UI
+    QMetaObject::invokeMethod(this, [this, result]() {
+        QImage image = cvMatToQImage(result);
+        if (!image.isNull()) {
+            ui->label_imgDisplay_4->setPixmap(QPixmap::fromImage(image));
+        }
+        else {
+            qDebug() << "Failed to convert cv::Mat to QImage in label_imgDisplay slots";
+        }
+        }, Qt::QueuedConnection);
 }
 void ButtonScanner::pbtn_set_clicked()
 {
