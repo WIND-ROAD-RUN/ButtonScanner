@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{f6fc6d1b-0e5f-4dd4-9ad7-2b4db78fe0f7}</ProjectGuid>
-    <RootNamespace>oso</RootNamespace>
+    <ProjectGuid>{ee66495a-1d72-484d-9dba-8f63f9093c07}</ProjectGuid>
+    <RootNamespace>hoec</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -70,6 +70,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
@@ -77,9 +80,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
@@ -90,7 +90,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\private\include;$(ProjectDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\MVS\Includes;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(ProjectDir)\private\include;$(ProjectDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -106,7 +106,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\private\include;$(ProjectDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\MVS\Includes;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(ProjectDir)\private\include;$(ProjectDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\private\include;$(ProjectDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\MVS\Includes;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(ProjectDir)\private\include;$(ProjectDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -138,7 +138,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\private\include;$(ProjectDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\MVS\Includes;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(ProjectDir)\private\include;$(ProjectDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -149,26 +149,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="private\src\oso_StorageStrategy.cpp" />
-    <ClCompile Include="private\src\oso_StorageStrategy_Json.cpp" />
-    <ClCompile Include="private\src\oso_StorageStrategy_Sqlite.cpp" />
-    <ClCompile Include="private\src\oso_StorageStrategy_Text.cpp" />
-    <ClCompile Include="private\src\oso_StorageStrategy_Xml.cpp" />
-    <ClCompile Include="src\osoc_MVSCameraConfig.cpp" />
-    <ClCompile Include="src\osop_OcrDateProductConfig.cpp" />
-    <ClCompile Include="src\oso_core.cpp" />
-    <ClCompile Include="src\oso_StorageContext.cpp" />
+    <ClCompile Include="private\src\hoec_Camera_core_private.cpp" />
+    <ClCompile Include="private\src\hoec_Camera_MVS_private.cpp" />
+    <ClCompile Include="private\src\hoec_Camera_private.cpp" />
+    <ClCompile Include="src\hoec_Camera.cpp" />
+    <ClCompile Include="src\hoec_CameraException.cpp" />
+    <ClCompile Include="src\hoec_CameraFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\osoc_MVSCameraConfig.h" />
-    <ClInclude Include="include\osop_OcrDateProductConfig.h" />
-    <ClInclude Include="include\oso_core.h" />
-    <ClInclude Include="include\oso_StorageContext.hpp" />
-    <ClInclude Include="private\include\oso_IStorageStrategy.hpp" />
-    <ClInclude Include="private\include\oso_StorageStrategy_Json.hpp" />
-    <ClInclude Include="private\include\oso_StorageStrategy_Sqlite.hpp" />
-    <ClInclude Include="private\include\oso_StorageStrategy_Text.hpp" />
-    <ClInclude Include="private\include\oso_StorageStrategy_Xml.hpp" />
+    <ClInclude Include="include\hoec_Camera.hpp" />
+    <ClInclude Include="include\hoec_CameraException.hpp" />
+    <ClInclude Include="include\hoec_CameraFactory.hpp" />
+    <ClInclude Include="private\include\hoec_Camera_core_private.hpp" />
+    <ClInclude Include="private\include\hoec_Camera_MVS_private.hpp" />
+    <ClInclude Include="private\include\hoec_Camera_private.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

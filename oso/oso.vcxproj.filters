@@ -13,5 +13,72 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="private">
+      <UniqueIdentifier>{0c79bb88-c156-45ea-ba9c-f16aa74339f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="private\include">
+      <UniqueIdentifier>{e9a624a5-20c9-4a8a-beba-9cff8fad1794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="private\src">
+      <UniqueIdentifier>{1afb7912-baec-4a2c-9706-deb2ca571aa4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="private\src\oso_StorageStrategy.cpp">
+      <Filter>private\src</Filter>
+    </ClCompile>
+    <ClCompile Include="private\src\oso_StorageStrategy_Json.cpp">
+      <Filter>private\src</Filter>
+    </ClCompile>
+    <ClCompile Include="private\src\oso_StorageStrategy_Sqlite.cpp">
+      <Filter>private\src</Filter>
+    </ClCompile>
+    <ClCompile Include="private\src\oso_StorageStrategy_Text.cpp">
+      <Filter>private\src</Filter>
+    </ClCompile>
+    <ClCompile Include="private\src\oso_StorageStrategy_Xml.cpp">
+      <Filter>private\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\oso_core.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\oso_StorageContext.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osoc_MVSCameraConfig.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osop_OcrDateProductConfig.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="private\include\oso_IStorageStrategy.hpp">
+      <Filter>private\include</Filter>
+    </ClInclude>
+    <ClInclude Include="private\include\oso_StorageStrategy_Json.hpp">
+      <Filter>private\include</Filter>
+    </ClInclude>
+    <ClInclude Include="private\include\oso_StorageStrategy_Sqlite.hpp">
+      <Filter>private\include</Filter>
+    </ClInclude>
+    <ClInclude Include="private\include\oso_StorageStrategy_Text.hpp">
+      <Filter>private\include</Filter>
+    </ClInclude>
+    <ClInclude Include="private\include\oso_StorageStrategy_Xml.hpp">
+      <Filter>private\include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\oso_core.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\oso_StorageContext.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osoc_MVSCameraConfig.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osop_OcrDateProductConfig.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

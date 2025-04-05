@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35919.96 d17.13
+VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ButtonScanner", "ButtonScanner\ButtonScanner.vcxproj", "{9B2068AC-751D-4620-93F9-9AA7EDBD3303}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "oso", "oso\oso.vcxproj", "{F6FC6D1B-0E5F-4DD4-9AD7-2B4DB78FE0F7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hoec", "hoec\hoec.vcxproj", "{EE66495A-1D72-484D-9DBA-8F63F9093C07}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rqw", "rqw\rqw.vcxproj", "{3057A7D1-A581-4F2C-A364-682F1C5A276E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{F6FC6D1B-0E5F-4DD4-9AD7-2B4DB78FE0F7}.Debug|x64.Build.0 = Debug|x64
 		{F6FC6D1B-0E5F-4DD4-9AD7-2B4DB78FE0F7}.Release|x64.ActiveCfg = Release|x64
 		{F6FC6D1B-0E5F-4DD4-9AD7-2B4DB78FE0F7}.Release|x64.Build.0 = Release|x64
+		{EE66495A-1D72-484D-9DBA-8F63F9093C07}.Debug|x64.ActiveCfg = Debug|x64
+		{EE66495A-1D72-484D-9DBA-8F63F9093C07}.Debug|x64.Build.0 = Debug|x64
+		{EE66495A-1D72-484D-9DBA-8F63F9093C07}.Release|x64.ActiveCfg = Release|x64
+		{EE66495A-1D72-484D-9DBA-8F63F9093C07}.Release|x64.Build.0 = Release|x64
+		{3057A7D1-A581-4F2C-A364-682F1C5A276E}.Debug|x64.ActiveCfg = Debug|x64
+		{3057A7D1-A581-4F2C-A364-682F1C5A276E}.Debug|x64.Build.0 = Debug|x64
+		{3057A7D1-A581-4F2C-A364-682F1C5A276E}.Release|x64.ActiveCfg = Release|x64
+		{3057A7D1-A581-4F2C-A364-682F1C5A276E}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
