@@ -361,3 +361,10 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/ThirdLibrary/YOLOV5V6/dll/hdf5.dll
+/ThirdLibrary/YOLOV5V6/dll/nvinfer.dll
+/ThirdLibrary/YOLOV5V6/dll/nvinfer_plugin.dll
+/ThirdLibrary/YOLOV5V6/dll/opencv_world470.dll
+/ThirdLibrary/YOLOV5V6/dll/szip.dll
+/ThirdLibrary/YOLOV5V6/dll/yolov5v6_seg_trt.dll
+/ThirdLibrary/YOLOV5V6/dll/zlib.dll
