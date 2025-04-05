@@ -14,7 +14,6 @@ namespace rw
 
         CameraPassiveThread::~CameraPassiveThread()
         {
-            stopMonitor();
             quit();
             wait();
             delete _cameraObject;

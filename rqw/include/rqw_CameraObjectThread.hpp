@@ -16,6 +16,10 @@ namespace rw {
             Q_OBJECT
         public:
             explicit CameraPassiveThread(QObject* parent = nullptr);
+            CameraPassiveThread(const CameraPassiveThread&) = delete; // 拷贝构造函数被删除
+            CameraPassiveThread& operator=(const CameraPassiveThread&) = delete; // 拷贝赋值运算符被删除
+            // 其他成员函数和变量
+
             ~CameraPassiveThread() override;
 
             void initCamera(const rw::rqw::CameraMetaData& cameraMetaData, rw::rqw::CameraObjectTrigger triggerMode);
