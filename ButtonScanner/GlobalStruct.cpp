@@ -6,8 +6,8 @@
 GlobalStruct::GlobalStruct()
 {
     //文件路径记得修改
-    std::string enginePath = R"(C:\Users\34615\Desktop\best.engine)";
-    std::string namePath = R"(C:\Users\34615\Desktop\index.names)";
+    std::string enginePath = R"(C:\Users\pc1\Desktop\best.engine)";
+    std::string namePath = R"(C:\Users\pc1\Desktop\index.names)";
     modelEnginePtr1 = std::make_unique<rw::ime::ModelEngine>(enginePath,namePath);
     modelEnginePtr2 = std::make_unique<rw::ime::ModelEngine>(enginePath, namePath);
     modelEnginePtr3 = std::make_unique<rw::ime::ModelEngine>(enginePath, namePath);

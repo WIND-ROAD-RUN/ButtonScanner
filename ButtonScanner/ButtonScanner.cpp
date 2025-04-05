@@ -110,57 +110,57 @@ void ButtonScanner::build_camera()
 
 
 
-    {
-        QString cameraIp2 = "12";
-        auto cameraMetaData2 = cameraMetaDataCheck(cameraIp2, cameraList);
+    //{
+    //    QString cameraIp2 = "12";
+    //    auto cameraMetaData2 = cameraMetaDataCheck(cameraIp2, cameraList);
 
-        if (cameraMetaData2.ip != "0") {
-            try
-            {
-                _camera2 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
-                _camera2->initCamera(cameraMetaData2, rw::rqw::CameraObjectTrigger::Hardware);
-                QObject::connect(_camera2.get(), &rw::rqw::CameraPassiveThread::frameCaptured, this, &ButtonScanner::_camera2Display, Qt::DirectConnection);
-            }
-            catch (const std::exception&)
-            {
-                qDebug() << "Camera 2 initialization failed.";
-            }
+    //    if (cameraMetaData2.ip != "0") {
+    //        try
+    //        {
+    //            _camera2 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
+    //            _camera2->initCamera(cameraMetaData2, rw::rqw::CameraObjectTrigger::Hardware);
+    //            QObject::connect(_camera2.get(), &rw::rqw::CameraPassiveThread::frameCaptured, this, &ButtonScanner::_camera2Display, Qt::DirectConnection);
+    //        }
+    //        catch (const std::exception&)
+    //        {
+    //            qDebug() << "Camera 2 initialization failed.";
+    //        }
 
-        }
-    }
+    //    }
+    //}
 
-    {
-        QString cameraIp3 = "13";
-        auto cameraMetaData3 = cameraMetaDataCheck(cameraIp3, cameraList);
-        if (cameraMetaData3.ip != "0") {
-            try
-            {
-                _camera3 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
-                _camera3->initCamera(cameraMetaData3, rw::rqw::CameraObjectTrigger::Hardware);
-                QObject::connect(_camera3.get(), &rw::rqw::CameraPassiveThread::frameCaptured, this, &ButtonScanner::_camera3Display, Qt::DirectConnection);
-            }
-            catch (const std::exception&)
-            {
-                qDebug() << "Camera 3 initialization failed.";
-            }
-        }
-    }
-    {
-        QString cameraIp4 = "14";
-        auto cameraMetaData4 = cameraMetaDataCheck(cameraIp4, cameraList);
-        if (cameraMetaData4.ip != "0") {
-            try
-            {
-                _camera4 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
-                _camera4->initCamera(cameraMetaData4, rw::rqw::CameraObjectTrigger::Hardware);
-                QObject::connect(_camera4.get(), &rw::rqw::CameraPassiveThread::frameCaptured, this, &ButtonScanner::_camera4Display, Qt::DirectConnection);
-            }
-            catch (const std::exception&)
-            {
-                qDebug() << "Camera 4 initialization failed.";
-            }
-        }
-    }
+    //{
+    //    QString cameraIp3 = "13";
+    //    auto cameraMetaData3 = cameraMetaDataCheck(cameraIp3, cameraList);
+    //    if (cameraMetaData3.ip != "0") {
+    //        try
+    //        {
+    //            _camera3 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
+    //            _camera3->initCamera(cameraMetaData3, rw::rqw::CameraObjectTrigger::Hardware);
+    //            QObject::connect(_camera3.get(), &rw::rqw::CameraPassiveThread::frameCaptured, this, &ButtonScanner::_camera3Display, Qt::DirectConnection);
+    //        }
+    //        catch (const std::exception&)
+    //        {
+    //            qDebug() << "Camera 3 initialization failed.";
+    //        }
+    //    }
+    //}
+    //{
+    //    QString cameraIp4 = "14";
+    //    auto cameraMetaData4 = cameraMetaDataCheck(cameraIp4, cameraList);
+    //    if (cameraMetaData4.ip != "0") {
+    //        try
+    //        {
+    //            _camera4 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
+    //            _camera4->initCamera(cameraMetaData4, rw::rqw::CameraObjectTrigger::Hardware);
+    //            QObject::connect(_camera4.get(), &rw::rqw::CameraPassiveThread::frameCaptured, this, &ButtonScanner::_camera4Display, Qt::DirectConnection);
+    //        }
+    //        catch (const std::exception&)
+    //        {
+    //            qDebug() << "Camera 4 initialization failed.";
+    //        }
+    //    }
+    //}
 
 
 
@@ -250,12 +250,7 @@ QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
 
 
 cv::Mat longRunningTask1(const cv::Mat& frame) {
-    static auto lastCallTime = std::chrono::steady_clock::now();
-    auto currentCallTime = std::chrono::steady_clock::now();
-    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
-    lastCallTime = currentCallTime;
 
-    qDebug() << "Time since last camera 1 call: " << timeDiff << " ms";
 
     cv::Mat result = frame.clone();
     auto& globalStruct = GlobalStruct::getInstance();
@@ -265,20 +260,20 @@ cv::Mat longRunningTask1(const cv::Mat& frame) {
     cv::Mat MaskMat;
     std::vector<rw::ime::ProcessRectanglesResult> resultRectangles;
 
+    //计算模型推理时间
+    static auto lastCallTime = std::chrono::steady_clock::now();
     modelEngine->ProcessMask(result, ResultMat, MaskMat, resultRectangles);
+    auto currentCallTime = std::chrono::steady_clock::now();
+    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
+    lastCallTime = currentCallTime;
+
+    qDebug() << "Time since last camera 1 call: " << timeDiff << " ms";
 
 
     return ResultMat;
 }
 
 cv::Mat longRunningTask2(const cv::Mat& frame) {
-    static auto lastCallTime = std::chrono::steady_clock::now();
-    auto currentCallTime = std::chrono::steady_clock::now();
-    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
-    lastCallTime = currentCallTime;
-
-    qDebug() << "Time since last camera 2 call: " << timeDiff << " ms";
-
     cv::Mat result = frame.clone();
     auto& globalStruct = GlobalStruct::getInstance();
     auto& modelEngine = globalStruct.modelEnginePtr2;
@@ -287,20 +282,19 @@ cv::Mat longRunningTask2(const cv::Mat& frame) {
     cv::Mat MaskMat;
     std::vector<rw::ime::ProcessRectanglesResult> resultRectangles;
 
+    //计算模型推理时间
+    static auto lastCallTime = std::chrono::steady_clock::now();
     modelEngine->ProcessMask(result, ResultMat, MaskMat, resultRectangles);
+    auto currentCallTime = std::chrono::steady_clock::now();
+    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
+    lastCallTime = currentCallTime;
 
+    qDebug() << "Time since last camera 2 call: " << timeDiff << " ms";
 
     return ResultMat;
 }
 
 cv::Mat longRunningTask3(const cv::Mat& frame) {
-    static auto lastCallTime = std::chrono::steady_clock::now();
-    auto currentCallTime = std::chrono::steady_clock::now();
-    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
-    lastCallTime = currentCallTime;
-
-    qDebug() << "Time since last camera 3 call: " << timeDiff << " ms";
-
     cv::Mat result = frame.clone();
     auto& globalStruct = GlobalStruct::getInstance();
     auto& modelEngine = globalStruct.modelEnginePtr3;
@@ -309,20 +303,19 @@ cv::Mat longRunningTask3(const cv::Mat& frame) {
     cv::Mat MaskMat;
     std::vector<rw::ime::ProcessRectanglesResult> resultRectangles;
 
+    //计算模型推理时间
+    static auto lastCallTime = std::chrono::steady_clock::now();
     modelEngine->ProcessMask(result, ResultMat, MaskMat, resultRectangles);
+    auto currentCallTime = std::chrono::steady_clock::now();
+    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
+    lastCallTime = currentCallTime;
 
+    qDebug() << "Time since last camera 3 call: " << timeDiff << " ms";
 
     return ResultMat;
 }
 
 cv::Mat longRunningTask4(const cv::Mat& frame) {
-    static auto lastCallTime = std::chrono::steady_clock::now();
-    auto currentCallTime = std::chrono::steady_clock::now();
-    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
-    lastCallTime = currentCallTime;
-
-    qDebug() << "Time since last camera 4 call: " << timeDiff << " ms";
-
     cv::Mat result = frame.clone();
     auto& globalStruct = GlobalStruct::getInstance();
     auto& modelEngine = globalStruct.modelEnginePtr4;
@@ -331,8 +324,14 @@ cv::Mat longRunningTask4(const cv::Mat& frame) {
     cv::Mat MaskMat;
     std::vector<rw::ime::ProcessRectanglesResult> resultRectangles;
 
+    //计算模型推理时间
+    static auto lastCallTime = std::chrono::steady_clock::now();
     modelEngine->ProcessMask(result, ResultMat, MaskMat, resultRectangles);
+    auto currentCallTime = std::chrono::steady_clock::now();
+    auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(currentCallTime - lastCallTime).count();
+    lastCallTime = currentCallTime;
 
+    qDebug() << "Time since last camera 4 call: " << timeDiff << " ms";
 
     return ResultMat;
 }
