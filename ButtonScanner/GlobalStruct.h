@@ -4,6 +4,7 @@
 
 #include"scc_Motion.h"
 
+#include"ime_ModelEngine.h"
 
 namespace zwy {
     namespace scc {
@@ -12,10 +13,13 @@ namespace zwy {
     }
 }
 
+
 class GlobalStruct
 {
 public:
     std::unique_ptr<zwy::scc::Motion> motionPtr;
+
+    std::unique_ptr<rw::ime::ModelEngine> modelEnginePtr;
    
 public:
     static GlobalStruct& getInstance()

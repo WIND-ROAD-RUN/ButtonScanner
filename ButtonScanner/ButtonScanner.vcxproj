@@ -69,8 +69,8 @@
       <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\ZMotion\include;$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\hoec\include;$(SolutionDir)\scc\include;$(SolutionDir)\ime\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>MvCameraControl.lib;zauxdll.lib;zmotion.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6\lib;$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>yolov5v6_seg_trt.lib;MvCameraControl.lib;zauxdll.lib;zmotion.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6\dll\*.dll" "$(OutDir)"
@@ -83,8 +83,8 @@ xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\ZMotion\dll\*.dll" "$(OutDir)"</Comma
       <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\ZMotion\include;$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\hoec\include;$(SolutionDir)\scc\include;$(SolutionDir)\ime\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>MvCameraControl.lib;zauxdll.lib;zmotion.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6\lib;$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>yolov5v6_seg_trt.lib;MvCameraControl.lib;zauxdll.lib;zmotion.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6\dll\*.dll" "$(OutDir)"
