@@ -69,7 +69,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\hoec\include;$(SolutionDir)\ime\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>D:\Workplace\rep\ButtonScanner\ThirdLibrary\MVS\Libraries\windows64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>MvCameraControl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -82,7 +82,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\hoec\include;$(SolutionDir)\ime\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>D:\Workplace\rep\ButtonScanner\ThirdLibrary\MVS\Libraries\windows64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>MvCameraControl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
