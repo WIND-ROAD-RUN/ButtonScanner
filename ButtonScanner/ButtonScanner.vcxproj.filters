@@ -21,6 +21,9 @@
       <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
       <Extensions>ts</Extensions>
     </Filter>
+    <Filter Include="lib">
+      <UniqueIdentifier>{809308b8-9607-4175-b874-c7fb59ae4870}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="ButtonScanner.qrc">
@@ -68,5 +71,10 @@
     <QtUic Include="DlgProduceLineSet.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\ThirdLibrary\MVS\Libraries\windows64\MvCameraControl.lib">
+      <Filter>lib</Filter>
+    </Library>
   </ItemGroup>
 </Project>
