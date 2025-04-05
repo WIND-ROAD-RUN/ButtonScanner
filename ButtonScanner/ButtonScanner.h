@@ -39,6 +39,9 @@ private:
     void build_ui();
     void build_connect();
 
+public:
+    void read_config();
+
 private:
     void build_camera();
     void start_monitor();

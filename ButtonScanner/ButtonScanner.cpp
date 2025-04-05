@@ -6,6 +6,9 @@
 
 #include"rqw_CameraObjectThread.hpp"
 #include"hoec_CameraException.hpp"
+#include"oso_core.h"
+#include"oso_StorageContext.hpp"
+#include"cdm_ButtonScannerMainWindow.h"
 
 #include<qdebug>
 
@@ -14,6 +17,8 @@ ButtonScanner::ButtonScanner(QWidget *parent)
     , ui(new Ui::ButtonScannerClass())
 {
     ui->setupUi(this);
+
+    read_config();
 
     build_ui();
     build_connect();
@@ -52,6 +57,18 @@ void ButtonScanner::build_connect()
     QObject::connect(ui->pbtn_set, &QPushButton::clicked, this, &ButtonScanner::pbtn_set_clicked);
 
     QObject::connect(ui->pbtn_newProduction, &QPushButton::clicked, this, &ButtonScanner::pbtn_newProduction_clicked);
+}
+
+void ButtonScanner::read_config()  
+{  
+  rw::cdm::ButtonScannerMainWindow config;   
+  rw::oso::StorageContext storageContext(rw::oso::StorageType::Xml);  
+
+  storageContext.save(config,std::string(R"(C:\Users\34615\Desktop\1\1.xml)"));
+
+  auto loadResult = storageContext.load( std::string(R"(C:\Users\34615\Desktop\1\1.xml)"));
+
+  rw::cdm::ButtonScannerMainWindow cdm(*loadResult);
 }
 
 void ButtonScanner::build_camera()

@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rqw", "rqw\rqw.vcxproj", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ime", "ime\ime.vcxproj", "{2458F6BF-7B0A-4CA8-833C-47AB0A353396}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cdm", "cdm\cdm.vcxproj", "{6F547121-D09C-4DAA-896F-E71AAE7DEAE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -39,6 +41,10 @@ Global
 		{2458F6BF-7B0A-4CA8-833C-47AB0A353396}.Debug|x64.Build.0 = Debug|x64
 		{2458F6BF-7B0A-4CA8-833C-47AB0A353396}.Release|x64.ActiveCfg = Release|x64
 		{2458F6BF-7B0A-4CA8-833C-47AB0A353396}.Release|x64.Build.0 = Release|x64
+		{6F547121-D09C-4DAA-896F-E71AAE7DEAE4}.Debug|x64.ActiveCfg = Debug|x64
+		{6F547121-D09C-4DAA-896F-E71AAE7DEAE4}.Debug|x64.Build.0 = Debug|x64
+		{6F547121-D09C-4DAA-896F-E71AAE7DEAE4}.Release|x64.ActiveCfg = Release|x64
+		{6F547121-D09C-4DAA-896F-E71AAE7DEAE4}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
