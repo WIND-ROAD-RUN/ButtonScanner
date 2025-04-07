@@ -11,6 +11,7 @@
 #include"cdm_ButtonScannerDlgProductSet.h"
 #include"oso_StorageContext.hpp"
 #include<QString>
+#include <cdm_ButtonScannerProduceLineSet.h>
 
 namespace zwy {
     namespace scc {
@@ -30,8 +31,10 @@ public:
 public:
     QString mainwindowFilePath;
 	QString dlgProduceLineSetFilePath;
+    QString dlgProductSetFilePath;
     rw::cdm::ButtonScannerMainWindow mainWindowConfig{};
-	rw::cdm::ButtonScannerDlgProductSet dlgProduceLineSetConfig{};
+	rw::cdm::ButtonScannerProduceLineSet dlgProduceLineSetConfig{};
+    rw::cdm::ButtonScannerDlgProductSet dlgProductSetConfig{};
 public:
     QString cameraIp1{ "11" };
     QString cameraIp2{ "12" };

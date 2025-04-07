@@ -124,7 +124,7 @@ void ButtonScanner::read_config()
         globalStruct.ReadConfig();
 	}
 
-	QString dlgProduceLineSetFilePath = R"(config/DlgProduceLineSetFilePath.xml)";
+	QString dlgProduceLineSetFilePath = R"(config/dlgProduceLineSetFilePath.xml)";
 	QDir dir;
 	QString dlgProduceLineSetFilePathFull = dir.absoluteFilePath(dlgProduceLineSetFilePath);
 	QFileInfo dlgProduceLineSetFile(dlgProduceLineSetFilePathFull);
@@ -152,7 +152,33 @@ void ButtonScanner::read_config()
 		globalStruct.ReadConfig();
 	}
 
+	QString dlgProductSetFilePath = R"(config/dlgProdutSetFilePath.xml)";
+	QDir dir;
+	QString dlgProductSetFilePathFull = dir.absoluteFilePath(dlgProductSetFilePath);
+	QFileInfo dlgProductSetFile(dlgProductSetFilePathFull);
 
+	globalStruct.dlgProductSetFilePath = dlgProductSetFilePathFull;
+	globalStruct.buildConfigManager(rw::oso::StorageType::Xml);
+
+	if (!dlgProductSetFile.exists()) {
+		QDir configDir = QFileInfo(dlgProductSetFilePathFull).absoluteDir();
+		if (!configDir.exists()) {
+			configDir.mkpath(".");
+		}
+		QFile file(dlgProductSetFilePathFull);
+		if (file.open(QIODevice::WriteOnly)) {
+			file.close();
+		}
+		else {
+			QMessageBox::critical(this, "Error", "无法创建配置文件。");
+		}
+		globalStruct.dlgProductSetConfig = rw::cdm::ButtonScannerDlgProductSet();
+		globalStruct.saveConfig();
+		return;
+	}
+	else {
+		globalStruct.ReadConfig();
+	}
 }
 
 void ButtonScanner::build_camera()

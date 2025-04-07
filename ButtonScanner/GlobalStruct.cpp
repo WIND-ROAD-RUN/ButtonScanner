@@ -57,7 +57,7 @@ void GlobalStruct::ReadConfig()
         LOG()  "Load main window config failed.";
     }
 
-	auto loadDlgProduceLineSetConfig = _StoreContext->load(dlgProduceLineSetPath.toStdString());
+	auto loadDlgProduceLineSetConfig = _StoreContext->load(dlgProduceLineSetFilePath.toStdString());  
 	if (loadDlgProduceLineSetConfig) {
 		dlgProduceLineSetConfig = *loadDlgProduceLineSetConfig;
 	}
@@ -65,9 +65,9 @@ void GlobalStruct::ReadConfig()
 		LOG()  "Load main window config failed.";
 	}
 
-	auto loadDlgProduceLineSetConfig = _StoreContext->load(dlgProduceLineSetPath.toStdString());
-	if (loadDlgProduceLineSetConfig) {
-		dlgProduceLineSetConfig = *loadDlgProduceLineSetConfig;
+	auto loadDlgProductSetConfig = _StoreContext->load(dlgProductSetFilePath.toStdString());
+	if (loadDlgProductSetConfig) {
+		dlgProductSetConfig = *loadDlgProductSetConfig;
 	}
 	else {
 		LOG()  "Load main window config failed.";
@@ -77,7 +77,8 @@ void GlobalStruct::ReadConfig()
 void GlobalStruct::saveConfig()
 {
     _StoreContext->save(mainWindowConfig, mainwindowFilePath.toStdString());
-
+	_StoreContext->save(dlgProduceLineSetConfig, dlgProduceLineSetFilePath.toStdString());
+	_StoreContext->save(dlgProductSetConfig, dlgProductSetFilePath.toStdString());
 }
 
 void GlobalStruct::buildCamera()
