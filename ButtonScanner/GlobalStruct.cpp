@@ -8,9 +8,24 @@
 void GlobalStruct::buildImageProcessingModule(size_t num)
 {
     _imageProcessingModule1 = std::make_unique<ImageProcessingModule>(num,this);
+	_imageProcessingModule1->modelEnginePath = enginePath;
+	_imageProcessingModule1->modelNamePath = namePath;
+    _imageProcessingModule1->BuildModule();
+
     _imageProcessingModule2 = std::make_unique<ImageProcessingModule>(num,this);
+	_imageProcessingModule2->modelEnginePath = enginePath;
+	_imageProcessingModule2->modelNamePath = namePath;
+    _imageProcessingModule2->BuildModule();
+
     _imageProcessingModule3 = std::make_unique<ImageProcessingModule>(num,this);
+	_imageProcessingModule3->modelEnginePath = enginePath;
+	_imageProcessingModule3->modelNamePath = namePath;
+    _imageProcessingModule3->BuildModule();
+
     _imageProcessingModule4 = std::make_unique<ImageProcessingModule>(num,this);
+    _imageProcessingModule4->modelEnginePath = enginePath;
+    _imageProcessingModule4->modelNamePath = namePath;
+    _imageProcessingModule4->BuildModule();
 }
 
 void GlobalStruct::buildCamera()

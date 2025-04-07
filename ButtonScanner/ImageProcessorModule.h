@@ -7,6 +7,8 @@
 #include <QImage>
 #include <opencv2/opencv.hpp>
 
+#include"ime_ModelEngine.h"
+
 
 class ImageProcessor : public QThread {
     Q_OBJECT
@@ -25,9 +27,14 @@ signals:
     void imageReady(const QImage& image);
 
 private:
-    cv::Mat processAI(const cv::Mat& frame);
+    std::unique_ptr<rw::ime::ModelEngine> _modelEnginePtr;
+public:
+    void buildModelEngine(const QString& enginePath, const QString& namePath);
 
-    cv::Mat processElimination(const cv::Mat& frame);
+private:
+    cv::Mat processAI(cv::Mat& frame);
+
+    cv::Mat processElimination(cv::Mat& frame);
 
     QImage cvMatToQImage(const cv::Mat& mat);
 
@@ -39,7 +46,11 @@ private:
 
 class ImageProcessingModule : public QObject {
     Q_OBJECT
-
+public:
+    QString modelEnginePath;
+    QString modelNamePath;
+public:
+    void BuildModule();
 public:
     ImageProcessingModule(int numConsumers, QObject* parent = nullptr);
        

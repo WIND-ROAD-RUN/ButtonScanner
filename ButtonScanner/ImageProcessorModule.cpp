@@ -2,17 +2,25 @@
 
 #include"ImageProcessorModule.h"
 
-cv::Mat ImageProcessor::processAI(const cv::Mat& frame)
+void ImageProcessor::buildModelEngine(const QString& enginePath, const QString& namePath)
 {
-    QThread::msleep(30);
-    return frame.clone();
+    _modelEnginePtr = std::make_unique<rw::ime::ModelEngine>(enginePath.toStdString(),namePath.toStdString());
 }
 
-cv::Mat ImageProcessor::processElimination(const cv::Mat& frame)
+cv::Mat ImageProcessor::processAI(cv::Mat& frame)
+{
+    cv::Mat resultImage;
+    cv::Mat maskImage = cv::Mat::zeros(frame.size(), CV_8UC1);
+    std::vector<rw::ime::ProcessRectanglesResult> vecRecogResult;
+    _modelEnginePtr->ProcessMask(frame,resultImage, maskImage, vecRecogResult);
+    return resultImage.clone();
+}
+
+cv::Mat ImageProcessor::processElimination(cv::Mat& frame)
 {
     // 模拟剔除算法处理
-    QThread::msleep(10);
-    return frame.clone();
+    //QThread::msleep(10);
+    return frame;
 }
 
 QImage ImageProcessor::cvMatToQImage(const cv::Mat& mat)
@@ -64,14 +72,20 @@ void ImageProcessor::run()
     }
 }
 
-ImageProcessingModule::ImageProcessingModule(int numConsumers, QObject* parent)
-    : QObject(parent), numConsumers(numConsumers) {
+void ImageProcessingModule::BuildModule()
+{
     for (int i = 0; i < numConsumers; ++i) {
         ImageProcessor* processor = new ImageProcessor(queue, mutex, condition, i, this);
-        connect(processor, &ImageProcessor::imageReady, this, &ImageProcessingModule::imageReady);
+        processor->buildModelEngine(modelEnginePath, modelNamePath);
+        connect(processor, &ImageProcessor::imageReady, this, &ImageProcessingModule::imageReady, Qt::QueuedConnection);
         processors.push_back(processor);
         processor->start();
     }
+}
+
+ImageProcessingModule::ImageProcessingModule(int numConsumers, QObject* parent)
+    : QObject(parent), numConsumers(numConsumers) {
+    
 }
 
 ImageProcessingModule::~ImageProcessingModule()
