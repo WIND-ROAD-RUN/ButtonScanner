@@ -4,7 +4,7 @@
 
 
 NumKeyBord::NumKeyBord(QWidget* parent, QPushButton* button, int _type)
-	: QMainWindow(parent),
+	: QDialog(parent),
 	inputLineEdit(new QLineEdit(this)),
 	keyboardWidget(new QWidget(this))
 {
@@ -13,10 +13,10 @@ NumKeyBord::NumKeyBord(QWidget* parent, QPushButton* button, int _type)
 
 	// 设置主窗口的中央部件
 	QWidget* centralWidget = new QWidget(this);
-	setCentralWidget(centralWidget);
 	NumKeyBord::setWindowTitle("");
 	// 创建主布局
 	QVBoxLayout* mainLayout = new QVBoxLayout(centralWidget);
+    this->setLayout(mainLayout);
 
 	setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
 
@@ -104,61 +104,6 @@ NumKeyBord::~NumKeyBord()
 
 }
 
-void  NumKeyBord::show() {
-
-
-
-	//// 在这里添加窗口显示时的初始化操作
-	//inputLineEdit->text() = "";
-
-	//QRect buttonRect = button->geometry();
-	//QPoint buttonCenter = button->mapToGlobal(QPoint(buttonRect.width() / 2, buttonRect.height() / 2));
-
-	//QSize windowSize = this->size();
-
-	//// 获取屏幕几何信息
-	//QScreen* screen = QGuiApplication::screenAt(buttonCenter);
-	//if (!screen) {
-	//	screen = QGuiApplication::primaryScreen();
-	//}
-	//QRect screenGeometry = screen->availableGeometry();
-
-	//// 定义偏移量
-	//int offset = 10; // 与按钮的间距
-	//// 计算键盘窗口可能的位置
-	//QPoint above(buttonCenter.x() - windowSize.width() / 2, buttonCenter.y() - windowSize.height() - offset);
-	//QPoint below(buttonCenter.x() - windowSize.width() / 2, buttonCenter.y() + offset);
-	//QPoint left(buttonCenter.x() - windowSize.width() - offset, buttonCenter.y() - windowSize.height() / 2);
-	//QPoint right(buttonCenter.x() + offset, buttonCenter.y() - windowSize.height() / 2);
-
-	//// 判断每个方向是否有足够的空间
-	//bool canAbove = (above.y() >= screenGeometry.y());
-	//bool canBelow = (buttonCenter.y() + offset + windowSize.height() <= screenGeometry.y() + screenGeometry.height());
-	//bool canLeft = (left.x() >= screenGeometry.x());
-	//bool canRight = (buttonCenter.x() + offset + windowSize.width() <= screenGeometry.x() + screenGeometry.width());
-
-	//// 根据可用空间选择位置的优先级：下 > 上 > 右 > 左
-	//QPoint finalPos;
-	//if (canBelow) {
-	//	finalPos = below;
-	//}
-	//else if (canAbove) {
-	//	finalPos = above;
-	//}
-	//else if (canRight) {
-	//	finalPos = right;
-	//}
-	//else if (canLeft) {
-	//	finalPos = left;
-	//}
-	//else {
-	//	// 默认位置，确保窗口在屏幕内
-	//	finalPos = screenGeometry.topLeft();
-	//}
-	//this->move(finalPos);
-
-	QMainWindow::show(); // 调用基类的 show () 函数
-}
 void NumKeyBord::handleSpace()
 {
 	if (type == 0 || type > 2) {

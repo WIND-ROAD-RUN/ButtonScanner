@@ -6,7 +6,8 @@
 
 class QPushButton;
 
-class NumKeyBord : public QMainWindow
+class NumKeyBord 
+	: public QDialog
 {
 	Q_OBJECT
 
@@ -18,7 +19,6 @@ public:
 	/// <param name="type">0:string,1:int,2:double</param>
 	NumKeyBord(QWidget* parent = nullptr, QPushButton* button = nullptr, int _type = 0);
 	~NumKeyBord();
-	void show();
 
 private slots:
 	void handleButton();
