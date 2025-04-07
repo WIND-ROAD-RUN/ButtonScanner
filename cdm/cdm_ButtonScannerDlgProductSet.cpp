@@ -153,23 +153,19 @@ rw::cdm::ButtonScannerDlgProductSet::ButtonScannerDlgProductSet(const rw::oso::O
 	}
 	holeCenterDistanceSimilarity = holeCenterDistanceSimilarityItem->getValueAsDouble();
  
-	auto holeCenterDistanceSimilarityItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$holeCenterDistanceSimilarity$"));
-	if (!holeCenterDistanceSimilarityItem) {
-		throw std::runtime_error("$variable$holeCenterDistanceSimilarity is not found");
+	auto specifyColorDifferenceEnableItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$specifyColorDifferenceEnable$"));
+	if (!specifyColorDifferenceEnableItem) {
+		throw std::runtime_error("$variable$specifyColorDifferenceEnable is not found");
 	}
-	holeCenterDistanceSimilarity = holeCenterDistanceSimilarityItem->getValueAsDouble();
+	specifyColorDifferenceEnable = specifyColorDifferenceEnableItem->getValueAsDouble();
 
-	auto holeCenterDistanceSimilarityItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$holeCenterDistanceSimilarity$"));
-	if (!holeCenterDistanceSimilarityItem) {
-		throw std::runtime_error("$variable$holeCenterDistanceSimilarity is not found");
+	auto specifyColorDifferenceRItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$specifyColorDifferenceR$"));
+	if (!specifyColorDifferenceRItem) {
+		throw std::runtime_error("$variable$specifyColorDifferenceR is not found");
 	}
-	holeCenterDistanceSimilarity = holeCenterDistanceSimilarityItem->getValueAsDouble();
+	specifyColorDifferenceR = specifyColorDifferenceRItem->getValueAsDouble();
 
-	auto holeCenterDistanceSimilarityItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$holeCenterDistanceSimilarity$"));
-	if (!holeCenterDistanceSimilarityItem) {
-		throw std::runtime_error("$variable$holeCenterDistanceSimilarity is not found");
-	}
-	holeCenterDistanceSimilarity = holeCenterDistanceSimilarityItem->getValueAsDouble();
+	 
 	bool specifyColorDifferenceEnable{ false };
 	double specifyColorDifferenceR{ 0 };
 	double specifyColorDifferenceG{ 0 };
@@ -190,11 +186,16 @@ rw::cdm::ButtonScannerDlgProductSet::ButtonScannerDlgProductSet(const ButtonScan
 
 rw::cdm::ButtonScannerDlgProductSet& rw::cdm::ButtonScannerDlgProductSet::operator=(const ButtonScannerDlgProductSet& buttonScannerMainWindow)
 {
-	// TODO: 在此处插入 return 语句
+	return *this;
 }
 
 rw::cdm::ButtonScannerDlgProductSet::operator rw::oso::ObjectStoreAssembly() const
 {
+	rw::oso::ObjectStoreAssembly assembly;
+	assembly.setName("$class$ButtonScannerDlgProductSet$");
+
+
+	return assembly;
 }
 
 bool rw::cdm::ButtonScannerDlgProductSet::operator==(const ButtonScannerDlgProductSet& account) const
