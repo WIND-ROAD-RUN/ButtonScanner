@@ -64,6 +64,9 @@
     <ClCompile Include="ImageProcessorModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="NumKeyBord.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DlgProductSet.h">
@@ -76,6 +79,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="ImageProcessorModule.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="NumKeyBord.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

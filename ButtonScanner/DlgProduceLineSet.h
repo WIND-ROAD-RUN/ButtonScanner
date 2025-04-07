@@ -16,5 +16,12 @@ public:
     ~DlgProduceLineSet();
 
 private:
+    void build_ui();
+
+    void build_connect();
+
+private:
     Ui::DlgProduceLineSetClass* ui;
+public:
+    void pbtn_blowDistance1_clicked();
 };

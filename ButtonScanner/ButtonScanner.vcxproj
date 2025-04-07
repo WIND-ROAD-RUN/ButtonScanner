@@ -145,7 +145,9 @@ xcopy /Y /R /D "$(ProjectDir)image\*.png" "$(OutDir)\image\"</Command>
     <QtMoc Include="DlgProduceLineSet.h" />
     <QtMoc Include="GlobalStruct.h" />
     <QtMoc Include="ImageProcessorModule.h" />
+    <QtMoc Include="NumKeyBord.h" />
     <ClInclude Include="stdafx.h" />
+    <ClCompile Include="NumKeyBord.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">Create</PrecompiledHeader>
