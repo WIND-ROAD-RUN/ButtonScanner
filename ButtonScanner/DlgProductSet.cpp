@@ -105,6 +105,8 @@ void DlgProductSet::pbtn_outsideDiameterValue_clicked() {
 
     auto& GlobalStruct = GlobalStruct::getInstance();
     GlobalStruct.dlgProductSetConfig.outsideDiameterValue=ui->pbtn_outsideDiameterValue->text().toDouble();
+
+    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_outsideDiameterDeviation_clicked()
@@ -112,6 +114,10 @@ void DlgProductSet::pbtn_outsideDiameterDeviation_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_outsideDiameterDeviation, 2);
     numKeyBoard->exec();
 
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.outsideDiameterDeviation = ui->pbtn_outsideDiameterDeviation->text().toDouble();
+
+    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_photography_clicked()
@@ -119,6 +125,10 @@ void DlgProductSet::pbtn_photography_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_photography, 2);
     numKeyBoard->exec();
 
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.photography = ui->pbtn_photography->text().toDouble();
+
+    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_blowTime_clicked()
@@ -126,6 +136,10 @@ void DlgProductSet::pbtn_blowTime_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime, 2);
     numKeyBoard->exec();
 
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.blowTime = ui->pbtn_blowTime->text().toDouble();
+
+    delete numKeyBoard;
 }
 
 void DlgProductSet::rbtn_edgeDamageSimilarity_clicked()
@@ -133,6 +147,10 @@ void DlgProductSet::rbtn_edgeDamageSimilarity_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->rbtn_edgeDamageSimilarity, 2);
     numKeyBoard->exec();
 
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.edgeDamageSimilarity = ui->rbtn_edgeDamageSimilarity->text().toDouble();
+
+    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_outerRadius_clicked()
@@ -140,6 +158,10 @@ void DlgProductSet::pbtn_outerRadius_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_outerRadius, 2);
     numKeyBoard->exec();
 
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.outerRadius = ui->pbtn_outerRadius->text().toDouble();
+
+    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_innerRadius_clicked()
@@ -147,6 +169,10 @@ void DlgProductSet::pbtn_innerRadius_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_innerRadius, 2);
     numKeyBoard->exec();
 
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.innerRadius = ui->pbtn_innerRadius->text().toDouble();
+
+    delete numKeyBoard;
 }
 
 void DlgProductSet::ptn_holesCountValue_clicked()
@@ -154,6 +180,10 @@ void DlgProductSet::ptn_holesCountValue_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->ptn_holesCountValue, 2);
     numKeyBoard->exec();
 
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.holesCountValue = ui->ptn_holesCountValue->text().toDouble();
+
+    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_brokenEyeSimilarity_clicked()
@@ -161,6 +191,10 @@ void DlgProductSet::pbtn_brokenEyeSimilarity_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_brokenEyeSimilarity, 2);
     numKeyBoard->exec();
 
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.brokenEyeSimilarity = ui->pbtn_brokenEyeSimilarity->text().toDouble();
+
+    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_crackSimilarity_clicked()
@@ -168,6 +202,10 @@ void DlgProductSet::pbtn_crackSimilarity_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_crackSimilarity, 2);
     numKeyBoard->exec();
 
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.crackSimilarity = ui->pbtn_crackSimilarity->text().toDouble();
+
+    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_apertureValue_clicked()
@@ -175,6 +213,10 @@ void DlgProductSet::pbtn_apertureValue_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_apertureValue, 2);
     numKeyBoard->exec();
 
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.apertureValue = ui->pbtn_apertureValue->text().toDouble();
+
+    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_apertureSimilarity_clicked()
@@ -182,6 +224,10 @@ void DlgProductSet::pbtn_apertureSimilarity_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_apertureSimilarity, 2);
     numKeyBoard->exec();
 
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.apertureSimilarity = ui->pbtn_apertureSimilarity->text().toDouble();
+
+    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_holeCenterDistanceValue_clicked()
@@ -189,6 +235,10 @@ void DlgProductSet::pbtn_holeCenterDistanceValue_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_holeCenterDistanceValue, 2);
     numKeyBoard->exec();
 
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.holeCenterDistanceValue = ui->pbtn_holeCenterDistanceValue->text().toDouble();
+
+    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_holeCenterDistanceSimilarity_clicked()
@@ -196,6 +246,10 @@ void DlgProductSet::pbtn_holeCenterDistanceSimilarity_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_holeCenterDistanceSimilarity, 2);
     numKeyBoard->exec();
 
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.holeCenterDistanceSimilarity = ui->pbtn_holeCenterDistanceSimilarity->text().toDouble();
+
+    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_specifyColorDifferenceR_clicked()
@@ -203,6 +257,10 @@ void DlgProductSet::pbtn_specifyColorDifferenceR_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_specifyColorDifferenceR, 2);
     numKeyBoard->exec();
 
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.specifyColorDifferenceR = ui->pbtn_specifyColorDifferenceR->text().toDouble();
+
+    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_specifyColorDifferenceG_clicked()
@@ -210,6 +268,10 @@ void DlgProductSet::pbtn_specifyColorDifferenceG_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_specifyColorDifferenceG, 2);
     numKeyBoard->exec();
 
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.specifyColorDifferenceG = ui->pbtn_specifyColorDifferenceG->text().toDouble();
+
+    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_specifyColorDifferenceB_clicked()
@@ -217,6 +279,10 @@ void DlgProductSet::pbtn_specifyColorDifferenceB_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_specifyColorDifferenceB, 2);
     numKeyBoard->exec();
 
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.specifyColorDifferenceB = ui->pbtn_specifyColorDifferenceB->text().toDouble();
+
+    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_specifyColorDifferenceDeviation_clicked()
@@ -224,6 +290,10 @@ void DlgProductSet::pbtn_specifyColorDifferenceDeviation_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_specifyColorDifferenceDeviation, 2);
     numKeyBoard->exec();
 
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.specifyColorDifferenceDeviation = ui->pbtn_specifyColorDifferenceDeviation->text().toDouble();
+
+    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_largeColorDifferenceDeviation_clicked()
@@ -231,4 +301,8 @@ void DlgProductSet::pbtn_largeColorDifferenceDeviation_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_largeColorDifferenceDeviation, 2);
     numKeyBoard->exec();
 
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.largeColorDifferenceDeviation = ui->pbtn_largeColorDifferenceDeviation->text().toDouble();
+
+    delete numKeyBoard;
 }

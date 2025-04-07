@@ -140,7 +140,7 @@ rw::cdm::ButtonScannerProduceLineSet::ButtonScannerProduceLineSet(const rw::oso:
 		throw std::runtime_error("$variable$maxBrightness is not found");
 	}
 	maxBrightness = maxBrightnessItem->getValueAsDouble();
-
+	
 	auto powerOnItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$powerOn$"));
 	if (!powerOnItem) {
 		throw std::runtime_error("$variable$powerOn is not found");

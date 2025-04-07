@@ -497,8 +497,12 @@ void ButtonScanner::pbtn_newProduction_clicked()
 void ButtonScanner::pbtn_lightValue_clicked()
 {
 	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_lightValue, 2);
-	numKeyBoard->setWindowModality(Qt::ApplicationModal);
-	numKeyBoard->show();
+	numKeyBoard->exec();
+
+	auto& GlobalStruct = GlobalStruct::getInstance();
+	GlobalStruct.mainWindowConfig.lightValue  = ui->pbtn_lightValue->text().toDouble();
+
+	delete numKeyBoard;
 }
 
 void ButtonScanner::pbtn_exit_clicked()
