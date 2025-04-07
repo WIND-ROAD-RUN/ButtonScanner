@@ -92,6 +92,9 @@ void DlgProductSet::read_image()
 
 void DlgProductSet::build_connect()
 {
+    QObject::connect(ui->pbtn_close, &QPushButton::clicked,
+        this, &DlgProductSet::pbtn_close_clicked);
+
     QObject::connect(ui->pbtn_outsideDiameterValue, &QPushButton::clicked,
         this, &DlgProductSet::pbtn_outsideDiameterValue_clicked);
     QObject::connect(ui->pbtn_outsideDiameterDeviation, &QPushButton::clicked,
@@ -130,6 +133,38 @@ void DlgProductSet::build_connect()
         this, &DlgProductSet::pbtn_specifyColorDifferenceDeviation_clicked);
     QObject::connect(ui->pbtn_largeColorDifferenceDeviation, &QPushButton::clicked,
         this, &DlgProductSet::pbtn_largeColorDifferenceDeviation_clicked);
+
+    QObject::connect(ui->rbtn_outsideDiameterEnable, &QPushButton::clicked,
+        this, &DlgProductSet::rbtn_outsideDiameterEnable_checked);
+    QObject::connect(ui->rbtn_edgeDamageEnable, &QPushButton::clicked,
+        this, &DlgProductSet::rbtn_edgeDamageEnable_checked);
+    QObject::connect(ui->rbtn_shieldingRangeEnable, &QPushButton::clicked,
+        this, &DlgProductSet::rbtn_shieldingRangeEnable_checked);
+    QObject::connect(ui->rbtn_poreEnable, &QPushButton::clicked,
+        this, &DlgProductSet::rbtn_poreEnable_checked);
+    QObject::connect(ui->rbtn_paintEnable, &QPushButton::clicked,
+        this, &DlgProductSet::rbtn_paintEnable_checked);
+    QObject::connect(ui->rbtn_holesCountEnable, &QPushButton::clicked,
+        this, &DlgProductSet::rbtn_holesCountEnable_checked);
+    QObject::connect(ui->rbtn_brokenEyeEnable, &QPushButton::clicked,
+        this, &DlgProductSet::rbtn_brokenEyeEnable_checked);
+    QObject::connect(ui->rbtn_crackEnable, &QPushButton::clicked,
+        this, &DlgProductSet::rbtn_crackEnable_checked);
+    QObject::connect(ui->rbtn_apertureEnable, &QPushButton::clicked,
+        this, &DlgProductSet::rbtn_apertureEnable_checked);
+    QObject::connect(ui->rbtn_holeCenterDistanceEnable, &QPushButton::clicked,
+        this, &DlgProductSet::rbtn_holeCenterDistanceEnable_checked);
+    QObject::connect(ui->rbtn_specifyColorDifferenceEnable, &QPushButton::clicked,
+        this, &DlgProductSet::rbtn_specifyColorDifferenceEnable_checked);
+    QObject::connect(ui->rbtn_largeColorDifferenceEnable, &QPushButton::clicked,
+        this, &DlgProductSet::rbtn_largeColorDifferenceEnable_checked);
+    QObject::connect(ui->rbtn_grindStoneEnable, &QPushButton::clicked,
+        this, &DlgProductSet::rbtn_grindStoneEnable_checked);
+    QObject::connect(ui->rbtn_blockEyeEnable, &QPushButton::clicked,
+        this, &DlgProductSet::rbtn_blockEyeEnable_checked);
+    QObject::connect(ui->rbtn_materialHeadEnable, &QPushButton::clicked,
+        this, &DlgProductSet::rbtn_materialHeadEnable_checked);
+     
 }
 
 void DlgProductSet::build_radioButton()
@@ -347,4 +382,99 @@ void DlgProductSet::pbtn_largeColorDifferenceDeviation_clicked()
     GlobalStruct.dlgProductSetConfig.largeColorDifferenceDeviation = ui->pbtn_largeColorDifferenceDeviation->text().toDouble();
 
     delete numKeyBoard;
+}
+
+void DlgProductSet::rbtn_outsideDiameterEnable_checked(bool checked)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.outsideDiameterEnable = checked;
+}
+
+void DlgProductSet::rbtn_edgeDamageEnable_checked(bool checked)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.edgeDamageEnable = checked;
+}
+
+void DlgProductSet::rbtn_shieldingRangeEnable_checked(bool checked)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.shieldingRangeEnable = checked;
+}
+
+void DlgProductSet::rbtn_poreEnable_checked(bool checked)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.poreEnable = checked;
+}
+
+void DlgProductSet::rbtn_paintEnable_checked(bool checked)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.paintEnable = checked;
+}
+
+void DlgProductSet::rbtn_holesCountEnable_checked(bool checked)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.holesCountEnable = checked;
+}
+
+void DlgProductSet::rbtn_brokenEyeEnable_checked(bool checked)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.brokenEyeEnable = checked;
+}
+
+void DlgProductSet::rbtn_crackEnable_checked(bool checked)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.crackEnable = checked;
+}
+
+void DlgProductSet::rbtn_apertureEnable_checked(bool checked)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.apertureEnable = checked;
+}
+
+void DlgProductSet::rbtn_holeCenterDistanceEnable_checked(bool checked)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.holeCenterDistanceEnable = checked;
+}
+
+void DlgProductSet::rbtn_specifyColorDifferenceEnable_checked(bool checked)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.specifyColorDifferenceEnable = checked;
+}
+
+void DlgProductSet::rbtn_largeColorDifferenceEnable_checked(bool checked)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.largeColorDifferenceEnable = checked;
+}
+
+void DlgProductSet::rbtn_grindStoneEnable_checked(bool checked)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.grindStoneEnable = checked;
+}
+
+void DlgProductSet::rbtn_blockEyeEnable_checked(bool checked)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.blockEyeEnable = checked;
+}
+
+void DlgProductSet::rbtn_materialHeadEnable_checked(bool checked)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.materialHeadEnable = checked;
+}
+
+void DlgProductSet::pbtn_close_clicked() {
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.saveConfig();
 }

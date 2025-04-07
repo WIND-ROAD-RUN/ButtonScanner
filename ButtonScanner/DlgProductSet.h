@@ -24,6 +24,8 @@ private:
 private:
 	Ui::DlgProductSetClass* ui;
 private slots:
+	void pbtn_close_clicked();
+
 	void pbtn_outsideDiameterValue_clicked();
 	void pbtn_outsideDiameterDeviation_clicked();
 	void pbtn_photography_clicked();
@@ -43,4 +45,20 @@ private slots:
 	void pbtn_specifyColorDifferenceB_clicked();
 	void pbtn_specifyColorDifferenceDeviation_clicked();
 	void pbtn_largeColorDifferenceDeviation_clicked();
+
+	void rbtn_outsideDiameterEnable_checked(bool checked);
+	void rbtn_edgeDamageEnable_checked(bool checked);
+	void rbtn_shieldingRangeEnable_checked(bool checked);
+	void rbtn_poreEnable_checked(bool checked);
+	void rbtn_paintEnable_checked(bool checked);
+	void rbtn_holesCountEnable_checked(bool checked);
+	void rbtn_brokenEyeEnable_checked(bool checked);
+	void rbtn_crackEnable_checked(bool checked);
+	void rbtn_apertureEnable_checked(bool checked);
+	void rbtn_holeCenterDistanceEnable_checked(bool checked);
+	void rbtn_specifyColorDifferenceEnable_checked(bool checked);
+	void rbtn_largeColorDifferenceEnable_checked(bool checked);
+	void rbtn_grindStoneEnable_checked(bool checked);
+	void rbtn_blockEyeEnable_checked(bool checked);
+	void rbtn_materialHeadEnable_checked(bool checked);
 };

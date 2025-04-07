@@ -88,10 +88,16 @@ private slots:
 
 private slots:
     void pbtn_exit_clicked();
-
     void pbtn_set_clicked();
-
     void pbtn_newProduction_clicked();
-
     void pbtn_lightValue_clicked();
+
+    void rbtn_debug_ckecked(bool checked);
+    void rbtn_takePicture_ckecked(bool checked);
+    void rbtn_removeFunc_ckecked(bool checked);
+    void rbtn_upLight_ckecked(bool checked);
+    void rbtn_sideLight_ckecked(bool checked);
+    void rbtn_downLight_ckecked(bool checked);
+    void rbtn_defect_ckecked(bool checked);
+    void rbtn_ForAndAgainst_ckecked(bool checked);
 };

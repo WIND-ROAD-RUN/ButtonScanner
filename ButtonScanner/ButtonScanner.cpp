@@ -107,6 +107,16 @@ void ButtonScanner::build_connect()
 	QObject::connect(ui->pbtn_newProduction, &QPushButton::clicked, this, &ButtonScanner::pbtn_newProduction_clicked);
 
 	QObject::connect(ui->pbtn_lightValue, &QPushButton::clicked, this, &ButtonScanner::pbtn_lightValue_clicked);
+
+	QObject::connect(ui->rbtn_debug, &QPushButton::clicked, this, &ButtonScanner::rbtn_debug_ckecked);
+	QObject::connect(ui->rbtn_takePicture, &QPushButton::clicked, this, &ButtonScanner::rbtn_takePicture_ckecked);
+	QObject::connect(ui->rbtn_removeFunc, &QPushButton::clicked, this, &ButtonScanner::rbtn_removeFunc_ckecked);
+	QObject::connect(ui->rbtn_upLight, &QPushButton::clicked, this, &ButtonScanner::rbtn_upLight_ckecked);
+	QObject::connect(ui->rbtn_sideLight, &QPushButton::clicked, this, &ButtonScanner::rbtn_sideLight_ckecked);
+	QObject::connect(ui->rbtn_downLight, &QPushButton::clicked, this, &ButtonScanner::rbtn_downLight_ckecked);
+	QObject::connect(ui->rbtn_defect, &QPushButton::clicked, this, &ButtonScanner::rbtn_defect_ckecked);
+	QObject::connect(ui->rbtn_ForAndAgainst, &QPushButton::clicked, this, &ButtonScanner::rbtn_ForAndAgainst_ckecked);
+ 
 	 
 }
 
@@ -503,6 +513,62 @@ void ButtonScanner::pbtn_lightValue_clicked()
 	GlobalStruct.mainWindowConfig.lightValue  = ui->pbtn_lightValue->text().toDouble();
 
 	delete numKeyBoard;
+}
+
+void ButtonScanner::rbtn_debug_ckecked(bool checked)
+{
+	auto& GlobalStruct = GlobalStruct::getInstance();
+	GlobalStruct.mainWindowConfig.isDebugMode = checked;
+	GlobalStruct.saveConfig();
+}
+
+void ButtonScanner::rbtn_takePicture_ckecked(bool checked)
+{
+	auto& GlobalStruct = GlobalStruct::getInstance();
+	GlobalStruct.mainWindowConfig.isTakePictures = checked;
+	GlobalStruct.saveConfig();
+}
+
+void ButtonScanner::rbtn_removeFunc_ckecked(bool checked)
+{
+	auto& GlobalStruct = GlobalStruct::getInstance();
+	GlobalStruct.mainWindowConfig.isEliminating = checked;
+	GlobalStruct.saveConfig();
+}
+
+void ButtonScanner::rbtn_upLight_ckecked(bool checked)
+{
+	auto& GlobalStruct = GlobalStruct::getInstance();
+	GlobalStruct.mainWindowConfig.upLight = checked;
+	GlobalStruct.saveConfig();
+}
+
+void ButtonScanner::rbtn_sideLight_ckecked(bool checked)
+{
+	auto& GlobalStruct = GlobalStruct::getInstance();
+	GlobalStruct.mainWindowConfig.sideLight = checked;
+	GlobalStruct.saveConfig();
+}
+
+void ButtonScanner::rbtn_downLight_ckecked(bool checked)
+{
+	auto& GlobalStruct = GlobalStruct::getInstance();
+	GlobalStruct.mainWindowConfig.downLight = checked;
+	GlobalStruct.saveConfig();
+}
+
+void ButtonScanner::rbtn_defect_ckecked(bool checked)
+{
+	auto& GlobalStruct = GlobalStruct::getInstance();
+	GlobalStruct.mainWindowConfig.isDefect = checked;
+	GlobalStruct.saveConfig();
+}
+
+void ButtonScanner::rbtn_ForAndAgainst_ckecked(bool checked)
+{
+	auto& GlobalStruct = GlobalStruct::getInstance();
+	GlobalStruct.mainWindowConfig.isPositive = checked;
+	GlobalStruct.saveConfig();
 }
 
 void ButtonScanner::pbtn_exit_clicked()
