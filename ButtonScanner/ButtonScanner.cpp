@@ -7,6 +7,7 @@
 #include"DlgProductSet.h"
 #include"DlgProduceLineSet.h"
 #include"GlobalStruct.h"
+#include"NumKeyBord.h"
 
 #include<qdebug>
 #include<QtConcurrent>
@@ -104,6 +105,9 @@ void ButtonScanner::build_connect()
 	QObject::connect(ui->pbtn_set, &QPushButton::clicked, this, &ButtonScanner::pbtn_set_clicked);
 
 	QObject::connect(ui->pbtn_newProduction, &QPushButton::clicked, this, &ButtonScanner::pbtn_newProduction_clicked);
+
+	QObject::connect(ui->pbtn_lightValue, &QPushButton::clicked, this, &ButtonScanner::pbtn_lightValue_clicked);
+	 
 }
 
 void ButtonScanner::read_config()
@@ -466,6 +470,13 @@ void ButtonScanner::pbtn_set_clicked()
 void ButtonScanner::pbtn_newProduction_clicked()
 {
     dlgProductSet->exec();
+}
+
+void ButtonScanner::pbtn_lightValue_clicked()
+{
+	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_lightValue, 2);
+	numKeyBoard->setWindowModality(Qt::ApplicationModal);
+	numKeyBoard->show();
 }
 
 void ButtonScanner::pbtn_exit_clicked()

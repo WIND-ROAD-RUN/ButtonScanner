@@ -89,4 +89,6 @@ private slots:
     void pbtn_set_clicked();
 
     void pbtn_newProduction_clicked();
+
+    void pbtn_lightValue_clicked();
 };
