@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "DlgProductSet.h"
 #include"NumKeyBord.h"
 
@@ -20,32 +20,74 @@ DlgProductSet::~DlgProductSet()
 
 void DlgProductSet::build_ui()
 {
+
+    read_config();
+    read_image();
+    build_radioButton();
+}
+
+void DlgProductSet::read_config()
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    ui->rbtn_outsideDiameterEnable->setChecked(GlobalStruct.dlgProductSetConfig.outsideDiameterEnable);
+    ui->pbtn_outsideDiameterValue->setText(QString::number(GlobalStruct.dlgProductSetConfig.outsideDiameterValue));
+    ui->pbtn_outsideDiameterDeviation->setText(QString::number(GlobalStruct.dlgProductSetConfig.outsideDiameterDeviation));
+    ui->pbtn_photography->setText(QString::number(GlobalStruct.dlgProductSetConfig.photography));
+    ui->pbtn_blowTime->setText(QString::number(GlobalStruct.dlgProductSetConfig.blowTime));
+    ui->rbtn_edgeDamageEnable->setChecked(GlobalStruct.dlgProductSetConfig.edgeDamageEnable);
+    ui->rbtn_edgeDamageSimilarity->setText(QString::number(GlobalStruct.dlgProductSetConfig.edgeDamageSimilarity));
+    ui->rbtn_shieldingRangeEnable->setCheckable(GlobalStruct.dlgProductSetConfig.shieldingRangeEnable);
+    ui->pbtn_outerRadius->setText(QString::number(GlobalStruct.dlgProductSetConfig.outerRadius));
+    ui->pbtn_innerRadius->setText(QString::number(GlobalStruct.dlgProductSetConfig.innerRadius));
+    ui->rbtn_poreEnable->setChecked(GlobalStruct.dlgProductSetConfig.poreEnable);
+    ui->rbtn_paintEnable->setChecked(GlobalStruct.dlgProductSetConfig.paintEnable);
+    ui->rbtn_holesCountEnable->setChecked(GlobalStruct.dlgProductSetConfig.holesCountEnable);
+    ui->ptn_holesCountValue->setText(QString::number(GlobalStruct.dlgProductSetConfig.holesCountValue));
+    ui->rbtn_brokenEyeEnable->setChecked(GlobalStruct.dlgProductSetConfig.brokenEyeEnable);
+    ui->pbtn_brokenEyeSimilarity->setText(QString::number(GlobalStruct.dlgProductSetConfig.brokenEyeSimilarity));
+    ui->rbtn_crackEnable->setChecked(GlobalStruct.dlgProductSetConfig.crackEnable);
+    ui->pbtn_crackSimilarity->setText(QString::number(GlobalStruct.dlgProductSetConfig.crackSimilarity));
+    ui->rbtn_apertureEnable->setChecked(GlobalStruct.dlgProductSetConfig.apertureEnable);
+    ui->pbtn_apertureValue->setText(QString::number(GlobalStruct.dlgProductSetConfig.apertureValue));
+    ui->pbtn_apertureSimilarity->setText(QString::number(GlobalStruct.dlgProductSetConfig.apertureSimilarity));
+    ui->rbtn_specifyColorDifferenceEnable->setChecked(GlobalStruct.dlgProductSetConfig.specifyColorDifferenceEnable);
+    ui->pbtn_specifyColorDifferenceR->setText(QString::number(GlobalStruct.dlgProductSetConfig.specifyColorDifferenceR));
+    ui->pbtn_specifyColorDifferenceG->setText(QString::number(GlobalStruct.dlgProductSetConfig.specifyColorDifferenceG));
+    ui->pbtn_specifyColorDifferenceB->setText(QString::number(GlobalStruct.dlgProductSetConfig.specifyColorDifferenceB));
+    ui->rbtn_largeColorDifferenceEnable->setChecked(GlobalStruct.dlgProductSetConfig.largeColorDifferenceEnable);
+    ui->pbtn_largeColorDifferenceDeviation->setText(QString::number(GlobalStruct.dlgProductSetConfig.largeColorDifferenceDeviation));
+    ui->rbtn_grindStoneEnable->setChecked(GlobalStruct.dlgProductSetConfig.grindStoneEnable);
+    ui->rbtn_blockEyeEnable->setChecked(GlobalStruct.dlgProductSetConfig.blockEyeEnable);
+    ui->pbtn_holeCenterDistanceValue->setText(QString::number(GlobalStruct.dlgProductSetConfig.holeCenterDistanceValue));
+    ui->rbtn_materialHeadEnable->setChecked(GlobalStruct.dlgProductSetConfig.materialHeadEnable);
+}
+
+void DlgProductSet::read_image()
+{
     QString imagePath = ":/ButtonScanner/image/product.png";
     QPixmap pixmap(imagePath);
 
     if (pixmap.isNull()) {
-        QMessageBox::critical(this, "Error", "ÎÞ·¨¼ÓÔØÍ¼Æ¬¡£");
+        QMessageBox::critical(this, "Error", "æ— æ³•åŠ è½½å›¾ç‰‡ã€‚");
         return;
     }
 
-    // »ñÈ¡ QLabel µÄÊµ¼ÊÏÔÊ¾³ß´ç
+    // èŽ·å– QLabel çš„å®žé™…æ˜¾ç¤ºå°ºå¯¸
     QSize labelSize = ui->label_pic->sizeHint();
 
-    // »ñÈ¡Éè±¸ÏñËØ±ÈÂÊ
+    // èŽ·å–è®¾å¤‡åƒç´ æ¯”çŽ‡
     qreal pixelRatio = devicePixelRatioF();
 
-    // ½« QPixmap Ëõ·Åµ½ QLabel µÄÊµ¼ÊÏÔÊ¾³ß´ç£¬²¢±£³Ö×Ýºá±È
+    // å°† QPixmap ç¼©æ”¾åˆ° QLabel çš„å®žé™…æ˜¾ç¤ºå°ºå¯¸ï¼Œå¹¶ä¿æŒçºµæ¨ªæ¯”
     QPixmap scaledPixmap = pixmap.scaled(labelSize * pixelRatio, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
-    // ÉèÖÃÉè±¸ÏñËØ±ÈÂÊ
+    // è®¾ç½®è®¾å¤‡åƒç´ æ¯”çŽ‡
     scaledPixmap.setDevicePixelRatio(pixelRatio);
 
     ui->label_pic->setPixmap(scaledPixmap);
 
-    // È·±£ QLabel ÔÚµ÷Õû´óÐ¡Ê±×Ô¶¯Ëõ·ÅÍ¼Æ¬
+    // ç¡®ä¿ QLabel åœ¨è°ƒæ•´å¤§å°æ—¶è‡ªåŠ¨ç¼©æ”¾å›¾ç‰‡
     ui->label_pic->setScaledContents(true);
-
-    build_radioButton();
 }
 
 void DlgProductSet::build_connect()

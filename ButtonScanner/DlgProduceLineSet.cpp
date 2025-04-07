@@ -2,6 +2,7 @@
 #include "DlgProduceLineSet.h"
 
 #include"NumKeyBord.h"
+#include"GlobalStruct.h"
 
 DlgProduceLineSet::DlgProduceLineSet(QWidget* parent)
 	: QDialog(parent)
@@ -20,6 +21,43 @@ DlgProduceLineSet::~DlgProduceLineSet()
 
 void DlgProduceLineSet::build_ui()
 {
+	read_config();
+}
+
+void DlgProduceLineSet::read_config()
+{
+	auto& globalStruct = GlobalStruct::getInstance();
+	ui->pbtn_blowDistance1->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowDistance1));
+	ui->pbtn_blowDistance2->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowDistance2));
+	ui->pbtn_blowDistance3->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowDistance3));
+	ui->pbtn_blowDistance4->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowDistance4));
+	ui->pbtn_blowTime1->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowTime1));
+	ui->pbtn_blowTime2->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowTime2));
+	ui->pbtn_blowTime3->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowTime3));
+	ui->pbtn_blowTime4->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowTime4));
+	ui->pbtn_pixelEquivalent1->setText(QString::number(globalStruct.dlgProduceLineSetConfig.pixelEquivalent1));
+	ui->pbtn_pixelEquivalent2->setText(QString::number(globalStruct.dlgProduceLineSetConfig.pixelEquivalent2));
+	ui->pbtn_pixelEquivalent3->setText(QString::number(globalStruct.dlgProduceLineSetConfig.pixelEquivalent3));
+	ui->pbtn_pixelEquivalent4->setText(QString::number(globalStruct.dlgProduceLineSetConfig.pixelEquivalent4));
+	ui->pbtn_limit1->setText(QString::number(globalStruct.dlgProduceLineSetConfig.limit1));
+	ui->pbtn_limit2->setText(QString::number(globalStruct.dlgProduceLineSetConfig.limit2));
+	ui->pbtn_limit3->setText(QString::number(globalStruct.dlgProduceLineSetConfig.limit3));
+	ui->pbtn_limit4->setText(QString::number(globalStruct.dlgProduceLineSetConfig.limit4));
+	ui->cbox_powerOn->setText(QString::number(globalStruct.dlgProduceLineSetConfig.powerOn));
+	ui->cbox_blowingEnable1->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowingEnable1));
+	ui->cbox_blowingEnable2->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowingEnable2));
+	ui->cbox_blowingEnable3->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowingEnable3));
+	ui->cbox_blowingEnable4->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowingEnable4));
+	ui->cbox_none->setText(QString::number(globalStruct.dlgProduceLineSetConfig.none));
+	ui->cbox_run->setText(QString::number(globalStruct.dlgProduceLineSetConfig.run));
+	ui->cbox_alarm->setText(QString::number(globalStruct.dlgProduceLineSetConfig.alarm));
+	ui->cbox_workstationProtection12->setText(QString::number(globalStruct.dlgProduceLineSetConfig.workstationProtection12));
+	ui->cbox_workstationProtection34->setText(QString::number(globalStruct.dlgProduceLineSetConfig.workstationProtection34));
+	ui->pbtn_motorSpeed->setText(QString::number(globalStruct.dlgProduceLineSetConfig.motorSpeed));
+	ui->pbtn_beltReductionRatio->setText(QString::number(globalStruct.dlgProduceLineSetConfig.beltReductionRatio));
+	ui->pbtn_accelerationAndDeceleration->setText(QString::number(globalStruct.dlgProduceLineSetConfig.accelerationAndDeceleration));
+	ui->pbtn_minBrightness->setText(QString::number(globalStruct.dlgProduceLineSetConfig.minBrightness));
+	ui->pbtn_maxBrightness->setText(QString::number(globalStruct.dlgProduceLineSetConfig.maxBrightness));
 }
 
 void DlgProduceLineSet::build_connect()

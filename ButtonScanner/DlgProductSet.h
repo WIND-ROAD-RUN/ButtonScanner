@@ -17,6 +17,8 @@ public:
 
 private:
 	void build_ui();
+	void read_config();
+	void read_image();
 	void build_radioButton();
 	void build_connect();
 private:

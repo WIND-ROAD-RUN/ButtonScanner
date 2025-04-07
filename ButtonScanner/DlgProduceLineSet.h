@@ -17,6 +17,7 @@ public:
 
 private:
 	void build_ui();
+	void read_config();
 
 	void build_connect();
 
