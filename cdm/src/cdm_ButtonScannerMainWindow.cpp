@@ -74,7 +74,7 @@ rw::cdm::ButtonScannerMainWindow::ButtonScannerMainWindow(const rw::oso::ObjectS
 	if (!lightValueItem) {
 		throw std::runtime_error("$variable$lightValue is not found");
 	}
-	lightValue = sideLightItem->getValueAsDouble();
+	lightValue = lightValueItem->getValueAsDouble();
 
 
 	auto speedItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$speed$"));
