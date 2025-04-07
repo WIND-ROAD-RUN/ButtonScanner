@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1285</width>
-    <height>1052</height>
+    <width>1280</width>
+    <height>1024</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,7 +37,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_24">
+      <widget class="QPushButton" name="pbtn_close">
        <property name="text">
         <string/>
        </property>
@@ -58,12 +58,12 @@
           <item>
            <widget class="QLabel" name="label">
             <property name="text">
-             <string>吹起距离1</string>
+             <string>吹气距离1</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="pbtn_blowDistance1">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
@@ -89,12 +89,12 @@
           <item>
            <widget class="QLabel" name="label_3">
             <property name="text">
-             <string>吹起时间1</string>
+             <string>吹气时间1</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="pbtn_blowTime1">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
@@ -120,12 +120,12 @@
           <item>
            <widget class="QLabel" name="label_5">
             <property name="text">
-             <string>吹起距离2</string>
+             <string>吹气距离2</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_3">
+           <widget class="QPushButton" name="pbtn_blowDistance2">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
@@ -151,12 +151,12 @@
           <item>
            <widget class="QLabel" name="label_7">
             <property name="text">
-             <string>吹起时间2</string>
+             <string>吹气时间2</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_4">
+           <widget class="QPushButton" name="pbtn_blowTime2">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
@@ -182,12 +182,12 @@
           <item>
            <widget class="QLabel" name="label_9">
             <property name="text">
-             <string>吹起距离3</string>
+             <string>吹气距离3</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_5">
+           <widget class="QPushButton" name="pbtn_blowDistance3">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
@@ -213,12 +213,12 @@
           <item>
            <widget class="QLabel" name="label_11">
             <property name="text">
-             <string>吹起时间3</string>
+             <string>吹气时间3</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_6">
+           <widget class="QPushButton" name="pbtn_blowTime3">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
@@ -244,12 +244,12 @@
           <item>
            <widget class="QLabel" name="label_13">
             <property name="text">
-             <string>吹起距离4</string>
+             <string>吹气距离4</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_7">
+           <widget class="QPushButton" name="pbtn_blowDistane4">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
@@ -275,12 +275,12 @@
           <item>
            <widget class="QLabel" name="label_15">
             <property name="text">
-             <string>吹起时间4</string>
+             <string>吹气时间4</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_8">
+           <widget class="QPushButton" name="pbtn_blowTime4">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
@@ -315,28 +315,28 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_9">
             <item>
-             <widget class="QCheckBox" name="checkBox">
+             <widget class="QCheckBox" name="cbox_powerOn">
               <property name="text">
                <string>1上电</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBox_2">
+             <widget class="QCheckBox" name="cbox_blowing1">
               <property name="text">
                <string>2吹气</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBox_5">
+             <widget class="QCheckBox" name="cbox_blowing2">
               <property name="text">
                <string>3吹气</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBox_6">
+             <widget class="QCheckBox" name="cbox_blowing3">
               <property name="text">
                <string>4吹气</string>
               </property>
@@ -347,28 +347,28 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_10">
             <item>
-             <widget class="QCheckBox" name="checkBox_3">
+             <widget class="QCheckBox" name="cbox_blowing4">
               <property name="text">
                <string>5吹气</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBox_4">
+             <widget class="QCheckBox" name="cbox_none">
               <property name="text">
                <string>6无</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBox_7">
+             <widget class="QCheckBox" name="cbox_run">
               <property name="text">
                <string>7运行</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBox_8">
+             <widget class="QCheckBox" name="cbox_alarm">
               <property name="text">
                <string>8报警</string>
               </property>
@@ -381,21 +381,21 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_11">
           <item>
-           <widget class="QCheckBox" name="checkBox_11">
+           <widget class="QCheckBox" name="cbox_workstationProtection12">
             <property name="text">
              <string>1，2工位保护</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBox_9">
+           <widget class="QCheckBox" name="cbox_workstationProtection34">
             <property name="text">
              <string>3，4工位保护</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBox_10">
+           <widget class="QCheckBox" name="cbox_debugMode">
             <property name="text">
              <string>调试模式</string>
             </property>
@@ -415,7 +415,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_9">
+             <widget class="QPushButton" name="pbtn_motorSpeed">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                 <horstretch>0</horstretch>
@@ -439,7 +439,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_10">
+             <widget class="QPushButton" name="pbtn_beltReductionRatio">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                 <horstretch>0</horstretch>
@@ -458,12 +458,12 @@
             <item>
              <widget class="QLabel" name="label_19">
               <property name="text">
-               <string>皮带加速比</string>
+               <string>皮带加减速</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_11">
+             <widget class="QPushButton" name="pbtn_accelerationAndDeceleration">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                 <horstretch>0</horstretch>
@@ -502,7 +502,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_12">
+           <widget class="QPushButton" name="pbtn_pixelEquivalent1">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
@@ -533,7 +533,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_16">
+           <widget class="QPushButton" name="pbtn_pixelEquivalent2">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
@@ -564,7 +564,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_13">
+           <widget class="QPushButton" name="pbtn_pixelEquivalent3">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
@@ -595,7 +595,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_14">
+           <widget class="QPushButton" name="pbtn_pixelEquivalent4">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
@@ -628,7 +628,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_17">
+         <widget class="QPushButton" name="pbtn_minBrightness">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
             <horstretch>0</horstretch>
@@ -648,7 +648,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_18">
+         <widget class="QPushButton" name="pbtn_maxBrightness">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
             <horstretch>0</horstretch>
@@ -681,7 +681,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_19">
+         <widget class="QPushButton" name="pbtn_Limit1">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
             <horstretch>0</horstretch>
@@ -712,7 +712,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_20">
+         <widget class="QPushButton" name="pbtn_Limit2">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
             <horstretch>0</horstretch>
@@ -743,7 +743,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_21">
+         <widget class="QPushButton" name="pbtn_Limit3">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
             <horstretch>0</horstretch>
@@ -774,7 +774,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_22">
+         <widget class="QPushButton" name="pbtn_Limit4">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
             <horstretch>0</horstretch>

@@ -25,14 +25,14 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QRadioButton" name="radioButton">
+           <widget class="QRadioButton" name="rbtn_outsideDiameterEnable">
             <property name="text">
              <string>外径</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="pbtn_outsideDiameterValue">
             <property name="text">
              <string>value</string>
             </property>
@@ -57,7 +57,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="pbtn_outsideDiameterDeviation">
             <property name="text">
              <string>value</string>
             </property>
@@ -82,7 +82,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_3">
+           <widget class="QPushButton" name="pbtn_photography">
             <property name="text">
              <string>value</string>
             </property>
@@ -107,7 +107,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_4">
+           <widget class="QPushButton" name="pbtn_blowTime">
             <property name="text">
              <string>value</string>
             </property>
@@ -126,7 +126,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_9">
+      <widget class="QLabel" name="label_pic">
        <property name="text">
         <string>纽扣图片</string>
        </property>
@@ -139,16 +139,9 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QRadioButton" name="radioButton_2">
+         <widget class="QRadioButton" name="rbtn_edgeDamageEnable">
           <property name="text">
-           <string>大破边</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="radioButton_3">
-          <property name="text">
-           <string>小破边</string>
+           <string>破边</string>
           </property>
          </widget>
         </item>
@@ -160,7 +153,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_5">
+         <widget class="QPushButton" name="rbtn_edgeDamageSimilarity">
           <property name="text">
            <string>value</string>
           </property>
@@ -188,7 +181,7 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_8">
              <item>
-              <widget class="QRadioButton" name="radioButton_4">
+              <widget class="QRadioButton" name="rbtn_shieldingRangeEnable">
                <property name="text">
                 <string>屏蔽范围</string>
                </property>
@@ -206,7 +199,7 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <item>
-              <widget class="QPushButton" name="pushButton_6">
+              <widget class="QPushButton" name="pbtn_outerRadius">
                <property name="text">
                 <string>value</string>
                </property>
@@ -231,7 +224,7 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_7">
              <item>
-              <widget class="QPushButton" name="pushButton_7">
+              <widget class="QPushButton" name="pbtn_innerRadius">
                <property name="text">
                 <string>value</string>
                </property>
@@ -252,14 +245,14 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
-           <widget class="QRadioButton" name="radioButton_5">
+           <widget class="QRadioButton" name="rbtn_poreEnable">
             <property name="text">
              <string>气孔</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_6">
+           <widget class="QRadioButton" name="rbtn_paintEnable">
             <property name="text">
              <string>油漆</string>
             </property>
@@ -285,7 +278,7 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_10">
              <item>
-              <widget class="QRadioButton" name="radioButton_7">
+              <widget class="QRadioButton" name="rbtn_holesCountEnable">
                <property name="text">
                 <string>孔数</string>
                </property>
@@ -294,7 +287,7 @@
             </layout>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_8">
+            <widget class="QPushButton" name="ptn_holesCountValue">
              <property name="text">
               <string>value</string>
              </property>
@@ -312,7 +305,7 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_11">
              <item>
-              <widget class="QRadioButton" name="radioButton_8">
+              <widget class="QRadioButton" name="rbtn_brokenEyeEnable">
                <property name="text">
                 <string>破眼</string>
                </property>
@@ -328,7 +321,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_9">
+            <widget class="QPushButton" name="pbtn_brokenEyeSimilarity">
              <property name="text">
               <string>value</string>
              </property>
@@ -346,9 +339,9 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_12">
              <item>
-              <widget class="QRadioButton" name="radioButton_9">
+              <widget class="QRadioButton" name="rbtn_crackEnable">
                <property name="text">
-                <string>裂眼</string>
+                <string>裂痕</string>
                </property>
               </widget>
              </item>
@@ -362,7 +355,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_10">
+            <widget class="QPushButton" name="pbtn_crackSimilarity">
              <property name="text">
               <string>value</string>
              </property>
@@ -380,7 +373,7 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_13">
              <item>
-              <widget class="QRadioButton" name="radioButton_10">
+              <widget class="QRadioButton" name="rbtn_apertureEnable">
                <property name="text">
                 <string>孔径</string>
                </property>
@@ -391,7 +384,7 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_21">
              <item>
-              <widget class="QPushButton" name="pushButton_11">
+              <widget class="QPushButton" name="pbtn_apertureValue">
                <property name="text">
                 <string>value</string>
                </property>
@@ -416,7 +409,7 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_22">
              <item>
-              <widget class="QPushButton" name="pushButton_17">
+              <widget class="QPushButton" name="pbtn_apertureSimilarity">
                <property name="text">
                 <string>value</string>
                </property>
@@ -443,7 +436,7 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_14">
              <item>
-              <widget class="QRadioButton" name="radioButton_11">
+              <widget class="QRadioButton" name="rbtn_holeCenterDistanceEnable">
                <property name="text">
                 <string>孔心距</string>
                </property>
@@ -454,7 +447,7 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_23">
              <item>
-              <widget class="QPushButton" name="pushButton_12">
+              <widget class="QPushButton" name="pbtn_holeCenterDistanceValue">
                <property name="text">
                 <string>value</string>
                </property>
@@ -479,7 +472,7 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_24">
              <item>
-              <widget class="QPushButton" name="pushButton_18">
+              <widget class="QPushButton" name="pbtn_holeCenterDistanceSimilarity">
                <property name="text">
                 <string>value</string>
                </property>
@@ -511,7 +504,7 @@
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_17">
         <item>
-         <widget class="QRadioButton" name="radioButton_12">
+         <widget class="QRadioButton" name="rbtn_specifyColorDifferenceEnable">
           <property name="text">
            <string>指定色差</string>
           </property>
@@ -527,7 +520,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_13">
+           <widget class="QPushButton" name="pbtn_specifyColorDifferenceR">
             <property name="text">
              <string>value</string>
             </property>
@@ -545,7 +538,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_14">
+           <widget class="QPushButton" name="pbtn_specifyColorDifferenceG">
             <property name="text">
              <string>value</string>
             </property>
@@ -563,7 +556,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_15">
+           <widget class="QPushButton" name="pbtn_specifyColorDifferenceB">
             <property name="text">
              <string>value</string>
             </property>
@@ -581,7 +574,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_16">
+           <widget class="QPushButton" name="pbtn_specifyColorDifferenceDeviation">
             <property name="text">
              <string>value</string>
             </property>
@@ -599,7 +592,7 @@
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_18">
         <item>
-         <widget class="QRadioButton" name="radioButton_13">
+         <widget class="QRadioButton" name="rbtn_largeColorDifferenceEnable">
           <property name="text">
            <string>大色差</string>
           </property>
@@ -615,7 +608,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_20">
+           <widget class="QPushButton" name="pbtn_largeColorDifferenceDeviation">
             <property name="text">
              <string>value</string>
             </property>
@@ -633,21 +626,21 @@
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_19">
         <item>
-         <widget class="QRadioButton" name="radioButton_14">
+         <widget class="QRadioButton" name="rbtn_grindStoneEnable">
           <property name="text">
            <string>磨石</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QRadioButton" name="radioButton_15">
+         <widget class="QRadioButton" name="rbtn_blockEyeEnable">
           <property name="text">
            <string>堵眼</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QRadioButton" name="radioButton_16">
+         <widget class="QRadioButton" name="rbtn_materialHeadEnable">
           <property name="text">
            <string>料头</string>
           </property>
