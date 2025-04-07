@@ -64,6 +64,8 @@ void ButtonScanner::build_ui()
 	//Set RadioButton ,make sure these can be checked at the same time
 	set_radioButton();
     build_MainWindowData();
+    build_dlgProduceLineSet();
+	build_dlgProductSet();
 }
 
 void ButtonScanner::build_MainWindowData()
@@ -82,6 +84,17 @@ void ButtonScanner::build_MainWindowData()
     ui->rbtn_sideLight->setChecked(mainWindowConfig.sideLight);
 	ui->rbtn_defect->setChecked(mainWindowConfig.isDefect);
     ui->rbtn_ForAndAgainst->setChecked(mainWindowConfig.isPositive);
+}
+
+void ButtonScanner::build_dlgProduceLineSet()
+{
+    this->dlgProduceLineSet = new DlgProduceLineSet(this);
+}
+
+void ButtonScanner::build_dlgProductSet()
+{
+    this->dlgProductSet = new DlgProductSet(this);
+
 }
 
 void ButtonScanner::build_connect()
@@ -393,14 +406,13 @@ void ButtonScanner::_camera4Display(QImage image)
 
 void ButtonScanner::pbtn_set_clicked()
 {
-	DlgProduceLineSet dlgProduceLineSet;
-	dlgProduceLineSet.exec();
+	dlgProduceLineSet->exec();
+
 }
 
 void ButtonScanner::pbtn_newProduction_clicked()
 {
-	DlgProductSet dlgProductSet;
-	dlgProductSet.exec();
+    dlgProductSet->exec();
 }
 
 void ButtonScanner::pbtn_exit_clicked()

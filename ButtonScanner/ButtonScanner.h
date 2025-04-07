@@ -3,10 +3,12 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_ButtonScanner.h"
 
+#include"DlgProduceLineSet.h"
+#include"DlgProductSet.h"
+
 #include"opencv2/opencv.hpp"
 
 #include<QImage>
-
 #include<memory>
 namespace rw
 {
@@ -23,6 +25,9 @@ QT_END_NAMESPACE
 class ButtonScanner : public QMainWindow
 {
     Q_OBJECT
+private:
+    DlgProduceLineSet* dlgProduceLineSet = nullptr;
+    DlgProductSet* dlgProductSet = nullptr;
 
 private:
     //变量监控线程关机的时候停止
@@ -39,6 +44,8 @@ private:
 private:
     void build_ui();
     void build_MainWindowData();
+    void build_dlgProduceLineSet();
+    void build_dlgProductSet();
 
     void build_connect();
 private:

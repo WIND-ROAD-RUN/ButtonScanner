@@ -16,5 +16,8 @@ public:
     ~DlgProductSet();
 
 private:
+    void build_ui();
+    void build_radioButton();
+private:
     Ui::DlgProductSetClass* ui;
 };
