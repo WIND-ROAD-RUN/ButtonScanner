@@ -57,12 +57,27 @@ void GlobalStruct::ReadConfig()
         LOG()  "Load main window config failed.";
     }
 
+	auto loadDlgProduceLineSetConfig = _StoreContext->load(dlgProduceLineSetPath.toStdString());
+	if (loadDlgProduceLineSetConfig) {
+		dlgProduceLineSetConfig = *loadDlgProduceLineSetConfig;
+	}
+	else {
+		LOG()  "Load main window config failed.";
+	}
 
+	auto loadDlgProduceLineSetConfig = _StoreContext->load(dlgProduceLineSetPath.toStdString());
+	if (loadDlgProduceLineSetConfig) {
+		dlgProduceLineSetConfig = *loadDlgProduceLineSetConfig;
+	}
+	else {
+		LOG()  "Load main window config failed.";
+	}
 }
 
 void GlobalStruct::saveConfig()
 {
     _StoreContext->save(mainWindowConfig, mainwindowFilePath.toStdString());
+
 }
 
 void GlobalStruct::buildCamera()

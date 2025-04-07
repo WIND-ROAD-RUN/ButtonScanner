@@ -8,6 +8,7 @@
 #include"ime_ModelEngine.h"
 #include"rqw_CameraObjectThread.hpp"
 #include"cdm_ButtonScannerMainWindow.h"
+#include"cdm_ButtonScannerDlgProductSet.h"
 #include"oso_StorageContext.hpp"
 #include<QString>
 
@@ -28,7 +29,9 @@ public:
     std::unique_ptr<rw::oso::StorageContext> _StoreContext{ nullptr };
 public:
     QString mainwindowFilePath;
+	QString dlgProduceLineSetFilePath;
     rw::cdm::ButtonScannerMainWindow mainWindowConfig{};
+	rw::cdm::ButtonScannerDlgProductSet dlgProduceLineSetConfig{};
 public:
     QString cameraIp1{ "11" };
     QString cameraIp2{ "12" };

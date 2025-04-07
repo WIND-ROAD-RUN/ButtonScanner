@@ -124,6 +124,35 @@ void ButtonScanner::read_config()
         globalStruct.ReadConfig();
 	}
 
+	QString dlgProduceLineSetFilePath = R"(config/DlgProduceLineSetFilePath.xml)";
+	QDir dir;
+	QString dlgProduceLineSetFilePathFull = dir.absoluteFilePath(dlgProduceLineSetFilePath);
+	QFileInfo dlgProduceLineSetFile(dlgProduceLineSetFilePathFull);
+
+	globalStruct.dlgProduceLineSetFilePath = dlgProduceLineSetFilePathFull;
+	globalStruct.buildConfigManager(rw::oso::StorageType::Xml);
+
+	if (!dlgProduceLineSetFile.exists()) {
+		QDir configDir = QFileInfo(dlgProduceLineSetFilePathFull).absoluteDir();
+		if (!configDir.exists()) {
+			configDir.mkpath(".");
+		}
+		QFile file(dlgProduceLineSetFilePathFull);
+		if (file.open(QIODevice::WriteOnly)) {
+			file.close();
+		}
+		else {
+			QMessageBox::critical(this, "Error", "无法创建配置文件。");
+		}
+		globalStruct.dlgProduceLineSetConfig = rw::cdm::ButtonScannerProduceLineSet();
+		globalStruct.saveConfig();
+		return;
+	}
+	else {
+		globalStruct.ReadConfig();
+	}
+
+
 }
 
 void ButtonScanner::build_camera()
