@@ -140,7 +140,7 @@ xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\ZMotion\dll\*.dll" "$(OutDir)"</Comma
     <ClCompile Include="main.cpp" />
     <QtMoc Include="DlgProductSet.h" />
     <QtMoc Include="DlgProduceLineSet.h" />
-    <ClInclude Include="GlobalStruct.h" />
+    <QtMoc Include="GlobalStruct.h" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>

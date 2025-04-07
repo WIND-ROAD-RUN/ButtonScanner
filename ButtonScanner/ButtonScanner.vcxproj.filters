@@ -66,6 +66,9 @@
     <QtMoc Include="DlgProduceLineSet.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="GlobalStruct.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="DlgProductSet.ui">
@@ -79,10 +82,5 @@
     <Library Include="..\ThirdLibrary\MVS\Libraries\windows64\MvCameraControl.lib">
       <Filter>lib</Filter>
     </Library>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GlobalStruct.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

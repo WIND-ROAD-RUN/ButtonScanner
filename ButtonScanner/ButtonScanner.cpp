@@ -1,18 +1,18 @@
-#include "stdafx.h"
-
-#include "ButtonScanner.h"
-#include"DlgProductSet.h"
-#include"DlgProduceLineSet.h"
+ï»¿#include "stdafx.h"
 
 #include"rqw_CameraObjectThread.hpp"
 #include"hoec_CameraException.hpp"
 
+#include "ButtonScanner.h"
+#include"DlgProductSet.h"
+#include"DlgProduceLineSet.h"
 #include"GlobalStruct.h"
 
 #include<qdebug>
 #include<QtConcurrent>
 #include <future>
-#define LOG(msg) qDebug() << "[" << __FILE__ << ":" << __LINE__ << "] INFO:" << msg
+#include<QDir>
+#include<QFileInfo>
 
 ButtonScanner::ButtonScanner(QWidget* parent)
 	: QMainWindow(parent)
@@ -22,24 +22,17 @@ ButtonScanner::ButtonScanner(QWidget* parent)
 
 	build_ui();
 	build_connect();
+
 	build_Motion();
 
 	build_camera();
-	start_monitor();
 
-	//¼àÊÓÏà»úÔË¶¯¿ØÖÆ¿¨Ïß³Ì
+    build_engine();
+
+	//ç›‘è§†ç›¸æœºè¿åŠ¨æ§åˆ¶å¡çº¿ç¨‹
 	build_MonitoringThread();
 
-	disp_Label.append(ui->label_imgDisplay);
-	disp_Label.append(ui->label_imgDisplay_2);
-	disp_Label.append(ui->label_imgDisplay_3);
-	disp_Label.append(ui->label_imgDisplay_4);
-
-
-
-	LOG()  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-
-
+	start_monitor();
 }
 
 ButtonScanner::~ButtonScanner()
@@ -76,189 +69,87 @@ void ButtonScanner::build_connect()
 
 void ButtonScanner::build_camera()
 {
-	auto isTargetCamera = [](const QString& cameraIndex, const QString& targetName) {
-		QRegularExpression regex(R"((\d+)\.(\d+)\.(\d+)\.(\d+))");
-		QRegularExpressionMatch match = regex.match(targetName);
+	auto& globalStruct = GlobalStruct::getInstance();
+	globalStruct.cameraIp1 = "11";
+    globalStruct.cameraIp2 = "12";
+    globalStruct.cameraIp3 = "13";
+    globalStruct.cameraIp4 = "14";
 
-		if (match.hasMatch()) {
-			auto matchString = match.captured(3);
+    globalStruct.buildCamera();
 
-			return cameraIndex == matchString;
-		}
-
-		return false;
-	};
-
-
-	auto cameraMetaDataCheck =
-		[isTargetCamera](const QString& cameraIndex, const QVector<rw::rqw::CameraMetaData>& cameraInfo) {
-		for (const auto& cameraMetaData : cameraInfo) {
-			if (isTargetCamera(cameraIndex, cameraMetaData.ip)) {
-				return cameraMetaData;
-			}
-		}
-		rw::rqw::CameraMetaData error;
-		error.ip = "0";
-		return error;
-	};
-
-	auto cameraList = rw::rqw::CheckCameraList();
-
-	{
-		QString cameraIp1 = "11";
-		auto cameraMetaData1 = cameraMetaDataCheck(cameraIp1, cameraList);
-
-		if (cameraMetaData1.ip != "0") {
-			try
-			{
-				_camera1 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
-				_camera1->initCamera(cameraMetaData1, rw::rqw::CameraObjectTrigger::Hardware);
-				QObject::connect(_camera1.get(), &rw::rqw::CameraPassiveThread::frameCaptured, this, &ButtonScanner::_camera1Display, Qt::DirectConnection);
-			}
-			catch (const std::exception&)
-			{
-				LOG()  "Camera 1 initialization failed.";
-			}
-
-		}
-	}
+	QObject::connect(globalStruct._camera1.get(), &rw::rqw::CameraPassiveThread::frameCaptured, 
+		this, &ButtonScanner::_camera1Display, Qt::DirectConnection);
+	QObject::connect(globalStruct._camera2.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
+		this, &ButtonScanner::_camera2Display, Qt::DirectConnection);
+	QObject::connect(globalStruct._camera3.get(), &rw::rqw::CameraPassiveThread::frameCaptured, 
+		this, &ButtonScanner::_camera3Display, Qt::DirectConnection);
+	QObject::connect(globalStruct._camera4.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
+		this, &ButtonScanner::_camera4Display, Qt::DirectConnection);
 
 
 
-	{
-	    QString cameraIp2 = "12";
-	    auto cameraMetaData2 = cameraMetaDataCheck(cameraIp2, cameraList);
+}
 
-	    if (cameraMetaData2.ip != "0") {
-	        try
-	        {
-	            _camera2 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
-	            _camera2->initCamera(cameraMetaData2, rw::rqw::CameraObjectTrigger::Hardware);
-	            QObject::connect(_camera2.get(), &rw::rqw::CameraPassiveThread::frameCaptured, this, &ButtonScanner::_camera2Display, Qt::DirectConnection);
-	        }
-	        catch (const std::exception&)
-	        {
-	            LOG()  "Camera 2 initialization failed.";
-	        }
+void ButtonScanner::build_engine()
+{
+	auto& globalStruct = GlobalStruct::getInstance();
 
-	    }
-	}
+	//
+    QString enginePath =R"(model/model.engine)";
+    QString namePath = R"(model/index.names)";
+	QDir dir;
+    
+    QString enginePathFull = dir.absoluteFilePath(enginePath);
+    QString namePathFull = dir.absoluteFilePath(namePath);
 
-	{
-	    QString cameraIp3 = "13";
-	    auto cameraMetaData3 = cameraMetaDataCheck(cameraIp3, cameraList);
-	    if (cameraMetaData3.ip != "0") {
-	        try
-	        {
-	            _camera3 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
-	            _camera3->initCamera(cameraMetaData3, rw::rqw::CameraObjectTrigger::Hardware);
-	            QObject::connect(_camera3.get(), &rw::rqw::CameraPassiveThread::frameCaptured, this, &ButtonScanner::_camera3Display, Qt::DirectConnection);
-	        }
-	        catch (const std::exception&)
-	        {
-	            LOG()  "Camera 3 initialization failed.";
-	        }
-	    }
-	}
-	{
-	    QString cameraIp4 = "14";
-	    auto cameraMetaData4 = cameraMetaDataCheck(cameraIp4, cameraList);
-	    if (cameraMetaData4.ip != "0") {
-	        try
-	        {
-	            _camera4 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
-	            _camera4->initCamera(cameraMetaData4, rw::rqw::CameraObjectTrigger::Hardware);
-	            QObject::connect(_camera4.get(), &rw::rqw::CameraPassiveThread::frameCaptured, this, &ButtonScanner::_camera4Display, Qt::DirectConnection);
-	        }
-	        catch (const std::exception&)
-	        {
-	            LOG()  "Camera 4 initialization failed.";
-	        }
-	    }
-	}
+    QFileInfo engineFile(enginePathFull);
+    QFileInfo nameFile(namePathFull);
 
+    //ä¿è¯æ–‡ä»¶å­˜åœ¨ï¼Œåœ¨exeæ–‡ä»¶åŒçº§ç›®å½•ä¸‹çš„modelæ–‡ä»¶å¤¹ä¸‹ä¸”å‘½åä¸ºmodel.engineå’Œindex.names
+    assert(engineFile.exists() && "Engine file does not exist");
+    assert(nameFile.exists() && "Name file does not exist");
+	//TODOï¼šä½¿ç”¨å¯¹è¯æ¡†æç¤ºç”¨æˆ·
 
+    globalStruct.enginePath = enginePathFull;
+    globalStruct.namePath = namePathFull;
 
-
-
+    globalStruct.buildModelEngine();
 }
 
 void ButtonScanner::start_monitor()
 {
-	if (_camera1)
-	{
-		try
-		{
-			_camera1->startMonitor();
-		}
-		catch (rw::hoec::CameraMonitorError& e)
-		{
-			LOG()  "Camera 1 startMonitor failed: " << e.what();
-		}
-
-	}
-	if (_camera2)
-	{
-		try
-		{
-			_camera2->startMonitor();
-		}
-		catch (rw::hoec::CameraMonitorError& e)
-		{
-			LOG()  "Camera 2 startMonitor failed: " << e.what();
-		}
-	}
-	if (_camera3)
-	{
-		try
-		{
-			_camera3->startMonitor();
-		}
-		catch (const rw::hoec::CameraMonitorError& e)
-		{
-			LOG()  "Camera 3 startMonitor failed: " << e.what();
-		}
-	}
-	if (_camera4)
-	{
-		try
-		{
-			_camera4->startMonitor();
-		}
-		catch (const rw::hoec::CameraMonitorError& e)
-		{
-			LOG()  "Camera 4 startMonitor failed: " << e.what();
-		}
-	}
+	auto& globalStruct = GlobalStruct::getInstance();
+	globalStruct.startMonitor();
 }
-//³õÊ¼»¯ÔË¶¯¿ØÖÆ¿¨
+
 void ButtonScanner::build_Motion()
 {
-	//ÕâÀï»ñÈ¡È«¾Ö±äÁ¿
 	auto& globalStruct = GlobalStruct::getInstance();
 
-	//»ñÈ¡Zmotion
+	globalStruct.buildMotion();
+
+	//è·å–Zmotion
 	auto& motionPtr = globalStruct.motionPtr;
 
-	//ÏÂÃæÍ¨¹ımotionPtr½øĞĞ²Ù×÷
+	//ä¸‹é¢é€šè¿‡motionPtrè¿›è¡Œæ“ä½œ
 	motionPtr.get()->OpenBoard((char*)"192.168.0.11");
 
 }
 
 void ButtonScanner::build_MonitoringThread()
 {
-	//Ïß³ÌÄÚ²¿
+	//çº¿ç¨‹å†…éƒ¨
 	QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
 
 		while (mark_Thread)
 		{
 
-			//ÔË¶¯¿ØÖÆ¿¨ÊµÊ±×´Ì¬
+			//è¿åŠ¨æ§åˆ¶å¡å®æ—¶çŠ¶æ€
 			{
-				//ÕâÀï»ñÈ¡È«¾Ö±äÁ¿
+				//è¿™é‡Œè·å–å…¨å±€å˜é‡
 				auto& globalStruct = GlobalStruct::getInstance();
 
-				//»ñÈ¡Zmotion
+				//è·å–Zmotion
 				auto& motionPtr = globalStruct.motionPtr;
 
 				bool  boardState = motionPtr.get()->getBoardState();
@@ -272,7 +163,7 @@ void ButtonScanner::build_MonitoringThread()
 
 				}
 			}
-			//»ñµÃÏà»úÁ´½Ó×´Ì¬
+			//è·å¾—ç›¸æœºé“¾æ¥çŠ¶æ€
 			{
 
 
@@ -297,22 +188,21 @@ void ButtonScanner::build_MonitoringThread()
 
 }
 
-//¼à¿ØioµãÎ»Ïß³Ì
 void ButtonScanner::build_IOThread()
 {
-	//Ïß³ÌÄÚ²¿
+	//çº¿ç¨‹å†…éƒ¨
 	QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
-		//ÕâÀï»ñÈ¡È«¾Ö±äÁ¿
+		//è¿™é‡Œè·å–å…¨å±€å˜é‡
 		auto& globalStruct = GlobalStruct::getInstance();
 
-		//»ñÈ¡Zmotion
+		//è·å–Zmotion
 		auto& motionPtr = globalStruct.motionPtr;
 		while (mark_Thread)
 		{
 
 			bool state = false;
 			state = motionPtr->GetIOIn(2);
-			//¼±Í£
+			//æ€¥åœ
 
 			if (state == true)
 			{
@@ -325,19 +215,19 @@ void ButtonScanner::build_IOThread()
 			}
 			//else
 			//{
-			//	//¿ªÊ¼°´Å¥
+			//	//å¼€å§‹æŒ‰é’®
 			//	bool state = false;
 			//	state = motionPtr->GetIOIn(1);
-			//	//Æô¶¯³ÌĞò
+			//	//å¯åŠ¨ç¨‹åº
 			//	if (state == true)
 			//	{
 
 
-			//		//ËùÓĞµç»úÉÏµç
+			//		//æ‰€æœ‰ç”µæœºä¸Šç”µ
 			//		QtConcurrent::run([this, &motionPtr]() {
 			//			QThread::msleep(500);
 			//			motionPtr->SetIOOut(1, true);
-			//			//Æô¶¯µç»ú
+			//			//å¯åŠ¨ç”µæœº
    //                 motionPtr->SetAxisType(0,1);
    //                 double unit= GlobelParam::SystemParam[9].toDouble();
    //                 motionPtr->SetAxisPulse(0,unit);
@@ -392,14 +282,6 @@ void ButtonScanner::build_IOThread()
 
 }
 
-
-
-
-
-
-
-
-
 QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
 {
 	if (mat.type() == CV_8UC1) {
@@ -418,14 +300,11 @@ QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
 
 }
 
-
-
-
 cv::Mat ButtonScanner::longRunningTask(const cv::Mat& frame,int workindex) {
 
 
 	try {
-		// 1. ¿ìËÙ¿ËÂ¡ÊäÈëÖ¡£¨±ÜÃâºóĞø²Ù×÷ĞŞ¸ÄÔ­Êı¾İ£©
+		// 1. å¿«é€Ÿå…‹éš†è¾“å…¥å¸§ï¼ˆé¿å…åç»­æ“ä½œä¿®æ”¹åŸæ•°æ®ï¼‰
 		cv::Mat result = frame.clone();
 		auto& globalStruct = GlobalStruct::getInstance();
 
@@ -448,25 +327,25 @@ cv::Mat ButtonScanner::longRunningTask(const cv::Mat& frame,int workindex) {
 			modelEngine = &globalStruct.modelEnginePtr4;
 		}
 
-		// 3. ´¦ÀíÄ£ĞÍÍÆÀí
+		// 3. å¤„ç†æ¨¡å‹æ¨ç†
 		cv::Mat ResultMat;
 		cv::Mat MaskMat;
 		std::vector<rw::ime::ProcessRectanglesResult> resultRectangles;
 
-		// 4. ĞÔÄÜ¼ÆÊ±£¨Ê¹ÓÃ¸ß¾«¶ÈÊ±ÖÓ£©
+		// 4. æ€§èƒ½è®¡æ—¶ï¼ˆä½¿ç”¨é«˜ç²¾åº¦æ—¶é’Ÿï¼‰
 		static auto lastCallTime = std::chrono::steady_clock::now();
 		auto startTime = std::chrono::steady_clock::now();
 		modelEngine->get()->ProcessMask(result, ResultMat, MaskMat, resultRectangles);
 
 		auto endTime = std::chrono::steady_clock::now();
 		auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - lastCallTime).count();
-		lastCallTime = startTime; // ¸üĞÂÎª±¾´Îµ÷ÓÃµÄ¿ªÊ¼Ê±¼ä
+		lastCallTime = startTime; // æ›´æ–°ä¸ºæœ¬æ¬¡è°ƒç”¨çš„å¼€å§‹æ—¶é—´
 
 		LOG()  "Model processing time: "
 			<< std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count()
 			<< " ms | Interval since last call: " << timeDiff << " ms";
 		//QImage image = cvMatToQImage(result);
-		// 5. °²È«¸üĞÂUI£¨¼ì²é¶ÔÏó´æ»îĞÔ£©
+		// 5. å®‰å…¨æ›´æ–°UIï¼ˆæ£€æŸ¥å¯¹è±¡å­˜æ´»æ€§ï¼‰
 		/*if (QThread::currentThread() != this->thread()) {
 			QMetaObject::invokeMethod(this, [this, result, image, workindex]() {
 
@@ -493,19 +372,14 @@ cv::Mat ButtonScanner::longRunningTask(const cv::Mat& frame,int workindex) {
 	}
 	catch (const std::exception& e) {
 		LOG()  "Error in longRunningTask1: " << e.what();
-		return cv::Mat(); // ·µ»Ø¿Õ¾ØÕó±íÊ¾´íÎó
+		return cv::Mat(); // è¿”å›ç©ºçŸ©é˜µè¡¨ç¤ºé”™è¯¯
 	}
 }
-
-
 
 void ButtonScanner::_camera1Display(cv::Mat frame)
 {
 	static size_t frameCount = 0;
-	//LOG()  "Camera 1 frame count: " << ++frameCount;
-
-
-
+	LOG()  "Camera 1 frame count: " << ++frameCount;
 
 	QFuture<void>  m_monitorFuture = QtConcurrent::run([this, frame]() {
 
@@ -519,6 +393,7 @@ void ButtonScanner::_camera1Display(cv::Mat frame)
 
 	
 }
+
 void ButtonScanner::_camera2Display(cv::Mat frame)
 {
 	static size_t frameCount = 0;
@@ -534,6 +409,7 @@ void ButtonScanner::_camera2Display(cv::Mat frame)
 
 	});
 }
+
 void ButtonScanner::_camera3Display(cv::Mat frame)
 {
 	static size_t frameCount = 0;
@@ -548,6 +424,7 @@ void ButtonScanner::_camera3Display(cv::Mat frame)
 
 	});
 }
+
 void ButtonScanner::_camera4Display(cv::Mat frame)
 {
 	static size_t frameCount = 0;
@@ -563,6 +440,7 @@ void ButtonScanner::_camera4Display(cv::Mat frame)
 
 	});
 }
+
 void ButtonScanner::pbtn_set_clicked()
 {
 	DlgProduceLineSet dlgProduceLineSet;

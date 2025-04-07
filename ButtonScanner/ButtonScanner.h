@@ -1,11 +1,13 @@
-#pragma once
+ï»¿#pragma once
 
 #include <QtWidgets/QMainWindow>
 #include "ui_ButtonScanner.h"
-#include<memory>
+
 #include"opencv2/opencv.hpp"
+
 #include<QImage>
 
+#include<memory>
 namespace rw
 {
     namespace rqw
@@ -23,20 +25,12 @@ class ButtonScanner : public QMainWindow
     Q_OBJECT
 
 private:
-    std::unique_ptr<rw::rqw::CameraPassiveThread> _camera1;
-    std::unique_ptr<rw::rqw::CameraPassiveThread> _camera2;
-    std::unique_ptr<rw::rqw::CameraPassiveThread> _camera3;
-    std::unique_ptr<rw::rqw::CameraPassiveThread> _camera4;
-
-
-    //±äÁ¿¼à¿ØÏß³Ì¹Ø»úµÄÊ±ºòÍ£Ö¹
+    //å˜é‡ç›‘æ§çº¿ç¨‹å…³æœºçš„æ—¶å€™åœæ­¢
     bool mark_Thread = false;
-    //qvector´æ·ÅÏÔÊ¾µÄlabel
-    QVector<QLabel*>disp_Label;
-
 
 public:
     ButtonScanner(QWidget *parent = nullptr);
+
     ~ButtonScanner();
 
 private:
@@ -44,28 +38,24 @@ private:
 
 private:
     void build_ui();
-    void build_connect();
 
+    void build_connect();
 private:
     void build_camera();
+
+    void build_engine();
+
     void start_monitor();
-    //³õÊ¼»¯ÔË¶¯¿ØÖÆ¿¨
+
     void build_Motion();
 
-    //ÊµÊ±¼à¿ØÔË¶¯¿ØÖÆ¿¨,Ïà»ú×´Ì¬£¨µôÏßÖØÁ¬£©
+    //å®æ—¶ç›‘æ§è¿åŠ¨æ§åˆ¶å¡,ç›¸æœºçŠ¶æ€ï¼ˆæ‰çº¿é‡è¿ï¼‰
     void build_MonitoringThread();
 
+    //å¼€å¯çº¿ç¨‹å®æ–½ç›‘æ§çš®å¸¦è¿åŠ¨ä½ç½®
 
-
-    //¿ªÆôÏß³ÌÊµÊ©¼à¿ØÆ¤´øÔË¶¯Î»ÖÃ
-
-
-
-    //¿ªÆôÏß³Ì¼à¿ØÔË¶¯¿ØÖÆ¿¨ioµã²¢ÇÒ×ö³öÏàÓ¦µÄÂß¼­
+    //å¼€å¯çº¿ç¨‹ç›‘æ§è¿åŠ¨æ§åˆ¶å¡ioç‚¹å¹¶ä¸”åšå‡ºç›¸åº”çš„é€»è¾‘
     void build_IOThread();
-
-
-
 
 private:
     Ui::ButtonScannerClass *ui;
@@ -75,15 +65,20 @@ private:
 
     cv::Mat longRunningTask(const cv::Mat& frame, int workindex);
 
-
 private slots:
     void _camera1Display(cv::Mat frame);
+
     void _camera2Display(cv::Mat frame);
+
     void _camera3Display(cv::Mat frame);
+
     void _camera4Display(cv::Mat frame);
 
 private slots:
     void pbtn_exit_clicked();
+
     void pbtn_set_clicked();
+
     void pbtn_newProduction_clicked();
+
 };
