@@ -302,22 +302,28 @@ QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
 
 void ButtonScanner::_camera1Display(QImage image)
 {
-
+    QPixmap pixmap = QPixmap::fromImage(image);
+    ui->label_imgDisplay->setPixmap(pixmap.scaled(ui->label_imgDisplay->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 	
 }
 
 void ButtonScanner::_camera2Display(QImage image)
 {
-
+    QPixmap pixmap = QPixmap::fromImage(image);
+    ui->label_imgDisplay_2->setPixmap(pixmap.scaled(ui->label_imgDisplay_2->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 void ButtonScanner::_camera3Display(QImage image)
 {
+	QPixmap pixmap = QPixmap::fromImage(image);
+	ui->label_imgDisplay_3->setPixmap(pixmap.scaled(ui->label_imgDisplay_3->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
 }
 
 void ButtonScanner::_camera4Display(QImage image)
 {
+	QPixmap pixmap = QPixmap::fromImage(image);
+	ui->label_imgDisplay_4->setPixmap(pixmap.scaled(ui->label_imgDisplay_4->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
 }
 

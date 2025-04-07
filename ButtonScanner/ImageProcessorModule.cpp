@@ -45,12 +45,15 @@ ImageProcessor::ImageProcessor(QQueue<cv::Mat>& queue, QMutex& mutex, QWaitCondi
 
 void ImageProcessor::run()
 {
-    while (true) {
+    while (!QThread::currentThread()->isInterruptionRequested()) {
         cv::Mat frame;
         {
             QMutexLocker locker(&mutex);
             if (queue.isEmpty()) {
                 condition.wait(&mutex);
+                if (QThread::currentThread()->isInterruptionRequested()) {
+                    break;
+                }
             }
             frame = queue.dequeue();
         }
@@ -90,9 +93,22 @@ ImageProcessingModule::ImageProcessingModule(int numConsumers, QObject* parent)
 
 ImageProcessingModule::~ImageProcessingModule()
 {
+    // 通知所有线程退出
     for (auto processor : processors) {
-        processor->quit();
-        processor->wait();
+        processor->requestInterruption();
+    }
+
+    // 唤醒所有等待的线程
+    {
+        QMutexLocker locker(&mutex);
+        condition.wakeAll();
+    }
+
+    // 等待所有线程退出
+    for (auto processor : processors) {
+        if (processor->isRunning()) {
+            processor->wait(1000); // 使用超时机制，等待1秒
+        }
         delete processor;
     }
 }
