@@ -93,16 +93,21 @@ void ButtonScanner::build_ImageProcessorModule()
 	QFileInfo engineFile(enginePathFull);
 	QFileInfo nameFile(namePathFull);
 
-	//保证文件存在，在exe文件同级目录下的model文件夹下且命名为model.engine和index.names
-	assert(engineFile.exists() && "Engine file does not exist");
-	assert(nameFile.exists() && "Name file does not exist");
+	if (!engineFile.exists() || !nameFile.exists()) {
+		QMessageBox::critical(this, "Error", "Engine file or Name file does not exist. The application will now exit.");
+		QApplication::quit();
+		return;
+	}
+
+
+
 	//TODO：使用对话框提示用户
 
 	
 	globalStruct.enginePath = enginePathFull;
 	globalStruct.namePath = namePathFull;
 
-    globalStruct.buildImageProcessingModule(1);
+    globalStruct.buildImageProcessingModule(2);
 
     ////连接界面显示和图像处理模块
     QObject::connect(globalStruct._imageProcessingModule1.get(), &ImageProcessingModule::imageReady,
