@@ -67,18 +67,6 @@ void ButtonScanner::build_connect()
 	QObject::connect(ui->pbtn_newProduction, &QPushButton::clicked, this, &ButtonScanner::pbtn_newProduction_clicked);
 }
 
-void ButtonScanner::read_config()  
-{  
-  rw::cdm::ButtonScannerMainWindow config;   
-  rw::oso::StorageContext storageContext(rw::oso::StorageType::Xml);  
-
-  storageContext.save(config,std::string(R"(C:\Users\34615\Desktop\1\1.xml)"));
-
-  auto loadResult = storageContext.load( std::string(R"(C:\Users\34615\Desktop\1\1.xml)"));
-
-  rw::cdm::ButtonScannerMainWindow cdm(*loadResult);
-}
-
 void ButtonScanner::build_camera()
 {
 	auto& globalStruct = GlobalStruct::getInstance();
