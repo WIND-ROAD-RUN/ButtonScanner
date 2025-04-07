@@ -20,6 +20,8 @@ ButtonScanner::ButtonScanner(QWidget* parent)
 {
 	ui->setupUi(this);
 
+	read_config();
+
 	build_ui();
 	build_connect();
 
@@ -38,6 +40,11 @@ ButtonScanner::ButtonScanner(QWidget* parent)
 ButtonScanner::~ButtonScanner()
 {
 	delete ui;
+	auto& globalStruct = GlobalStruct::getInstance();
+	globalStruct.destroyCamera();
+	globalStruct.destroyImageProcessingModule();
+	globalStruct.destroyMotion();
+	globalStruct.saveConfig();
 }
 
 void ButtonScanner::set_radioButton()
@@ -56,6 +63,25 @@ void ButtonScanner::build_ui()
 {
 	//Set RadioButton ,make sure these can be checked at the same time
 	set_radioButton();
+    build_MainWindowData();
+}
+
+void ButtonScanner::build_MainWindowData()
+{
+    auto& globalStruct = GlobalStruct::getInstance();
+    auto& mainWindowConfig = globalStruct.mainWindowConfig;
+    ui->label_produceTotalValue->setText(QString::number(mainWindowConfig.totalProduction));
+    ui->label_wasteProductsValue->setText(QString::number(mainWindowConfig.totalWaste));
+    ui->label_productionYieldValue->setText(QString::number(mainWindowConfig.passRate)+QString(" %"));
+    ui->rbtn_debug->setChecked(mainWindowConfig.isDebugMode);
+	ui->rbtn_takePicture->setChecked(mainWindowConfig.isTakePictures);
+    ui->rbtn_removeFunc->setChecked(mainWindowConfig.isEliminating);
+    ui->label_removeRate->setText(QString::number(mainWindowConfig.scrappingRate) + QString(" /min"));
+    ui->rbtn_upLight->setChecked(mainWindowConfig.upLight);
+    ui->rbtn_downLight->setChecked(mainWindowConfig.downLight);
+    ui->rbtn_sideLight->setChecked(mainWindowConfig.sideLight);
+	ui->rbtn_defect->setChecked(mainWindowConfig.isDefect);
+    ui->rbtn_ForAndAgainst->setChecked(mainWindowConfig.isPositive);
 }
 
 void ButtonScanner::build_connect()
@@ -65,6 +91,39 @@ void ButtonScanner::build_connect()
 	QObject::connect(ui->pbtn_set, &QPushButton::clicked, this, &ButtonScanner::pbtn_set_clicked);
 
 	QObject::connect(ui->pbtn_newProduction, &QPushButton::clicked, this, &ButtonScanner::pbtn_newProduction_clicked);
+}
+
+void ButtonScanner::read_config()
+{
+    QString mainWindowFilePath = R"(config/mainWindowFilePath.xml)";
+	QDir dir;
+    QString mainWindowFilePathFull = dir.absoluteFilePath(mainWindowFilePath);
+	QFileInfo mainWindowFile(mainWindowFilePathFull);
+
+	auto& globalStruct = GlobalStruct::getInstance();
+    globalStruct.mainwindowFilePath = mainWindowFilePathFull;
+	globalStruct.buildConfigManager(rw::oso::StorageType::Xml);
+
+	if (!mainWindowFile.exists()) {
+		QDir configDir = QFileInfo(mainWindowFilePathFull).absoluteDir();
+		if (!configDir.exists()) {
+			configDir.mkpath(".");
+		}
+		QFile file(mainWindowFilePathFull);
+		if (file.open(QIODevice::WriteOnly)) {
+			file.close();
+		}
+		else {
+			QMessageBox::critical(this, "Error", "无法创建配置文件。");
+		}
+        globalStruct.mainWindowConfig = rw::cdm::ButtonScannerMainWindow();
+		globalStruct.saveConfig();
+		return;
+	}
+	else {
+        globalStruct.ReadConfig();
+	}
+
 }
 
 void ButtonScanner::build_camera()
@@ -347,10 +406,6 @@ void ButtonScanner::pbtn_newProduction_clicked()
 void ButtonScanner::pbtn_exit_clicked()
 {
 	//TODO: question messagebox
-	auto& globalStruct = GlobalStruct::getInstance();
-	globalStruct.destroyCamera();
-	globalStruct.destroyImageProcessingModule();
-    globalStruct.destroyMotion();
 
 	this->close();
 }

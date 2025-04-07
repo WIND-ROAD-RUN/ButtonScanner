@@ -41,6 +41,30 @@ void GlobalStruct::buildImageProcessingModule(size_t num)
 		_imageProcessingModule4.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
 }
 
+void GlobalStruct::buildConfigManager(rw::oso::StorageType type)
+{
+	_StoreContext = std::make_unique<rw::oso::StorageContext>(type);
+}
+
+void GlobalStruct::ReadConfig()
+{
+    
+	auto loadMainWindowConfig = _StoreContext->load(mainwindowFilePath.toStdString());
+    if (loadMainWindowConfig) {
+		mainWindowConfig = *loadMainWindowConfig;
+    }
+    else {
+        LOG()  "Load main window config failed.";
+    }
+
+
+}
+
+void GlobalStruct::saveConfig()
+{
+    _StoreContext->save(mainWindowConfig, mainwindowFilePath.toStdString());
+}
+
 void GlobalStruct::buildCamera()
 {
 
