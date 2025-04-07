@@ -28,7 +28,6 @@ private slots:
 	void pbtn_outsideDiameterDeviation_clicked();
 	void pbtn_photography_clicked();
 	void pbtn_blowTime_clicked();
-	void rbtn_edgeDamageSimilarity_clicked();
 	void pbtn_outerRadius_clicked();
 	void pbtn_innerRadius_clicked();
 	void ptn_holesCountValue_clicked();

@@ -109,6 +109,30 @@ void DlgProduceLineSet::build_connect()
 		this, &DlgProduceLineSet::pbtn_beltReductionRatio_clicked);
 	QObject::connect(ui->pbtn_accelerationAndDeceleration, &QPushButton::clicked,
 		this, &DlgProduceLineSet::pbtn_accelerationAndDeceleration_clicked);
+
+    QObject::connect(ui->cbox_powerOn, &QCheckBox::clicked,
+        this, &DlgProduceLineSet::cbox_powerOn_checked);
+    QObject::connect(ui->cbox_blowingEnable1, &QCheckBox::clicked,
+        this, &DlgProduceLineSet::cbox_blowingEnable1_checked);
+    QObject::connect(ui->cbox_blowingEnable2, &QCheckBox::clicked,
+        this, &DlgProduceLineSet::cbox_blowingEnable2_checked);
+    QObject::connect(ui->cbox_blowingEnable3, &QCheckBox::clicked,
+        this, &DlgProduceLineSet::cbox_blowingEnable3_checked);
+    QObject::connect(ui->cbox_blowingEnable4, &QCheckBox::clicked,
+        this, &DlgProduceLineSet::cbox_blowingEnable4_checked);
+    QObject::connect(ui->cbox_none, &QCheckBox::clicked,
+        this, &DlgProduceLineSet::cbox_none_checked);
+    QObject::connect(ui->cbox_run, &QCheckBox::clicked,
+        this, &DlgProduceLineSet::cbox_run_checked);
+    QObject::connect(ui->cbox_alarm, &QCheckBox::clicked,
+        this, &DlgProduceLineSet::cbox_alarm_checked);
+    QObject::connect(ui->cbox_workstationProtection12, &QCheckBox::clicked,
+        this, &DlgProduceLineSet::cbox_workstationProtection12_checked);
+    QObject::connect(ui->cbox_workstationProtection34, &QCheckBox::clicked,
+        this, &DlgProduceLineSet::cbox_workstationProtection34_checked);
+    QObject::connect(ui->cbox_debugMode, &QCheckBox::clicked,
+        this, &DlgProduceLineSet::cbox_debugMode_checked);
+
 }
 
 void DlgProduceLineSet::pbtn_blowDistance1_clicked()
@@ -345,6 +369,72 @@ void DlgProduceLineSet::pbtn_accelerationAndDeceleration_clicked()
 	GlobalStruct.dlgProduceLineSetConfig.accelerationAndDeceleration = ui->pbtn_accelerationAndDeceleration->text().toDouble();
 
 	delete numKeyBoard;
+}
+
+void DlgProduceLineSet::cbox_powerOn_checked(bool ischeck)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.powerOn = ischeck;
+}
+
+void DlgProduceLineSet::cbox_blowingEnable1_checked(bool ischeck)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.blowingEnable1 = ischeck;
+}
+
+void DlgProduceLineSet::cbox_blowingEnable2_checked(bool ischeck)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.blowingEnable2 = ischeck;
+}
+
+void DlgProduceLineSet::cbox_blowingEnable3_checked(bool ischeck)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.blowingEnable3 = ischeck;
+}
+
+void DlgProduceLineSet::cbox_blowingEnable4_checked(bool ischeck)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.blowingEnable4 = ischeck;
+}
+
+void DlgProduceLineSet::cbox_none_checked(bool ischeck)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.none = ischeck;
+}
+
+void DlgProduceLineSet::cbox_run_checked(bool ischeck)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.run = ischeck;
+}
+
+void DlgProduceLineSet::cbox_alarm_checked(bool ischeck)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.alarm = ischeck;
+}
+
+void DlgProduceLineSet::cbox_workstationProtection12_checked(bool ischeck)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.workstationProtection12 = ischeck;
+}
+
+void DlgProduceLineSet::cbox_workstationProtection34_checked(bool ischeck)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.workstationProtection34 = ischeck;
+}
+
+void DlgProduceLineSet::cbox_debugMode_checked(bool ischeck)
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.debugMode = ischeck;
 }
 
 
