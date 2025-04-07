@@ -26,6 +26,19 @@ void GlobalStruct::buildImageProcessingModule(size_t num)
     _imageProcessingModule4->modelEnginePath = enginePath;
     _imageProcessingModule4->modelNamePath = namePath;
     _imageProcessingModule4->BuildModule();
+
+    //连接相机和图像处理模块
+    QObject::connect(_camera1.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
+        _imageProcessingModule1.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
+
+	QObject::connect(_camera2.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
+		_imageProcessingModule2.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
+
+	QObject::connect(_camera3.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
+		_imageProcessingModule3.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
+
+	QObject::connect(_camera4.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
+		_imageProcessingModule4.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
 }
 
 void GlobalStruct::buildCamera()
@@ -174,17 +187,30 @@ void GlobalStruct::startMonitor()
 	}
 }
 
-void GlobalStruct::buildModelEngine()
-{
-    modelEnginePtr1 = std::make_unique<rw::ime::ModelEngine>(enginePath.toStdString(), namePath.toStdString());
-	modelEnginePtr2 = std::make_unique<rw::ime::ModelEngine>(enginePath.toStdString(), namePath.toStdString());
-	modelEnginePtr3 = std::make_unique<rw::ime::ModelEngine>(enginePath.toStdString(), namePath.toStdString());
-	modelEnginePtr4 = std::make_unique<rw::ime::ModelEngine>(enginePath.toStdString(), namePath.toStdString());
-}
-
 void GlobalStruct::buildMotion()
 {
-	motionPtr = std::make_unique<zwy::scc::Motion>();
+	_motionPtr = std::make_unique<zwy::scc::Motion>();
+}
+
+void GlobalStruct::destroyCamera()
+{
+    _camera1.reset();
+    _camera2.reset();
+    _camera3.reset();
+    _camera4.reset();
+}
+
+void GlobalStruct::destroyImageProcessingModule()
+{
+    _imageProcessingModule1.reset();
+    _imageProcessingModule2.reset();
+    _imageProcessingModule3.reset();
+    _imageProcessingModule4.reset();
+}
+
+void GlobalStruct::destroyMotion()
+{
+    _motionPtr.reset();
 }
 
 GlobalStruct::GlobalStruct()

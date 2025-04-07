@@ -41,21 +41,21 @@ public:
     std::unique_ptr<ImageProcessingModule> _imageProcessingModule4{ nullptr };
 
 public:
+    //调用前确保模型文件存在且以设置
     void buildImageProcessingModule(size_t num);
 
     void buildCamera();
     void startMonitor();
 
-    void buildModelEngine();
     void buildMotion();
 
 public:
-    std::unique_ptr<zwy::scc::Motion> motionPtr;
+    void destroyCamera();
+    void destroyImageProcessingModule();
+    void destroyMotion();
+
 public:
-    std::unique_ptr<rw::ime::ModelEngine> modelEnginePtr1;
-    std::unique_ptr<rw::ime::ModelEngine> modelEnginePtr2;
-    std::unique_ptr<rw::ime::ModelEngine> modelEnginePtr3;
-    std::unique_ptr<rw::ime::ModelEngine> modelEnginePtr4;
+    std::unique_ptr<zwy::scc::Motion> _motionPtr;
 
 public:
     static GlobalStruct& getInstance()

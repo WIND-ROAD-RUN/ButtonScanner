@@ -43,7 +43,7 @@ private:
 private:
     void build_camera();
 
-    void build_engine();
+    void build_ImageProcessorModule();
 
     void start_monitor();
 
@@ -63,16 +63,14 @@ private:
 private:
     QImage cvMatToQImage(const cv::Mat& mat);
 
-    cv::Mat longRunningTask(const cv::Mat& frame, int workindex);
-
 private slots:
-    void _camera1Display(cv::Mat frame);
+    void _camera1Display(QImage image);
 
-    void _camera2Display(cv::Mat frame);
+    void _camera2Display(QImage image);
 
-    void _camera3Display(cv::Mat frame);
+    void _camera3Display(QImage image);
 
-    void _camera4Display(cv::Mat frame);
+    void _camera4Display(QImage image);
 
 private slots:
     void pbtn_exit_clicked();

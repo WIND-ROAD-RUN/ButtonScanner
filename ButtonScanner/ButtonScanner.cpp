@@ -27,7 +27,7 @@ ButtonScanner::ButtonScanner(QWidget* parent)
 
 	build_camera();
 
-    build_engine();
+    build_ImageProcessorModule();
 
 	//监视相机运动控制卡线程
 	build_MonitoringThread();
@@ -76,44 +76,44 @@ void ButtonScanner::build_camera()
     globalStruct.cameraIp4 = "14";
 
     globalStruct.buildCamera();
-
-	QObject::connect(globalStruct._camera1.get(), &rw::rqw::CameraPassiveThread::frameCaptured, 
-		this, &ButtonScanner::_camera1Display, Qt::DirectConnection);
-	QObject::connect(globalStruct._camera2.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
-		this, &ButtonScanner::_camera2Display, Qt::DirectConnection);
-	QObject::connect(globalStruct._camera3.get(), &rw::rqw::CameraPassiveThread::frameCaptured, 
-		this, &ButtonScanner::_camera3Display, Qt::DirectConnection);
-	QObject::connect(globalStruct._camera4.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
-		this, &ButtonScanner::_camera4Display, Qt::DirectConnection);
-
-
-
 }
 
-void ButtonScanner::build_engine()
+void ButtonScanner::build_ImageProcessorModule()
 {
 	auto& globalStruct = GlobalStruct::getInstance();
 
 	//
-    QString enginePath =R"(model/model.engine)";
-    QString namePath = R"(model/index.names)";
+	QString enginePath = R"(model/model.engine)";
+	QString namePath = R"(model/index.names)";
 	QDir dir;
-    
-    QString enginePathFull = dir.absoluteFilePath(enginePath);
-    QString namePathFull = dir.absoluteFilePath(namePath);
 
-    QFileInfo engineFile(enginePathFull);
-    QFileInfo nameFile(namePathFull);
+	QString enginePathFull = dir.absoluteFilePath(enginePath);
+	QString namePathFull = dir.absoluteFilePath(namePath);
 
-    //保证文件存在，在exe文件同级目录下的model文件夹下且命名为model.engine和index.names
-    assert(engineFile.exists() && "Engine file does not exist");
-    assert(nameFile.exists() && "Name file does not exist");
+	QFileInfo engineFile(enginePathFull);
+	QFileInfo nameFile(namePathFull);
+
+	//保证文件存在，在exe文件同级目录下的model文件夹下且命名为model.engine和index.names
+	assert(engineFile.exists() && "Engine file does not exist");
+	assert(nameFile.exists() && "Name file does not exist");
 	//TODO：使用对话框提示用户
 
-    globalStruct.enginePath = enginePathFull;
-    globalStruct.namePath = namePathFull;
+	
+	globalStruct.enginePath = enginePathFull;
+	globalStruct.namePath = namePathFull;
 
-    globalStruct.buildModelEngine();
+    globalStruct.buildImageProcessingModule(1);
+
+    ////连接界面显示和图像处理模块
+    QObject::connect(globalStruct._imageProcessingModule1.get(), &ImageProcessingModule::imageReady,
+       this, &ButtonScanner::_camera1Display, Qt::DirectConnection);
+    QObject::connect(globalStruct._imageProcessingModule2.get(), &ImageProcessingModule::imageReady,
+        this, &ButtonScanner::_camera2Display, Qt::DirectConnection);
+    QObject::connect(globalStruct._imageProcessingModule3.get(), &ImageProcessingModule::imageReady,
+        this, &ButtonScanner::_camera3Display, Qt::DirectConnection);
+    QObject::connect(globalStruct._imageProcessingModule4.get(), &ImageProcessingModule::imageReady,
+        this, &ButtonScanner::_camera4Display, Qt::DirectConnection);
+
 }
 
 void ButtonScanner::start_monitor()
@@ -129,7 +129,7 @@ void ButtonScanner::build_Motion()
 	globalStruct.buildMotion();
 
 	//获取Zmotion
-	auto& motionPtr = globalStruct.motionPtr;
+	auto& motionPtr = globalStruct._motionPtr;
 
 	//下面通过motionPtr进行操作
 	motionPtr.get()->OpenBoard((char*)"192.168.0.11");
@@ -150,7 +150,7 @@ void ButtonScanner::build_MonitoringThread()
 				auto& globalStruct = GlobalStruct::getInstance();
 
 				//获取Zmotion
-				auto& motionPtr = globalStruct.motionPtr;
+				auto& motionPtr = globalStruct._motionPtr;
 
 				bool  boardState = motionPtr.get()->getBoardState();
 				if (boardState == false)
@@ -196,7 +196,7 @@ void ButtonScanner::build_IOThread()
 		auto& globalStruct = GlobalStruct::getInstance();
 
 		//获取Zmotion
-		auto& motionPtr = globalStruct.motionPtr;
+		auto& motionPtr = globalStruct._motionPtr;
 		while (mark_Thread)
 		{
 
@@ -300,145 +300,25 @@ QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
 
 }
 
-cv::Mat ButtonScanner::longRunningTask(const cv::Mat& frame,int workindex) {
-
-
-	try {
-		// 1. 快速克隆输入帧（避免后续操作修改原数据）
-		cv::Mat result = frame.clone();
-		auto& globalStruct = GlobalStruct::getInstance();
-
-		
-		std::unique_ptr<rw::ime::ModelEngine>* modelEngine=nullptr;
-		if (workindex==0)
-		{
-			modelEngine = &globalStruct.modelEnginePtr1;
-		}
-		if (workindex == 1)
-		{
-			modelEngine = &globalStruct.modelEnginePtr2;
-		}
-		if (workindex == 2)
-		{
-			modelEngine = &globalStruct.modelEnginePtr3;
-		}
-		if (workindex == 3)
-		{
-			modelEngine = &globalStruct.modelEnginePtr4;
-		}
-
-		// 3. 处理模型推理
-		cv::Mat ResultMat;
-		cv::Mat MaskMat;
-		std::vector<rw::ime::ProcessRectanglesResult> resultRectangles;
-
-		// 4. 性能计时（使用高精度时钟）
-		static auto lastCallTime = std::chrono::steady_clock::now();
-		auto startTime = std::chrono::steady_clock::now();
-		modelEngine->get()->ProcessMask(result, ResultMat, MaskMat, resultRectangles);
-
-		auto endTime = std::chrono::steady_clock::now();
-		auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - lastCallTime).count();
-		lastCallTime = startTime; // 更新为本次调用的开始时间
-
-		LOG()  "Model processing time: "
-			<< std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count()
-			<< " ms | Interval since last call: " << timeDiff << " ms";
-		//QImage image = cvMatToQImage(result);
-		// 5. 安全更新UI（检查对象存活性）
-		/*if (QThread::currentThread() != this->thread()) {
-			QMetaObject::invokeMethod(this, [this, result, image, workindex]() {
-
-				
-
-				if (!this->ui || !disp_Label[workindex]) return;
-
-				
-				if (!image.isNull()) {
-					disp_Label[workindex]->setPixmap(QPixmap::fromImage(image.scaled(
-						disp_Label[workindex]->size(),
-						Qt::KeepAspectRatio,
-						Qt::SmoothTransformation
-					)));
-				}
-				else {
-					LOG()  "Failed to convert cv::Mat to QImage";
-				}
-			}, Qt::QueuedConnection);
-		}
-		*/
-
-		return ResultMat;
-	}
-	catch (const std::exception& e) {
-		LOG()  "Error in longRunningTask1: " << e.what();
-		return cv::Mat(); // 返回空矩阵表示错误
-	}
-}
-
-void ButtonScanner::_camera1Display(cv::Mat frame)
+void ButtonScanner::_camera1Display(QImage image)
 {
-	static size_t frameCount = 0;
-	LOG()  "Camera 1 frame count: " << ++frameCount;
-
-	QFuture<void>  m_monitorFuture = QtConcurrent::run([this, frame]() {
-
-
-		longRunningTask(frame,0);
-
-
-
-
-	});
 
 	
 }
 
-void ButtonScanner::_camera2Display(cv::Mat frame)
+void ButtonScanner::_camera2Display(QImage image)
 {
-	static size_t frameCount = 0;
-	//LOG()  "Camera 2 frame count: " << ++frameCount;
 
-	QFuture<void>  m_monitorFuture = QtConcurrent::run([this, frame]() {
-
-
-		longRunningTask(frame, 1);
-
-
-
-
-	});
 }
 
-void ButtonScanner::_camera3Display(cv::Mat frame)
+void ButtonScanner::_camera3Display(QImage image)
 {
-	static size_t frameCount = 0;
-	//LOG()  "Camera 3 frame count: " << ++frameCount;
-	QFuture<void>  m_monitorFuture = QtConcurrent::run([this, frame]() {
 
-
-		longRunningTask(frame, 2);
-
-
-
-
-	});
 }
 
-void ButtonScanner::_camera4Display(cv::Mat frame)
+void ButtonScanner::_camera4Display(QImage image)
 {
-	static size_t frameCount = 0;
-	//LOG()  "Camera 4 frame count: " << ++frameCount;
 
-	QFuture<void>  m_monitorFuture = QtConcurrent::run([this, frame]() {
-
-
-		longRunningTask(frame, 3);
-
-
-
-
-	});
 }
 
 void ButtonScanner::pbtn_set_clicked()
@@ -456,5 +336,10 @@ void ButtonScanner::pbtn_newProduction_clicked()
 void ButtonScanner::pbtn_exit_clicked()
 {
 	//TODO: question messagebox
+	auto& globalStruct = GlobalStruct::getInstance();
+	globalStruct.destroyCamera();
+	globalStruct.destroyImageProcessingModule();
+    globalStruct.destroyMotion();
+
 	this->close();
 }
