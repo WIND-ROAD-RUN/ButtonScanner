@@ -273,3 +273,7 @@ void GlobalStruct::destroyImageProcessingModule()
     _imageProcessingModule4.reset();
 }
 
+GlobalStruct::GlobalStruct()
+{
+}
+
