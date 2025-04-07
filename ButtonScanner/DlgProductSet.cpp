@@ -2,6 +2,8 @@
 #include "DlgProductSet.h"
 #include"NumKeyBord.h"
 
+#include "GlobalStruct.h"
+
 DlgProductSet::DlgProductSet(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::DlgProductSetClass())
@@ -101,6 +103,8 @@ void DlgProductSet::pbtn_outsideDiameterValue_clicked() {
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_outsideDiameterValue, 2);
     numKeyBoard->exec();
 
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProductSetConfig.outsideDiameterValue=ui->pbtn_outsideDiameterValue->text().toDouble();
 }
 
 void DlgProductSet::pbtn_outsideDiameterDeviation_clicked()
