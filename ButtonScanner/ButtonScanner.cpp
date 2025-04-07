@@ -125,7 +125,6 @@ void ButtonScanner::read_config()
 	}
 
 	QString dlgProduceLineSetFilePath = R"(config/dlgProduceLineSetFilePath.xml)";
-	QDir dir;
 	QString dlgProduceLineSetFilePathFull = dir.absoluteFilePath(dlgProduceLineSetFilePath);
 	QFileInfo dlgProduceLineSetFile(dlgProduceLineSetFilePathFull);
 
@@ -153,7 +152,6 @@ void ButtonScanner::read_config()
 	}
 
 	QString dlgProductSetFilePath = R"(config/dlgProdutSetFilePath.xml)";
-	QDir dir;
 	QString dlgProductSetFilePathFull = dir.absoluteFilePath(dlgProductSetFilePath);
 	QFileInfo dlgProductSetFile(dlgProductSetFilePathFull);
 
