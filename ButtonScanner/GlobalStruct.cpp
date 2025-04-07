@@ -48,23 +48,35 @@ void GlobalStruct::buildConfigManager(rw::oso::StorageType type)
 
 void GlobalStruct::ReadConfig()
 {
-    
-	auto loadMainWindowConfig = _StoreContext->load(mainwindowFilePath.toStdString());
-    if (loadMainWindowConfig) {
-		mainWindowConfig = *loadMainWindowConfig;
-    }
-    else {
-        LOG()  "Load main window config failed.";
-    }
+	ReadMainWindowConfig();
+	ReadDlgProduceLineSetConfig();
+	ReadDlgProductSetConfig();
+}
 
-	auto loadDlgProduceLineSetConfig = _StoreContext->load(dlgProduceLineSetFilePath.toStdString());  
+void GlobalStruct::ReadMainWindowConfig()
+{
+	auto loadMainWindowConfig = _StoreContext->load(mainwindowFilePath.toStdString());
+	if (loadMainWindowConfig) {
+		mainWindowConfig = *loadMainWindowConfig;
+	}
+	else {
+		LOG()  "Load main window config failed.";
+	}
+}
+
+void GlobalStruct::ReadDlgProduceLineSetConfig()
+{
+	auto loadDlgProduceLineSetConfig = _StoreContext->load(dlgProduceLineSetFilePath.toStdString());
 	if (loadDlgProduceLineSetConfig) {
 		dlgProduceLineSetConfig = *loadDlgProduceLineSetConfig;
 	}
 	else {
 		LOG()  "Load main window config failed.";
 	}
+}
 
+void GlobalStruct::ReadDlgProductSetConfig()
+{
 	auto loadDlgProductSetConfig = _StoreContext->load(dlgProductSetFilePath.toStdString());
 	if (loadDlgProductSetConfig) {
 		dlgProductSetConfig = *loadDlgProductSetConfig;
@@ -76,9 +88,26 @@ void GlobalStruct::ReadConfig()
 
 void GlobalStruct::saveConfig()
 {
-    _StoreContext->save(mainWindowConfig, mainwindowFilePath.toStdString());
+	saveMainWindowConfig();
+	saveDlgProduceLineSetConfig();
+	saveDlgProductSetConfig();
+}
+
+void GlobalStruct::saveMainWindowConfig()
+{
+	_StoreContext->save(mainWindowConfig, mainwindowFilePath.toStdString());
+}
+
+void GlobalStruct::saveDlgProduceLineSetConfig()
+{
 	_StoreContext->save(dlgProduceLineSetConfig, dlgProduceLineSetFilePath.toStdString());
+
+}
+
+void GlobalStruct::saveDlgProductSetConfig()
+{
 	_StoreContext->save(dlgProductSetConfig, dlgProductSetFilePath.toStdString());
+
 }
 
 void GlobalStruct::buildCamera()

@@ -303,22 +303,22 @@ rw::cdm::ButtonScannerProduceLineSet::operator rw::oso::ObjectStoreAssembly() co
 
 	auto blowingEnable1Item = std::make_shared<oso::ObjectStoreItem>();
 	blowingEnable1Item->setName("$variable$blowingEnable1$");
-	blowingEnable1Item->setValueFromDouble(blowingEnable1);
+	blowingEnable1Item->setValueFromBool(blowingEnable1);
 	assembly.addItem(blowingEnable1Item);
 
 	auto blowingEnable2Item = std::make_shared<oso::ObjectStoreItem>();
 	blowingEnable2Item->setName("$variable$blowingEnable2$");
-	blowingEnable2Item->setValueFromDouble(blowingEnable2);
+	blowingEnable2Item->setValueFromBool(blowingEnable2);
 	assembly.addItem(blowingEnable2Item);
 
 	auto blowingEnable3Item = std::make_shared<oso::ObjectStoreItem>();
 	blowingEnable3Item->setName("$variable$blowingEnable3$");
-	blowingEnable3Item->setValueFromDouble(blowingEnable3);
+	blowingEnable3Item->setValueFromBool(blowingEnable3);
 	assembly.addItem(blowingEnable3Item);
 
 	auto blowingEnable4Item = std::make_shared<oso::ObjectStoreItem>();
 	blowingEnable4Item->setName("$variable$blowingEnable4$");
-	blowingEnable4Item->setValueFromDouble(blowingEnable4);
+	blowingEnable4Item->setValueFromBool(blowingEnable4);
 	assembly.addItem(blowingEnable4Item);
 
 	auto blowDistance1Item = std::make_shared<oso::ObjectStoreItem>();
@@ -448,17 +448,17 @@ rw::cdm::ButtonScannerProduceLineSet::operator rw::oso::ObjectStoreAssembly() co
 
 	auto motorSpeedItem = std::make_shared<oso::ObjectStoreItem>();
 	motorSpeedItem->setName("$variable$motorSpeed$");
-	motorSpeedItem->setValueFromBool(motorSpeed);
+	motorSpeedItem->setValueFromDouble(motorSpeed);
 	assembly.addItem(motorSpeedItem);
 
 	auto beltReductionRatioItem = std::make_shared<oso::ObjectStoreItem>();
 	beltReductionRatioItem->setName("$variable$beltReductionRatio$");
-	beltReductionRatioItem->setValueFromBool(beltReductionRatio);
+	beltReductionRatioItem->setValueFromDouble(beltReductionRatio);
 	assembly.addItem(beltReductionRatioItem);
 
 	auto accelerationAndDecelerationItem = std::make_shared<oso::ObjectStoreItem>();
 	accelerationAndDecelerationItem->setName("$variable$accelerationAndDeceleration$");
-	accelerationAndDecelerationItem->setValueFromBool(accelerationAndDeceleration);
+	accelerationAndDecelerationItem->setValueFromDouble(accelerationAndDeceleration);
 	assembly.addItem(accelerationAndDecelerationItem);
 
 	return assembly;
