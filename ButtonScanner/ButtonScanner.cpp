@@ -290,144 +290,198 @@ void ButtonScanner::start_monitor()
 
 void ButtonScanner::build_Motion()
 {
-	//auto& globalStruct = GlobalStruct::getInstance();
+	auto& globalStruct = GlobalStruct::getInstance();
 
-	////获取Zmotion
-	//auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
+	//获取Zmotion
+	auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
 
-	////下面通过motionPtr进行操作
-	//motionPtr.get()->OpenBoard((char*)"192.168.0.11");
+	//下面通过motionPtr进行操作
+	motionPtr.get()->OpenBoard((char*)"192.168.0.11");
 
 }
 
 void ButtonScanner::build_MonitoringThread()
 {
-	////线程内部
-	//QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
+	//线程内部
+	QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
 
-	//	while (mark_Thread)
-	//	{
+		while (mark_Thread)
+		{
 
-	//		//运动控制卡实时状态
-	//		{
-	//			//这里获取全局变量
-	//			auto& globalStruct = GlobalStruct::getInstance();
+			//运动控制卡实时状态
+			{
+				//这里获取全局变量
+				auto& globalStruct = GlobalStruct::getInstance();
 
-	//			//获取Zmotion
-	//			auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
-
-
-	//			bool  boardState = motionPtr.get()->getBoardState();
-	//			if (boardState == false)
-	//			{
-	//				motionPtr.get()->OpenBoard((char*)"192.168.0.11");
-
-	//			}
-	//			else
-	//			{
-
-	//			}
-	//		}
-	//		//获得相机链接状态
-	//		{
+				//获取Zmotion
+				auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
 
 
+				bool  boardState = motionPtr.get()->getBoardState();
+				if (boardState == false)
+				{
+					motionPtr.get()->OpenBoard((char*)"192.168.0.11");
 
+				}
+				else
+				{
 
-
-
-	//		}
-
-	//		QThread::msleep(500);
-
-
-
-	//	}
+				}
+			}
+			//获得相机链接状态
+			{
 
 
 
 
 
-	//});
 
+			}
+
+			QThread::msleep(500);
+
+
+
+		}
+
+
+
+
+
+	});
+
+
+}
+
+
+void ButtonScanner::build_LOcationThread()
+{
+	//线程内部
+	QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
+	
+		while (mark_Thread)
+		{
+			//获得位置数据
+
+			//1,3相机
+			float lacation1 = 0;
+			//2，4相机
+			float lacation2 = 0;
+			//获取两个位置
+			zwy::scc::GlobalMotion::getInstance().motionPtr.get()->GetAxisLocation(1, lacation1);
+			zwy::scc::GlobalMotion::getInstance().motionPtr.get()->GetAxisLocation(2, lacation2);
+
+
+			for (int i = 0; i < Products.size(); i++)
+			{
+				//踢飞逻辑
+
+				if (Products[i].index==0)
+				{
+					double tifeishijian = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime1;
+					double tifeijuli = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance1;
+
+					Products.removeAt(i);
+
+
+
+
+
+
+				}
+
+
+
+
+
+			}
+
+
+
+
+
+
+		}
+	});
 
 }
 
 void ButtonScanner::build_IOThread()
 {
-	////线程内部
-	//QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
+	//线程内部
+	QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
 
 
-	//	//获取Zmotion
-	//	auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
-	//	while (mark_Thread)
-	//	{
+		//获取Zmotion
+		auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
+		
+		while (mark_Thread)
+		{
 
-	//		bool state = false;
-	//		state = motionPtr->GetIOIn(2);
-	//		//急停
+			bool state = false;
+			state = motionPtr->GetIOIn(2);
+			//急停
 
-	//		if (state == true)
-	//		{
-	//			// pidaimove->stop();
-	//			motionPtr->StopAllAxis();
-	//			motionPtr->SetIOOut(1, false);
-	//			
-	//			motionPtr->SetIOOut(7, false);
+			if (state == true)
+			{
+				// pidaimove->stop();
+				motionPtr->StopAllAxis();
+				motionPtr->SetIOOut(1, false);
+				
+				motionPtr->SetIOOut(7, false);
 
-	//		}
-	//		//else
-	//		//{
-	//		//	//开始按钮
-	//		//	bool state = false;
-	//		//	state = motionPtr->GetIOIn(1);
-	//		//	//启动程序
-	//		//	if (state == true)
-	//		//	{
-
-
-	//		//		//所有电机上电
-	//		//		QtConcurrent::run([this, &motionPtr]() {
-	//		//			QThread::msleep(500);
-	//		//			motionPtr->SetIOOut(1, true);
-	//		//			//启动电机
- //  //                 motionPtr->SetAxisType(0,1);
- //  //                 double unit= GlobelParam::SystemParam[9].toDouble();
- //  //                 motionPtr->SetAxisPulse(0,unit);
- //  //                 double acc=GlobelParam::SystemParam[10].toDouble();
- //  //                 motionPtr->SetAxisAcc(0,acc);
- //  //                 motionPtr->SetAxisDec(0,acc);
- //  //                 double speed= GlobelParam::SystemParam[8].toDouble();
- //  //                 motionPtr->SetAxisRunSpeed(0,speed);
- //  //                 // pidaimove->start(100);
- //  //                 motionPtr->AxisRun(0,-1);
- //  //                 motionPtr->SetIOOut(7,true);
-	//		//		});
-	//		//	}
-	//		//	else
-	//		//	{
+			}
+			else
+			{
+				//开始按钮
+				bool state = false;
+				state = motionPtr->GetIOIn(1);
+				//启动程序
+				if (state == true)
+				{
 
 
-
-
-
-
-
-	//		//	}
+					//所有电机上电
+					QtConcurrent::run([this, &motionPtr]() {
+						QThread::msleep(500);
+						motionPtr->SetIOOut(1, true);
+						//启动电机
+                    motionPtr->SetAxisType(0,1);
+					double unit = GlobalStruct::getInstance().dlgProduceLineSetConfig.pulseFactor;
+                    motionPtr->SetAxisPulse(0,unit);
+                    double acc= GlobalStruct::getInstance().dlgProduceLineSetConfig.accelerationAndDeceleration;
+                    motionPtr->SetAxisAcc(0,acc);
+                    motionPtr->SetAxisDec(0,acc);
+                    double speed= GlobalStruct::getInstance().dlgProduceLineSetConfig.motorSpeed;
+                    motionPtr->SetAxisRunSpeed(0,speed);
+                    // pidaimove->start(100);
+                    motionPtr->AxisRun(0,-1);
+                    motionPtr->SetIOOut(7,true);
+					});
+				}
+				else
+				{
 
 
 
 
 
-	//		//}
+
+
+				}
 
 
 
-	//	}
 
 
-	//});
+			}
+
+
+
+		}
+
+
+	});
 
 }
 

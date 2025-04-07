@@ -10,6 +10,7 @@
 
 #include<QImage>
 #include<memory>
+#include"Product.h"
 namespace rw
 {
     namespace rqw
@@ -32,6 +33,8 @@ private:
 private:
     //变量监控线程关机的时候停止
     bool mark_Thread = false;
+    //踢飞产品数组
+    QVector<Product>Products;
 
 public:
     ButtonScanner(QWidget* parent = nullptr);
@@ -67,7 +70,7 @@ private:
     void build_MonitoringThread();
 
     //开启线程实施监控皮带运动位置
-
+    void build_LOcationThread();
     //开启线程监控运动控制卡io点并且做出相应的逻辑
     void build_IOThread();
 
