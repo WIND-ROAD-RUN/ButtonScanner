@@ -74,7 +74,8 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6\dll\*.dll" "$(OutDir)"
-xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\ZMotion\dll\*.dll" "$(OutDir)"</Command>
+xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\ZMotion\dll\*.dll" "$(OutDir)"
+xcopy /Y /R /D "$(ProjectDir)image\*.png" "$(OutDir)\image\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -88,7 +89,8 @@ xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\ZMotion\dll\*.dll" "$(OutDir)"</Comma
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6\dll\*.dll" "$(OutDir)"
-xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\ZMotion\dll\*.dll" "$(OutDir)"</Command>
+xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\ZMotion\dll\*.dll" "$(OutDir)"
+xcopy /Y /R /D "$(ProjectDir)image\*.png" "$(OutDir)\image\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -173,6 +175,9 @@ xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\ZMotion\dll\*.dll" "$(OutDir)"</Comma
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\ThirdLibrary\MVS\Libraries\windows64\MvCameraControl.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="image\product.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

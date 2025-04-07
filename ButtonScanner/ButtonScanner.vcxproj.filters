@@ -24,6 +24,9 @@
     <Filter Include="lib">
       <UniqueIdentifier>{809308b8-9607-4175-b874-c7fb59ae4870}</UniqueIdentifier>
     </Filter>
+    <Filter Include="image">
+      <UniqueIdentifier>{2931e0e0-c7e5-437b-949d-bc0835e2122c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="ButtonScanner.qrc">
@@ -88,5 +91,10 @@
     <Library Include="..\ThirdLibrary\MVS\Libraries\windows64\MvCameraControl.lib">
       <Filter>lib</Filter>
     </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="image\product.png">
+      <Filter>image</Filter>
+    </Image>
   </ItemGroup>
 </Project>

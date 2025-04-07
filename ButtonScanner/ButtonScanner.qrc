@@ -1,4 +1,5 @@
 <RCC>
-    <qresource prefix="ButtonScanner">
+    <qresource prefix="/ButtonScanner">
+        <file>image/product.png</file>
     </qresource>
 </RCC>
