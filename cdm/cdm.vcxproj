@@ -19,13 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cdm_ButtonScannerProduceLineSet.h" />
-    <ClInclude Include="cdm_ButtonScannerDlgProductSet.h" />
+    <ClInclude Include="include\cdm_ButtonScannerProduceLineSet.h" />
+    <ClInclude Include="include\cdm_ButtonScannerDlgProductSet.h" />
     <ClInclude Include="include\cdm_ButtonScannerMainWindow.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cdm_ButtonScannerDlgProductSet.cpp" />
-    <ClCompile Include="cdm_ButtonScannerProduceLineSet.cpp" />
+    <ClCompile Include="src\cdm_ButtonScannerDlgProductSet.cpp" />
+    <ClCompile Include="src\cdm_ButtonScannerProduceLineSet.cpp" />
     <ClCompile Include="src\cdm_ButtonScannerMainWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
