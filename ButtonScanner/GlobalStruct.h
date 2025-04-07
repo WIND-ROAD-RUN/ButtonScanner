@@ -25,8 +25,16 @@ class GlobalStruct
     Q_OBJECT
 public:
     void buildConfigManager(rw::oso::StorageType type);
+public:
     void ReadConfig();
+    void ReadMainWindowConfig();
+    void ReadDlgProduceLineSetConfig();
+    void ReadDlgProductSetConfig();
+public:
     void saveConfig();
+    void saveMainWindowConfig();
+    void saveDlgProduceLineSetConfig();
+    void saveDlgProductSetConfig();
     std::unique_ptr<rw::oso::StorageContext> _StoreContext{ nullptr };
 public:
     QString mainwindowFilePath;

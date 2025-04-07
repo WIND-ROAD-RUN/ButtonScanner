@@ -51,6 +51,9 @@ private:
 private:
     //read_cofig必须在最前面运行
     void read_config();
+    void read_config_mainWindowConfig();
+    void read_config_produceLineConfig();
+    void read_config_productSetConfig();
     
     void build_camera();
 

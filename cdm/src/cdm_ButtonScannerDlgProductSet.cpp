@@ -49,7 +49,7 @@ rw::cdm::ButtonScannerDlgProductSet::ButtonScannerDlgProductSet(const rw::oso::O
 	if (!edgeDamageSimilarityItem) {
 		throw std::runtime_error("$variable$edgeDamageSimilarity is not found");
 	}
-	edgeDamageSimilarity = edgeDamageSimilarityItem->getValueAsBool();
+	edgeDamageSimilarity = edgeDamageSimilarityItem->getValueAsDouble();
 
 	auto shieldingRangeEnableItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$shieldingRangeEnable$"));
 	if (!shieldingRangeEnableItem) {
