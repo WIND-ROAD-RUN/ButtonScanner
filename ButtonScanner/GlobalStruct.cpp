@@ -5,6 +5,14 @@
 #include"rqw_CameraObjectThread.hpp"
 
 
+void GlobalStruct::buildImageProcessingModule(size_t num)
+{
+    _imageProcessingModule1 = std::make_unique<ImageProcessingModule>(num,this);
+    _imageProcessingModule2 = std::make_unique<ImageProcessingModule>(num,this);
+    _imageProcessingModule3 = std::make_unique<ImageProcessingModule>(num,this);
+    _imageProcessingModule4 = std::make_unique<ImageProcessingModule>(num,this);
+}
+
 void GlobalStruct::buildCamera()
 {
 

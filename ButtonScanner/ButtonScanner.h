@@ -29,7 +29,7 @@ private:
     bool mark_Thread = false;
 
 public:
-    ButtonScanner(QWidget *parent = nullptr);
+    ButtonScanner(QWidget* parent = nullptr);
 
     ~ButtonScanner();
 
@@ -58,7 +58,7 @@ private:
     void build_IOThread();
 
 private:
-    Ui::ButtonScannerClass *ui;
+    Ui::ButtonScannerClass* ui;
 
 private:
     QImage cvMatToQImage(const cv::Mat& mat);
@@ -80,5 +80,4 @@ private slots:
     void pbtn_set_clicked();
 
     void pbtn_newProduction_clicked();
-
 };

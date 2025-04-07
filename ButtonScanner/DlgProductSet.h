@@ -12,9 +12,9 @@ class DlgProductSet : public QDialog
     Q_OBJECT
 
 public:
-    DlgProductSet(QWidget *parent = nullptr);
+    DlgProductSet(QWidget* parent = nullptr);
     ~DlgProductSet();
 
 private:
-    Ui::DlgProductSetClass *ui;
+    Ui::DlgProductSetClass* ui;
 };
