@@ -12,9 +12,9 @@ class DlgProduceLineSet : public QDialog
     Q_OBJECT
 
 public:
-    DlgProduceLineSet(QWidget *parent = nullptr);
+    DlgProduceLineSet(QWidget* parent = nullptr);
     ~DlgProduceLineSet();
 
 private:
-    Ui::DlgProduceLineSetClass *ui;
+    Ui::DlgProduceLineSetClass* ui;
 };
