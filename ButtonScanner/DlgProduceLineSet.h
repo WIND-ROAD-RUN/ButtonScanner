@@ -46,6 +46,9 @@ private slots:
 	void pbtn_motorSpeed_clicked();
 	void pbtn_beltReductionRatio_clicked();
 	void pbtn_accelerationAndDeceleration_clicked();
+	void pbtn_codeWheel_clicked();
+	void pbtn_pulseFactor_clicked();
+
 
 	void cbox_powerOn_checked(bool ischeck);
 	void cbox_blowingEnable1_checked(bool ischeck);

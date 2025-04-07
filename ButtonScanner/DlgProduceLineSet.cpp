@@ -371,6 +371,26 @@ void DlgProduceLineSet::pbtn_accelerationAndDeceleration_clicked()
 	delete numKeyBoard;
 }
 
+void DlgProduceLineSet::pbtn_codeWheel_clicked() {
+	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_codeWheel, 2);
+	numKeyBoard->exec();
+
+	auto& GlobalStruct = GlobalStruct::getInstance();
+	GlobalStruct.dlgProduceLineSetConfig.codeWheel = ui->pbtn_codeWheel->text().toDouble();
+
+	delete numKeyBoard;
+}
+
+void DlgProduceLineSet::pbtn_pulseFactor_clicked() {
+	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pulseFactor, 2);
+	numKeyBoard->exec();
+
+	auto& GlobalStruct = GlobalStruct::getInstance();
+	GlobalStruct.dlgProduceLineSetConfig.pulseFactor = ui->pbtn_pulseFactor->text().toDouble();
+
+	delete numKeyBoard;
+}
+
 void DlgProduceLineSet::cbox_powerOn_checked(bool ischeck)
 {
     auto& GlobalStruct = GlobalStruct::getInstance();

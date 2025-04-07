@@ -42,6 +42,7 @@ private slots:
 	void pbtn_specifyColorDifferenceR_clicked();
 	void pbtn_specifyColorDifferenceG_clicked();
 	void pbtn_specifyColorDifferenceB_clicked();
+	void rbtn_edgeDamageSimilarity_clicked();
 	void pbtn_specifyColorDifferenceDeviation_clicked();
 	void pbtn_largeColorDifferenceDeviation_clicked();
 

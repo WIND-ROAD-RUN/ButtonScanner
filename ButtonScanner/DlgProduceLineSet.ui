@@ -485,7 +485,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="pbtn_codeWheel">
             <property name="text">
              <string>value</string>
             </property>

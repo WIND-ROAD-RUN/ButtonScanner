@@ -145,6 +145,13 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
+         <widget class="QPushButton" name="pbtn_close">
+          <property name="text">
+           <string>关闭</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QRadioButton" name="rbtn_edgeDamageEnable">
           <property name="text">
            <string>破边</string>

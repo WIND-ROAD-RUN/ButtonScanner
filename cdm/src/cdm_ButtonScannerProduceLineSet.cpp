@@ -9,6 +9,18 @@ rw::cdm::ButtonScannerProduceLineSet::ButtonScannerProduceLineSet(const rw::oso:
 		throw std::runtime_error("Assembly is not $class$ButtonScannerProduceLineSet$");
 	}
 
+	auto pulseFactorItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$pulseFactor$"));
+	if (!pulseFactorItem) {
+		throw std::runtime_error("$variable$pulseFactor is not found");
+	}
+	pulseFactor = pulseFactorItem->getValueAsBool();
+
+	auto codeWheelItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$codeWheel$"));
+	if (!codeWheelItem) {
+		throw std::runtime_error("$variable$codeWheel is not found");
+	}
+	codeWheel = codeWheelItem->getValueAsBool();
+
 	auto blowingEnable1Item = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$blowingEnable1$"));
 	if (!blowingEnable1Item) {
 		throw std::runtime_error("$variable$blowingEnable1 is not found");
@@ -140,7 +152,7 @@ rw::cdm::ButtonScannerProduceLineSet::ButtonScannerProduceLineSet(const rw::oso:
 		throw std::runtime_error("$variable$maxBrightness is not found");
 	}
 	maxBrightness = maxBrightnessItem->getValueAsDouble();
-	
+
 	auto powerOnItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$powerOn$"));
 	if (!powerOnItem) {
 		throw std::runtime_error("$variable$powerOn is not found");
@@ -245,6 +257,8 @@ rw::cdm::ButtonScannerProduceLineSet::ButtonScannerProduceLineSet(const ButtonSc
 	motorSpeed = buttonScannerMainWindow.motorSpeed;
 	beltReductionRatio = buttonScannerMainWindow.beltReductionRatio;
 	accelerationAndDeceleration = buttonScannerMainWindow.accelerationAndDeceleration;
+	pulseFactor = buttonScannerMainWindow.pulseFactor;
+	codeWheel = buttonScannerMainWindow.codeWheel;
 }
 
 rw::cdm::ButtonScannerProduceLineSet& rw::cdm::ButtonScannerProduceLineSet::operator=(const ButtonScannerProduceLineSet& buttonScannerMainWindow)
@@ -292,6 +306,8 @@ rw::cdm::ButtonScannerProduceLineSet& rw::cdm::ButtonScannerProduceLineSet::oper
 		motorSpeed = buttonScannerMainWindow.motorSpeed;
 		beltReductionRatio = buttonScannerMainWindow.beltReductionRatio;
 		accelerationAndDeceleration = buttonScannerMainWindow.accelerationAndDeceleration;
+		pulseFactor = buttonScannerMainWindow.pulseFactor;
+		codeWheel = buttonScannerMainWindow.codeWheel;
 	}
 	return *this;
 }
@@ -300,6 +316,16 @@ rw::cdm::ButtonScannerProduceLineSet::operator rw::oso::ObjectStoreAssembly() co
 {
 	rw::oso::ObjectStoreAssembly assembly;
 	assembly.setName("$class$ButtonScannerProduceLineSet$");
+
+	auto pulseFactorItem = std::make_shared<oso::ObjectStoreItem>();
+	pulseFactorItem->setName("$variable$pulseFactor$");
+	pulseFactorItem->setValueFromBool(pulseFactor);
+	assembly.addItem(pulseFactorItem);
+
+	auto codeWheelItem = std::make_shared<oso::ObjectStoreItem>();
+	codeWheelItem->setName("$variable$codeWheel$");
+	codeWheelItem->setValueFromBool(codeWheel);
+	assembly.addItem(codeWheelItem);
 
 	auto blowingEnable1Item = std::make_shared<oso::ObjectStoreItem>();
 	blowingEnable1Item->setName("$variable$blowingEnable1$");
@@ -506,7 +532,9 @@ bool rw::cdm::ButtonScannerProduceLineSet::operator==(const ButtonScannerProduce
 
 		motorSpeed == buttonScannerMainWindow.motorSpeed &&
 		beltReductionRatio == buttonScannerMainWindow.beltReductionRatio &&
-		accelerationAndDeceleration == buttonScannerMainWindow.accelerationAndDeceleration;
+		accelerationAndDeceleration == buttonScannerMainWindow.accelerationAndDeceleration &&
+		pulseFactor == buttonScannerMainWindow.pulseFactor &&
+		codeWheel == buttonScannerMainWindow.codeWheel;
 }
 
 bool rw::cdm::ButtonScannerProduceLineSet::operator!=(const ButtonScannerProduceLineSet& account) const

@@ -59,6 +59,8 @@ namespace rw
 			double motorSpeed{ 0 };
 			double beltReductionRatio{ 0 };
 			double accelerationAndDeceleration{ 0 };
+			double codeWheel{ 0 };
+			double pulseFactor{ 0 };
 
 		public:
 			operator rw::oso::ObjectStoreAssembly() const;
