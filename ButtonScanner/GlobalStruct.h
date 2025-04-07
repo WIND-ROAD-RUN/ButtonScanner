@@ -26,6 +26,7 @@ public:
     std::unique_ptr<rw::ime::ModelEngine> modelEnginePtr3;
 
     std::unique_ptr<rw::ime::ModelEngine> modelEnginePtr4;
+
    
 public:
     static GlobalStruct& getInstance()

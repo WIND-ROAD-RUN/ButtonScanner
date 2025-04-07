@@ -13,5 +13,10 @@ GlobalStruct::GlobalStruct()
     modelEnginePtr3 = std::make_unique<rw::ime::ModelEngine>(enginePath, namePath);
     modelEnginePtr4 = std::make_unique<rw::ime::ModelEngine>(enginePath, namePath);
     motionPtr = std::make_unique<zwy::scc::Motion>();
+
+    //保存的参数
+
+
+
     //这里初始化ZMotion以及相关操作
 }

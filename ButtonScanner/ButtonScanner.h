@@ -28,6 +28,13 @@ private:
     std::unique_ptr<rw::rqw::CameraPassiveThread> _camera3;
     std::unique_ptr<rw::rqw::CameraPassiveThread> _camera4;
 
+
+    //变量监控线程关机的时候停止
+    bool mark_Thread = false;
+    //qvector存放显示的label
+    QVector<QLabel*>disp_Label;
+
+
 public:
     ButtonScanner(QWidget *parent = nullptr);
     ~ButtonScanner();
@@ -45,11 +52,8 @@ private:
     //初始化运动控制卡
     void build_Motion();
 
-    //实时监控运动控制卡状态（掉线重连）
-
-
-
-    //实时监控相机链接状态（掉线重连）
+    //实时监控运动控制卡,相机状态（掉线重连）
+    void build_MonitoringThread();
 
 
 
@@ -58,7 +62,7 @@ private:
 
 
     //开启线程监控运动控制卡io点并且做出相应的逻辑
-
+    void build_IOThread();
 
 
 
@@ -68,6 +72,9 @@ private:
 
 private:
     QImage cvMatToQImage(const cv::Mat& mat);
+
+    cv::Mat longRunningTask(const cv::Mat& frame, int workindex);
+
 
 private slots:
     void _camera1Display(cv::Mat frame);
