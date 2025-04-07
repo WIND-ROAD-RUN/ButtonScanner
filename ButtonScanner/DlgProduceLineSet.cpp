@@ -78,7 +78,6 @@ void DlgProduceLineSet::pbtn_blowDistance1_clicked()
 	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowDistance1, 2);
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
-	delete numKeyBoard;
 }
 
 
@@ -87,8 +86,6 @@ void DlgProduceLineSet::pbtn_blowTime1_clicked()
 	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime1, 2);
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
-
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_blowDistance2_clicked()
@@ -97,7 +94,6 @@ void DlgProduceLineSet::pbtn_blowDistance2_clicked()
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
 
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_blowTime2_clicked()
@@ -106,7 +102,6 @@ void DlgProduceLineSet::pbtn_blowTime2_clicked()
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
 
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_blowDistance3_clicked()
@@ -115,7 +110,6 @@ void DlgProduceLineSet::pbtn_blowDistance3_clicked()
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
 
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_blowTime3_clicked()
@@ -124,7 +118,6 @@ void DlgProduceLineSet::pbtn_blowTime3_clicked()
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
 
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_blowDistance4_clicked()
@@ -133,7 +126,6 @@ void DlgProduceLineSet::pbtn_blowDistance4_clicked()
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
 
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_blowTime4_clicked()
@@ -142,7 +134,6 @@ void DlgProduceLineSet::pbtn_blowTime4_clicked()
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
 
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_pixelEquivalent1_clicked()
@@ -151,7 +142,6 @@ void DlgProduceLineSet::pbtn_pixelEquivalent1_clicked()
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
 
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_pixelEquivalent2_clicked()
@@ -160,7 +150,6 @@ void DlgProduceLineSet::pbtn_pixelEquivalent2_clicked()
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
 
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_pixelEquivalent3_clicked()
@@ -169,7 +158,6 @@ void DlgProduceLineSet::pbtn_pixelEquivalent3_clicked()
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
 
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_pixelEquivalent4_clicked()
@@ -178,7 +166,6 @@ void DlgProduceLineSet::pbtn_pixelEquivalent4_clicked()
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
 
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_limit1_clicked()
@@ -187,7 +174,6 @@ void DlgProduceLineSet::pbtn_limit1_clicked()
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
 
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_limit2_clicked()
@@ -196,7 +182,6 @@ void DlgProduceLineSet::pbtn_limit2_clicked()
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
 
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_limit3_clicked()
@@ -205,7 +190,6 @@ void DlgProduceLineSet::pbtn_limit3_clicked()
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
 
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_limit4_clicked()
@@ -214,7 +198,6 @@ void DlgProduceLineSet::pbtn_limit4_clicked()
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
 
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_minBrightness_clicked()
@@ -223,7 +206,6 @@ void DlgProduceLineSet::pbtn_minBrightness_clicked()
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
 
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_maxBrightness_clicked()
@@ -232,7 +214,6 @@ void DlgProduceLineSet::pbtn_maxBrightness_clicked()
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
 
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_motorSpeed_clicked()
@@ -241,7 +222,6 @@ void DlgProduceLineSet::pbtn_motorSpeed_clicked()
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
 
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_beltReductionRatio_clicked()
@@ -250,7 +230,6 @@ void DlgProduceLineSet::pbtn_beltReductionRatio_clicked()
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
 
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_accelerationAndDeceleration_clicked()
@@ -259,7 +238,6 @@ void DlgProduceLineSet::pbtn_accelerationAndDeceleration_clicked()
 	numKeyBoard->setWindowModality(Qt::ApplicationModal);
 	numKeyBoard->show();
 
-	delete numKeyBoard;
 }
 
 

@@ -8,6 +8,8 @@ DlgProductSet::DlgProductSet(QWidget *parent)
 {
     ui->setupUi(this);
     build_ui();
+    build_connect();
+
 }
 
 DlgProductSet::~DlgProductSet()
@@ -101,7 +103,6 @@ void DlgProductSet::pbtn_outsideDiameterValue_clicked() {
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 
-    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_outsideDiameterDeviation_clicked()
@@ -110,7 +111,6 @@ void DlgProductSet::pbtn_outsideDiameterDeviation_clicked()
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 
-    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_photography_clicked()
@@ -119,7 +119,6 @@ void DlgProductSet::pbtn_photography_clicked()
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 
-    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_blowTime_clicked()
@@ -128,7 +127,6 @@ void DlgProductSet::pbtn_blowTime_clicked()
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 
-    delete numKeyBoard;
 }
 
 void DlgProductSet::rbtn_edgeDamageSimilarity_clicked()
@@ -137,7 +135,6 @@ void DlgProductSet::rbtn_edgeDamageSimilarity_clicked()
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 
-    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_outerRadius_clicked()
@@ -146,7 +143,6 @@ void DlgProductSet::pbtn_outerRadius_clicked()
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 
-    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_innerRadius_clicked()
@@ -155,7 +151,6 @@ void DlgProductSet::pbtn_innerRadius_clicked()
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 
-    delete numKeyBoard;
 }
 
 void DlgProductSet::ptn_holesCountValue_clicked()
@@ -164,7 +159,6 @@ void DlgProductSet::ptn_holesCountValue_clicked()
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 
-    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_brokenEyeSimilarity_clicked()
@@ -173,7 +167,6 @@ void DlgProductSet::pbtn_brokenEyeSimilarity_clicked()
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 
-    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_crackSimilarity_clicked()
@@ -182,7 +175,6 @@ void DlgProductSet::pbtn_crackSimilarity_clicked()
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 
-    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_apertureValue_clicked()
@@ -191,7 +183,6 @@ void DlgProductSet::pbtn_apertureValue_clicked()
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 
-    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_apertureSimilarity_clicked()
@@ -200,7 +191,6 @@ void DlgProductSet::pbtn_apertureSimilarity_clicked()
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 
-    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_holeCenterDistanceValue_clicked()
@@ -209,7 +199,6 @@ void DlgProductSet::pbtn_holeCenterDistanceValue_clicked()
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 
-    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_holeCenterDistanceSimilarity_clicked()
@@ -218,7 +207,6 @@ void DlgProductSet::pbtn_holeCenterDistanceSimilarity_clicked()
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 
-    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_specifyColorDifferenceR_clicked()
@@ -227,7 +215,6 @@ void DlgProductSet::pbtn_specifyColorDifferenceR_clicked()
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 
-    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_specifyColorDifferenceG_clicked()
@@ -236,7 +223,6 @@ void DlgProductSet::pbtn_specifyColorDifferenceG_clicked()
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 
-    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_specifyColorDifferenceB_clicked()
@@ -245,7 +231,6 @@ void DlgProductSet::pbtn_specifyColorDifferenceB_clicked()
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 
-    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_specifyColorDifferenceDeviation_clicked()
@@ -254,7 +239,6 @@ void DlgProductSet::pbtn_specifyColorDifferenceDeviation_clicked()
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 
-    delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_largeColorDifferenceDeviation_clicked()
@@ -263,5 +247,4 @@ void DlgProductSet::pbtn_largeColorDifferenceDeviation_clicked()
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 
-    delete numKeyBoard;
 }
