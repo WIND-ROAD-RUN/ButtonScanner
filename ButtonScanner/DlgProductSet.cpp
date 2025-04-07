@@ -103,8 +103,6 @@ void DlgProductSet::build_connect()
         this, &DlgProductSet::pbtn_photography_clicked);
     QObject::connect(ui->pbtn_blowTime, &QPushButton::clicked,
         this, &DlgProductSet::pbtn_blowTime_clicked);
-    QObject::connect(ui->rbtn_edgeDamageSimilarity, &QPushButton::clicked,
-        this, &DlgProductSet::rbtn_edgeDamageSimilarity_clicked);
     QObject::connect(ui->pbtn_outerRadius, &QPushButton::clicked,
         this, &DlgProductSet::pbtn_outerRadius_clicked);
     QObject::connect(ui->pbtn_innerRadius, &QPushButton::clicked,
