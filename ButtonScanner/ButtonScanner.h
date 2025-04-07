@@ -38,9 +38,13 @@ private:
 
 private:
     void build_ui();
+    void build_MainWindowData();
 
     void build_connect();
 private:
+    //read_cofig必须在最前面运行
+    void read_config();
+    
     void build_camera();
 
     void build_ImageProcessorModule();
