@@ -137,6 +137,59 @@ void ButtonScanner::read_config()
         globalStruct.ReadConfig();
 	}
 
+	QString dlgProduceLineSetFilePath = R"(config/dlgProduceLineSetFilePath.xml)";
+	QString dlgProduceLineSetFilePathFull = dir.absoluteFilePath(dlgProduceLineSetFilePath);
+	QFileInfo dlgProduceLineSetFile(dlgProduceLineSetFilePathFull);
+
+	globalStruct.dlgProduceLineSetFilePath = dlgProduceLineSetFilePathFull;
+	globalStruct.buildConfigManager(rw::oso::StorageType::Xml);
+
+	if (!dlgProduceLineSetFile.exists()) {
+		QDir configDir = QFileInfo(dlgProduceLineSetFilePathFull).absoluteDir();
+		if (!configDir.exists()) {
+			configDir.mkpath(".");
+		}
+		QFile file(dlgProduceLineSetFilePathFull);
+		if (file.open(QIODevice::WriteOnly)) {
+			file.close();
+		}
+		else {
+			QMessageBox::critical(this, "Error", "无法创建配置文件。");
+		}
+		globalStruct.dlgProduceLineSetConfig = rw::cdm::ButtonScannerProduceLineSet();
+		globalStruct.saveConfig();
+		return;
+	}
+	else {
+		globalStruct.ReadConfig();
+	}
+
+	QString dlgProductSetFilePath = R"(config/dlgProdutSetFilePath.xml)";
+	QString dlgProductSetFilePathFull = dir.absoluteFilePath(dlgProductSetFilePath);
+	QFileInfo dlgProductSetFile(dlgProductSetFilePathFull);
+
+	globalStruct.dlgProductSetFilePath = dlgProductSetFilePathFull;
+	globalStruct.buildConfigManager(rw::oso::StorageType::Xml);
+
+	if (!dlgProductSetFile.exists()) {
+		QDir configDir = QFileInfo(dlgProductSetFilePathFull).absoluteDir();
+		if (!configDir.exists()) {
+			configDir.mkpath(".");
+		}
+		QFile file(dlgProductSetFilePathFull);
+		if (file.open(QIODevice::WriteOnly)) {
+			file.close();
+		}
+		else {
+			QMessageBox::critical(this, "Error", "无法创建配置文件。");
+		}
+		globalStruct.dlgProductSetConfig = rw::cdm::ButtonScannerDlgProductSet();
+		globalStruct.saveConfig();
+		return;
+	}
+	else {
+		globalStruct.ReadConfig();
+	}
 }
 
 void ButtonScanner::build_camera()

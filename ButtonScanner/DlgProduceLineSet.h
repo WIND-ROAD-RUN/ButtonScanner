@@ -9,12 +9,12 @@ QT_END_NAMESPACE
 
 class DlgProduceLineSet : public QDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    DlgProduceLineSet(QWidget* parent = nullptr);
-    ~DlgProduceLineSet();
-
+	DlgProduceLineSet(QWidget* parent = nullptr);
+	~DlgProduceLineSet();
+ 
 private:
     void build_ui();
 

@@ -8,8 +8,10 @@
 #include"ime_ModelEngine.h"
 #include"rqw_CameraObjectThread.hpp"
 #include"cdm_ButtonScannerMainWindow.h"
+#include"cdm_ButtonScannerDlgProductSet.h"
 #include"oso_StorageContext.hpp"
 #include<QString>
+#include <cdm_ButtonScannerProduceLineSet.h>
 
 namespace zwy {
     namespace scc {
@@ -28,7 +30,11 @@ public:
     std::unique_ptr<rw::oso::StorageContext> _StoreContext{ nullptr };
 public:
     QString mainwindowFilePath;
+	QString dlgProduceLineSetFilePath;
+    QString dlgProductSetFilePath;
     rw::cdm::ButtonScannerMainWindow mainWindowConfig{};
+	rw::cdm::ButtonScannerProduceLineSet dlgProduceLineSetConfig{};
+    rw::cdm::ButtonScannerDlgProductSet dlgProductSetConfig{};
 public:
     QString cameraIp1{ "11" };
     QString cameraIp2{ "12" };

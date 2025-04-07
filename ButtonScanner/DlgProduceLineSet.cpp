@@ -35,3 +35,5 @@ void DlgProduceLineSet::pbtn_blowDistance1_clicked()
     numKeyBoard->setWindowModality(Qt::ApplicationModal);
     numKeyBoard->show();
 }
+
+ 
