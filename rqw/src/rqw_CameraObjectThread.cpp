@@ -20,7 +20,7 @@ namespace rw
         }
 
         void CameraPassiveThread::initCamera(const rw::rqw::CameraMetaData& cameraMetaData,
-            rw::rqw::CameraObjectTrigger triggerMode)
+            rw::rqw::CameraObjectTrigger triggerMode, size_t motionInde)
         {
             if (_cameraObject)
             {
@@ -148,9 +148,9 @@ namespace rw
             exec();
         }
 
-        void CameraPassiveThread::onFrameCaptured(cv::Mat frame)
+        void CameraPassiveThread::onFrameCaptured(cv::Mat frame,float location)
         {
-            emit frameCaptured(std::move(frame));
+            emit frameCaptured(std::move(frame), location);
         }
 
         void CameraPassiveThread::onFrameCapturedWithMetaData(cv::Mat frame, rw::rqw::CameraMetaData cameraMetaData)

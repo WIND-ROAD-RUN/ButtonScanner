@@ -71,12 +71,6 @@ public:
     std::unique_ptr<ImageProcessingModule> _imageProcessingModule3{ nullptr };
     std::unique_ptr<ImageProcessingModule> _imageProcessingModule4{ nullptr };
 
-public:
-    void buildMotion();
-
-    void destroyMotion();
-
-    std::unique_ptr<zwy::scc::Motion> _motionPtr;
 
 public:
     static GlobalStruct& getInstance()
@@ -87,7 +81,6 @@ public:
 
     GlobalStruct(const GlobalStruct&) = delete;
     GlobalStruct& operator=(const GlobalStruct&) = delete;
-
 private:
     GlobalStruct();
     ~GlobalStruct() = default;

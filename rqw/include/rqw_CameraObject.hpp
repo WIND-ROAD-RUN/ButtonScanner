@@ -8,6 +8,35 @@
 
 #include<QVector>
 #include<QObject>
+#include<memory>
+
+#include"scc_motion.h"
+
+namespace zwy {
+    namespace scc {
+        class GlobalMotion
+            :public QObject
+        {
+            Q_OBJECT
+        public:
+            std::unique_ptr<Motion> motionPtr;
+        public:
+            static GlobalMotion& getInstance()
+            {
+                static GlobalMotion instance;
+                return instance;
+            }
+
+            GlobalMotion(const GlobalMotion&) = delete;
+            GlobalMotion& operator=(const GlobalMotion&) = delete;
+
+        private:
+            GlobalMotion();
+        public:
+            ~GlobalMotion() = default;
+        };
+    }
+}
 
 namespace rw {
     namespace hoec
@@ -20,6 +49,8 @@ namespace rw {
         class CameraPassiveObject : public QObject
         {
             Q_OBJECT
+        public:
+            size_t motionInde;
         private:
             std::unique_ptr<hoec::CameraPassive> _cameraPassive;
             CameraMetaData _cameraMetaData;
@@ -51,7 +82,7 @@ namespace rw {
         public:
             void initCamera(const CameraMetaData& cameraMetaData, CameraObjectTrigger triggerMode);
         signals:
-            void frameCaptured(cv::Mat frame);
+            void frameCaptured(cv::Mat frame,float);
             void frameCapturedWithMetaData(cv::Mat frame, CameraMetaData cameraMetaData);
             void frameCapturedWithoutArgs();
         };

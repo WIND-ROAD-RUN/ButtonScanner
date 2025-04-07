@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include"rqw_CameraObjectThread.hpp"
+#include"rqw_CameraObject.hpp"
 #include"hoec_CameraException.hpp"
 
 #include "ButtonScanner.h"
@@ -44,7 +45,6 @@ ButtonScanner::~ButtonScanner()
 	auto& globalStruct = GlobalStruct::getInstance();
 	globalStruct.destroyCamera();
 	globalStruct.destroyImageProcessingModule();
-	globalStruct.destroyMotion();
 	globalStruct.saveConfig();
 }
 
@@ -290,139 +290,123 @@ void ButtonScanner::start_monitor()
 
 void ButtonScanner::build_Motion()
 {
-	auto& globalStruct = GlobalStruct::getInstance();
+	//auto& globalStruct = GlobalStruct::getInstance();
 
-	globalStruct.buildMotion();
+	////获取Zmotion
+	//auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
 
-	//获取Zmotion
-	auto& motionPtr = globalStruct._motionPtr;
-
-	//下面通过motionPtr进行操作
-	motionPtr.get()->OpenBoard((char*)"192.168.0.11");
+	////下面通过motionPtr进行操作
+	//motionPtr.get()->OpenBoard((char*)"192.168.0.11");
 
 }
 
 void ButtonScanner::build_MonitoringThread()
 {
-	//线程内部
-	QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
+	////线程内部
+	//QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
 
-		while (mark_Thread)
-		{
+	//	while (mark_Thread)
+	//	{
 
-			//运动控制卡实时状态
-			{
-				//这里获取全局变量
-				auto& globalStruct = GlobalStruct::getInstance();
+	//		//运动控制卡实时状态
+	//		{
+	//			//这里获取全局变量
+	//			auto& globalStruct = GlobalStruct::getInstance();
 
-				//获取Zmotion
-				auto& motionPtr = globalStruct._motionPtr;
-
-				bool  boardState = motionPtr.get()->getBoardState();
-				if (boardState == false)
-				{
-					motionPtr.get()->OpenBoard((char*)"192.168.0.11");
-
-				}
-				else
-				{
-
-				}
-			}
-			//获得相机链接状态
-			{
+	//			//获取Zmotion
+	//			auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
 
 
+	//			bool  boardState = motionPtr.get()->getBoardState();
+	//			if (boardState == false)
+	//			{
+	//				motionPtr.get()->OpenBoard((char*)"192.168.0.11");
 
+	//			}
+	//			else
+	//			{
 
-
-
-			}
-
-			QThread::msleep(500);
-
-
-
-		}
+	//			}
+	//		}
+	//		//获得相机链接状态
+	//		{
 
 
 
 
 
-	});
+
+	//		}
+
+	//		QThread::msleep(500);
+
+
+
+	//	}
+
+
+
+
+
+	//});
 
 
 }
 
 void ButtonScanner::build_IOThread()
 {
-	//线程内部
-	QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
-		//这里获取全局变量
-		auto& globalStruct = GlobalStruct::getInstance();
-
-		//获取Zmotion
-		auto& motionPtr = globalStruct._motionPtr;
-		while (mark_Thread)
-		{
-
-			bool state = false;
-			state = motionPtr->GetIOIn(2);
-			//急停
-
-			if (state == true)
-			{
-				// pidaimove->stop();
-				motionPtr->StopAllAxis();
-				motionPtr->SetIOOut(1, false);
-				
-				motionPtr->SetIOOut(7, false);
-
-			}
-			//else
-			//{
-			//	//开始按钮
-			//	bool state = false;
-			//	state = motionPtr->GetIOIn(1);
-			//	//启动程序
-			//	if (state == true)
-			//	{
+	////线程内部
+	//QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
 
 
-			//		//所有电机上电
-			//		QtConcurrent::run([this, &motionPtr]() {
-			//			QThread::msleep(500);
-			//			motionPtr->SetIOOut(1, true);
-			//			//启动电机
-   //                 motionPtr->SetAxisType(0,1);
-   //                 double unit= GlobelParam::SystemParam[9].toDouble();
-   //                 motionPtr->SetAxisPulse(0,unit);
-   //                 double acc=GlobelParam::SystemParam[10].toDouble();
-   //                 motionPtr->SetAxisAcc(0,acc);
-   //                 motionPtr->SetAxisDec(0,acc);
-   //                 double speed= GlobelParam::SystemParam[8].toDouble();
-   //                 motionPtr->SetAxisRunSpeed(0,speed);
-   //                 // pidaimove->start(100);
-   //                 motionPtr->AxisRun(0,-1);
-   //                 motionPtr->SetIOOut(7,true);
-			//		});
-			//	}
-			//	else
-			//	{
+	//	//获取Zmotion
+	//	auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
+	//	while (mark_Thread)
+	//	{
+
+	//		bool state = false;
+	//		state = motionPtr->GetIOIn(2);
+	//		//急停
+
+	//		if (state == true)
+	//		{
+	//			// pidaimove->stop();
+	//			motionPtr->StopAllAxis();
+	//			motionPtr->SetIOOut(1, false);
+	//			
+	//			motionPtr->SetIOOut(7, false);
+
+	//		}
+	//		//else
+	//		//{
+	//		//	//开始按钮
+	//		//	bool state = false;
+	//		//	state = motionPtr->GetIOIn(1);
+	//		//	//启动程序
+	//		//	if (state == true)
+	//		//	{
 
 
-
-
-
-
-
-			//	}
-
-
-
-
-
-			//}
+	//		//		//所有电机上电
+	//		//		QtConcurrent::run([this, &motionPtr]() {
+	//		//			QThread::msleep(500);
+	//		//			motionPtr->SetIOOut(1, true);
+	//		//			//启动电机
+ //  //                 motionPtr->SetAxisType(0,1);
+ //  //                 double unit= GlobelParam::SystemParam[9].toDouble();
+ //  //                 motionPtr->SetAxisPulse(0,unit);
+ //  //                 double acc=GlobelParam::SystemParam[10].toDouble();
+ //  //                 motionPtr->SetAxisAcc(0,acc);
+ //  //                 motionPtr->SetAxisDec(0,acc);
+ //  //                 double speed= GlobelParam::SystemParam[8].toDouble();
+ //  //                 motionPtr->SetAxisRunSpeed(0,speed);
+ //  //                 // pidaimove->start(100);
+ //  //                 motionPtr->AxisRun(0,-1);
+ //  //                 motionPtr->SetIOOut(7,true);
+	//		//		});
+	//		//	}
+	//		//	else
+	//		//	{
 
 
 
@@ -430,21 +414,20 @@ void ButtonScanner::build_IOThread()
 
 
 
+	//		//	}
 
 
 
 
 
+	//		//}
 
 
 
+	//	}
 
 
-
-		}
-
-
-	});
+	//});
 
 }
 
@@ -470,7 +453,6 @@ void ButtonScanner::_camera1Display(QImage image)
 {
     QPixmap pixmap = QPixmap::fromImage(image);
     ui->label_imgDisplay->setPixmap(pixmap.scaled(ui->label_imgDisplay->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
-	
 }
 
 void ButtonScanner::_camera2Display(QImage image)
@@ -483,14 +465,12 @@ void ButtonScanner::_camera3Display(QImage image)
 {
 	QPixmap pixmap = QPixmap::fromImage(image);
 	ui->label_imgDisplay_3->setPixmap(pixmap.scaled(ui->label_imgDisplay_3->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
-
 }
 
 void ButtonScanner::_camera4Display(QImage image)
 {
 	QPixmap pixmap = QPixmap::fromImage(image);
 	ui->label_imgDisplay_4->setPixmap(pixmap.scaled(ui->label_imgDisplay_4->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
-
 }
 
 void ButtonScanner::pbtn_set_clicked()

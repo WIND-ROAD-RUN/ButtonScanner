@@ -111,9 +111,13 @@ namespace rw
 
             _cameraPassive = hoec::CameraFactory::CreatePassiveCamera(hoecCameraIp, hoecTrigger, [this](cv::Mat  mat)
                 {
+                auto & cameraObject = zwy::scc::GlobalMotion::getInstance();
+                float location;
+                cameraObject.motionPtr->GetModbus(motionInde,1, location);
+
                     cv::Mat matCopy;
                     mat.copyTo(matCopy);
-                    emit frameCaptured(std::move(mat));
+                    emit frameCaptured(std::move(mat), location);
                     emit frameCapturedWithoutArgs();
                     emit frameCapturedWithMetaData(std::move(matCopy), _cameraMetaData);
                 });
@@ -122,3 +126,8 @@ namespace rw
         }
     } // namespace rqw
 } // namespace rw
+
+zwy::scc::GlobalMotion::GlobalMotion()
+{
+    motionPtr = std::make_unique<Motion>();
+}

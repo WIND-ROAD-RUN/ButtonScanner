@@ -19,6 +19,7 @@ public:
         QWaitCondition& condition,
         int workindex,
         QObject* parent = nullptr);
+    int count;
 
 protected:
     void run() override; 
@@ -57,7 +58,7 @@ public:
     ~ImageProcessingModule();
 
 public slots :
-    void onFrameCaptured(cv::Mat frame);
+    void onFrameCaptured(cv::Mat frame,float location);
 
 signals:
     void imageReady(const QImage& image);

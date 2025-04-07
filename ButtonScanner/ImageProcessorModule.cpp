@@ -12,8 +12,15 @@ cv::Mat ImageProcessor::processAI(cv::Mat& frame)
     cv::Mat resultImage;
     cv::Mat maskImage = cv::Mat::zeros(frame.size(), CV_8UC1);
     std::vector<rw::ime::ProcessRectanglesResult> vecRecogResult;
-    _modelEnginePtr->ProcessMask(frame,resultImage, maskImage, vecRecogResult);
-    return resultImage.clone();
+    double t = (double)cv::getTickCount();
+
+    // Process the frame
+    _modelEnginePtr->ProcessMask(frame, resultImage, maskImage, vecRecogResult);
+
+    // Calculate elapsed time
+    t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
+   //LOG () "ProcessMask execution time: " << t*1000 << " seconds";  
+   return resultImage.clone();
 }
 
 cv::Mat ImageProcessor::processElimination(cv::Mat& frame)
@@ -69,16 +76,18 @@ void ImageProcessor::run()
 
         // 显示到界面
         emit imageReady(image);
+        count++;
+        LOG() "index:"<< workindex<<"count" << count;
 
-        // 模拟其他操作
-        QThread::msleep(100);
     }
 }
 
 void ImageProcessingModule::BuildModule()
 {
     for (int i = 0; i < numConsumers; ++i) {
-        ImageProcessor* processor = new ImageProcessor(queue, mutex, condition, i, this);
+        static size_t workIndexCount = 0;
+        ImageProcessor* processor = new ImageProcessor(queue, mutex, condition, workIndexCount, this);
+        workIndexCount++;
         processor->buildModelEngine(modelEnginePath, modelNamePath);
         connect(processor, &ImageProcessor::imageReady, this, &ImageProcessingModule::imageReady, Qt::QueuedConnection);
         processors.push_back(processor);
@@ -113,7 +122,7 @@ ImageProcessingModule::~ImageProcessingModule()
     }
 }
 
-void ImageProcessingModule::onFrameCaptured(cv::Mat frame)
+void ImageProcessingModule::onFrameCaptured(cv::Mat frame,float location)
 {
     QMutexLocker locker(&mutex);
     queue.enqueue(frame);

@@ -22,7 +22,7 @@ namespace rw {
 
             ~CameraPassiveThread() override;
 
-            void initCamera(const rw::rqw::CameraMetaData& cameraMetaData, rw::rqw::CameraObjectTrigger triggerMode);
+            void initCamera(const rw::rqw::CameraMetaData& cameraMetaData, rw::rqw::CameraObjectTrigger triggerMode,size_t motionInde);
             void startMonitor();
             void stopMonitor();
 
@@ -42,7 +42,7 @@ namespace rw {
             [[nodiscard]] size_t getTriggerLine() const;
 
         signals:
-            void frameCaptured(cv::Mat frame);
+            void frameCaptured(cv::Mat frame,float location);
             void frameCapturedWithMetaData(cv::Mat frame, rw::rqw::CameraMetaData cameraMetaData);
             void frameCapturedWithoutArgs();
 
@@ -52,7 +52,7 @@ namespace rw {
         private:
             CameraPassiveObject* _cameraObject;
         private slots:
-            void onFrameCaptured(cv::Mat frame);
+            void onFrameCaptured(cv::Mat frame, float location);
             void onFrameCapturedWithMetaData(cv::Mat frame, rw::rqw::CameraMetaData cameraMetaData);
             void onFrameCapturedWithoutArgs();
         };

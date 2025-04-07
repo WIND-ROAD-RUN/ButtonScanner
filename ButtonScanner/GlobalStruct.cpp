@@ -148,7 +148,7 @@ void GlobalStruct::buildCamera()
 			try
 			{
 				_camera1 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
-				_camera1->initCamera(cameraMetaData1, rw::rqw::CameraObjectTrigger::Hardware);
+				_camera1->initCamera(cameraMetaData1, rw::rqw::CameraObjectTrigger::Hardware,2);
 			}
 			catch (const std::exception&)
 			{
@@ -167,7 +167,7 @@ void GlobalStruct::buildCamera()
 			try
 			{
 				_camera2 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
-				_camera2->initCamera(cameraMetaData2, rw::rqw::CameraObjectTrigger::Hardware);
+				_camera2->initCamera(cameraMetaData2, rw::rqw::CameraObjectTrigger::Hardware,4);
 			}
 			catch (const std::exception&)
 			{
@@ -183,7 +183,7 @@ void GlobalStruct::buildCamera()
 			try
 			{
 				_camera3 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
-				_camera3->initCamera(cameraMetaData3, rw::rqw::CameraObjectTrigger::Hardware);
+				_camera3->initCamera(cameraMetaData3, rw::rqw::CameraObjectTrigger::Hardware,6);
 			}
 			catch (const std::exception&)
 			{
@@ -197,7 +197,7 @@ void GlobalStruct::buildCamera()
 			try
 			{
 				_camera4 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
-				_camera4->initCamera(cameraMetaData4, rw::rqw::CameraObjectTrigger::Hardware);
+				_camera4->initCamera(cameraMetaData4, rw::rqw::CameraObjectTrigger::Hardware,8);
 			}
 			catch (const std::exception&)
 			{
@@ -256,10 +256,6 @@ void GlobalStruct::startMonitor()
 	}
 }
 
-void GlobalStruct::buildMotion()
-{
-	_motionPtr = std::make_unique<zwy::scc::Motion>();
-}
 
 void GlobalStruct::destroyCamera()
 {
@@ -277,12 +273,3 @@ void GlobalStruct::destroyImageProcessingModule()
     _imageProcessingModule4.reset();
 }
 
-void GlobalStruct::destroyMotion()
-{
-    _motionPtr.reset();
-}
-
-GlobalStruct::GlobalStruct()
-{
-
-}
