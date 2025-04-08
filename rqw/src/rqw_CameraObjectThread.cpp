@@ -32,6 +32,7 @@ namespace rw
                 connect(_cameraObject, &rw::rqw::CameraPassiveObject::frameCaptured, this, &CameraPassiveThread::onFrameCaptured,Qt::DirectConnection);
                 connect(_cameraObject, &rw::rqw::CameraPassiveObject::frameCapturedWithMetaData, this, &CameraPassiveThread::onFrameCapturedWithMetaData, Qt::DirectConnection);
                 connect(_cameraObject, &rw::rqw::CameraPassiveObject::frameCapturedWithoutArgs, this, &CameraPassiveThread::onFrameCapturedWithoutArgs, Qt::DirectConnection);
+                _cameraObject->motionInde = motionInde;
                 _cameraObject->initCamera(cameraMetaData, triggerMode);
             }
         }

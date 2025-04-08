@@ -13,7 +13,7 @@ namespace rw
         {
             Point left_top;							//左上角坐标
 			Point right_bottom;						//右下角坐标
-			int classId;
+			int classId;							//0外径 1是孔 
 			int track_id;							//跟踪id
 			int label_len;							//名称长度
 			int mask_b;								//b分类值

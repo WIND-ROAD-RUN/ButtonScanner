@@ -113,7 +113,7 @@ namespace rw
                 {
                 auto & cameraObject = zwy::scc::GlobalMotion::getInstance();
                 float location;
-                cameraObject.motionPtr->GetModbus(motionInde,1, location);
+                cameraObject.motionPtr->GetModbus(motionInde, motionRedix, location);
 
                     cv::Mat matCopy;
                     mat.copyTo(matCopy);

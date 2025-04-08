@@ -38,11 +38,8 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 	// Process the frame
 	_modelEnginePtr->ProcessMask(frame.image, resultImage, maskImage, vecRecogResult);
 
-	LOG()vecRecogResult.size();
-
 	auto isBad = false;
 
-	//std::vector<rw::ime::ProcessRectanglesResult> vecRecogResult;
 	cv::Mat resultMat;
 	cv::Mat maskmat;
 
@@ -76,8 +73,22 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 		}
 	}
 
+	std::vector<rw::ime::ProcessRectanglesResult> body;
+	std::vector<rw::ime::ProcessRectanglesResult> hole;
+
+	//拆分body和hole
+	for (const auto & item:vecRecogResult) {
+		if (item.classId==0) {
+			body.emplace_back(item);
+		}
+		else if (item.classId==1) {
+            hole.emplace_back(item);
+		}
+		
+	}
 
 	if (checkConfig->outsideDiameterEnable)
+		ImagePainter::drawCirclesOnImage(resultImage, body);
 		if (waiJingIndexs.size() == 0)
 		{
 			isBad = true;
@@ -103,6 +114,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 		}
 
 	if (checkConfig->holesCountEnable)
+		ImagePainter::drawCirclesOnImage(resultImage, hole);
 		if (konJingIndexs.size() != checkConfig->holesCountValue)
 		{
 			isBad = true;
@@ -267,6 +279,8 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 		}
 	}
 
+	LOG()errorInfo.size();
+
     emit processResult(!isBad, frame.loaction);
 
 	// Calculate elapsed time
@@ -323,6 +337,8 @@ void ImageProcessor::run()
 
 		// 剔除算法处理
 		//result = processElimination(result);
+
+
 
 		// 转换为QImage并绘制错误信息
 		QImage image = cvMatToQImage(result, errorInfo);
@@ -464,5 +480,27 @@ void ImagePainter::drawTextOnImage(QImage& image, const QVector<QString>& texts,
 	}
 
 	painter.end();
+}
+
+void ImagePainter::drawCirclesOnImage(cv::Mat& image, const std::vector<rw::ime::ProcessRectanglesResult>& rectangles)
+{
+	for (const auto& rect : rectangles) {
+		// 计算矩形中心点
+		int centerX = (rect.left_top.first + rect.right_bottom.first) / 2;
+		int centerY = (rect.left_top.second + rect.right_bottom.second) / 2;
+
+		// 计算矩形的宽度和高度
+		int width = rect.right_bottom.first - rect.left_top.first;
+		int height = rect.right_bottom.second - rect.left_top.second;
+
+		// 计算圆的半径（取宽度和高度的较小值的一半）
+		int radius = std::min(width, height) / 2;
+
+		// 使用 mask_r, mask_g, mask_b 作为圆的颜色
+		cv::Scalar color(0,165,255);
+
+		// 在图像上绘制圆
+		cv::circle(image, cv::Point(centerX, centerY), radius, color,5); // 2 表示线宽
+	}
 }
 

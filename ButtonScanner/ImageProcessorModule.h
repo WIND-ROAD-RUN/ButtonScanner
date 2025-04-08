@@ -29,7 +29,9 @@ struct ImagePainter
 
     static QColor ColorToQColor(Color c);
 
-    static void drawTextOnImage(QImage& image, const QVector<QString>& texts, const QVector<Color>& colorList = { Color ::RED,Color::GREEN}, double proportion = 0.3);
+    static void drawTextOnImage(QImage& image, const QVector<QString>& texts, const QVector<Color>& colorList = { Color ::RED,Color::GREEN}, double proportion = 0.6);
+
+    static void drawCirclesOnImage(cv::Mat& image, const std::vector<rw::ime::ProcessRectanglesResult>& rectangles);
 };
 
 

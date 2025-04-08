@@ -162,6 +162,7 @@ typedef struct _PyRecMaskResult {
 	int mask_g;								//g分量值
 	int mask_r;								//r分量值
 	double score;							//得分
+	double area;
 	char label_text[MAX_CHAR_LEN];			//名称
 } PyRecMaskResult;
 

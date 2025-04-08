@@ -50,6 +50,7 @@ namespace rw {
         {
             Q_OBJECT
         public:
+            size_t motionRedix;
             size_t motionInde;
         private:
             std::unique_ptr<hoec::CameraPassive> _cameraPassive;

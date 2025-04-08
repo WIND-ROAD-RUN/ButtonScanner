@@ -16,6 +16,7 @@ namespace rw {
             Q_OBJECT
         public:
             size_t cameraIndex{0};
+            size_t motionRedix;
         public:
             explicit CameraPassiveThread(QObject* parent = nullptr);
             CameraPassiveThread(const CameraPassiveThread&) = delete; // 拷贝构造函数被删除
