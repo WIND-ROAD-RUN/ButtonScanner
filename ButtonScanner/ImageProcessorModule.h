@@ -6,8 +6,31 @@
 #include <QWaitCondition>
 #include <QImage>
 #include <opencv2/opencv.hpp>
+#include <QImage>
+#include <QPainter>
+#include <QFont>
+#include <vector>
+#include <string>
 
 #include"ime_ModelEngine.h"
+
+struct ImagePainter
+{
+    enum Color {
+        WHITE,
+        RED,
+        GREEN,
+        BLUE,
+        YELLOW,
+        CYAN,
+        MAGENTA,
+        BLACK
+    };
+
+    static QColor ColorToQColor(Color c);
+
+    static void drawTextOnImage(QImage& image, const QVector<QString>& texts, const QVector<Color>& colorList = { Color ::RED,Color::GREEN}, double proportion = 0.3);
+};
 
 
 struct MatInfo {
@@ -39,9 +62,9 @@ public:
     void buildModelEngine(const QString& enginePath, const QString& namePath);
 
 private:
-    cv::Mat processAI(MatInfo& frame);
+    cv::Mat processAI(MatInfo& frame,QVector<QString> & errorInfo);
 
-    QImage cvMatToQImage(const cv::Mat& mat);
+    QImage cvMatToQImage(const cv::Mat& mat,const QVector<QString>& errorInfo);
 
     QQueue<MatInfo>& queue;
     QMutex& mutex;

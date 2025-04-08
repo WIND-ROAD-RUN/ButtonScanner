@@ -1,4 +1,4 @@
-#include"stdafx.h"
+﻿#include"stdafx.h"
 #include "GlobalStruct.h"
 #include"ImageProcessorModule.h"
 
@@ -7,7 +7,7 @@ void ImageProcessor::buildModelEngine(const QString& enginePath, const QString& 
 	_modelEnginePtr = std::make_unique<rw::ime::ModelEngine>(enginePath.toStdString(), namePath.toStdString());
 }
 
-cv::Mat ImageProcessor::processAI(MatInfo& frame)
+cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 {
 	auto& globalStruct = GlobalStruct::getInstance();
 
@@ -39,7 +39,6 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame)
 	_modelEnginePtr->ProcessMask(frame.image, resultImage, maskImage, vecRecogResult);
 
 	auto isBad = false;
-	//std::vector<string> infos = std::vector<string>();
 
 	std::vector<rw::ime::ProcessRectanglesResult> vecrecogresult;
 	cv::Mat resultMat;
@@ -75,11 +74,12 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame)
 		}
 	}
 
+
 	if (checkConfig->outsideDiameterEnable)
 		if (waiJingIndexs.size() == 0)
 		{
 			isBad = true;
-			//infos.push_back("û�ҵ��⾶");
+			errorInfo.emplace_back("没找到外径");
 		}
 		else
 		{
@@ -93,10 +93,10 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame)
 			{
 				isBad = true;
 
-				/*if (shangXiaPianChaAbs >= zuoYouPianChaAbs)
-					infos.push_back("�⾶ " + std::to_string(shangXiaPianCha * CameraSetting()->xiangShuDangLiang));
+				if (shangXiaPianChaAbs >= zuoYouPianChaAbs)
+					errorInfo.emplace_back("外径 "+QString::number(shangXiaPianCha * CameraSetting()->xiangShuDangLiang));
 				else
-					infos.push_back("�⾶ " + std::to_string(zuoYouPianCha * CameraSetting()->xiangShuDangLiang));*/
+					errorInfo.emplace_back("外径 " + QString::number(zuoYouPianCha * CameraSetting()->xiangShuDangLiang));
 			}
 		}
 
@@ -104,7 +104,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame)
 		if (konJingIndexs.size() != checkConfig->holesCountValue)
 		{
 			isBad = true;
-			//infos.push_back("ֻ�ҵ�" + std::to_string(konJingIndexs.size()) + "����");
+			errorInfo.emplace_back("只找到" + QString::number(konJingIndexs.size()) + "个孔");
 		}
 
 	if (checkConfig->apertureEnable)
@@ -120,10 +120,11 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame)
 			{
 				isBad = true;
 
-				/*if (shangXiaPianChaAbs >= zuoYouPianChaAbs)
-					infos.push_back("�׾� " + std::to_string(shangXiaPianCha * pixEquivalent));
+				if (shangXiaPianChaAbs >= zuoYouPianChaAbs)
+					errorInfo.emplace_back("孔径 " + QString::number(shangXiaPianCha * pixEquivalent));
+
 				else
-					infos.push_back("�׾� " + std::to_string(zuoYouPianCha * pixEquivalent));*/
+					errorInfo.emplace_back("孔径 " + QString::number(zuoYouPianCha * pixEquivalent));
 			}
 		}
 
@@ -133,7 +134,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame)
 			auto konCenterY = vecrecogresult[konJingIndexs[i]].left_top.second + (vecrecogresult[konJingIndexs[i]].right_bottom.second - vecrecogresult[konJingIndexs[i]].left_top.second) / 2;
 			auto konCenterX = vecrecogresult[konJingIndexs[i]].left_top.first + (vecrecogresult[konJingIndexs[i]].right_bottom.first - vecrecogresult[konJingIndexs[i]].left_top.first) / 2;
 
-			//auto konXinJu = ImageTool.CalculateDistance2D(new Point((int)konCenterX, (int)konCenterY), new Point(image.Width / 2, image.Height / 2));
+			auto konXinJu = ImageTool.CalculateDistance2D(new Point((int)konCenterX, (int)konCenterY), new Point(image.Width / 2, image.Height / 2));
 			auto konXinJu = std::sqrt((konCenterX * frame.image.cols / 2) + (konCenterY * frame.image.rows / 2));
 			auto pianCha = konXinJu - checkConfig->holeCenterDistanceValue / pixEquivalent;
 
@@ -141,7 +142,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame)
 			{
 				isBad = true;
 
-				//infos.push_back("���ľ� " + std::to_string(pianCha * CameraSetting()->xiangShuDangLiang));
+				errorInfo.emplace_back("孔心距 " + QString::number(pianCha * CameraSetting()->xiangShuDangLiang));
 			}
 		}
 
@@ -154,8 +155,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame)
 			if (score > checkConfig->edgeDamageSimilarity)
 			{
 				isBad = true;
-
-				//infos.push_back("�Ʊ� " + std::to_string(score));
+				errorInfo.emplace_back("破边 " + QString::number(score));
 			}
 		}
 	}
@@ -164,7 +164,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame)
 	{
 		for (int i = 0; i < poYanIndexs.size(); i++)
 		{
-			//var area = container.candidates[poYanIndexs[i]].area;
+			var area = container.candidates[poYanIndexs[i]].area;
 			auto score = vecrecogresult[poYanIndexs[i]].score;
 			auto width = abs(vecrecogresult[poYanIndexs[i]].right_bottom.first - vecrecogresult[poYanIndexs[i]].left_top.first);
 			auto height = abs(vecrecogresult[poYanIndexs[i]].right_bottom.second - vecrecogresult[poYanIndexs[i]].left_top.second);
@@ -172,7 +172,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame)
 			if (score > checkConfig->brokenEyeSimilarity)//&& width * height > CheckSetting()->poYanMianJi
 			{
 				isBad = true;
-				//infos.push_back("���� " + std::to_string(score));
+				errorInfo.emplace_back("破眼 " + QString::number(score));
 			}
 		}
 	}
@@ -190,7 +190,8 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame)
 			if (score > checkConfig->crackSimilarity)//&& width * height > checkConfig->lieHenMianJi
 			{
 				isBad = true;
-				//infos.push_back("�Ѻ� " + std::to_string(score));
+				errorInfo.emplace_back("裂痕 " + QString::number(score));
+
 			}
 		}
 	}
@@ -203,7 +204,8 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame)
 			if (score > 30)
 			{
 				isBad = true;
-				//infos.push_back("���� " + std::to_string(score));
+				errorInfo.emplace_back("气孔 " + QString::number(score));
+
 			}
 		}
 	}
@@ -216,7 +218,8 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame)
 			if (score > 50)
 			{
 				isBad = true;
-				//infos.push_back("���� " + std::to_string(score));
+				errorInfo.emplace_back("油漆 " + QString::number(score));
+
 			}
 		}
 	}
@@ -229,7 +232,8 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame)
 			if (score > 0)
 			{
 				isBad = true;
-				//infos.push_back("ĥʯ " + std::to_string(score));
+				errorInfo.emplace_back("磨石 " + QString::number(score));
+
 			}
 		}
 	}
@@ -242,7 +246,8 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame)
 			if (score > 10)
 			{
 				isBad = true;
-				//infos.push_back("���� " + std::to_string(score));
+				errorInfo.emplace_back("堵眼 " + QString::number(score));
+
 			}
 		}
 	}
@@ -255,7 +260,8 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame)
 			if (score > 10)
 			{
 				isBad = true;
-				//infos.push_back("��ͷ " + std::to_string(score));
+				errorInfo.emplace_back("料头 " + QString::number(score));
+
 			}
 		}
 	}
@@ -266,20 +272,25 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame)
 	return resultImage.clone();
 }
 
-QImage ImageProcessor::cvMatToQImage(const cv::Mat& mat)
+QImage ImageProcessor::cvMatToQImage(const cv::Mat& mat,const QVector<QString>& errorInfo)
 {
+	QImage result;
 	if (mat.type() == CV_8UC1) {
-		return QImage(mat.data, mat.cols, mat.rows, mat.step[0], QImage::Format_Grayscale8);
+		result= QImage(mat.data, mat.cols, mat.rows, mat.step[0], QImage::Format_Grayscale8);
 	}
 	else if (mat.type() == CV_8UC3) {
-		return QImage(mat.data, mat.cols, mat.rows, mat.step[0], QImage::Format_RGB888).rgbSwapped();
+		result = QImage(mat.data, mat.cols, mat.rows, mat.step[0], QImage::Format_RGB888).rgbSwapped();
 	}
 	else if (mat.type() == CV_8UC4) {
-		return QImage(mat.data, mat.cols, mat.rows, mat.step[0], QImage::Format_RGBA8888);
+		result = QImage(mat.data, mat.cols, mat.rows, mat.step[0], QImage::Format_RGBA8888);
 	}
 	else {
-		return QImage();
+		result = QImage();
 	}
+
+	ImagePainter::drawTextOnImage(result, errorInfo);
+
+
 }
 
 ImageProcessor::ImageProcessor(QQueue<MatInfo>& queue, QMutex& mutex, QWaitCondition& condition, int workindex, QObject* parent)
@@ -301,16 +312,19 @@ void ImageProcessor::run()
 			frame = queue.dequeue();
 		}
 
-		// AIʶ����
-		cv::Mat result = processAI(frame);
+		QVector<QString> errorInfo;
+		errorInfo.reserve(20);
 
-		// �޳��㷨����
+		// AI识别处理
+		cv::Mat result = processAI(frame, errorInfo);
+
+		// 剔除算法处理
 		//result = processElimination(result);
 
-		// ת��ΪQImage
-		QImage image = cvMatToQImage(result);
+		// 转换为QImage并绘制错误信息
+		QImage image = cvMatToQImage(result, errorInfo);
 
-		// ��ʾ������
+		// 显示到界面
 		emit imageReady(image);
 		count++;
 		LOG() "index:" << workindex << "count" << count;
@@ -338,21 +352,21 @@ ImageProcessingModule::ImageProcessingModule(int numConsumers, QObject* parent)
 
 ImageProcessingModule::~ImageProcessingModule()
 {
-	// ֪ͨ�����߳��˳�
+	// 通知所有线程退出
 	for (auto processor : processors) {
 		processor->requestInterruption();
 	}
 
-	// �������еȴ����߳�
+	// 唤醒所有等待的线程
 	{
 		QMutexLocker locker(&mutex);
 		condition.wakeAll();
 	}
 
-	// �ȴ������߳��˳�
+	// 等待所有线程退出
 	for (auto processor : processors) {
 		if (processor->isRunning()) {
-			processor->wait(1000); // ʹ�ó�ʱ���ƣ��ȴ�1��
+			processor->wait(1000); // 使用超时机制，等待1秒
 		}
 		delete processor;
 	}
@@ -368,3 +382,78 @@ void ImageProcessingModule::onFrameCaptured(cv::Mat frame, float location, size_
 	queue.enqueue(mat);
 	condition.wakeOne();
 }
+
+QColor ImagePainter::ColorToQColor(Color c)
+{
+	switch (c) {
+	case Color::WHITE:   return QColor(255, 255, 255);
+	case Color::RED:     return QColor(255, 0, 0);
+	case Color::GREEN:   return QColor(0, 255, 0);
+	case Color::BLUE:    return QColor(0, 0, 255);
+	case Color::YELLOW:  return QColor(255, 255, 0);
+	case Color::CYAN:    return QColor(0, 255, 255);
+	case Color::MAGENTA: return QColor(255, 0, 255);
+	case Color::BLACK:   return QColor(0, 0, 0);
+	default:             return QColor(255, 255, 255);
+	}
+}
+
+void ImagePainter::drawTextOnImage(QImage& image, const QVector<QString>& texts, const QVector<Color>& colorList, double proportion)
+{
+	// 确保图像非空
+	if (image.isNull() || texts.empty() || proportion <= 0.0 || proportion > 1.0) {
+		return;
+	}
+
+	// 创建 QPainter
+	QPainter painter(&image);
+	painter.setRenderHint(QPainter::Antialiasing);
+	painter.setRenderHint(QPainter::TextAntialiasing);
+
+	// 计算字体大小和初始位置
+	int imageHeight = image.height();
+	int textAreaHeight = static_cast<int>(imageHeight * proportion); // 根据比例计算文字区域高度
+	int yOffset = 10; // 初始Y偏移量
+
+	// 动态调整字体大小
+	QFont font("Arial");
+	int fontSize = 20; // 初始字体大小
+	font.setPixelSize(fontSize);
+	painter.setFont(font);
+
+	// 计算动态字体大小
+	for (const auto& text : texts) {
+		QRect textRect(0, 0, image.width(), textAreaHeight);
+		QFontMetrics metrics(font);
+		if (metrics.height() * texts.size() > textAreaHeight) {
+			fontSize = static_cast<int>(fontSize * 0.9); // 缩小字体
+			font.setPixelSize(fontSize);
+			painter.setFont(font);
+		}
+	}
+
+	// 绘制文字
+	for (size_t i = 0; i < texts.size(); ++i) {
+		// 确定颜色
+		Color textColor = Color::WHITE; // 默认白色
+		if (!colorList.empty()) {
+			if (i < colorList.size()) {
+				textColor = colorList[i];
+			}
+			else {
+				textColor = colorList.back(); // 使用最后一个颜色
+			}
+		}
+
+		// 设置颜色
+		painter.setPen(ColorToQColor(textColor));
+
+		// 绘制文字
+		QString qText = texts[i];
+		painter.drawText(10, yOffset + fontSize, qText); // 左上角偏移量为 (10, yOffset)
+		yOffset += fontSize + 5; // 行间距
+	}
+
+	painter.end();
+}
+
