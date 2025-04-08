@@ -15,6 +15,8 @@ namespace rw {
         {
             Q_OBJECT
         public:
+            size_t cameraIndex{0};
+        public:
             explicit CameraPassiveThread(QObject* parent = nullptr);
             CameraPassiveThread(const CameraPassiveThread&) = delete; // ¿½±´¹¹Ôìº¯Êý±»É¾³ý
             CameraPassiveThread& operator=(const CameraPassiveThread&) = delete; // ¿½±´¸³ÖµÔËËã·û±»É¾³ý
@@ -42,7 +44,7 @@ namespace rw {
             [[nodiscard]] size_t getTriggerLine() const;
 
         signals:
-            void frameCaptured(cv::Mat frame,float location);
+            void frameCaptured(cv::Mat frame,float location,size_t index);
             void frameCapturedWithMetaData(cv::Mat frame, rw::rqw::CameraMetaData cameraMetaData);
             void frameCapturedWithoutArgs();
 

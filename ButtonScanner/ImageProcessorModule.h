@@ -10,11 +10,17 @@
 #include"ime_ModelEngine.h"
 
 
+struct MatInfo {
+    cv::Mat image;
+    float loaction;
+    size_t index;
+};
+
 class ImageProcessor : public QThread {
     Q_OBJECT
 
 public:
-    ImageProcessor(QQueue<cv::Mat>& queue,
+    ImageProcessor(QQueue<MatInfo>& queue,
         QMutex& mutex,
         QWaitCondition& condition,
         int workindex,
@@ -33,13 +39,11 @@ public:
     void buildModelEngine(const QString& enginePath, const QString& namePath);
 
 private:
-    cv::Mat processAI(cv::Mat& frame);
-
-    cv::Mat processElimination(cv::Mat& frame);
+    cv::Mat processAI(MatInfo& frame);
 
     QImage cvMatToQImage(const cv::Mat& mat);
 
-    QQueue<cv::Mat>& queue;
+    QQueue<MatInfo>& queue;
     QMutex& mutex;
     QWaitCondition& condition;
     int workindex;
@@ -58,13 +62,13 @@ public:
     ~ImageProcessingModule();
 
 public slots :
-    void onFrameCaptured(cv::Mat frame,float location);
+    void onFrameCaptured(cv::Mat frame,float location, size_t index);
 
 signals:
     void imageReady(const QImage& image);
 
 private:
-    QQueue<cv::Mat> queue;
+    QQueue<MatInfo> queue;
     QMutex mutex;
     QWaitCondition condition;
     std::vector<ImageProcessor*> processors;

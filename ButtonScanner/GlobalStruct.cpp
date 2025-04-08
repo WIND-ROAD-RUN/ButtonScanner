@@ -149,6 +149,7 @@ void GlobalStruct::buildCamera()
 			{
 				_camera1 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
 				_camera1->initCamera(cameraMetaData1, rw::rqw::CameraObjectTrigger::Hardware,2);
+				_camera1->cameraIndex = 1;
 			}
 			catch (const std::exception&)
 			{
@@ -168,6 +169,7 @@ void GlobalStruct::buildCamera()
 			{
 				_camera2 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
 				_camera2->initCamera(cameraMetaData2, rw::rqw::CameraObjectTrigger::Hardware,4);
+				_camera2->cameraIndex = 2;
 			}
 			catch (const std::exception&)
 			{
@@ -184,6 +186,7 @@ void GlobalStruct::buildCamera()
 			{
 				_camera3 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
 				_camera3->initCamera(cameraMetaData3, rw::rqw::CameraObjectTrigger::Hardware,6);
+				_camera3->cameraIndex = 3;
 			}
 			catch (const std::exception&)
 			{
@@ -198,6 +201,8 @@ void GlobalStruct::buildCamera()
 			{
 				_camera4 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
 				_camera4->initCamera(cameraMetaData4, rw::rqw::CameraObjectTrigger::Hardware,8);
+				_camera4->cameraIndex = 4;
+
 			}
 			catch (const std::exception&)
 			{

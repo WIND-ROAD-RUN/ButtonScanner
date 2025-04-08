@@ -150,7 +150,7 @@ namespace rw
 
         void CameraPassiveThread::onFrameCaptured(cv::Mat frame,float location)
         {
-            emit frameCaptured(std::move(frame), location);
+            emit frameCaptured(std::move(frame), location,cameraIndex);
         }
 
         void CameraPassiveThread::onFrameCapturedWithMetaData(cv::Mat frame, rw::rqw::CameraMetaData cameraMetaData)
