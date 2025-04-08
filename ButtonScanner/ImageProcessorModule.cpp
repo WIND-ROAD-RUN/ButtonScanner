@@ -94,9 +94,9 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 				isBad = true;
 
 				if (shangXiaPianChaAbs >= zuoYouPianChaAbs)
-					errorInfo.emplace_back("外径 "+QString::number(shangXiaPianCha * CameraSetting()->xiangShuDangLiang));
+					errorInfo.emplace_back("外径 "+QString::number(shangXiaPianCha * pixEquivalent));
 				else
-					errorInfo.emplace_back("外径 " + QString::number(zuoYouPianCha * CameraSetting()->xiangShuDangLiang));
+					errorInfo.emplace_back("外径 " + QString::number(zuoYouPianCha * pixEquivalent));
 			}
 		}
 
@@ -134,7 +134,6 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 			auto konCenterY = vecrecogresult[konJingIndexs[i]].left_top.second + (vecrecogresult[konJingIndexs[i]].right_bottom.second - vecrecogresult[konJingIndexs[i]].left_top.second) / 2;
 			auto konCenterX = vecrecogresult[konJingIndexs[i]].left_top.first + (vecrecogresult[konJingIndexs[i]].right_bottom.first - vecrecogresult[konJingIndexs[i]].left_top.first) / 2;
 
-			auto konXinJu = ImageTool.CalculateDistance2D(new Point((int)konCenterX, (int)konCenterY), new Point(image.Width / 2, image.Height / 2));
 			auto konXinJu = std::sqrt((konCenterX * frame.image.cols / 2) + (konCenterY * frame.image.rows / 2));
 			auto pianCha = konXinJu - checkConfig->holeCenterDistanceValue / pixEquivalent;
 
@@ -142,7 +141,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 			{
 				isBad = true;
 
-				errorInfo.emplace_back("孔心距 " + QString::number(pianCha * CameraSetting()->xiangShuDangLiang));
+				errorInfo.emplace_back("孔心距 " + QString::number(pianCha * pixEquivalent));
 			}
 		}
 
@@ -164,7 +163,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 	{
 		for (int i = 0; i < poYanIndexs.size(); i++)
 		{
-			var area = container.candidates[poYanIndexs[i]].area;
+			//auto area = vecrecogresult[poYanIndexs[i]].area;
 			auto score = vecrecogresult[poYanIndexs[i]].score;
 			auto width = abs(vecrecogresult[poYanIndexs[i]].right_bottom.first - vecrecogresult[poYanIndexs[i]].left_top.first);
 			auto height = abs(vecrecogresult[poYanIndexs[i]].right_bottom.second - vecrecogresult[poYanIndexs[i]].left_top.second);
@@ -266,6 +265,8 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 		}
 	}
 
+    emit processResult(!isBad, frame.loaction);
+
 	// Calculate elapsed time
 	t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
 	//LOG () "ProcessMask execution time: " << t*1000 << " seconds";  
@@ -340,6 +341,7 @@ void ImageProcessingModule::BuildModule()
 		workIndexCount++;
 		processor->buildModelEngine(modelEnginePath, modelNamePath);
 		connect(processor, &ImageProcessor::imageReady, this, &ImageProcessingModule::imageReady, Qt::QueuedConnection);
+        connect(processor, &ImageProcessor::processResult, this, &ImageProcessingModule::onProcessResult, Qt::QueuedConnection);
 		processors.push_back(processor);
 		processor->start();
 	}
@@ -370,6 +372,11 @@ ImageProcessingModule::~ImageProcessingModule()
 		}
 		delete processor;
 	}
+}
+
+void ImageProcessingModule::onProcessResult(bool isOk, float location)
+{
+    emit processResult(isOk, location);
 }
 
 void ImageProcessingModule::onFrameCaptured(cv::Mat frame, float location, size_t index)

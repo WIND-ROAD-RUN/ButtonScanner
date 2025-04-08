@@ -17,56 +17,56 @@
 #include<QFileInfo>
 
 ButtonScanner::ButtonScanner(QWidget* parent)
-	: QMainWindow(parent)
-	, ui(new Ui::ButtonScannerClass())
+    : QMainWindow(parent)
+    , ui(new Ui::ButtonScannerClass())
 {
-	ui->setupUi(this);
+    ui->setupUi(this);
 
-	read_config();
+    read_config();
 
-	build_ui();
-	build_connect();
+    build_ui();
+    build_connect();
 
-	build_Motion();
+    build_Motion();
 
-	build_camera();
+    build_camera();
 
     build_ImageProcessorModule();
 
-	//监视相机运动控制卡线程
-	build_MonitoringThread();
+    //监视相机运动控制卡线程
+    build_MonitoringThread();
 
-	start_monitor();
+    start_monitor();
 }
 
 ButtonScanner::~ButtonScanner()
 {
-	delete ui;
-	auto& globalStruct = GlobalStruct::getInstance();
-	globalStruct.destroyCamera();
-	globalStruct.destroyImageProcessingModule();
-	globalStruct.saveConfig();
+    delete ui;
+    auto& globalStruct = GlobalStruct::getInstance();
+    globalStruct.destroyCamera();
+    globalStruct.destroyImageProcessingModule();
+    globalStruct.saveConfig();
 }
 
 void ButtonScanner::set_radioButton()
 {
-	ui->rbtn_debug->setAutoExclusive(false);
-	ui->rbtn_defect->setAutoExclusive(false);
-	ui->rbtn_downLight->setAutoExclusive(false);
-	ui->rbtn_ForAndAgainst->setAutoExclusive(false);
-	ui->rbtn_removeFunc->setAutoExclusive(false);
-	ui->rbtn_sideLight->setAutoExclusive(false);
-	ui->rbtn_takePicture->setAutoExclusive(false);
-	ui->rbtn_upLight->setAutoExclusive(false);
+    ui->rbtn_debug->setAutoExclusive(false);
+    ui->rbtn_defect->setAutoExclusive(false);
+    ui->rbtn_downLight->setAutoExclusive(false);
+    ui->rbtn_ForAndAgainst->setAutoExclusive(false);
+    ui->rbtn_removeFunc->setAutoExclusive(false);
+    ui->rbtn_sideLight->setAutoExclusive(false);
+    ui->rbtn_takePicture->setAutoExclusive(false);
+    ui->rbtn_upLight->setAutoExclusive(false);
 }
 
 void ButtonScanner::build_ui()
 {
-	//Set RadioButton ,make sure these can be checked at the same time
-	set_radioButton();
+    //Set RadioButton ,make sure these can be checked at the same time
+    set_radioButton();
     build_MainWindowData();
     build_dlgProduceLineSet();
-	build_dlgProductSet();
+    build_dlgProductSet();
 }
 
 void ButtonScanner::build_MainWindowData()
@@ -75,15 +75,15 @@ void ButtonScanner::build_MainWindowData()
     auto& mainWindowConfig = globalStruct.mainWindowConfig;
     ui->label_produceTotalValue->setText(QString::number(mainWindowConfig.totalProduction));
     ui->label_wasteProductsValue->setText(QString::number(mainWindowConfig.totalWaste));
-    ui->label_productionYieldValue->setText(QString::number(mainWindowConfig.passRate)+QString(" %"));
+    ui->label_productionYieldValue->setText(QString::number(mainWindowConfig.passRate) + QString(" %"));
     ui->rbtn_debug->setChecked(mainWindowConfig.isDebugMode);
-	ui->rbtn_takePicture->setChecked(mainWindowConfig.isTakePictures);
+    ui->rbtn_takePicture->setChecked(mainWindowConfig.isTakePictures);
     ui->rbtn_removeFunc->setChecked(mainWindowConfig.isEliminating);
     ui->label_removeRate->setText(QString::number(mainWindowConfig.scrappingRate) + QString(" /min"));
     ui->rbtn_upLight->setChecked(mainWindowConfig.upLight);
     ui->rbtn_downLight->setChecked(mainWindowConfig.downLight);
     ui->rbtn_sideLight->setChecked(mainWindowConfig.sideLight);
-	ui->rbtn_defect->setChecked(mainWindowConfig.isDefect);
+    ui->rbtn_defect->setChecked(mainWindowConfig.isDefect);
     ui->rbtn_ForAndAgainst->setChecked(mainWindowConfig.isPositive);
 }
 
@@ -100,138 +100,138 @@ void ButtonScanner::build_dlgProductSet()
 
 void ButtonScanner::build_connect()
 {
-	QObject::connect(ui->pbtn_exit, &QPushButton::clicked, this, &ButtonScanner::pbtn_exit_clicked);
+    QObject::connect(ui->pbtn_exit, &QPushButton::clicked, this, &ButtonScanner::pbtn_exit_clicked);
 
-	QObject::connect(ui->pbtn_set, &QPushButton::clicked, this, &ButtonScanner::pbtn_set_clicked);
+    QObject::connect(ui->pbtn_set, &QPushButton::clicked, this, &ButtonScanner::pbtn_set_clicked);
 
-	QObject::connect(ui->pbtn_newProduction, &QPushButton::clicked, this, &ButtonScanner::pbtn_newProduction_clicked);
+    QObject::connect(ui->pbtn_newProduction, &QPushButton::clicked, this, &ButtonScanner::pbtn_newProduction_clicked);
 
-	QObject::connect(ui->pbtn_lightValue, &QPushButton::clicked, this, &ButtonScanner::pbtn_lightValue_clicked);
+    QObject::connect(ui->pbtn_lightValue, &QPushButton::clicked, this, &ButtonScanner::pbtn_lightValue_clicked);
 
-	QObject::connect(ui->rbtn_debug, &QPushButton::clicked, this, &ButtonScanner::rbtn_debug_ckecked);
-	QObject::connect(ui->rbtn_takePicture, &QPushButton::clicked, this, &ButtonScanner::rbtn_takePicture_ckecked);
-	QObject::connect(ui->rbtn_removeFunc, &QPushButton::clicked, this, &ButtonScanner::rbtn_removeFunc_ckecked);
-	QObject::connect(ui->rbtn_upLight, &QPushButton::clicked, this, &ButtonScanner::rbtn_upLight_ckecked);
-	QObject::connect(ui->rbtn_sideLight, &QPushButton::clicked, this, &ButtonScanner::rbtn_sideLight_ckecked);
-	QObject::connect(ui->rbtn_downLight, &QPushButton::clicked, this, &ButtonScanner::rbtn_downLight_ckecked);
-	QObject::connect(ui->rbtn_defect, &QPushButton::clicked, this, &ButtonScanner::rbtn_defect_ckecked);
-	QObject::connect(ui->rbtn_ForAndAgainst, &QPushButton::clicked, this, &ButtonScanner::rbtn_ForAndAgainst_ckecked);
- 
-	 
+    QObject::connect(ui->rbtn_debug, &QPushButton::clicked, this, &ButtonScanner::rbtn_debug_ckecked);
+    QObject::connect(ui->rbtn_takePicture, &QPushButton::clicked, this, &ButtonScanner::rbtn_takePicture_ckecked);
+    QObject::connect(ui->rbtn_removeFunc, &QPushButton::clicked, this, &ButtonScanner::rbtn_removeFunc_ckecked);
+    QObject::connect(ui->rbtn_upLight, &QPushButton::clicked, this, &ButtonScanner::rbtn_upLight_ckecked);
+    QObject::connect(ui->rbtn_sideLight, &QPushButton::clicked, this, &ButtonScanner::rbtn_sideLight_ckecked);
+    QObject::connect(ui->rbtn_downLight, &QPushButton::clicked, this, &ButtonScanner::rbtn_downLight_ckecked);
+    QObject::connect(ui->rbtn_defect, &QPushButton::clicked, this, &ButtonScanner::rbtn_defect_ckecked);
+    QObject::connect(ui->rbtn_ForAndAgainst, &QPushButton::clicked, this, &ButtonScanner::rbtn_ForAndAgainst_ckecked);
+
+
 }
 
 void ButtonScanner::read_config()
 {
-	auto& globalStruct = GlobalStruct::getInstance();
-	globalStruct.buildConfigManager(rw::oso::StorageType::Xml);
+    auto& globalStruct = GlobalStruct::getInstance();
+    globalStruct.buildConfigManager(rw::oso::StorageType::Xml);
 
-	read_config_mainWindowConfig();
-	read_config_productSetConfig();
-	read_config_produceLineConfig();
+    read_config_mainWindowConfig();
+    read_config_productSetConfig();
+    read_config_produceLineConfig();
 }
 
 void ButtonScanner::read_config_mainWindowConfig()
 {
-	auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStruct::getInstance();
 
-	QString mainWindowFilePath = R"(config/mainWindowConfig.xml)";
-	QDir dir;
-	QString mainWindowFilePathFull = dir.absoluteFilePath(mainWindowFilePath);
-	QFileInfo mainWindowFile(mainWindowFilePathFull);
+    QString mainWindowFilePath = R"(config/mainWindowConfig.xml)";
+    QDir dir;
+    QString mainWindowFilePathFull = dir.absoluteFilePath(mainWindowFilePath);
+    QFileInfo mainWindowFile(mainWindowFilePathFull);
 
-	globalStruct.mainwindowFilePath = mainWindowFilePathFull;
+    globalStruct.mainwindowFilePath = mainWindowFilePathFull;
 
-	if (!mainWindowFile.exists()) {
-		QDir configDir = QFileInfo(mainWindowFilePathFull).absoluteDir();
-		if (!configDir.exists()) {
-			configDir.mkpath(".");
-		}
-		QFile file(mainWindowFilePathFull);
-		if (file.open(QIODevice::WriteOnly)) {
-			file.close();
-		}
-		else {
-			QMessageBox::critical(this, "Error", "无法创建配置文件mainWindowConfig.xml");
-		}
-		globalStruct.mainWindowConfig = rw::cdm::ButtonScannerMainWindow();
-		globalStruct.saveMainWindowConfig();
-		return;
-	}
-	else {
-		globalStruct.ReadMainWindowConfig();
-	}
+    if (!mainWindowFile.exists()) {
+        QDir configDir = QFileInfo(mainWindowFilePathFull).absoluteDir();
+        if (!configDir.exists()) {
+            configDir.mkpath(".");
+        }
+        QFile file(mainWindowFilePathFull);
+        if (file.open(QIODevice::WriteOnly)) {
+            file.close();
+        }
+        else {
+            QMessageBox::critical(this, "Error", "无法创建配置文件mainWindowConfig.xml");
+        }
+        globalStruct.mainWindowConfig = rw::cdm::ButtonScannerMainWindow();
+        globalStruct.saveMainWindowConfig();
+        return;
+    }
+    else {
+        globalStruct.ReadMainWindowConfig();
+    }
 }
 
 void ButtonScanner::read_config_produceLineConfig()
 {
-	auto& globalStruct = GlobalStruct::getInstance();
-	QDir dir;
+    auto& globalStruct = GlobalStruct::getInstance();
+    QDir dir;
 
-	QString dlgProduceLineSetFilePath = R"(config/dlgProduceLineSetConfig.xml)";
-	QString dlgProduceLineSetFilePathFull = dir.absoluteFilePath(dlgProduceLineSetFilePath);
-	QFileInfo dlgProduceLineSetFile(dlgProduceLineSetFilePathFull);
+    QString dlgProduceLineSetFilePath = R"(config/dlgProduceLineSetConfig.xml)";
+    QString dlgProduceLineSetFilePathFull = dir.absoluteFilePath(dlgProduceLineSetFilePath);
+    QFileInfo dlgProduceLineSetFile(dlgProduceLineSetFilePathFull);
 
-	globalStruct.dlgProduceLineSetFilePath = dlgProduceLineSetFilePathFull;
+    globalStruct.dlgProduceLineSetFilePath = dlgProduceLineSetFilePathFull;
 
-	if (!dlgProduceLineSetFile.exists()) {
-		QDir configDir = QFileInfo(dlgProduceLineSetFilePathFull).absoluteDir();
-		if (!configDir.exists()) {
-			configDir.mkpath(".");
-		}
-		QFile file(dlgProduceLineSetFilePathFull);
-		if (file.open(QIODevice::WriteOnly)) {
-			file.close();
-		}
-		else {
-			QMessageBox::critical(this, "Error", "无法创建配置文件dlgProduceLineSetConfig.xml");
-		}
-		globalStruct.dlgProduceLineSetConfig = rw::cdm::ButtonScannerProduceLineSet();
-		globalStruct.saveDlgProduceLineSetConfig();
-		return;
-	}
-	else {
-		globalStruct.ReadDlgProduceLineSetConfig();
-	}
+    if (!dlgProduceLineSetFile.exists()) {
+        QDir configDir = QFileInfo(dlgProduceLineSetFilePathFull).absoluteDir();
+        if (!configDir.exists()) {
+            configDir.mkpath(".");
+        }
+        QFile file(dlgProduceLineSetFilePathFull);
+        if (file.open(QIODevice::WriteOnly)) {
+            file.close();
+        }
+        else {
+            QMessageBox::critical(this, "Error", "无法创建配置文件dlgProduceLineSetConfig.xml");
+        }
+        globalStruct.dlgProduceLineSetConfig = rw::cdm::ButtonScannerProduceLineSet();
+        globalStruct.saveDlgProduceLineSetConfig();
+        return;
+    }
+    else {
+        globalStruct.ReadDlgProduceLineSetConfig();
+    }
 }
 
 void ButtonScanner::read_config_productSetConfig()
 {
-	auto& globalStruct = GlobalStruct::getInstance();
-	QDir dir;
+    auto& globalStruct = GlobalStruct::getInstance();
+    QDir dir;
 
-	QString dlgProductSetFilePath = R"(config/dlgProdutSetConfig.xml)";
-	QString dlgProductSetFilePathFull = dir.absoluteFilePath(dlgProductSetFilePath);
-	QFileInfo dlgProductSetFile(dlgProductSetFilePathFull);
+    QString dlgProductSetFilePath = R"(config/dlgProdutSetConfig.xml)";
+    QString dlgProductSetFilePathFull = dir.absoluteFilePath(dlgProductSetFilePath);
+    QFileInfo dlgProductSetFile(dlgProductSetFilePathFull);
 
-	globalStruct.dlgProductSetFilePath = dlgProductSetFilePathFull;
+    globalStruct.dlgProductSetFilePath = dlgProductSetFilePathFull;
 
-	if (!dlgProductSetFile.exists()) {
-		QDir configDir = QFileInfo(dlgProductSetFilePathFull).absoluteDir();
-		if (!configDir.exists()) {
-			configDir.mkpath(".");
-		}
-		QFile file(dlgProductSetFilePathFull);
-		if (file.open(QIODevice::WriteOnly)) {
-			file.close();
-		}
-		else {
-			QMessageBox::critical(this, "Error", "无法创建配置文件dlgProdutSetConfig.xml");
-		}
-		globalStruct.dlgProductSetConfig = rw::cdm::ButtonScannerDlgProductSet();
-		globalStruct.saveDlgProductSetConfig();
-		return;
-	}
-	else {
-		globalStruct.ReadDlgProductSetConfig();
-	}
+    if (!dlgProductSetFile.exists()) {
+        QDir configDir = QFileInfo(dlgProductSetFilePathFull).absoluteDir();
+        if (!configDir.exists()) {
+            configDir.mkpath(".");
+        }
+        QFile file(dlgProductSetFilePathFull);
+        if (file.open(QIODevice::WriteOnly)) {
+            file.close();
+        }
+        else {
+            QMessageBox::critical(this, "Error", "无法创建配置文件dlgProdutSetConfig.xml");
+        }
+        globalStruct.dlgProductSetConfig = rw::cdm::ButtonScannerDlgProductSet();
+        globalStruct.saveDlgProductSetConfig();
+        return;
+    }
+    else {
+        globalStruct.ReadDlgProductSetConfig();
+    }
 
 }
 
 
 void ButtonScanner::build_camera()
 {
-	auto& globalStruct = GlobalStruct::getInstance();
-	globalStruct.cameraIp1 = "11";
+    auto& globalStruct = GlobalStruct::getInstance();
+    globalStruct.cameraIp1 = "11";
     globalStruct.cameraIp2 = "12";
     globalStruct.cameraIp3 = "13";
     globalStruct.cameraIp4 = "14";
@@ -241,38 +241,38 @@ void ButtonScanner::build_camera()
 
 void ButtonScanner::build_ImageProcessorModule()
 {
-	auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStruct::getInstance();
 
-	//
-	QString enginePath = R"(model/model.engine)";
-	QString namePath = R"(model/index.names)";
-	QDir dir;
+    //
+    QString enginePath = R"(model/model.engine)";
+    QString namePath = R"(model/index.names)";
+    QDir dir;
 
-	QString enginePathFull = dir.absoluteFilePath(enginePath);
-	QString namePathFull = dir.absoluteFilePath(namePath);
+    QString enginePathFull = dir.absoluteFilePath(enginePath);
+    QString namePathFull = dir.absoluteFilePath(namePath);
 
-	QFileInfo engineFile(enginePathFull);
-	QFileInfo nameFile(namePathFull);
+    QFileInfo engineFile(enginePathFull);
+    QFileInfo nameFile(namePathFull);
 
-	if (!engineFile.exists() || !nameFile.exists()) {
-		QMessageBox::critical(this, "Error", "Engine file or Name file does not exist. The application will now exit.");
-		QApplication::quit();
-		return;
-	}
+    if (!engineFile.exists() || !nameFile.exists()) {
+        QMessageBox::critical(this, "Error", "Engine file or Name file does not exist. The application will now exit.");
+        QApplication::quit();
+        return;
+    }
 
 
 
-	//TODO：使用对话框提示用户
+    //TODO：使用对话框提示用户
 
-	
-	globalStruct.enginePath = enginePathFull;
-	globalStruct.namePath = namePathFull;
+
+    globalStruct.enginePath = enginePathFull;
+    globalStruct.namePath = namePathFull;
 
     globalStruct.buildImageProcessingModule(2);
 
     ////连接界面显示和图像处理模块
     QObject::connect(globalStruct._imageProcessingModule1.get(), &ImageProcessingModule::imageReady,
-       this, &ButtonScanner::_camera1Display, Qt::DirectConnection);
+        this, &ButtonScanner::_camera1Display, Qt::DirectConnection);
     QObject::connect(globalStruct._imageProcessingModule2.get(), &ImageProcessingModule::imageReady,
         this, &ButtonScanner::_camera2Display, Qt::DirectConnection);
     QObject::connect(globalStruct._imageProcessingModule3.get(), &ImageProcessingModule::imageReady,
@@ -284,71 +284,71 @@ void ButtonScanner::build_ImageProcessorModule()
 
 void ButtonScanner::start_monitor()
 {
-	auto& globalStruct = GlobalStruct::getInstance();
-	globalStruct.startMonitor();
+    auto& globalStruct = GlobalStruct::getInstance();
+    globalStruct.startMonitor();
 }
 
 void ButtonScanner::build_Motion()
 {
-	auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStruct::getInstance();
 
-	//获取Zmotion
-	auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
+    //获取Zmotion
+    auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
 
-	//下面通过motionPtr进行操作
-	motionPtr.get()->OpenBoard((char*)"192.168.0.11");
+    //下面通过motionPtr进行操作
+    motionPtr.get()->OpenBoard((char*)"192.168.0.11");
 
 }
 
 void ButtonScanner::build_MonitoringThread()
 {
-	//线程内部
-	QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
+    //线程内部
+    QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
 
-		while (mark_Thread)
-		{
+        while (mark_Thread)
+        {
 
-			//运动控制卡实时状态
-			{
-				//这里获取全局变量
-				auto& globalStruct = GlobalStruct::getInstance();
+            //运动控制卡实时状态
+            {
+                //这里获取全局变量
+                auto& globalStruct = GlobalStruct::getInstance();
 
-				//获取Zmotion
-				auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
-
-
-				bool  boardState = motionPtr.get()->getBoardState();
-				if (boardState == false)
-				{
-					motionPtr.get()->OpenBoard((char*)"192.168.0.11");
-
-				}
-				else
-				{
-
-				}
-			}
-			//获得相机链接状态
-			{
+                //获取Zmotion
+                auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
 
 
+                bool  boardState = motionPtr.get()->getBoardState();
+                if (boardState == false)
+                {
+                    motionPtr.get()->OpenBoard((char*)"192.168.0.11");
 
+                }
+                else
+                {
 
-
-
-			}
-
-			QThread::msleep(500);
-
-
-
-		}
+                }
+            }
+            //获得相机链接状态
+            {
 
 
 
 
 
-	});
+
+            }
+
+            QThread::msleep(500);
+
+
+
+        }
+
+
+
+
+
+        });
 
 
 }
@@ -356,150 +356,245 @@ void ButtonScanner::build_MonitoringThread()
 
 void ButtonScanner::build_LOcationThread()
 {
-	//线程内部
-	QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
-	
-		while (mark_Thread)
-		{
-			//获得位置数据
+    //线程内部
+    QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
 
-			//1,3相机
-			float lacation1 = 0;
-			//2，4相机
-			float lacation2 = 0;
-			//获取两个位置
-			zwy::scc::GlobalMotion::getInstance().motionPtr.get()->GetAxisLocation(1, lacation1);
-			zwy::scc::GlobalMotion::getInstance().motionPtr.get()->GetAxisLocation(2, lacation2);
+        while (mark_Thread)
+        {
+            //获得位置数据
 
+            //1,3相机
+            float lacation1 = 0;
+            //2，4相机
+            float lacation2 = 0;
+            //获取两个位置
+            zwy::scc::GlobalMotion::getInstance().motionPtr.get()->GetAxisLocation(2, lacation1);
+            zwy::scc::GlobalMotion::getInstance().motionPtr.get()->GetAxisLocation(1, lacation2);
 
-			for (int i = 0; i < Products.size(); i++)
-			{
-				//踢飞逻辑
+            {
+            auto& work1 = GlobalStruct::getInstance().productPriorityQueue1;
 
-				if (Products[i].index==0)
-				{
-					double tifeishijian = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime1;
-					double tifeijuli = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance1;
+            double tifeishijian1 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime1;
+            double tifeijuli1 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance1;
 
-					Products.removeAt(i);
+            try
+            {
+                double nowlocation = work1.peek();
+                if (abs(lacation1- nowlocation)> tifeijuli1)
+                {
+                    work1.top();
 
-
-
-
-
-
-				}
+                    //吹气
+                    zwy::scc::GlobalMotion::getInstance().motionPtr.get()->SetIOOut(5, 5, true, tifeishijian1);
 
 
+                }
 
-
-
-			}
-
-
-
+            }
+            catch (const std::exception&)
+            {
+                    
+            }
+            
 
 
 
-		}
-	});
+
+            }
+            {
+                auto& work2 = GlobalStruct::getInstance().productPriorityQueue2;
+
+                double tifeishijian2 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime2;
+                double tifeijuli2 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance2;
+
+                try
+                {
+                    double nowlocation = work2.peek();
+                    if (abs(lacation2 - nowlocation) > tifeijuli2)
+                    {
+                        work2.top();
+
+                        //吹气
+                        zwy::scc::GlobalMotion::getInstance().motionPtr.get()->SetIOOut(1, 4, true, tifeishijian2);
+
+
+                    }
+
+                }
+                catch (const std::exception&)
+                {
+
+                }
+
+
+
+
+
+            }
+
+            {
+                auto& work3 = GlobalStruct::getInstance().productPriorityQueue3;
+
+                double tifeishijian3 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime3;
+                double tifeijuli3 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance3;
+
+                try
+                {
+                    double nowlocation = work3.peek();
+                    if (abs(lacation1 - nowlocation) > tifeijuli3)
+                    {
+                        work3.top();
+
+                        //吹气
+                        zwy::scc::GlobalMotion::getInstance().motionPtr.get()->SetIOOut(2, 3, true, tifeishijian3);
+
+
+                    }
+
+                }
+                catch (const std::exception&)
+                {
+
+                }
+
+
+
+
+
+            }
+
+            {
+                auto& work4 = GlobalStruct::getInstance().productPriorityQueue4;
+
+                double tifeishijian4 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime4;
+                double tifeijuli4 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance4;
+
+                try
+                {
+                    double nowlocation = work4.peek();
+                    if (abs(lacation2 - nowlocation) > tifeijuli4)
+                    {
+                        work4.top();
+
+                        //吹气
+                        zwy::scc::GlobalMotion::getInstance().motionPtr.get()->SetIOOut(3, 2, true, tifeishijian4);
+
+
+                    }
+
+                }
+                catch (const std::exception&)
+                {
+
+                }
+
+
+
+
+
+            }
+
+
+
+        }
+        });
 
 }
 
 void ButtonScanner::build_IOThread()
 {
-	//线程内部
-	QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
+    //线程内部
+    QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
 
 
-		//获取Zmotion
-		auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
-		
-		while (mark_Thread)
-		{
+        //获取Zmotion
+        auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
 
-			bool state = false;
-			state = motionPtr->GetIOIn(2);
-			//急停
+        while (mark_Thread)
+        {
 
-			if (state == true)
-			{
-				// pidaimove->stop();
-				motionPtr->StopAllAxis();
-				motionPtr->SetIOOut(1, false);
-				
-				motionPtr->SetIOOut(7, false);
+            bool state = false;
+            state = motionPtr->GetIOIn(2);
+            //急停
 
-			}
-			else
-			{
-				//开始按钮
-				bool state = false;
-				state = motionPtr->GetIOIn(1);
-				//启动程序
-				if (state == true)
-				{
+            if (state == true)
+            {
+                // pidaimove->stop();
+                motionPtr->StopAllAxis();
+                motionPtr->SetIOOut(1, false);
 
+                motionPtr->SetIOOut(7, false);
 
-					//所有电机上电
-					QtConcurrent::run([this, &motionPtr]() {
-						QThread::msleep(500);
-						motionPtr->SetIOOut(1, true);
-						//启动电机
-                    motionPtr->SetAxisType(0,1);
-					double unit = GlobalStruct::getInstance().dlgProduceLineSetConfig.pulseFactor;
-                    motionPtr->SetAxisPulse(0,unit);
-                    double acc= GlobalStruct::getInstance().dlgProduceLineSetConfig.accelerationAndDeceleration;
-                    motionPtr->SetAxisAcc(0,acc);
-                    motionPtr->SetAxisDec(0,acc);
-                    double speed= GlobalStruct::getInstance().dlgProduceLineSetConfig.motorSpeed;
-                    motionPtr->SetAxisRunSpeed(0,speed);
-                    // pidaimove->start(100);
-                    motionPtr->AxisRun(0,-1);
-                    motionPtr->SetIOOut(7,true);
-					});
-				}
-				else
-				{
+            }
+            else
+            {
+                //开始按钮
+                bool state = false;
+                state = motionPtr->GetIOIn(1);
+                //启动程序
+                if (state == true)
+                {
 
 
-
-
-
-
-
-				}
+                    //所有电机上电
+                    QtConcurrent::run([this, &motionPtr]() {
+                        QThread::msleep(500);
+                        motionPtr->SetIOOut(1, true);
+                        //启动电机
+                        motionPtr->SetAxisType(0, 1);
+                        double unit = GlobalStruct::getInstance().dlgProduceLineSetConfig.pulseFactor;
+                        motionPtr->SetAxisPulse(0, unit);
+                        double acc = GlobalStruct::getInstance().dlgProduceLineSetConfig.accelerationAndDeceleration;
+                        motionPtr->SetAxisAcc(0, acc);
+                        motionPtr->SetAxisDec(0, acc);
+                        double speed = GlobalStruct::getInstance().dlgProduceLineSetConfig.motorSpeed;
+                        motionPtr->SetAxisRunSpeed(0, speed);
+                        // pidaimove->start(100);
+                        motionPtr->AxisRun(0, -1);
+                        motionPtr->SetIOOut(7, true);
+                        });
+                }
+                else
+                {
 
 
 
 
 
-			}
+
+
+                }
 
 
 
-		}
 
 
-	});
+            }
+
+
+
+        }
+
+
+        });
 
 }
 
 QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
 {
-	if (mat.type() == CV_8UC1) {
-		return QImage(mat.data, mat.cols, mat.rows, mat.step[0], QImage::Format_Grayscale8);
-	}
-	else if (mat.type() == CV_8UC3) {
-		return QImage(mat.data, mat.cols, mat.rows, mat.step[0], QImage::Format_RGB888).rgbSwapped();
-	}
-	else if (mat.type() == CV_8UC4) {
-		return QImage(mat.data, mat.cols, mat.rows, mat.step[0], QImage::Format_RGBA8888);
-	}
-	else {
-		LOG()  "Unsupported image format";
-		return QImage();
-	}
+    if (mat.type() == CV_8UC1) {
+        return QImage(mat.data, mat.cols, mat.rows, mat.step[0], QImage::Format_Grayscale8);
+    }
+    else if (mat.type() == CV_8UC3) {
+        return QImage(mat.data, mat.cols, mat.rows, mat.step[0], QImage::Format_RGB888).rgbSwapped();
+    }
+    else if (mat.type() == CV_8UC4) {
+        return QImage(mat.data, mat.cols, mat.rows, mat.step[0], QImage::Format_RGBA8888);
+    }
+    else {
+        LOG()  "Unsupported image format";
+        return QImage();
+    }
 
 }
 
@@ -517,19 +612,19 @@ void ButtonScanner::_camera2Display(QImage image)
 
 void ButtonScanner::_camera3Display(QImage image)
 {
-	QPixmap pixmap = QPixmap::fromImage(image);
-	ui->label_imgDisplay_3->setPixmap(pixmap.scaled(ui->label_imgDisplay_3->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    QPixmap pixmap = QPixmap::fromImage(image);
+    ui->label_imgDisplay_3->setPixmap(pixmap.scaled(ui->label_imgDisplay_3->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 void ButtonScanner::_camera4Display(QImage image)
 {
-	QPixmap pixmap = QPixmap::fromImage(image);
-	ui->label_imgDisplay_4->setPixmap(pixmap.scaled(ui->label_imgDisplay_4->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    QPixmap pixmap = QPixmap::fromImage(image);
+    ui->label_imgDisplay_4->setPixmap(pixmap.scaled(ui->label_imgDisplay_4->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 void ButtonScanner::pbtn_set_clicked()
 {
-	dlgProduceLineSet->exec();
+    dlgProduceLineSet->exec();
 
 }
 
@@ -540,74 +635,74 @@ void ButtonScanner::pbtn_newProduction_clicked()
 
 void ButtonScanner::pbtn_lightValue_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_lightValue, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_lightValue, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.mainWindowConfig.lightValue  = ui->pbtn_lightValue->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.mainWindowConfig.lightValue = ui->pbtn_lightValue->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
 
 void ButtonScanner::rbtn_debug_ckecked(bool checked)
 {
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.mainWindowConfig.isDebugMode = checked;
-	GlobalStruct.saveConfig();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.mainWindowConfig.isDebugMode = checked;
+    GlobalStruct.saveConfig();
 }
 
 void ButtonScanner::rbtn_takePicture_ckecked(bool checked)
 {
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.mainWindowConfig.isTakePictures = checked;
-	GlobalStruct.saveConfig();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.mainWindowConfig.isTakePictures = checked;
+    GlobalStruct.saveConfig();
 }
 
 void ButtonScanner::rbtn_removeFunc_ckecked(bool checked)
 {
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.mainWindowConfig.isEliminating = checked;
-	GlobalStruct.saveConfig();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.mainWindowConfig.isEliminating = checked;
+    GlobalStruct.saveConfig();
 }
 
 void ButtonScanner::rbtn_upLight_ckecked(bool checked)
 {
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.mainWindowConfig.upLight = checked;
-	GlobalStruct.saveConfig();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.mainWindowConfig.upLight = checked;
+    GlobalStruct.saveConfig();
 }
 
 void ButtonScanner::rbtn_sideLight_ckecked(bool checked)
 {
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.mainWindowConfig.sideLight = checked;
-	GlobalStruct.saveConfig();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.mainWindowConfig.sideLight = checked;
+    GlobalStruct.saveConfig();
 }
 
 void ButtonScanner::rbtn_downLight_ckecked(bool checked)
 {
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.mainWindowConfig.downLight = checked;
-	GlobalStruct.saveConfig();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.mainWindowConfig.downLight = checked;
+    GlobalStruct.saveConfig();
 }
 
 void ButtonScanner::rbtn_defect_ckecked(bool checked)
 {
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.mainWindowConfig.isDefect = checked;
-	GlobalStruct.saveConfig();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.mainWindowConfig.isDefect = checked;
+    GlobalStruct.saveConfig();
 }
 
 void ButtonScanner::rbtn_ForAndAgainst_ckecked(bool checked)
 {
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.mainWindowConfig.isPositive = checked;
-	GlobalStruct.saveConfig();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.mainWindowConfig.isPositive = checked;
+    GlobalStruct.saveConfig();
 }
 
 void ButtonScanner::pbtn_exit_clicked()
 {
-	//TODO: question messagebox
+    //TODO: question messagebox
 
-	this->close();
+    this->close();
 }

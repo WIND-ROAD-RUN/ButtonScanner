@@ -55,6 +55,7 @@ protected:
 
 signals:
     void imageReady(const QImage& image);
+    void processResult(bool isOk,float location);
 
 private:
     std::unique_ptr<rw::ime::ModelEngine> _modelEnginePtr;
@@ -86,9 +87,11 @@ public:
 
 public slots :
     void onFrameCaptured(cv::Mat frame,float location, size_t index);
+    void onProcessResult(bool isOk, float location);
 
 signals:
     void imageReady(const QImage& image);
+    void processResult(bool isOk, float location);
 
 private:
     QQueue<MatInfo> queue;

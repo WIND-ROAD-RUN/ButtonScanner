@@ -67,9 +67,6 @@
     <ClCompile Include="NumKeyBord.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Product.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DlgProductSet.h">
@@ -107,7 +104,7 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Product.h">
+    <ClInclude Include="ThreadSafePriorityQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

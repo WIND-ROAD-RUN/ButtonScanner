@@ -33,8 +33,10 @@ private:
 private:
     //变量监控线程关机的时候停止
     bool mark_Thread = false;
-    //踢飞产品数组
-    QVector<Product>Products;
+
+
+
+
 
 public:
     ButtonScanner(QWidget* parent = nullptr);
