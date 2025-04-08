@@ -36,6 +36,11 @@ namespace rw
             }
         }
 
+        bool CameraPassiveThread::getConnectState()
+        {
+            return _cameraObject->getConnectState();
+        }
+
         void CameraPassiveThread::startMonitor()
         {
             if (!this->isRunning())

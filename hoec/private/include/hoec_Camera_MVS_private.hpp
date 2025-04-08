@@ -30,6 +30,7 @@ namespace rw {
             static void unInitSDK();
         public:
             void connectCamera() override;
+            bool getConnectState()override;
         public:
             void startMonitor() override;
             void stopMonitor() override;

@@ -58,6 +58,8 @@ void DlgProduceLineSet::read_config()
 	ui->pbtn_accelerationAndDeceleration->setText(QString::number(globalStruct.dlgProduceLineSetConfig.accelerationAndDeceleration));
 	ui->pbtn_minBrightness->setText(QString::number(globalStruct.dlgProduceLineSetConfig.minBrightness));
 	ui->pbtn_maxBrightness->setText(QString::number(globalStruct.dlgProduceLineSetConfig.maxBrightness));
+	ui->pbtn_codeWheel->setText(QString::number(globalStruct.dlgProduceLineSetConfig.codeWheel));
+	ui->pbtn_pulseFactor->setText(QString::number(globalStruct.dlgProduceLineSetConfig.pulseFactor));
 }
 
 void DlgProduceLineSet::build_connect()
@@ -132,6 +134,11 @@ void DlgProduceLineSet::build_connect()
         this, &DlgProduceLineSet::cbox_workstationProtection34_checked);
     QObject::connect(ui->cbox_debugMode, &QCheckBox::clicked,
         this, &DlgProduceLineSet::cbox_debugMode_checked);
+
+    QObject::connect(ui->pbtn_codeWheel, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_codeWheel_clicked);
+    QObject::connect(ui->pbtn_pulseFactor, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_pulseFactor_clicked);
 
 }
 

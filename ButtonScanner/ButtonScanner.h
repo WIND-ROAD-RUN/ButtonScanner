@@ -10,7 +10,6 @@
 
 #include<QImage>
 #include<memory>
-#include"Product.h"
 namespace rw
 {
     namespace rqw
@@ -33,10 +32,6 @@ private:
 private:
     //变量监控线程关机的时候停止
     bool mark_Thread = false;
-
-
-
-
 
 public:
     ButtonScanner(QWidget* parent = nullptr);

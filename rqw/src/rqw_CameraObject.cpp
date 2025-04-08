@@ -124,6 +124,13 @@ namespace rw
 
             _cameraPassive->RegisterCallBackFunc();
         }
+        bool CameraPassiveObject::getConnectState()
+        {
+            if (_cameraPassive) {
+                return _cameraPassive->getConnectState();
+            }
+            return false;
+        }
     } // namespace rqw
 } // namespace rw
 

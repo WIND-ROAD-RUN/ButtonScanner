@@ -163,7 +163,6 @@ void GlobalStruct::buildCamera()
 			{
 				LOG()  "Camera 1 initialization failed.";
 			}
-
 		}
 	}
 

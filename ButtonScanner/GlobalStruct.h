@@ -13,7 +13,6 @@
 #include"oso_StorageContext.hpp"
 #include<QString>
 #include <cdm_ButtonScannerProduceLineSet.h>
-#include"Product.h"
 #include<atomic>
 
 namespace zwy {

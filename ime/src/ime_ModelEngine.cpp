@@ -48,7 +48,6 @@ namespace rw
             {
                 std::vector<PyRecMaskResult> vecrecogresult;
                 yolov5v6_seg_trt_process_mask(_index, img, resultMat, maskMat, vecrecogresult);
-                vecRecogResult.clear();
                 for (auto& pyRecMaskResult : vecrecogresult)
                 {
                     vecRecogResult.push_back(ConvertPyRecMaskResultToProcessRectanglesResult(pyRecMaskResult));

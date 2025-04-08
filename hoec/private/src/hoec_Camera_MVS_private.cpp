@@ -179,6 +179,11 @@ namespace rw {
             return ;
         }
 
+        bool Camera_MVS::getConnectState()
+        {
+            return MV_CC_IsDeviceConnected(m_cameraHandle);
+        }
+
         void Camera_MVS::startMonitor()
         {
             if (_isMonitor) {

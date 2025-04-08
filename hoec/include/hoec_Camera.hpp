@@ -172,6 +172,8 @@ namespace rw
              */
             virtual void connectCamera() = 0;
 
+            virtual bool getConnectState() = 0;
+
         public:
 
             /**
@@ -452,6 +454,8 @@ namespace rw
         protected:
             void connectCamera() override;
         public:
+            bool getConnectState()override;
+        public:
             void startMonitor() override;
             void stopMonitor() override;
             void setExposureTime(size_t value) override;
@@ -490,6 +494,8 @@ namespace rw
             UserToCallBack _userToCallBack;
         protected:
             void connectCamera() override;
+        public:
+            bool getConnectState()override;
         public:
             void startMonitor() override;
             void stopMonitor() override;

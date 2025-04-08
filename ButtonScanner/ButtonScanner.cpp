@@ -21,7 +21,7 @@ ButtonScanner::ButtonScanner(QWidget* parent)
     , ui(new Ui::ButtonScannerClass())
 {
     ui->setupUi(this);
-
+    mark_Thread = true;
     read_config();
 
     build_ui();
@@ -36,11 +36,15 @@ ButtonScanner::ButtonScanner(QWidget* parent)
     //监视相机运动控制卡线程
     build_MonitoringThread();
 
+    build_IOThread();
+
     start_monitor();
+
 }
 
 ButtonScanner::~ButtonScanner()
 {
+    mark_Thread = false;
     delete ui;
     auto& globalStruct = GlobalStruct::getInstance();
     globalStruct.destroyCamera();
@@ -296,7 +300,23 @@ void ButtonScanner::build_Motion()
     auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
 
     //下面通过motionPtr进行操作
-    motionPtr.get()->OpenBoard((char*)"192.168.0.11");
+   bool state= motionPtr.get()->OpenBoard((char*)"192.168.0.11");
+
+
+
+
+
+   if (state) {
+    
+       motionPtr->SetLocationZero(0);
+       motionPtr->SetLocationZero(1);
+       motionPtr->SetLocationZero(2);
+       motionPtr->SetAxisType(1,3);
+       motionPtr->SetAxisType(2,3);
+       motionPtr->SetAxisPulse(1, globalStruct.dlgProduceLineSetConfig.codeWheel);
+       motionPtr->SetAxisPulse(2, globalStruct.dlgProduceLineSetConfig.codeWheel);
+
+   }
 
 }
 
@@ -331,7 +351,84 @@ void ButtonScanner::build_MonitoringThread()
             //获得相机链接状态
             {
 
+                auto& globalStruct = GlobalStruct::getInstance();
 
+                if (globalStruct._camera1) {
+                    if (globalStruct._camera1->getConnectState()) {
+                        QMetaObject::invokeMethod(qApp, [this]
+                            {
+                                ui->label_camera1State->setText("连接成功");
+                                ui->label_camera1State->setStyleSheet(QString("QLabel{color:rgb(0, 230, 0);} "));
+                            });
+                    }
+                    else {
+                        QMetaObject::invokeMethod(qApp, [this]
+                            {
+                                ui->label_camera1State->setText("连接失败");
+                                ui->label_camera1State->setStyleSheet(QString("QLabel{color:rgb(230, 0, 0);} "));
+                            });
+                    }
+                }
+
+              
+
+                if (globalStruct._camera2) {
+                    if (globalStruct._camera2->getConnectState()) {
+                        QMetaObject::invokeMethod(qApp, [this]
+                            {
+                                ui->label_camera2State->setText("连接成功");
+                                ui->label_camera2State->setStyleSheet(QString("QLabel{color:rgb(0, 230, 0);} "));
+                            });
+                    }
+                    else {
+                        QMetaObject::invokeMethod(qApp, [this]
+                            {
+                                ui->label_camera2State->setText("连接失败");
+                                ui->label_camera2State->setStyleSheet(QString("QLabel{color:rgb(230, 0, 0);} "));
+                            });
+                    }
+                }
+
+               
+
+               
+                if (globalStruct._camera3) {
+                    if (globalStruct._camera3->getConnectState()) {
+                        QMetaObject::invokeMethod(qApp, [this]
+                            {
+                                ui->label_camera3State->setText("连接成功");
+                                ui->label_camera3State->setStyleSheet(QString("QLabel{color:rgb(0, 230, 0);} "));
+                            });
+                    }
+                    else {
+                        QMetaObject::invokeMethod(qApp, [this]
+                            {
+                                ui->label_camera3State->setText("连接失败");
+                                ui->label_camera3State->setStyleSheet(QString("QLabel{color:rgb(230, 0, 0);} "));
+                            });
+                    }
+                }
+
+               
+
+
+               if (globalStruct._camera4) {
+                   if (globalStruct._camera4->getConnectState()) {
+                       QMetaObject::invokeMethod(qApp, [this]
+                           {
+                               ui->label_camera4State->setText("连接成功");
+                               ui->label_camera4State->setStyleSheet(QString("QLabel{color:rgb(0, 230, 0);} "));
+                           });
+                   }
+                   else {
+                       QMetaObject::invokeMethod(qApp, [this]
+                           {
+                               ui->label_camera4State->setText("连接失败");
+                               ui->label_camera4State->setStyleSheet(QString("QLabel{color:rgb(230, 0, 0);} "));
+                           });
+                   }
+               }
+               
 
 
 
@@ -507,6 +604,7 @@ void ButtonScanner::build_IOThread()
     QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
 
 
+        auto& globalStruct = GlobalStruct::getInstance();
         //获取Zmotion
         auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
 
@@ -554,24 +652,58 @@ void ButtonScanner::build_IOThread()
                         motionPtr->SetIOOut(7, true);
                         });
                 }
-                else
+                //停止点
+                state = motionPtr->GetIOIn(2);
+                if (state)
                 {
-
-
-
+                    motionPtr->StopAllAxis();
+                    motionPtr->SetIOOut(1,false);
+                    motionPtr->SetIOOut(7, false);
+                    
 
 
 
 
                 }
 
+                //获取气压表数据
+                auto qiya = motionPtr->GetIOIn(7);
+                if (qiya==true) {
+                    //气压正常
+                    motionPtr->SetIOOut(8, true);
+                }
+                else {
+                    motionPtr->SetIOOut(8, false);
+
+                }
+
+                if (globalStruct.mainWindowConfig.upLight) {
+                    motionPtr->SetIOOut(9, true);
+                }
+                else {
+                    motionPtr->SetIOOut(9, false);
+                }
+
+                if (globalStruct.mainWindowConfig.downLight) {
+                    motionPtr->SetIOOut(10, true);
+                }
+                else {
+                    motionPtr->SetIOOut(10, false);
+                }
+
+                if (globalStruct.mainWindowConfig.sideLight) {
+                    motionPtr->SetIOOut(0, true);
+                }
+                else {
+                    motionPtr->SetIOOut(0, false);
+                }
 
 
-
-
+               
+                            
             }
 
-
+            QThread::msleep(100);
 
         }
 

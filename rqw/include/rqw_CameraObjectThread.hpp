@@ -25,6 +25,9 @@ namespace rw {
             ~CameraPassiveThread() override;
 
             void initCamera(const rw::rqw::CameraMetaData& cameraMetaData, rw::rqw::CameraObjectTrigger triggerMode,size_t motionInde);
+            
+            bool getConnectState();
+        public:
             void startMonitor();
             void stopMonitor();
 

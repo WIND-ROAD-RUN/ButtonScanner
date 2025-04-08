@@ -81,6 +81,7 @@ namespace rw {
             [[nodiscard]] size_t getTriggerLine() const;
         public:
             void initCamera(const CameraMetaData& cameraMetaData, CameraObjectTrigger triggerMode);
+            bool getConnectState();
         signals:
             void frameCaptured(cv::Mat frame,float);
             void frameCapturedWithMetaData(cv::Mat frame, CameraMetaData cameraMetaData);

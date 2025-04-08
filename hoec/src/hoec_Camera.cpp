@@ -31,6 +31,11 @@ namespace rw {
              _cameraInfo = _camera->getCameraInfo();
         }
 
+        bool CameraActive::getConnectState()
+        {
+            return _camera->getConnectState();
+        }
+
         void CameraActive::startMonitor()
         {
              _camera->startMonitor();
@@ -132,6 +137,11 @@ namespace rw {
             _camera->setIP(_ip);
              _camera->connectCamera();
              _cameraInfo = _camera->getCameraInfo();
+        }
+
+        bool CameraPassive::getConnectState()
+        {
+            return _camera->getConnectState();
         }
 
         void CameraPassive::startMonitor()

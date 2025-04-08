@@ -38,9 +38,11 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 	// Process the frame
 	_modelEnginePtr->ProcessMask(frame.image, resultImage, maskImage, vecRecogResult);
 
+	LOG()vecRecogResult.size();
+
 	auto isBad = false;
 
-	std::vector<rw::ime::ProcessRectanglesResult> vecrecogresult;
+	//std::vector<rw::ime::ProcessRectanglesResult> vecRecogResult;
 	cv::Mat resultMat;
 	cv::Mat maskmat;
 
@@ -55,9 +57,9 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 	std::vector<int> lieHenIndexs = std::vector<int>();
 	std::vector<int> poYanIndexs = std::vector<int>();
 
-	for (int i = 0; i < vecrecogresult.size(); i++)
+	for (int i = 0; i < vecRecogResult.size(); i++)
 	{
-		switch (vecrecogresult[i].classId)
+		switch (vecRecogResult[i].classId)
 		{
 		case 0: waiJingIndexs.push_back(i); continue;
 		case 1: konJingIndexs.push_back(i); continue;
@@ -83,8 +85,8 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 		}
 		else
 		{
-			auto shangXiaPianCha = vecrecogresult[waiJingIndexs[0]].right_bottom.second - vecrecogresult[waiJingIndexs[0]].left_top.second - checkConfig->outsideDiameterValue / pixEquivalent;
-			auto zuoYouPianCha = vecrecogresult[waiJingIndexs[0]].right_bottom.first - vecrecogresult[waiJingIndexs[0]].left_top.first - checkConfig->outsideDiameterValue / pixEquivalent;
+			auto shangXiaPianCha = vecRecogResult[waiJingIndexs[0]].right_bottom.second - vecRecogResult[waiJingIndexs[0]].left_top.second - checkConfig->outsideDiameterValue / pixEquivalent;
+			auto zuoYouPianCha = vecRecogResult[waiJingIndexs[0]].right_bottom.first - vecRecogResult[waiJingIndexs[0]].left_top.first - checkConfig->outsideDiameterValue / pixEquivalent;
 
 			auto shangXiaPianChaAbs = abs(shangXiaPianCha);
 			auto zuoYouPianChaAbs = abs(zuoYouPianCha);
@@ -110,8 +112,8 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 	if (checkConfig->apertureEnable)
 		for (int i = 0; i < konJingIndexs.size(); i++)
 		{
-			auto shangXiaPianCha = vecrecogresult[konJingIndexs[i]].right_bottom.second - vecrecogresult[konJingIndexs[i]].left_top.second - checkConfig->apertureValue / pixEquivalent;
-			auto zuoYouPianCha = vecrecogresult[konJingIndexs[i]].right_bottom.first - vecrecogresult[konJingIndexs[i]].left_top.first - checkConfig->apertureValue / pixEquivalent;
+			auto shangXiaPianCha = vecRecogResult[konJingIndexs[i]].right_bottom.second - vecRecogResult[konJingIndexs[i]].left_top.second - checkConfig->apertureValue / pixEquivalent;
+			auto zuoYouPianCha = vecRecogResult[konJingIndexs[i]].right_bottom.first - vecRecogResult[konJingIndexs[i]].left_top.first - checkConfig->apertureValue / pixEquivalent;
 
 			auto shangXiaPianChaAbs = abs(shangXiaPianCha);
 			auto zuoYouPianChaAbs = abs(zuoYouPianCha);
@@ -131,8 +133,8 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 	if (checkConfig->holeCenterDistanceEnable)
 		for (int i = 0; i < konJingIndexs.size(); i++)
 		{
-			auto konCenterY = vecrecogresult[konJingIndexs[i]].left_top.second + (vecrecogresult[konJingIndexs[i]].right_bottom.second - vecrecogresult[konJingIndexs[i]].left_top.second) / 2;
-			auto konCenterX = vecrecogresult[konJingIndexs[i]].left_top.first + (vecrecogresult[konJingIndexs[i]].right_bottom.first - vecrecogresult[konJingIndexs[i]].left_top.first) / 2;
+			auto konCenterY = vecRecogResult[konJingIndexs[i]].left_top.second + (vecRecogResult[konJingIndexs[i]].right_bottom.second - vecRecogResult[konJingIndexs[i]].left_top.second) / 2;
+			auto konCenterX = vecRecogResult[konJingIndexs[i]].left_top.first + (vecRecogResult[konJingIndexs[i]].right_bottom.first - vecRecogResult[konJingIndexs[i]].left_top.first) / 2;
 
 			auto konXinJu = std::sqrt((konCenterX * frame.image.cols / 2) + (konCenterY * frame.image.rows / 2));
 			auto pianCha = konXinJu - checkConfig->holeCenterDistanceValue / pixEquivalent;
@@ -149,7 +151,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 	{
 		for (int i = 0; i < daPoBianIndexs.size(); i++)
 		{
-			auto score = vecrecogresult[daPoBianIndexs[i]].score;
+			auto score = vecRecogResult[daPoBianIndexs[i]].score;
 
 			if (score > checkConfig->edgeDamageSimilarity)
 			{
@@ -163,10 +165,10 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 	{
 		for (int i = 0; i < poYanIndexs.size(); i++)
 		{
-			//auto area = vecrecogresult[poYanIndexs[i]].area;
-			auto score = vecrecogresult[poYanIndexs[i]].score;
-			auto width = abs(vecrecogresult[poYanIndexs[i]].right_bottom.first - vecrecogresult[poYanIndexs[i]].left_top.first);
-			auto height = abs(vecrecogresult[poYanIndexs[i]].right_bottom.second - vecrecogresult[poYanIndexs[i]].left_top.second);
+			//auto area = vecRecogResult[poYanIndexs[i]].area;
+			auto score = vecRecogResult[poYanIndexs[i]].score;
+			auto width = abs(vecRecogResult[poYanIndexs[i]].right_bottom.first - vecRecogResult[poYanIndexs[i]].left_top.first);
+			auto height = abs(vecRecogResult[poYanIndexs[i]].right_bottom.second - vecRecogResult[poYanIndexs[i]].left_top.second);
 			//area > _checkSetting.poYanMianJi&&
 			if (score > checkConfig->brokenEyeSimilarity)//&& width * height > CheckSetting()->poYanMianJi
 			{
@@ -180,11 +182,11 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 	{
 		for (int i = 0; i < lieHenIndexs.size(); i++)
 		{
-			auto width = abs(vecrecogresult[lieHenIndexs[i]].right_bottom.first - vecrecogresult[lieHenIndexs[i]].left_top.first);
-			auto height = abs(vecrecogresult[lieHenIndexs[i]].right_bottom.second - vecrecogresult[lieHenIndexs[i]].left_top.second);
+			auto width = abs(vecRecogResult[lieHenIndexs[i]].right_bottom.first - vecRecogResult[lieHenIndexs[i]].left_top.first);
+			auto height = abs(vecRecogResult[lieHenIndexs[i]].right_bottom.second - vecRecogResult[lieHenIndexs[i]].left_top.second);
 
 			//var area = container.candidates[lieHenIndexs[i]].area;
-			auto score = vecrecogresult[lieHenIndexs[i]].score;
+			auto score = vecRecogResult[lieHenIndexs[i]].score;
 			//area > _checkSetting.lieHenMianJi &&
 			if (score > checkConfig->crackSimilarity)//&& width * height > checkConfig->lieHenMianJi
 			{
@@ -199,7 +201,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 	{
 		for (int i = 0; i < qiKonIndexs.size(); i++)
 		{
-			auto score = vecrecogresult[qiKonIndexs[i]].score;
+			auto score = vecRecogResult[qiKonIndexs[i]].score;
 			if (score > 30)
 			{
 				isBad = true;
@@ -213,7 +215,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 	{
 		for (int i = 0; i < youQiIndexs.size(); i++)
 		{
-			auto score = vecrecogresult[youQiIndexs[i]].score;
+			auto score = vecRecogResult[youQiIndexs[i]].score;
 			if (score > 50)
 			{
 				isBad = true;
@@ -227,7 +229,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 	{
 		for (int i = 0; i < moShiIndexs.size(); i++)
 		{
-			auto score = vecrecogresult[moShiIndexs[i]].score;
+			auto score = vecRecogResult[moShiIndexs[i]].score;
 			if (score > 0)
 			{
 				isBad = true;
@@ -241,7 +243,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 	{
 		for (int i = 0; i < duYanIndexs.size(); i++)
 		{
-			auto score = vecrecogresult[duYanIndexs[i]].score;
+			auto score = vecRecogResult[duYanIndexs[i]].score;
 			if (score > 10)
 			{
 				isBad = true;
@@ -255,7 +257,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 	{
 		for (int i = 0; i < liaoTouIndexs.size(); i++)
 		{
-			auto score = vecrecogresult[liaoTouIndexs[i]].score;
+			auto score = vecRecogResult[liaoTouIndexs[i]].score;
 			if (score > 10)
 			{
 				isBad = true;
@@ -291,7 +293,7 @@ QImage ImageProcessor::cvMatToQImage(const cv::Mat& mat,const QVector<QString>& 
 
 	ImagePainter::drawTextOnImage(result, errorInfo);
 
-
+	return result;
 }
 
 ImageProcessor::ImageProcessor(QQueue<MatInfo>& queue, QMutex& mutex, QWaitCondition& condition, int workindex, QObject* parent)

@@ -13,13 +13,13 @@ rw::cdm::ButtonScannerProduceLineSet::ButtonScannerProduceLineSet(const rw::oso:
 	if (!pulseFactorItem) {
 		throw std::runtime_error("$variable$pulseFactor is not found");
 	}
-	pulseFactor = pulseFactorItem->getValueAsBool();
+	pulseFactor = pulseFactorItem->getValueAsDouble();
 
 	auto codeWheelItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$codeWheel$"));
 	if (!codeWheelItem) {
 		throw std::runtime_error("$variable$codeWheel is not found");
 	}
-	codeWheel = codeWheelItem->getValueAsBool();
+	codeWheel = codeWheelItem->getValueAsDouble();
 
 	auto blowingEnable1Item = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$blowingEnable1$"));
 	if (!blowingEnable1Item) {
@@ -319,12 +319,12 @@ rw::cdm::ButtonScannerProduceLineSet::operator rw::oso::ObjectStoreAssembly() co
 
 	auto pulseFactorItem = std::make_shared<oso::ObjectStoreItem>();
 	pulseFactorItem->setName("$variable$pulseFactor$");
-	pulseFactorItem->setValueFromBool(pulseFactor);
+	pulseFactorItem->setValueFromDouble(pulseFactor);
 	assembly.addItem(pulseFactorItem);
 
 	auto codeWheelItem = std::make_shared<oso::ObjectStoreItem>();
 	codeWheelItem->setName("$variable$codeWheel$");
-	codeWheelItem->setValueFromBool(codeWheel);
+	codeWheelItem->setValueFromDouble(codeWheel);
 	assembly.addItem(codeWheelItem);
 
 	auto blowingEnable1Item = std::make_shared<oso::ObjectStoreItem>();
