@@ -67,6 +67,7 @@ void ButtonScanner::build_ui()
     build_MainWindowData();
     build_dlgProduceLineSet();
 	build_dlgProductSet();
+	build_dlgAiLearn();
 }
 
 void ButtonScanner::build_MainWindowData()
@@ -96,6 +97,11 @@ void ButtonScanner::build_dlgProductSet()
 {
     this->dlgProductSet = new DlgProductSet(this);
 
+}
+
+void ButtonScanner::build_dlgAiLearn()
+{
+	this->dlgAiLearn = new DlgAiLearn(this);
 }
 
 void ButtonScanner::build_connect()
@@ -535,7 +541,9 @@ void ButtonScanner::pbtn_set_clicked()
 
 void ButtonScanner::pbtn_newProduction_clicked()
 {
-    dlgProductSet->exec();
+	delete dlgAiLearn;
+	dlgAiLearn = new DlgAiLearn(this);
+	dlgAiLearn->exec();
 }
 
 void ButtonScanner::pbtn_lightValue_clicked()
@@ -547,6 +555,11 @@ void ButtonScanner::pbtn_lightValue_clicked()
 	GlobalStruct.mainWindowConfig.lightValue  = ui->pbtn_lightValue->text().toDouble();
 
 	delete numKeyBoard;
+}
+
+void ButtonScanner::pbtn_score_clicked()
+{
+	dlgProductSet->exec();
 }
 
 void ButtonScanner::rbtn_debug_ckecked(bool checked)

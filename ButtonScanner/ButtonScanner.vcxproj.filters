@@ -70,6 +70,9 @@
     <ClCompile Include="Product.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DlgAiLearn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DlgProductSet.h">
@@ -87,12 +90,18 @@
     <QtMoc Include="NumKeyBord.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="DlgAiLearn.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="DlgProductSet.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="DlgProduceLineSet.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DlgAiLearn.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
