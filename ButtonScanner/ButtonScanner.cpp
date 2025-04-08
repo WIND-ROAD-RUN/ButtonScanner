@@ -9,6 +9,7 @@
 #include"DlgProduceLineSet.h"
 #include"GlobalStruct.h"
 #include"NumKeyBord.h"
+#include"cdm_ButtonScannerDlgAiLearn.h"
 
 #include<qdebug>
 #include<QtConcurrent>
@@ -134,6 +135,7 @@ void ButtonScanner::read_config()
 	read_config_mainWindowConfig();
 	read_config_productSetConfig();
 	read_config_produceLineConfig();
+	//read_config_DlgAiLearnConfig();
 }
 
 void ButtonScanner::read_config_mainWindowConfig()
@@ -232,6 +234,38 @@ void ButtonScanner::read_config_productSetConfig()
 	}
 
 }
+
+//void ButtonScanner::read_config_DlgAiLearnConfig()
+//{
+//	auto& globalStruct = GlobalStruct::getInstance();
+//	QDir dir;
+//
+//	QString dlgAiLearnFilePath = R"(config/dlgAiLearnConfig.xml)";
+//	QString dlgAiLearnFilePathFull = dir.absoluteFilePath(dlgAiLearnFilePath);
+//	QFileInfo dlgAiLearnFile(dlgAiLearnFilePathFull);
+//
+//	globalStruct.dlgAiLearnFilePath = dlgAiLearnFilePathFull;
+//
+//	if (!dlgAiLearnFile.exists()) {
+//		QDir configDir = QFileInfo(dlgAiLearnFilePathFull).absoluteDir();
+//		if (!configDir.exists()) {
+//			configDir.mkpath(".");
+//		}
+//		QFile file(dlgAiLearnFilePathFull);
+//		if (file.open(QIODevice::WriteOnly)) {
+//			file.close();
+//		}
+//		else {
+//			QMessageBox::critical(this, "Error", "无法创建配置文件dlgAiLearnConfig.xml");
+//		}
+//		globalStruct.dlgAiLearnConfig = rw::cdm::ButtonScannerDlgAiLearn();
+//		globalStruct.saveDlgProductSetConfig();
+//		return;
+//	}
+//	else {
+//		globalStruct.ReadDlgAiLearnConfig();
+//	}
+//}
 
 
 void ButtonScanner::build_camera()

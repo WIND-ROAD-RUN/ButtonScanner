@@ -152,7 +152,7 @@
     </widget>
    </widget>
   </widget>
-  <widget class="QWidget" name="widget_step1" native="true">
+  <widget class="QWidget" name="widget_step" native="true">
    <property name="geometry">
     <rect>
      <x>970</x>
@@ -161,7 +161,7 @@
      <height>741</height>
     </rect>
    </property>
-   <widget class="QLabel" name="label_6">
+   <widget class="QLabel" name="label_stepTitle">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -179,7 +179,7 @@
      <string>第一步：</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_7">
+   <widget class="QLabel" name="label_stepDescribe">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -290,14 +290,117 @@
    <widget class="QPushButton" name="pbtn_next">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>170</x>
       <y>640</y>
       <width>101</width>
       <height>51</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>下一步</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbtn_lookAllImage">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>500</y>
+      <width>171</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>查看纽扣图片</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbtn_pre">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>640</y>
+      <width>101</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>上一步</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="widget_pic" native="true">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>30</y>
+     <width>950</width>
+     <height>950</height>
+    </rect>
+   </property>
+   <widget class="QLabel" name="label_pic3">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>475</y>
+      <width>475</width>
+      <height>475</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_pic1">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>475</width>
+      <height>475</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_pic4">
+    <property name="geometry">
+     <rect>
+      <x>475</x>
+      <y>475</y>
+      <width>475</width>
+      <height>475</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_pic2">
+    <property name="geometry">
+     <rect>
+      <x>475</x>
+      <y>0</y>
+      <width>475</width>
+      <height>475</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>

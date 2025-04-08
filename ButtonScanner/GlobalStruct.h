@@ -12,6 +12,7 @@
 #include"oso_StorageContext.hpp"
 #include<QString>
 #include <cdm_ButtonScannerProduceLineSet.h>
+#include <cdm_ButtonScannerDlgAiLearn.h>
 
 
 template<typename T>

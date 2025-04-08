@@ -73,6 +73,9 @@
     <ClCompile Include="DlgAiLearn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cdm_ButtonScannerDlgAiLearn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DlgProductSet.h">
@@ -117,6 +120,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Product.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cdm_ButtonScannerDlgAiLearn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
