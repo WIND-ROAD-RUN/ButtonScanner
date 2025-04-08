@@ -369,7 +369,7 @@ namespace rw
             T top() override {
                 std::lock_guard<std::mutex> lock(_mutex);
                 if (this->_heap_array.empty()) {
-                    throw std::runtime_error("Heap is empty");
+                    return 0;
                 }
                 T top_element = this->_heap_array.front().first;
                 std::swap(this->_heap_array.front(), this->_heap_array.back());
@@ -383,7 +383,7 @@ namespace rw
             T peek() override {
                 std::lock_guard<std::mutex> lock(_mutex);
                 if (this->_heap_array.empty()) {
-                    throw std::runtime_error("Heap is empty");
+                    return 0;
                 }
                 return this->_heap_array.front().first;
             }

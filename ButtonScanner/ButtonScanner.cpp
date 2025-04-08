@@ -40,6 +40,8 @@ ButtonScanner::ButtonScanner(QWidget* parent)
 
     start_monitor();
 
+    build_LocationThread();
+
 }
 
 ButtonScanner::~ButtonScanner()
@@ -451,7 +453,7 @@ void ButtonScanner::build_MonitoringThread()
 }
 
 
-void ButtonScanner::build_LOcationThread()
+void ButtonScanner::build_LocationThread()
 {
     //线程内部
     QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
@@ -474,8 +476,7 @@ void ButtonScanner::build_LOcationThread()
             double tifeishijian1 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime1;
             double tifeijuli1 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance1;
 
-            try
-            {
+           
                 double nowlocation = work1.peek();
                 if (abs(lacation1- nowlocation)> tifeijuli1)
                 {
@@ -487,11 +488,6 @@ void ButtonScanner::build_LOcationThread()
 
                 }
 
-            }
-            catch (const std::exception&)
-            {
-                    
-            }
             
 
 
@@ -504,10 +500,9 @@ void ButtonScanner::build_LOcationThread()
                 double tifeishijian2 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime2;
                 double tifeijuli2 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance2;
 
-                try
-                {
+              
                     double nowlocation = work2.peek();
-                    if (abs(lacation2 - nowlocation) > tifeijuli2)
+                    if (nowlocation!=0&&(abs(lacation2 - nowlocation) > tifeijuli2))
                     {
                         work2.top();
 
@@ -517,11 +512,7 @@ void ButtonScanner::build_LOcationThread()
 
                     }
 
-                }
-                catch (const std::exception&)
-                {
-
-                }
+                
 
 
 
@@ -535,10 +526,8 @@ void ButtonScanner::build_LOcationThread()
                 double tifeishijian3 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime3;
                 double tifeijuli3 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance3;
 
-                try
-                {
                     double nowlocation = work3.peek();
-                    if (abs(lacation1 - nowlocation) > tifeijuli3)
+                    if (nowlocation != 0 && abs(lacation1 - nowlocation) > tifeijuli3)
                     {
                         work3.top();
 
@@ -548,11 +537,7 @@ void ButtonScanner::build_LOcationThread()
 
                     }
 
-                }
-                catch (const std::exception&)
-                {
-
-                }
+                
 
 
 
@@ -566,10 +551,9 @@ void ButtonScanner::build_LOcationThread()
                 double tifeishijian4 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime4;
                 double tifeijuli4 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance4;
 
-                try
-                {
+               
                     double nowlocation = work4.peek();
-                    if (abs(lacation2 - nowlocation) > tifeijuli4)
+                    if (nowlocation != 0 && abs(lacation2 - nowlocation) > tifeijuli4)
                     {
                         work4.top();
 
@@ -579,11 +563,7 @@ void ButtonScanner::build_LOcationThread()
 
                     }
 
-                }
-                catch (const std::exception&)
-                {
-
-                }
+              
 
 
 
