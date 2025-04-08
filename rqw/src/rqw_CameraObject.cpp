@@ -112,8 +112,8 @@ namespace rw
             _cameraPassive = hoec::CameraFactory::CreatePassiveCamera(hoecCameraIp, hoecTrigger, [this](cv::Mat  mat)
                 {
                 auto & cameraObject = zwy::scc::GlobalMotion::getInstance();
-                float location;
-                cameraObject.motionPtr->GetModbus(motionInde, motionRedix, location);
+                float location=0;
+                cameraObject.motionPtr->GetModbus(motionInde, 1, location);
 
                     cv::Mat matCopy;
                     mat.copyTo(matCopy);

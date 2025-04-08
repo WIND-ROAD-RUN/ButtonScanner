@@ -88,6 +88,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 	}
 
 	if (checkConfig->outsideDiameterEnable)
+	{ 
 		ImagePainter::drawCirclesOnImage(resultImage, body);
 		if (waiJingIndexs.size() == 0)
 		{
@@ -112,16 +113,18 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 					errorInfo.emplace_back("外径 " + QString::number(zuoYouPianCha * pixEquivalent));
 			}
 		}
-
+	}
 	if (checkConfig->holesCountEnable)
+	{
 		ImagePainter::drawCirclesOnImage(resultImage, hole);
 		if (konJingIndexs.size() != checkConfig->holesCountValue)
 		{
 			isBad = true;
 			errorInfo.emplace_back("只找到" + QString::number(konJingIndexs.size()) + "个孔");
 		}
-
+	}
 	if (checkConfig->apertureEnable)
+	{ 
 		for (int i = 0; i < konJingIndexs.size(); i++)
 		{
 			auto shangXiaPianCha = vecRecogResult[konJingIndexs[i]].right_bottom.second - vecRecogResult[konJingIndexs[i]].left_top.second - checkConfig->apertureValue / pixEquivalent;
@@ -141,8 +144,9 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 					errorInfo.emplace_back("孔径 " + QString::number(zuoYouPianCha * pixEquivalent));
 			}
 		}
-
+	}
 	if (checkConfig->holeCenterDistanceEnable)
+	{ 
 		for (int i = 0; i < konJingIndexs.size(); i++)
 		{
 			auto konCenterY = vecRecogResult[konJingIndexs[i]].left_top.second + (vecRecogResult[konJingIndexs[i]].right_bottom.second - vecRecogResult[konJingIndexs[i]].left_top.second) / 2;
@@ -158,7 +162,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 				errorInfo.emplace_back("孔心距 " + QString::number(pianCha * pixEquivalent));
 			}
 		}
-
+	}
 	if (checkConfig->edgeDamageEnable)
 	{
 		for (int i = 0; i < daPoBianIndexs.size(); i++)
@@ -279,13 +283,9 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 		}
 	}
 
-	LOG()errorInfo.size();
-
     emit processResult(!isBad, frame.loaction);
 
-	// Calculate elapsed time
-	t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
-	//LOG () "ProcessMask execution time: " << t*1000 << " seconds";  
+
 	return resultImage.clone();
 }
 
@@ -394,7 +394,7 @@ ImageProcessingModule::~ImageProcessingModule()
 
 void ImageProcessingModule::onProcessResult(bool isOk, float location)
 {
-    emit processResult(isOk, location);
+    emit processResultModule(isOk, location);
 }
 
 void ImageProcessingModule::onFrameCaptured(cv::Mat frame, float location, size_t index)

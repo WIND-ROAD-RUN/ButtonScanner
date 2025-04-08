@@ -93,7 +93,7 @@ public slots :
 
 signals:
     void imageReady(const QImage& image);
-    void processResult(bool isOk, float location);
+    void processResultModule(bool isOk, float location);
 
 private:
     QQueue<MatInfo> queue;

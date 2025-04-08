@@ -30,22 +30,22 @@ void GlobalStruct::buildImageProcessingModule(size_t num)
     //连接相机和图像处理模块
     QObject::connect(_camera1.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
         _imageProcessingModule1.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
-	QObject::connect(_imageProcessingModule1.get(), &ImageProcessingModule::onProcessResult,
+	QObject::connect(_imageProcessingModule1.get(), &ImageProcessingModule::processResultModule,
 		this, &GlobalStruct::onCamera1ImageReady,Qt::DirectConnection);
 
 	QObject::connect(_camera2.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
 		_imageProcessingModule2.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
-    QObject::connect(_imageProcessingModule2.get(), &ImageProcessingModule::onProcessResult,
+    QObject::connect(_imageProcessingModule2.get(), &ImageProcessingModule::processResultModule,
         this, &GlobalStruct::onCamera2ImageReady, Qt::DirectConnection);
 
 	QObject::connect(_camera3.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
 		_imageProcessingModule3.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
-    QObject::connect(_imageProcessingModule3.get(), &ImageProcessingModule::onProcessResult,
+    QObject::connect(_imageProcessingModule3.get(), &ImageProcessingModule::processResultModule,
 		this, &GlobalStruct::onCamera3ImageReady, Qt::DirectConnection);
 
 	QObject::connect(_camera4.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
 		_imageProcessingModule4.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
-	QObject::connect(_imageProcessingModule4.get(), &ImageProcessingModule::onProcessResult,
+	QObject::connect(_imageProcessingModule4.get(), &ImageProcessingModule::processResultModule,
 		this, &GlobalStruct::onCamera4ImageReady, Qt::DirectConnection);
 }
 

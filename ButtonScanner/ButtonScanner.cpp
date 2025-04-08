@@ -473,12 +473,15 @@ void ButtonScanner::build_LocationThread()
             {
             auto& work1 = GlobalStruct::getInstance().productPriorityQueue1;
 
+            int i=work1.size();
+        
             double tifeishijian1 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime1;
             double tifeijuli1 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance1;
 
            
                 double nowlocation = work1.peek();
-                if (abs(lacation1- nowlocation)> tifeijuli1)
+                
+                if (nowlocation != 0 && (abs(lacation1- nowlocation)> tifeijuli1))
                 {
                     work1.top();
 
