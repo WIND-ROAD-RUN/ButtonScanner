@@ -27,20 +27,20 @@ ButtonScanner::ButtonScanner(QWidget* parent)
     build_ui();
     build_connect();
 
-    build_Motion();
+    build_motion();
 
     build_camera();
 
-    build_ImageProcessorModule();
+    build_imageProcessorModule();
 
     //监视相机运动控制卡线程
-    build_MonitoringThread();
+    build_monitoringThread();
 
-    build_IOThread();
+    build_ioThread();
 
     start_monitor();
 
-    build_LocationThread();
+    build_locationThread();
 
 }
 
@@ -70,12 +70,12 @@ void ButtonScanner::build_ui()
 {
     //Set RadioButton ,make sure these can be checked at the same time
     set_radioButton();
-    build_MainWindowData();
+    build_mainWindowData();
     build_dlgProduceLineSet();
     build_dlgProductSet();
 }
 
-void ButtonScanner::build_MainWindowData()
+void ButtonScanner::build_mainWindowData()
 {
     auto& globalStruct = GlobalStruct::getInstance();
     auto& mainWindowConfig = globalStruct.mainWindowConfig;
@@ -245,7 +245,7 @@ void ButtonScanner::build_camera()
     globalStruct.buildCamera();
 }
 
-void ButtonScanner::build_ImageProcessorModule()
+void ButtonScanner::build_imageProcessorModule()
 {
     auto& globalStruct = GlobalStruct::getInstance();
 
@@ -278,13 +278,13 @@ void ButtonScanner::build_ImageProcessorModule()
 
     ////连接界面显示和图像处理模块
     QObject::connect(globalStruct.imageProcessingModule1.get(), &ImageProcessingModule::imageReady,
-        this, &ButtonScanner::_camera1Display, Qt::DirectConnection);
+        this, &ButtonScanner::onCamera1Display, Qt::DirectConnection);
     QObject::connect(globalStruct.imageProcessingModule2.get(), &ImageProcessingModule::imageReady,
-        this, &ButtonScanner::_camera2Display, Qt::DirectConnection);
+        this, &ButtonScanner::onCamera2Display, Qt::DirectConnection);
     QObject::connect(globalStruct.imageProcessingModule3.get(), &ImageProcessingModule::imageReady,
-        this, &ButtonScanner::_camera3Display, Qt::DirectConnection);
+        this, &ButtonScanner::onCamera3Display, Qt::DirectConnection);
     QObject::connect(globalStruct.imageProcessingModule4.get(), &ImageProcessingModule::imageReady,
-        this, &ButtonScanner::_camera4Display, Qt::DirectConnection);
+        this, &ButtonScanner::onCamera4Display, Qt::DirectConnection);
 
 }
 
@@ -294,7 +294,7 @@ void ButtonScanner::start_monitor()
     globalStruct.startMonitor();
 }
 
-void ButtonScanner::build_Motion()
+void ButtonScanner::build_motion()
 {
     auto& globalStruct = GlobalStruct::getInstance();
 
@@ -322,7 +322,7 @@ void ButtonScanner::build_Motion()
 
 }
 
-void ButtonScanner::build_MonitoringThread()
+void ButtonScanner::build_monitoringThread()
 {
     //线程内部
     QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
@@ -453,7 +453,7 @@ void ButtonScanner::build_MonitoringThread()
 }
 
 
-void ButtonScanner::build_LocationThread()
+void ButtonScanner::build_locationThread()
 {
     //线程内部
     QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
@@ -581,7 +581,7 @@ void ButtonScanner::build_LocationThread()
 
 }
 
-void ButtonScanner::build_IOThread()
+void ButtonScanner::build_ioThread()
 {
     //线程内部
     QtConcurrent::run([this]() {
@@ -712,25 +712,25 @@ QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
 
 }
 
-void ButtonScanner::_camera1Display(QImage image)
+void ButtonScanner::onCamera1Display(QImage image)
 {
     QPixmap pixmap = QPixmap::fromImage(image);
     ui->label_imgDisplay->setPixmap(pixmap.scaled(ui->label_imgDisplay->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
-void ButtonScanner::_camera2Display(QImage image)
+void ButtonScanner::onCamera2Display(QImage image)
 {
     QPixmap pixmap = QPixmap::fromImage(image);
     ui->label_imgDisplay_2->setPixmap(pixmap.scaled(ui->label_imgDisplay_2->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
-void ButtonScanner::_camera3Display(QImage image)
+void ButtonScanner::onCamera3Display(QImage image)
 {
     QPixmap pixmap = QPixmap::fromImage(image);
     ui->label_imgDisplay_3->setPixmap(pixmap.scaled(ui->label_imgDisplay_3->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
-void ButtonScanner::_camera4Display(QImage image)
+void ButtonScanner::onCamera4Display(QImage image)
 {
     QPixmap pixmap = QPixmap::fromImage(image);
     ui->label_imgDisplay_4->setPixmap(pixmap.scaled(ui->label_imgDisplay_4->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));

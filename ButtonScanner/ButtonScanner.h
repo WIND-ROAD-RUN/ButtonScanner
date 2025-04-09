@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <QtWidgets/QMainWindow>
 #include "ui_ButtonScanner.h"
@@ -43,7 +43,7 @@ private:
 
 private:
     void build_ui();
-    void build_MainWindowData();
+    void build_mainWindowData();
     void build_dlgProduceLineSet();
     void build_dlgProductSet();
 
@@ -57,19 +57,19 @@ private:
     
     void build_camera();
 
-    void build_ImageProcessorModule();
+    void build_imageProcessorModule();
 
     void start_monitor();
 
-    void build_Motion();
+    void build_motion();
 
     //实时监控运动控制卡,相机状态（掉线重连）
-    void build_MonitoringThread();
+    void build_monitoringThread();
 
     //开启线程实施监控皮带运动位置
-    void build_LocationThread();
+    void build_locationThread();
     //开启线程监控运动控制卡io点并且做出相应的逻辑
-    void build_IOThread();
+    void build_ioThread();
 
 private:
     Ui::ButtonScannerClass* ui;
@@ -78,13 +78,13 @@ private:
     QImage cvMatToQImage(const cv::Mat& mat);
 
 private slots:
-    void _camera1Display(QImage image);
+    void onCamera1Display(QImage image);
 
-    void _camera2Display(QImage image);
+    void onCamera2Display(QImage image);
 
-    void _camera3Display(QImage image);
+    void onCamera3Display(QImage image);
 
-    void _camera4Display(QImage image);
+    void onCamera4Display(QImage image);
 
 private slots:
     void pbtn_exit_clicked();
