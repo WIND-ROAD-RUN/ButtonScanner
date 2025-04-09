@@ -18,7 +18,6 @@ namespace rw {
         {
             if (_cameraNum == 0)
             {
-
                 initSDK();
             }
             _cameraNum++;
@@ -37,10 +36,8 @@ namespace rw {
             _cameraNum--;
             if (_cameraNum == 0)
             {
-
                 unInitSDK();
             }
-
         }
         std::vector<std::string> Camera_MVS::getCameraIpList()
         {
@@ -101,10 +98,9 @@ namespace rw {
             _isIniSDK = true;
             auto result = MV_CC_Initialize();
             if (result == MV_OK) {
-                return ;
+                return;
             }
             throw CameraInitError("Failed to initialize SDK");
-
         }
 
         void Camera_MVS::unInitSDK()
@@ -112,7 +108,7 @@ namespace rw {
             _isIniSDK = false;
             auto result = MV_CC_Finalize();
             if (result == MV_OK) {
-                return ;
+                return;
             }
             throw CameraInitError("Failed to uninitialize SDK");
         }
@@ -146,7 +142,6 @@ namespace rw {
                 throw CameraConnectionError("Failed to find target device");
             }
 
-
             //是否可以独占访问
             auto canAccessible = MV_CC_IsDeviceAccessible(targetDevice, MV_ACCESS_Exclusive);
             if (canAccessible != true) {
@@ -165,7 +160,7 @@ namespace rw {
                 throw CameraConnectionError("Failed to open device");
             }
 
-            auto cameraInfoList=Camera_MVS::getCameraInfoList();
+            auto cameraInfoList = Camera_MVS::getCameraInfoList();
             auto findResult = std::find_if(cameraInfoList.begin(), cameraInfoList.end(), [this](const CameraInfo& cameraInfo) {
                 return cameraInfo.ip == _ip;
                 });
@@ -176,7 +171,7 @@ namespace rw {
 
             _cameraInfo = *findResult;
 
-            return ;
+            return;
         }
 
         bool Camera_MVS::getConnectState()
@@ -195,7 +190,7 @@ namespace rw {
                 throw CameraMonitorError("Failed to start grabbing");
             }
             _isMonitor = true;
-            return ;
+            return;
         }
 
         void Camera_MVS::stopMonitor()
@@ -208,7 +203,7 @@ namespace rw {
                 throw CameraMonitorError("Failed to stop grabbing");
             }
             _isMonitor = false;
-            return ;
+            return;
         }
 
         void Camera_MVS::setExposureTime(size_t value)
@@ -216,10 +211,9 @@ namespace rw {
             float exposureTime = static_cast<float>(value);
             auto result = MV_CC_SetExposureTime(m_cameraHandle, exposureTime);
             if (result == MV_OK)
-                return ;
+                return;
 
             throw CameraSettingError("Failed to set exposuretime");
-
         }
 
         void Camera_MVS::setGain(size_t value)
@@ -227,9 +221,8 @@ namespace rw {
             float gain = static_cast<float>(value);
             auto result = MV_CC_SetGain(m_cameraHandle, gain);
             if (result == MV_OK)
-                return ;
+                return;
             throw CameraSettingError("Failed to set gain");
-
         }
 
         void Camera_MVS::setIOTime(size_t value)
@@ -237,7 +230,7 @@ namespace rw {
             auto result = MV_CC_SetIntValue(m_cameraHandle, "LineDebouncerTime ", value);
             if (result == MV_OK)
             {
-                return ;
+                return;
             }
             throw CameraSettingError("Failed to set I/OTime");
         }
@@ -252,7 +245,6 @@ namespace rw {
             }
 
             throw CameraRetrievalError("Failed to get exposure time");
-
         }
 
         size_t Camera_MVS::getGain()
@@ -265,8 +257,6 @@ namespace rw {
             }
 
             throw CameraRetrievalError("Failed to get gain");
-
-
         }
 
         size_t Camera_MVS::getIOTime()
@@ -280,8 +270,6 @@ namespace rw {
             }
 
             throw CameraRetrievalError("Failed to get ioTime");
-
-
         }
 
         CameraTriggerMode Camera_MVS::getMonitorMode() {
@@ -303,16 +291,14 @@ namespace rw {
             else
             {
                 throw CameraSettingError("Invalid trigger mode");
-
             }
             if (MV_CC_SetTriggerMode(m_cameraHandle, modeValue) == MV_OK)
             {
-                return ;
+                return;
             }
             else
             {
                 throw CameraSettingError("Failed to set trigger mode");
-
             }
         }
 
@@ -321,11 +307,10 @@ namespace rw {
             unsigned int lineValue = static_cast <unsigned int> (lineIndex);
             if (MV_CC_SetTriggerSource(m_cameraHandle, lineValue) == MV_OK)
             {
-                return ;
+                return;
             }
 
             throw CameraSettingError("Failed to set trigger line");
-
         }
 
         size_t Camera_MVS::getTriggerLine()
@@ -338,7 +323,6 @@ namespace rw {
             }
 
             throw CameraRetrievalError("Failed to get trigger line");
-
         }
 
         Camera_MVS_Active::Camera_MVS_Active()
@@ -394,7 +378,6 @@ namespace rw {
         Camera_MVS_Passive::Camera_MVS_Passive(UserToCallBack userToCallback)
             :_userToCallBack(userToCallback)
         {
-
         }
 
         Camera_MVS_Passive::~Camera_MVS_Passive()
@@ -415,7 +398,6 @@ namespace rw {
             return;
         }
 
-
         void __stdcall Camera_MVS_Passive::ImageCallBackFunc(unsigned char* pData, MV_FRAME_OUT_INFO_EX* pFrameInfo, void* pUser) {
             Camera_MVS_Passive* pThis = static_cast<Camera_MVS_Passive*>(pUser);
             if (pFrameInfo)
@@ -428,9 +410,6 @@ namespace rw {
                     throw CameraMonitorError("Failed to get user pointer");
                 }
             }
-
         }
-
     } // namespace hoec
-
 } // namespace rw

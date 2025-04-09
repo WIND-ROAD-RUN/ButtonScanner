@@ -14,7 +14,7 @@ namespace rw {
 
         template<typename T>
         using Vector = std::vector<T>;
-        
+
         template<typename T>
         using Shared_ptr = std::shared_ptr<T>;
 
@@ -22,9 +22,7 @@ namespace rw {
         inline Shared_ptr<T> make_shared(Args&&... args) {
             return std::make_shared<T>(std::forward<Args>(args)...);
         }
-    
     }
 }
-
 
 #endif // !DSL_CORE_H_

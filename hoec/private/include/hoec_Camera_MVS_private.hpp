@@ -15,7 +15,7 @@ typedef struct _MV_FRAME_OUT_INFO_EX_ MV_FRAME_OUT_INFO_EX;
 
 namespace rw {
     namespace hoec {
-        class Camera_MVS:
+        class Camera_MVS :
             public ICamera {
         private:
             static std::atomic<size_t> _cameraNum;
@@ -23,7 +23,7 @@ namespace rw {
             Camera_MVS();
             ~Camera_MVS() override;
         public:
-            static bool _isIniSDK;   
+            static bool _isIniSDK;
             static std::vector<std::string> getCameraIpList();
             static std::vector<CameraInfo> getCameraInfoList();
             static void initSDK();
@@ -64,7 +64,7 @@ namespace rw {
         };
 
         class Camera_MVS_Passive
-            :public Camera_MVS, public ICameraPassive{
+            :public Camera_MVS, public ICameraPassive {
         private:
             UserToCallBack _userToCallBack;
         public:
@@ -79,10 +79,7 @@ namespace rw {
 
             static void __stdcall ImageCallBackFunc(unsigned char* pData, MV_FRAME_OUT_INFO_EX* pFrameInfo, void* pUser);
         };
-
     } // namespace hoec
-
 } // namespace rw
-
 
 #endif // !HOEC_CAMERA_MVS_PRIVATE_H_

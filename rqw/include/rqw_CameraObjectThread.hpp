@@ -6,7 +6,6 @@
 
 #include<QThread>
 
-
 namespace rw {
     namespace rqw {
         class CameraPassiveObject;
@@ -15,18 +14,18 @@ namespace rw {
         {
             Q_OBJECT
         public:
-            size_t cameraIndex{0};
+            size_t cameraIndex{ 0 };
             size_t motionRedix;
         public:
             explicit CameraPassiveThread(QObject* parent = nullptr);
-            CameraPassiveThread(const CameraPassiveThread&) = delete; // ¿½±´¹¹Ôìº¯Êı±»É¾³ı
-            CameraPassiveThread& operator=(const CameraPassiveThread&) = delete; // ¿½±´¸³ÖµÔËËã·û±»É¾³ı
-            // ÆäËû³ÉÔ±º¯ÊıºÍ±äÁ¿
+            CameraPassiveThread(const CameraPassiveThread&) = delete; // æ‹·è´æ„é€ å‡½æ•°è¢«åˆ é™¤
+            CameraPassiveThread& operator=(const CameraPassiveThread&) = delete; // æ‹·è´èµ‹å€¼è¿ç®—ç¬¦è¢«åˆ é™¤
+            // å…¶ä»–æˆå‘˜å‡½æ•°å’Œå˜é‡
 
             ~CameraPassiveThread() override;
 
-            void initCamera(const rw::rqw::CameraMetaData& cameraMetaData, rw::rqw::CameraObjectTrigger triggerMode,size_t motionInde);
-            
+            void initCamera(const rw::rqw::CameraMetaData& cameraMetaData, rw::rqw::CameraObjectTrigger triggerMode, size_t motionInde);
+
             bool getConnectState();
         public:
             void startMonitor();
@@ -48,7 +47,7 @@ namespace rw {
             [[nodiscard]] size_t getTriggerLine() const;
 
         signals:
-            void frameCaptured(cv::Mat frame,float location,size_t index);
+            void frameCaptured(cv::Mat frame, float location, size_t index);
             void frameCapturedWithMetaData(cv::Mat frame, rw::rqw::CameraMetaData cameraMetaData);
             void frameCapturedWithoutArgs();
 
@@ -62,8 +61,5 @@ namespace rw {
             void onFrameCapturedWithMetaData(cv::Mat frame, rw::rqw::CameraMetaData cameraMetaData);
             void onFrameCapturedWithoutArgs();
         };
-
-
     } // namespace rqw
-
 } // namespace rw

@@ -24,12 +24,11 @@ namespace rw {
              *@Methods:
              *  Set the name of the object store
              *@Returns: void
-             * 
+             *
              *@Throws:
              *
              */
             void setName(const std::string& name);
-
 
             /**
              *@Parameters:
@@ -54,15 +53,14 @@ namespace rw {
         public:
             /**
              * @brief The level of the object store
-             * 
+             *
              * This is a private member of class ObjectStoreCore.Means the level of the instance object, which can serve as the node level in the class composition structure.
-             * 
+             *
              * @Supplement:
-             * 
+             *
              * Hierarchical structure:He represents the level of the instance in the object tree, for example, if he has a parent object and the parent object has no parent bject, then his level is 1
              */
             size_t level{ 0 };
-
 
             /**
              *@Parameters:
@@ -70,7 +68,7 @@ namespace rw {
              *@Methods:
              * Increase the hierarchy of class instances
              *@Returns: void
-             * 
+             *
              *@Throws:
              *
              */
@@ -78,12 +76,11 @@ namespace rw {
                 level++;
             }
 
-
             /**
              *@Parameters:
              *  void
              *@Methods:
-             *  Decrease the   
+             *  Decrease the
              *@Returns: types hierarchy of class instances
              *
              *@Throws:
@@ -112,13 +109,12 @@ namespace rw {
                 return "core";
             }
 
-
         public:
-            ObjectStoreCore()=default;
+            ObjectStoreCore() = default;
 
-            ObjectStoreCore(const ObjectStoreCore & core);
+            ObjectStoreCore(const ObjectStoreCore& core);
 
-            ObjectStoreCore(ObjectStoreCore && core) noexcept;
+            ObjectStoreCore(ObjectStoreCore&& core) noexcept;
 
             ObjectStoreCore(std::vector<char> binary);
 
@@ -135,13 +131,13 @@ namespace rw {
              *@Methods:
              *  Print the object tree of the Object Store with the current instance as the root node
              *@Returns: void
-             *  
+             *
              *@Throws:
              *
              */
             virtual void print(std::ostream& os);
         public:
-           ObjectStoreCore& operator=(const ObjectStoreCore& other);
+            ObjectStoreCore& operator=(const ObjectStoreCore& other);
         public:
             virtual bool operator==(const ObjectStoreCore& other) const;
 
@@ -172,15 +168,15 @@ namespace rw {
             //The type of data stored in the object data item
             ObjectDataItemStoreType _type{ ObjectDataItemStoreType::item_int };
         public:
-            ObjectStoreItem()=default;
+            ObjectStoreItem() = default;
 
-            ObjectStoreItem(const ObjectStoreItem & item);
+            ObjectStoreItem(const ObjectStoreItem& item);
 
             ObjectStoreItem(ObjectStoreItem&& item) noexcept;
 
             ObjectStoreItem(std::vector<char> binary);
 
-            ~ObjectStoreItem() override = default ;
+            ~ObjectStoreItem() override = default;
         public:
             ObjectStoreItem& operator=(const ObjectStoreItem& other);
 
@@ -262,7 +258,6 @@ namespace rw {
 
         public:
             //std::vector<char> getBinary()override;
-
         };
 
         //
@@ -273,19 +268,18 @@ namespace rw {
             std::vector<std::shared_ptr<ObjectStoreCore>> _items;
 
         public:
-            ObjectStoreAssembly()=default;
+            ObjectStoreAssembly() = default;
 
-            ObjectStoreAssembly(const ObjectStoreAssembly & assembly);
+            ObjectStoreAssembly(const ObjectStoreAssembly& assembly);
 
             ObjectStoreAssembly(ObjectStoreAssembly&& assembly) noexcept;
-
 
             ObjectStoreAssembly(std::vector<char> binary);
 
             virtual ~ObjectStoreAssembly() = default;
 
         public:
-            ObjectStoreAssembly& operator=(const ObjectStoreAssembly & other);
+            ObjectStoreAssembly& operator=(const ObjectStoreAssembly& other);
 
             ObjectStoreAssembly& operator=(ObjectStoreAssembly&& other) noexcept;
 
@@ -371,7 +365,6 @@ namespace rw {
             //std::vector<char> getBinary() override;
         };
 
-
         inline std::shared_ptr<ObjectStoreAssembly>
             makeObjectStoreAssemblySharedPtr
             (const ObjectStoreAssembly& assembly) {
@@ -399,10 +392,7 @@ namespace rw {
 
             return item;
         }
-
     }
-
 }
-
 
 #endif // !OSO_CORE_H_

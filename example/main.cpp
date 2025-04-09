@@ -9,14 +9,13 @@
 //    return a.exec();
 //}
 
-
 #include <QImage>
 #include <QPainter>
 #include <QFont>
 #include <vector>
 #include <string>
 
-// ¶¨ÒåÑÕÉ«Ã¶¾Ù
+// å®šä¹‰é¢œè‰²æšä¸¾
 enum class color {
     WHITE,
     RED,
@@ -28,7 +27,7 @@ enum class color {
     BLACK
 };
 
-// ½« color Ã¶¾Ù×ª»»Îª QColor
+// å°† color æšä¸¾è½¬æ¢ä¸º QColor
 QColor colorToQColor(color c) {
     switch (c) {
     case color::WHITE:   return QColor(255, 255, 255);
@@ -39,88 +38,88 @@ QColor colorToQColor(color c) {
     case color::CYAN:    return QColor(0, 255, 255);
     case color::MAGENTA: return QColor(255, 0, 255);
     case color::BLACK:   return QColor(0, 0, 0);
-    default:             return QColor(255, 255, 255); // Ä¬ÈÏ°×É«
+    default:             return QColor(255, 255, 255); // é»˜è®¤ç™½è‰²
     }
 }
 
 void drawTextOnImage(QImage& image, const std::vector<std::string>& texts, const std::vector<color>& colorList, double proportion) {
-    // È·±£Í¼Ïñ·Ç¿Õ
+    // ç¡®ä¿å›¾åƒéç©º
     if (image.isNull() || texts.empty() || proportion <= 0.0 || proportion > 1.0) {
         return;
     }
 
-    // ´´½¨ QPainter
+    // åˆ›å»º QPainter
     QPainter painter(&image);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setRenderHint(QPainter::TextAntialiasing);
 
-    // ¼ÆËã×ÖÌå´óĞ¡ºÍ³õÊ¼Î»ÖÃ
+    // è®¡ç®—å­—ä½“å¤§å°å’Œåˆå§‹ä½ç½®
     int imageHeight = image.height();
-    int textAreaHeight = static_cast<int>(imageHeight * proportion); // ¸ù¾İ±ÈÀı¼ÆËãÎÄ×ÖÇøÓò¸ß¶È
-    int yOffset = 10; // ³õÊ¼YÆ«ÒÆÁ¿
+    int textAreaHeight = static_cast<int>(imageHeight * proportion); // æ ¹æ®æ¯”ä¾‹è®¡ç®—æ–‡å­—åŒºåŸŸé«˜åº¦
+    int yOffset = 10; // åˆå§‹Yåç§»é‡
 
-    // ¶¯Ì¬µ÷Õû×ÖÌå´óĞ¡
+    // åŠ¨æ€è°ƒæ•´å­—ä½“å¤§å°
     QFont font("Arial");
-    int fontSize = 20; // ³õÊ¼×ÖÌå´óĞ¡
+    int fontSize = 20; // åˆå§‹å­—ä½“å¤§å°
     font.setPixelSize(fontSize);
     painter.setFont(font);
 
-    // ¼ÆËã¶¯Ì¬×ÖÌå´óĞ¡
+    // è®¡ç®—åŠ¨æ€å­—ä½“å¤§å°
     for (const auto& text : texts) {
         QRect textRect(0, 0, image.width(), textAreaHeight);
         QFontMetrics metrics(font);
         if (metrics.height() * texts.size() > textAreaHeight) {
-            fontSize = static_cast<int>(fontSize * 0.9); // ËõĞ¡×ÖÌå
+            fontSize = static_cast<int>(fontSize * 0.9); // ç¼©å°å­—ä½“
             font.setPixelSize(fontSize);
             painter.setFont(font);
         }
     }
 
-    // »æÖÆÎÄ×Ö
+    // ç»˜åˆ¶æ–‡å­—
     for (size_t i = 0; i < texts.size(); ++i) {
-        // È·¶¨ÑÕÉ«
-        color textColor = color::WHITE; // Ä¬ÈÏ°×É«
+        // ç¡®å®šé¢œè‰²
+        color textColor = color::WHITE; // é»˜è®¤ç™½è‰²
         if (!colorList.empty()) {
             if (i < colorList.size()) {
                 textColor = colorList[i];
             }
             else {
-                textColor = colorList.back(); // Ê¹ÓÃ×îºóÒ»¸öÑÕÉ«
+                textColor = colorList.back(); // ä½¿ç”¨æœ€åä¸€ä¸ªé¢œè‰²
             }
         }
 
-        // ÉèÖÃÑÕÉ«
+        // è®¾ç½®é¢œè‰²
         painter.setPen(colorToQColor(textColor));
 
-        // »æÖÆÎÄ×Ö
+        // ç»˜åˆ¶æ–‡å­—
         QString qText = QString::fromStdString(texts[i]);
-        painter.drawText(10, yOffset + fontSize, qText); // ×óÉÏ½ÇÆ«ÒÆÁ¿Îª (10, yOffset)
-        yOffset += fontSize + 5; // ĞĞ¼ä¾à
+        painter.drawText(10, yOffset + fontSize, qText); // å·¦ä¸Šè§’åç§»é‡ä¸º (10, yOffset)
+        yOffset += fontSize + 5; // è¡Œé—´è·
     }
 
     painter.end();
 }
 
 int main() {
-    // ´´½¨Ò»¸öÊ¾ÀıÍ¼Ïñ
+    // åˆ›å»ºä¸€ä¸ªç¤ºä¾‹å›¾åƒ
     QImage image(600, 400, QImage::Format_RGB32);
     image.fill(Qt::black);
 
-    // Òª»æÖÆµÄÎÄ×Ö
+    // è¦ç»˜åˆ¶çš„æ–‡å­—
     std::vector<std::string> texts = {
-        "Ã»ÕÒµ½Íâ¾¶!",
+        "æ²¡æ‰¾åˆ°å¤–å¾„!",
         "This is a test.",
         "Dynamic font scaling.",
         "Hello, QImage!"
     };
 
-    // ¶¨ÒåÑÕÉ«ÁĞ±í
+    // å®šä¹‰é¢œè‰²åˆ—è¡¨
     std::vector<color> colorList = { color::RED, color::GREEN, color::YELLOW, color::CYAN };
 
-    // µ÷ÓÃº¯Êı»æÖÆÎÄ×Ö
+    // è°ƒç”¨å‡½æ•°ç»˜åˆ¶æ–‡å­—
     drawTextOnImage(image, texts, colorList, 0.78);
 
-    // ±£´æ½á¹ûµ½ÎÄ¼ş
+    // ä¿å­˜ç»“æœåˆ°æ–‡ä»¶
     image.save("output.png");
 
     return 0;

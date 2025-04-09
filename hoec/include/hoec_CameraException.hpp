@@ -29,7 +29,7 @@ namespace rw
             explicit CameraInitError(std::string message) : CameraRuntimeError(std::move(message)) {}
         };
 
-	    class CameraConnectionError : public CameraRuntimeError {
+        class CameraConnectionError : public CameraRuntimeError {
         public:
             explicit CameraConnectionError(std::string message) : CameraRuntimeError(std::move(message)) {}
         };
@@ -53,6 +53,5 @@ namespace rw
         public:
             explicit CameraCreateError(std::string message) : CameraRuntimeError(std::move(message)) {}
         };
-
-	}
+    }
 }

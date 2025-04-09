@@ -34,7 +34,7 @@ namespace rw
             // Take a picture in the passive mode.
             // When use this mode, If you want to get a picture, you should register a callback function.
             // When the camera get a picture, the callback function will be called.
-            // The callback function has default realization, you can also register your own callback function 
+            // The callback function has default realization, you can also register your own callback function
             //when you construct the camera object.
             Passive
         };
@@ -113,11 +113,10 @@ namespace rw
              */
             ICamera() = default;
 
-
             /**
              * @brief Delete the copy constructor and copy assignment operator.
              *
-             * The camera object is entity object,they are global unique,for each camera object, 
+             * The camera object is entity object,they are global unique,for each camera object,
              *it take over every hardware resource of the camera.
              */
             ICamera(ICamera&&) = delete;
@@ -136,7 +135,7 @@ namespace rw
              *@Throws:
              *
              */
-            void setIP(const std::string &ip);
+            void setIP(const std::string& ip);
 
             /**
              *@Parameters:
@@ -189,7 +188,7 @@ namespace rw
              *      - Monitor has already started
              *      - Failed to start grabbing
              *@Warning:
-             * If you want stop the camera monitor,you can call the stopMonitor() function 
+             * If you want stop the camera monitor,you can call the stopMonitor() function
              *or destruct the camera object which will stop the camera monitor automatically.
              */
             virtual void startMonitor() = 0;
@@ -240,7 +239,7 @@ namespace rw
              *      - Failed to set exposure time
              *@Warning:
              * For some camera, the exposure time has a range, you should set the value in the range.
-             *For this function,we guarantee that when you set the exposure,whatever the value is,if 
+             *For this function,we guarantee that when you set the exposure,whatever the value is,if
              *the value will be agreed,it will return true,otherwise return false.
              */
             virtual void setExposureTime(size_t value) = 0;
@@ -325,7 +324,7 @@ namespace rw
              *      - Failed to get exposure time
              *
              */
-            [[nodiscard]] virtual size_t getExposureTime()=0;
+            [[nodiscard]] virtual size_t getExposureTime() = 0;
 
             /**
              *@Parameters:
@@ -339,7 +338,7 @@ namespace rw
              *  Below is the reason:
              *      - Failed to get gain
              */
-            [[nodiscard]] virtual size_t getGain()=0;
+            [[nodiscard]] virtual size_t getGain() = 0;
 
             /**
              *@Parameters:
@@ -353,7 +352,7 @@ namespace rw
              *  Below is the reason:
              *      - Failed to get IO time
              */
-            [[nodiscard]] virtual size_t getIOTime()=0;
+            [[nodiscard]] virtual size_t getIOTime() = 0;
 
             /**
              *@Parameters:
@@ -367,7 +366,7 @@ namespace rw
              *  Below is the reason:
              *      - Failed to get monitor mode
              */
-            [[nodiscard]] virtual CameraTriggerMode getMonitorMode()=0;
+            [[nodiscard]] virtual CameraTriggerMode getMonitorMode() = 0;
 
             /**
              *@Parameters:
@@ -382,7 +381,6 @@ namespace rw
              *
              */
             [[nodiscard]] virtual size_t getTriggerLine() = 0;
-
         };
 
         class ICameraActive
@@ -401,7 +399,7 @@ namespace rw
              *@Throws:
              *
              */
-            [[nodiscard]] virtual cv::Mat getImage(bool& isGet)=0;
+            [[nodiscard]] virtual cv::Mat getImage(bool& isGet) = 0;
 
             /**
              *@Parameters:
@@ -443,8 +441,7 @@ namespace rw
              *@Throws:
              *
              */
-            virtual void RegisterCallBackFunc()=0;
-
+            virtual void RegisterCallBackFunc() = 0;
         };
 
         class CameraActive
@@ -477,13 +474,12 @@ namespace rw
             void setCameraProvider(CameraProvider provider);
             CameraProvider getCameraProvider() const;
         private:
-            ICamera* _camera{nullptr};
-            ICameraActive* _cameraActive{nullptr};
+            ICamera* _camera{ nullptr };
+            ICameraActive* _cameraActive{ nullptr };
         public:
-            CameraActive(ICamera * camera, ICameraActive * cameraActive);
+            CameraActive(ICamera* camera, ICameraActive* cameraActive);
         public:
             ~CameraActive() override;
-
         };
 
         class CameraPassive
@@ -524,7 +520,6 @@ namespace rw
         public:
             ~CameraPassive() override;
         };
-
     }
 }
 

@@ -150,6 +150,5 @@ namespace rw {
 
             return image;
         }
-
     } // namespace hoec
 } // namespace rw

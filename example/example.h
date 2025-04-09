@@ -12,9 +12,9 @@ class example : public QMainWindow
     Q_OBJECT
 
 public:
-    example(QWidget *parent = nullptr);
+    example(QWidget* parent = nullptr);
     ~example();
 
 private:
-    Ui::exampleClass *ui;
+    Ui::exampleClass* ui;
 };

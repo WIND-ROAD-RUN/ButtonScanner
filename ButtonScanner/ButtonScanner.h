@@ -54,7 +54,7 @@ private:
     void read_config_mainWindowConfig();
     void read_config_produceLineConfig();
     void read_config_productSetConfig();
-    
+
     void build_camera();
 
     void build_imageProcessorModule();

@@ -2,178 +2,173 @@
 
 #include "NumKeyBord.h"
 
-
 NumKeyBord::NumKeyBord(QWidget* parent, QPushButton* button, int _type)
-	: QDialog(parent),
-	inputLineEdit(new QLineEdit(this)),
-	keyboardWidget(new QWidget(this))
+    : QDialog(parent),
+    inputLineEdit(new QLineEdit(this)),
+    keyboardWidget(new QWidget(this))
 {
-	btn = button;
-	type = _type;
+    btn = button;
+    type = _type;
 
-	// ÉèÖÃÖ÷´°¿ÚµÄÖĞÑë²¿¼ş
-	QWidget* centralWidget = new QWidget(this);
-	NumKeyBord::setWindowTitle("");
-	// ´´½¨Ö÷²¼¾Ö
-	QVBoxLayout* mainLayout = new QVBoxLayout(centralWidget);
+    // è®¾ç½®ä¸»çª—å£çš„ä¸­å¤®éƒ¨ä»¶
+    QWidget* centralWidget = new QWidget(this);
+    NumKeyBord::setWindowTitle("");
+    // åˆ›å»ºä¸»å¸ƒå±€
+    QVBoxLayout* mainLayout = new QVBoxLayout(centralWidget);
     this->setLayout(mainLayout);
 
-	setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
 
-	// ÉèÖÃÊäÈë¿ò
-	inputLineEdit->setReadOnly(true); // ÉèÖÃÎªÖ»¶Á£¬±ÜÃâÖ±½ÓÊäÈë
-	inputLineEdit->setFixedHeight(40);
-	mainLayout->addWidget(inputLineEdit);
+    // è®¾ç½®è¾“å…¥æ¡†
+    inputLineEdit->setReadOnly(true); // è®¾ç½®ä¸ºåªè¯»ï¼Œé¿å…ç›´æ¥è¾“å…¥
+    inputLineEdit->setFixedHeight(40);
+    mainLayout->addWidget(inputLineEdit);
 
-	// ´´½¨Êı×Ö¼üÅÌ²¼¾Ö
-	QGridLayout* keyboardLayout = new QGridLayout();
-	QStringList keys;
+    // åˆ›å»ºæ•°å­—é”®ç›˜å¸ƒå±€
+    QGridLayout* keyboardLayout = new QGridLayout();
+    QStringList keys;
 
-	keys = { "1", "2", "3",
-			"4", "5", "6",
-			"7", "8", "9",
-			"-", "0", ".",
-			"Delete", "Enter", "Close" };
+    keys = { "1", "2", "3",
+            "4", "5", "6",
+            "7", "8", "9",
+            "-", "0", ".",
+            "Delete", "Enter", "Close" };
 
-	int pos = 0;
-	int totalRows = (keys.size() + 2) / 3; // Ã¿ĞĞ3¸ö°´Å¥
-	for (int i = 0; i < totalRows; ++i) {
-		for (int j = 0; j < 3; ++j) {
-			if (pos >= keys.size())
-				break;
-			QPushButton* button = new QPushButton(keys[pos], this);
-			button->setFixedSize(100, 50);
-			keyboardLayout->addWidget(button, i, j);
-			if (keys[pos] == "Close")
-			{// Á¬½Ó "Close" °´Å¥µ½¹Ø±Õ²Û
-				connect(button, &QPushButton::clicked, this, &NumKeyBord::closeKeyboard);
-				button->setStyleSheet("QPushButton {"
-					"background-color: #ff4d4d;" // ºìÉ«±³¾°
-					"color: white;"
-					"font-size: 16px;"
-					"border: none;"
-					"border-radius: 5px;"
-					"}"
-					"QPushButton:pressed {"
-					"background-color: #ff1a1a;"
-					"}");
-			}
-			else
-			{
-				connect(button, &QPushButton::clicked, this, &NumKeyBord::handleButton);
-				// ÉèÖÃÆäËû°´Å¥µÄÑùÊ½
-				if (keys[pos] == "-" || keys[pos] == ".") {
-					// ÌØÊâ°´Å¥ÑùÊ½£¨½öÔÚ Decimal Ä£Ê½ÏÂ£©
-					button->setStyleSheet("QPushButton {"
-						"font-size: 18px;"
-						"background-color: #d9d9d9;" // »ÒÉ«±³¾°
-						"border: 1px solid #aaa;"
-						"border-radius: 5px;"
-						"}"
-						"QPushButton:pressed {"
-						"background-color: #bfbfbf;"
-						"}");
-				}
-				else {
-					button->setStyleSheet("QPushButton {"
-						"font-size: 18px;"
-						"background-color: #f0f0f0;"
-						"border: 1px solid #ccc;"
-						"border-radius: 5px;"
-						"}"
-						"QPushButton:pressed {"
-						"background-color: #d0d0d0;"
-						"}");
-				}
-			}
-			pos++;
-		}
-	}
+    int pos = 0;
+    int totalRows = (keys.size() + 2) / 3; // æ¯è¡Œ3ä¸ªæŒ‰é’®
+    for (int i = 0; i < totalRows; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            if (pos >= keys.size())
+                break;
+            QPushButton* button = new QPushButton(keys[pos], this);
+            button->setFixedSize(100, 50);
+            keyboardLayout->addWidget(button, i, j);
+            if (keys[pos] == "Close")
+            {// è¿æ¥ "Close" æŒ‰é’®åˆ°å…³é—­æ§½
+                connect(button, &QPushButton::clicked, this, &NumKeyBord::closeKeyboard);
+                button->setStyleSheet("QPushButton {"
+                    "background-color: #ff4d4d;" // çº¢è‰²èƒŒæ™¯
+                    "color: white;"
+                    "font-size: 16px;"
+                    "border: none;"
+                    "border-radius: 5px;"
+                    "}"
+                    "QPushButton:pressed {"
+                    "background-color: #ff1a1a;"
+                    "}");
+            }
+            else
+            {
+                connect(button, &QPushButton::clicked, this, &NumKeyBord::handleButton);
+                // è®¾ç½®å…¶ä»–æŒ‰é’®çš„æ ·å¼
+                if (keys[pos] == "-" || keys[pos] == ".") {
+                    // ç‰¹æ®ŠæŒ‰é’®æ ·å¼ï¼ˆä»…åœ¨ Decimal æ¨¡å¼ä¸‹ï¼‰
+                    button->setStyleSheet("QPushButton {"
+                        "font-size: 18px;"
+                        "background-color: #d9d9d9;" // ç°è‰²èƒŒæ™¯
+                        "border: 1px solid #aaa;"
+                        "border-radius: 5px;"
+                        "}"
+                        "QPushButton:pressed {"
+                        "background-color: #bfbfbf;"
+                        "}");
+                }
+                else {
+                    button->setStyleSheet("QPushButton {"
+                        "font-size: 18px;"
+                        "background-color: #f0f0f0;"
+                        "border: 1px solid #ccc;"
+                        "border-radius: 5px;"
+                        "}"
+                        "QPushButton:pressed {"
+                        "background-color: #d0d0d0;"
+                        "}");
+                }
+            }
+            pos++;
+        }
+    }
 
-	// Ìí¼Ó¼üÅÌ²¼¾Öµ½Ö÷²¼¾Ö
-	keyboardWidget->setLayout(keyboardLayout);
-	mainLayout->addWidget(keyboardWidget);
-	// ÉèÖÃ´°¿Ú´óĞ¡£¬¸ù¾İÊäÈëÀàĞÍµ÷Õû¸ß¶È
-		setFixedSize(350, 400);  
-	 
-	 
+    // æ·»åŠ é”®ç›˜å¸ƒå±€åˆ°ä¸»å¸ƒå±€
+    keyboardWidget->setLayout(keyboardLayout);
+    mainLayout->addWidget(keyboardWidget);
+    // è®¾ç½®çª—å£å¤§å°ï¼Œæ ¹æ®è¾“å…¥ç±»å‹è°ƒæ•´é«˜åº¦
+    setFixedSize(350, 400);
 }
 
 NumKeyBord::~NumKeyBord()
 {
-
 }
 
 void NumKeyBord::handleSpace()
 {
-	if (type == 0 || type > 2) {
-		inputLineEdit->setText(inputLineEdit->text() + " ");
-	}
+    if (type == 0 || type > 2) {
+        inputLineEdit->setText(inputLineEdit->text() + " ");
+    }
 }
 void NumKeyBord::closeKeyboard()
 {
-	this->close(); // ¹Ø±Õµ±Ç°´°¿Ú
+    this->close(); // å…³é—­å½“å‰çª—å£
 }
 void NumKeyBord::handleButton()
 {
-	QPushButton* button = qobject_cast<QPushButton*>(sender());
-	if (!button)
-		return;
+    QPushButton* button = qobject_cast<QPushButton*>(sender());
+    if (!button)
+        return;
 
-	QString key = button->text();
+    QString key = button->text();
 
-	if (key == "Delete") {
-		QString currentText = inputLineEdit->text();
-		if (!currentText.isEmpty()) {
-			currentText.chop(1); // É¾³ı×îºóÒ»¸ö×Ö·û
-			inputLineEdit->setText(currentText);
-		}
-	}
-	else if (key == "Enter") {
-		// ÔÚÕâÀï´¦ÀíÈ·ÈÏ²Ù×÷£¬±ÈÈçÌá½»ÊäÈëÄÚÈİ
-		// Ê¾Àı£ºµ¯³öÒ»¸öÏûÏ¢¿òÏÔÊ¾ÊäÈëÄÚÈİ
-		QString input = inputLineEdit->text();
-		btn->setText(input);
-		emit closed();
+    if (key == "Delete") {
+        QString currentText = inputLineEdit->text();
+        if (!currentText.isEmpty()) {
+            currentText.chop(1); // åˆ é™¤æœ€åä¸€ä¸ªå­—ç¬¦
+            inputLineEdit->setText(currentText);
+        }
+    }
+    else if (key == "Enter") {
+        // åœ¨è¿™é‡Œå¤„ç†ç¡®è®¤æ“ä½œï¼Œæ¯”å¦‚æäº¤è¾“å…¥å†…å®¹
+        // ç¤ºä¾‹ï¼šå¼¹å‡ºä¸€ä¸ªæ¶ˆæ¯æ¡†æ˜¾ç¤ºè¾“å…¥å†…å®¹
+        QString input = inputLineEdit->text();
+        btn->setText(input);
+        emit closed();
 
+        this->close();
+    }
+    else if (key == ".") {
+        if (type == 1)
+            return;
 
-		this->close();
-	}
-	else if (key == ".") {
-		if (type == 1)
-			return;
-
-		QString currentText = inputLineEdit->text();
-		// ¼ì²éÊÇ·ñÒÑ¾­´æÔÚĞ¡Êıµã
-		if (type == 2 && !currentText.contains('.')) {
-			if (currentText.isEmpty()) {
-				// Èç¹ûÊäÈëÎª¿Õ£¬Ç°ÖÃÒ»¸öÁã
-				inputLineEdit->setText("0.");
-			}
-			else {
-				inputLineEdit->setText(currentText + ".");
-			}
-		}
-		else {
-			inputLineEdit->setText(currentText + ".");
-		}
-	}
-	else if (key == "-") {
-		QString currentText = inputLineEdit->text();
-		if (type == 1 || type == 2)
-			if (currentText.startsWith("-")) {
-				// Èç¹ûÒÑ¾­ÓĞ¸ººÅ£¬ÔòÈ¥µô
-				inputLineEdit->setText(currentText.mid(1));
-			}
-			else {
-				// Ìí¼Ó¸ººÅ
-				inputLineEdit->setText("-" + currentText);
-			}
-		else
-			inputLineEdit->setText(currentText + "-");
-	}
-	else  {
-		// ÔÚ Character Ä£Ê½ÏÂÔÊĞíÊäÈë×Ö·û
-		inputLineEdit->setText(inputLineEdit->text() + key);
-	}
+        QString currentText = inputLineEdit->text();
+        // æ£€æŸ¥æ˜¯å¦å·²ç»å­˜åœ¨å°æ•°ç‚¹
+        if (type == 2 && !currentText.contains('.')) {
+            if (currentText.isEmpty()) {
+                // å¦‚æœè¾“å…¥ä¸ºç©ºï¼Œå‰ç½®ä¸€ä¸ªé›¶
+                inputLineEdit->setText("0.");
+            }
+            else {
+                inputLineEdit->setText(currentText + ".");
+            }
+        }
+        else {
+            inputLineEdit->setText(currentText + ".");
+        }
+    }
+    else if (key == "-") {
+        QString currentText = inputLineEdit->text();
+        if (type == 1 || type == 2)
+            if (currentText.startsWith("-")) {
+                // å¦‚æœå·²ç»æœ‰è´Ÿå·ï¼Œåˆ™å»æ‰
+                inputLineEdit->setText(currentText.mid(1));
+            }
+            else {
+                // æ·»åŠ è´Ÿå·
+                inputLineEdit->setText("-" + currentText);
+            }
+        else
+            inputLineEdit->setText(currentText + "-");
+    }
+    else {
+        // åœ¨ Character æ¨¡å¼ä¸‹å…è®¸è¾“å…¥å­—ç¬¦
+        inputLineEdit->setText(inputLineEdit->text() + key);
+    }
 }

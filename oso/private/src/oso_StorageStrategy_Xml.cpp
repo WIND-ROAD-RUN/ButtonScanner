@@ -18,7 +18,6 @@ namespace rw
             if (auto saveResult = doc.save_file(fileName.c_str()); !saveResult) {
                 throw std::runtime_error("Failed to save xml document to file");
             }
-
         }
 
         std::shared_ptr<ObjectStoreAssembly> StorageStrategy_Xml::load(const std::filesystem::path& fileName)
@@ -77,7 +76,7 @@ namespace rw
         }
 
         void StorageStrategy_Xml::appendXmlNodeFromStoreAssembly(pugi::xml_node& node,
-                                                                 const std::shared_ptr<ObjectStoreAssembly> source)
+            const std::shared_ptr<ObjectStoreAssembly> source)
         {
             node.set_name("ObjectStoreAssembly");
             node.append_attribute("name").set_value(source->getName().c_str());

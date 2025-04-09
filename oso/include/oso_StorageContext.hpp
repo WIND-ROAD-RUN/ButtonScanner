@@ -41,7 +41,7 @@ namespace rw
             explicit StorageContext(StorageType type);
         public:
             void save(const ObjectStoreAssembly& assembly, const std::filesystem::path& fileName) const;
-            void save(const ObjectStoreAssembly& assembly, const std::string & fileName) const;
+            void save(const ObjectStoreAssembly& assembly, const std::string& fileName) const;
 
             [[nodiscard]] std::shared_ptr<ObjectStoreAssembly> load(const std::filesystem::path& fileName) const;
             [[nodiscard]] std::shared_ptr<ObjectStoreAssembly> load(const std::string& fileName) const;
@@ -50,7 +50,5 @@ namespace rw
         private:
             std::shared_ptr<IStorageStrategy> _strategy;
         };
-
-
     } // namespace oso
 } // namespace rw

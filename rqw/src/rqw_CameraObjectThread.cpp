@@ -2,7 +2,6 @@
 
 #include"rqw_CameraObject.hpp"
 
-
 namespace rw
 {
     namespace rqw
@@ -29,7 +28,7 @@ namespace rw
             if (!_cameraObject)
             {
                 _cameraObject = new rw::rqw::CameraPassiveObject();
-                connect(_cameraObject, &rw::rqw::CameraPassiveObject::frameCaptured, this, &CameraPassiveThread::onFrameCaptured,Qt::DirectConnection);
+                connect(_cameraObject, &rw::rqw::CameraPassiveObject::frameCaptured, this, &CameraPassiveThread::onFrameCaptured, Qt::DirectConnection);
                 connect(_cameraObject, &rw::rqw::CameraPassiveObject::frameCapturedWithMetaData, this, &CameraPassiveThread::onFrameCapturedWithMetaData, Qt::DirectConnection);
                 connect(_cameraObject, &rw::rqw::CameraPassiveObject::frameCapturedWithoutArgs, this, &CameraPassiveThread::onFrameCapturedWithoutArgs, Qt::DirectConnection);
                 _cameraObject->motionInde = motionInde;
@@ -154,9 +153,9 @@ namespace rw
             exec();
         }
 
-        void CameraPassiveThread::onFrameCaptured(cv::Mat frame,float location)
+        void CameraPassiveThread::onFrameCaptured(cv::Mat frame, float location)
         {
-            emit frameCaptured(std::move(frame), location,cameraIndex);
+            emit frameCaptured(std::move(frame), location, cameraIndex);
         }
 
         void CameraPassiveThread::onFrameCapturedWithMetaData(cv::Mat frame, rw::rqw::CameraMetaData cameraMetaData)

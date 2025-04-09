@@ -18,8 +18,6 @@ namespace rw {
             static cv::Mat MVS_ConvertFrameToMat(const MV_FRAME_OUT_INFO_EX& frameInfo, unsigned char* pData);
         };
     } // namespace hoec
-
 } // namespace rw
-
 
 #endif // !HOEC_CORE_PRIVATE_H_

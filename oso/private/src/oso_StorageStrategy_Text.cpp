@@ -169,7 +169,6 @@ namespace rw
                     throw std::runtime_error("Unknown type");
                 }
             }
-
         }
 
         void StorageStrategy_Text::appendObjectStoreChildAssemblyFromTxt(std::shared_ptr<ObjectStoreAssembly> target,
@@ -200,7 +199,6 @@ namespace rw
                     throw std::runtime_error("Unknown type");
                 }
             }
-
         }
 
         std::shared_ptr<ObjectStoreAssembly> StorageStrategy_Text::getStoreAssemblyFromString(const std::string& source)

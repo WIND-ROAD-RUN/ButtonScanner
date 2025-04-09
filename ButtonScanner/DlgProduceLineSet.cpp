@@ -5,112 +5,112 @@
 #include"GlobalStruct.h"
 
 DlgProduceLineSet::DlgProduceLineSet(QWidget* parent)
-	: QDialog(parent)
-	, ui(new Ui::DlgProduceLineSetClass())
+    : QDialog(parent)
+    , ui(new Ui::DlgProduceLineSetClass())
 {
-	ui->setupUi(this);
+    ui->setupUi(this);
 
-	build_ui();
-	build_connect();
+    build_ui();
+    build_connect();
 }
 
 DlgProduceLineSet::~DlgProduceLineSet()
 {
-	delete ui;
+    delete ui;
 }
 
 void DlgProduceLineSet::build_ui()
 {
-	read_config();
+    read_config();
 }
 
 void DlgProduceLineSet::read_config()
 {
-	auto& globalStruct = GlobalStruct::getInstance();
-	ui->pbtn_blowDistance1->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowDistance1));
-	ui->pbtn_blowDistance2->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowDistance2));
-	ui->pbtn_blowDistance3->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowDistance3));
-	ui->pbtn_blowDistance4->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowDistance4));
-	ui->pbtn_blowTime1->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowTime1));
-	ui->pbtn_blowTime2->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowTime2));
-	ui->pbtn_blowTime3->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowTime3));
-	ui->pbtn_blowTime4->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowTime4));
-	ui->pbtn_pixelEquivalent1->setText(QString::number(globalStruct.dlgProduceLineSetConfig.pixelEquivalent1));
-	ui->pbtn_pixelEquivalent2->setText(QString::number(globalStruct.dlgProduceLineSetConfig.pixelEquivalent2));
-	ui->pbtn_pixelEquivalent3->setText(QString::number(globalStruct.dlgProduceLineSetConfig.pixelEquivalent3));
-	ui->pbtn_pixelEquivalent4->setText(QString::number(globalStruct.dlgProduceLineSetConfig.pixelEquivalent4));
-	ui->pbtn_limit1->setText(QString::number(globalStruct.dlgProduceLineSetConfig.limit1));
-	ui->pbtn_limit2->setText(QString::number(globalStruct.dlgProduceLineSetConfig.limit2));
-	ui->pbtn_limit3->setText(QString::number(globalStruct.dlgProduceLineSetConfig.limit3));
-	ui->pbtn_limit4->setText(QString::number(globalStruct.dlgProduceLineSetConfig.limit4));
-	ui->cbox_powerOn->setText(QString::number(globalStruct.dlgProduceLineSetConfig.powerOn));
-	ui->cbox_blowingEnable1->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowingEnable1));
-	ui->cbox_blowingEnable2->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowingEnable2));
-	ui->cbox_blowingEnable3->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowingEnable3));
-	ui->cbox_blowingEnable4->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowingEnable4));
-	ui->cbox_none->setText(QString::number(globalStruct.dlgProduceLineSetConfig.none));
-	ui->cbox_run->setText(QString::number(globalStruct.dlgProduceLineSetConfig.run));
-	ui->cbox_alarm->setText(QString::number(globalStruct.dlgProduceLineSetConfig.alarm));
-	ui->cbox_workstationProtection12->setText(QString::number(globalStruct.dlgProduceLineSetConfig.workstationProtection12));
-	ui->cbox_workstationProtection34->setText(QString::number(globalStruct.dlgProduceLineSetConfig.workstationProtection34));
-	ui->pbtn_motorSpeed->setText(QString::number(globalStruct.dlgProduceLineSetConfig.motorSpeed));
-	ui->pbtn_beltReductionRatio->setText(QString::number(globalStruct.dlgProduceLineSetConfig.beltReductionRatio));
-	ui->pbtn_accelerationAndDeceleration->setText(QString::number(globalStruct.dlgProduceLineSetConfig.accelerationAndDeceleration));
-	ui->pbtn_minBrightness->setText(QString::number(globalStruct.dlgProduceLineSetConfig.minBrightness));
-	ui->pbtn_maxBrightness->setText(QString::number(globalStruct.dlgProduceLineSetConfig.maxBrightness));
-	ui->pbtn_codeWheel->setText(QString::number(globalStruct.dlgProduceLineSetConfig.codeWheel));
-	ui->pbtn_pulseFactor->setText(QString::number(globalStruct.dlgProduceLineSetConfig.pulseFactor));
+    auto& globalStruct = GlobalStruct::getInstance();
+    ui->pbtn_blowDistance1->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowDistance1));
+    ui->pbtn_blowDistance2->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowDistance2));
+    ui->pbtn_blowDistance3->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowDistance3));
+    ui->pbtn_blowDistance4->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowDistance4));
+    ui->pbtn_blowTime1->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowTime1));
+    ui->pbtn_blowTime2->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowTime2));
+    ui->pbtn_blowTime3->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowTime3));
+    ui->pbtn_blowTime4->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowTime4));
+    ui->pbtn_pixelEquivalent1->setText(QString::number(globalStruct.dlgProduceLineSetConfig.pixelEquivalent1));
+    ui->pbtn_pixelEquivalent2->setText(QString::number(globalStruct.dlgProduceLineSetConfig.pixelEquivalent2));
+    ui->pbtn_pixelEquivalent3->setText(QString::number(globalStruct.dlgProduceLineSetConfig.pixelEquivalent3));
+    ui->pbtn_pixelEquivalent4->setText(QString::number(globalStruct.dlgProduceLineSetConfig.pixelEquivalent4));
+    ui->pbtn_limit1->setText(QString::number(globalStruct.dlgProduceLineSetConfig.limit1));
+    ui->pbtn_limit2->setText(QString::number(globalStruct.dlgProduceLineSetConfig.limit2));
+    ui->pbtn_limit3->setText(QString::number(globalStruct.dlgProduceLineSetConfig.limit3));
+    ui->pbtn_limit4->setText(QString::number(globalStruct.dlgProduceLineSetConfig.limit4));
+    ui->cbox_powerOn->setText(QString::number(globalStruct.dlgProduceLineSetConfig.powerOn));
+    ui->cbox_blowingEnable1->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowingEnable1));
+    ui->cbox_blowingEnable2->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowingEnable2));
+    ui->cbox_blowingEnable3->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowingEnable3));
+    ui->cbox_blowingEnable4->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowingEnable4));
+    ui->cbox_none->setText(QString::number(globalStruct.dlgProduceLineSetConfig.none));
+    ui->cbox_run->setText(QString::number(globalStruct.dlgProduceLineSetConfig.run));
+    ui->cbox_alarm->setText(QString::number(globalStruct.dlgProduceLineSetConfig.alarm));
+    ui->cbox_workstationProtection12->setText(QString::number(globalStruct.dlgProduceLineSetConfig.workstationProtection12));
+    ui->cbox_workstationProtection34->setText(QString::number(globalStruct.dlgProduceLineSetConfig.workstationProtection34));
+    ui->pbtn_motorSpeed->setText(QString::number(globalStruct.dlgProduceLineSetConfig.motorSpeed));
+    ui->pbtn_beltReductionRatio->setText(QString::number(globalStruct.dlgProduceLineSetConfig.beltReductionRatio));
+    ui->pbtn_accelerationAndDeceleration->setText(QString::number(globalStruct.dlgProduceLineSetConfig.accelerationAndDeceleration));
+    ui->pbtn_minBrightness->setText(QString::number(globalStruct.dlgProduceLineSetConfig.minBrightness));
+    ui->pbtn_maxBrightness->setText(QString::number(globalStruct.dlgProduceLineSetConfig.maxBrightness));
+    ui->pbtn_codeWheel->setText(QString::number(globalStruct.dlgProduceLineSetConfig.codeWheel));
+    ui->pbtn_pulseFactor->setText(QString::number(globalStruct.dlgProduceLineSetConfig.pulseFactor));
 }
 
 void DlgProduceLineSet::build_connect()
 {
-	QObject::connect(ui->pbtn_blowDistance1, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_blowDistance1_clicked);
-	QObject::connect(ui->pbtn_blowDistance2, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_blowDistance2_clicked);
-	QObject::connect(ui->pbtn_blowDistance3, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_blowDistance3_clicked);
-	QObject::connect(ui->pbtn_blowDistance4, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_blowDistance4_clicked);
+    QObject::connect(ui->pbtn_blowDistance1, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_blowDistance1_clicked);
+    QObject::connect(ui->pbtn_blowDistance2, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_blowDistance2_clicked);
+    QObject::connect(ui->pbtn_blowDistance3, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_blowDistance3_clicked);
+    QObject::connect(ui->pbtn_blowDistance4, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_blowDistance4_clicked);
 
-	QObject::connect(ui->pbtn_blowTime1, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_blowTime1_clicked);
-	QObject::connect(ui->pbtn_blowTime2, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_blowTime2_clicked);
-	QObject::connect(ui->pbtn_blowTime3, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_blowTime3_clicked);
-	QObject::connect(ui->pbtn_blowTime4, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_blowTime4_clicked);
+    QObject::connect(ui->pbtn_blowTime1, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_blowTime1_clicked);
+    QObject::connect(ui->pbtn_blowTime2, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_blowTime2_clicked);
+    QObject::connect(ui->pbtn_blowTime3, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_blowTime3_clicked);
+    QObject::connect(ui->pbtn_blowTime4, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_blowTime4_clicked);
 
-	QObject::connect(ui->pbtn_pixelEquivalent1, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_pixelEquivalent1_clicked);
-	QObject::connect(ui->pbtn_pixelEquivalent2, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_pixelEquivalent2_clicked);
-	QObject::connect(ui->pbtn_pixelEquivalent3, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_pixelEquivalent3_clicked);
-	QObject::connect(ui->pbtn_pixelEquivalent4, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_pixelEquivalent4_clicked);
+    QObject::connect(ui->pbtn_pixelEquivalent1, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_pixelEquivalent1_clicked);
+    QObject::connect(ui->pbtn_pixelEquivalent2, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_pixelEquivalent2_clicked);
+    QObject::connect(ui->pbtn_pixelEquivalent3, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_pixelEquivalent3_clicked);
+    QObject::connect(ui->pbtn_pixelEquivalent4, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_pixelEquivalent4_clicked);
 
-	QObject::connect(ui->pbtn_limit1, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_limit1_clicked);
-	QObject::connect(ui->pbtn_limit2, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_limit2_clicked);
-	QObject::connect(ui->pbtn_limit3, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_limit3_clicked);
-	QObject::connect(ui->pbtn_limit4, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_limit4_clicked);
+    QObject::connect(ui->pbtn_limit1, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_limit1_clicked);
+    QObject::connect(ui->pbtn_limit2, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_limit2_clicked);
+    QObject::connect(ui->pbtn_limit3, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_limit3_clicked);
+    QObject::connect(ui->pbtn_limit4, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_limit4_clicked);
 
-	QObject::connect(ui->pbtn_minBrightness, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_minBrightness_clicked);
-	QObject::connect(ui->pbtn_maxBrightness, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_maxBrightness_clicked);
+    QObject::connect(ui->pbtn_minBrightness, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_minBrightness_clicked);
+    QObject::connect(ui->pbtn_maxBrightness, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_maxBrightness_clicked);
 
-	QObject::connect(ui->pbtn_motorSpeed, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_motorSpeed_clicked);
-	QObject::connect(ui->pbtn_beltReductionRatio, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_beltReductionRatio_clicked);
-	QObject::connect(ui->pbtn_accelerationAndDeceleration, &QPushButton::clicked,
-		this, &DlgProduceLineSet::pbtn_accelerationAndDeceleration_clicked);
+    QObject::connect(ui->pbtn_motorSpeed, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_motorSpeed_clicked);
+    QObject::connect(ui->pbtn_beltReductionRatio, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_beltReductionRatio_clicked);
+    QObject::connect(ui->pbtn_accelerationAndDeceleration, &QPushButton::clicked,
+        this, &DlgProduceLineSet::pbtn_accelerationAndDeceleration_clicked);
 
     QObject::connect(ui->cbox_powerOn, &QCheckBox::clicked,
         this, &DlgProduceLineSet::cbox_powerOn_checked);
@@ -139,263 +139,257 @@ void DlgProduceLineSet::build_connect()
         this, &DlgProduceLineSet::pbtn_codeWheel_clicked);
     QObject::connect(ui->pbtn_pulseFactor, &QPushButton::clicked,
         this, &DlgProduceLineSet::pbtn_pulseFactor_clicked);
-
 }
 
 void DlgProduceLineSet::pbtn_blowDistance1_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowDistance1, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowDistance1, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.blowDistance1 = ui->pbtn_blowDistance1->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.blowDistance1 = ui->pbtn_blowDistance1->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
-
 
 void DlgProduceLineSet::pbtn_blowTime1_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime1, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime1, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.blowTime1 = ui->pbtn_blowTime1->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.blowTime1 = ui->pbtn_blowTime1->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_blowDistance2_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowDistance2, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowDistance2, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.blowDistance2 = ui->pbtn_blowDistance2->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.blowDistance2 = ui->pbtn_blowDistance2->text().toDouble();
 
-	delete numKeyBoard;
-
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_blowTime2_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime2, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime2, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.blowTime2 = ui->pbtn_blowTime2->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.blowTime2 = ui->pbtn_blowTime2->text().toDouble();
 
-	delete numKeyBoard;
-
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_blowDistance3_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowDistance3, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowDistance3, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.blowDistance3 = ui->pbtn_blowDistance3->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.blowDistance3 = ui->pbtn_blowDistance3->text().toDouble();
 
-	delete numKeyBoard;
-
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_blowTime3_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime3, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime3, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.blowTime3 = ui->pbtn_blowTime3->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.blowTime3 = ui->pbtn_blowTime3->text().toDouble();
 
-	delete numKeyBoard;
-
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_blowDistance4_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowDistance4, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowDistance4, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.blowDistance4 = ui->pbtn_blowDistance4->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.blowDistance4 = ui->pbtn_blowDistance4->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_blowTime4_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime4, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime4, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.blowTime4 = ui->pbtn_blowTime4->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.blowTime4 = ui->pbtn_blowTime4->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_pixelEquivalent1_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pixelEquivalent1, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pixelEquivalent1, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.pixelEquivalent1 = ui->pbtn_pixelEquivalent1->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.pixelEquivalent1 = ui->pbtn_pixelEquivalent1->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_pixelEquivalent2_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pixelEquivalent2, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pixelEquivalent2, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.pixelEquivalent2 = ui->pbtn_pixelEquivalent2->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.pixelEquivalent2 = ui->pbtn_pixelEquivalent2->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_pixelEquivalent3_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pixelEquivalent3, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pixelEquivalent3, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.pixelEquivalent3 = ui->pbtn_pixelEquivalent3->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.pixelEquivalent3 = ui->pbtn_pixelEquivalent3->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_pixelEquivalent4_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pixelEquivalent4, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pixelEquivalent4, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.pixelEquivalent4 = ui->pbtn_pixelEquivalent4->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.pixelEquivalent4 = ui->pbtn_pixelEquivalent4->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_limit1_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_limit1, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_limit1, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.limit1 = ui->pbtn_limit1->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.limit1 = ui->pbtn_limit1->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_limit2_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_limit2, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_limit2, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.limit2 = ui->pbtn_limit2->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.limit2 = ui->pbtn_limit2->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_limit3_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_limit3, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_limit3, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.limit3 = ui->pbtn_limit3->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.limit3 = ui->pbtn_limit3->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_limit4_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_limit4, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_limit4, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.limit4 = ui->pbtn_limit4->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.limit4 = ui->pbtn_limit4->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_minBrightness_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_minBrightness, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_minBrightness, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.minBrightness = ui->pbtn_minBrightness->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.minBrightness = ui->pbtn_minBrightness->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_maxBrightness_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_maxBrightness, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_maxBrightness, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.maxBrightness = ui->pbtn_maxBrightness->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.maxBrightness = ui->pbtn_maxBrightness->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_motorSpeed_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_motorSpeed, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_motorSpeed, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.motorSpeed = ui->pbtn_motorSpeed->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.motorSpeed = ui->pbtn_motorSpeed->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_beltReductionRatio_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_beltReductionRatio, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_beltReductionRatio, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.beltReductionRatio = ui->pbtn_beltReductionRatio->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.beltReductionRatio = ui->pbtn_beltReductionRatio->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_accelerationAndDeceleration_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_accelerationAndDeceleration, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_accelerationAndDeceleration, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.accelerationAndDeceleration = ui->pbtn_accelerationAndDeceleration->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.accelerationAndDeceleration = ui->pbtn_accelerationAndDeceleration->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_codeWheel_clicked() {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_codeWheel, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_codeWheel, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.codeWheel = ui->pbtn_codeWheel->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.codeWheel = ui->pbtn_codeWheel->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_pulseFactor_clicked() {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pulseFactor, 2);
-	numKeyBoard->exec();
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pulseFactor, 2);
+    numKeyBoard->exec();
 
-	auto& GlobalStruct = GlobalStruct::getInstance();
-	GlobalStruct.dlgProduceLineSetConfig.pulseFactor = ui->pbtn_pulseFactor->text().toDouble();
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    GlobalStruct.dlgProduceLineSetConfig.pulseFactor = ui->pbtn_pulseFactor->text().toDouble();
 
-	delete numKeyBoard;
+    delete numKeyBoard;
 }
 
 void DlgProduceLineSet::cbox_powerOn_checked(bool ischeck)
@@ -463,7 +457,3 @@ void DlgProduceLineSet::cbox_debugMode_checked(bool ischeck)
     auto& GlobalStruct = GlobalStruct::getInstance();
     GlobalStruct.dlgProduceLineSetConfig.debugMode = ischeck;
 }
-
-
-
-

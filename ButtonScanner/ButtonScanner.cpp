@@ -41,7 +41,6 @@ ButtonScanner::ButtonScanner(QWidget* parent)
     start_monitor();
 
     build_locationThread();
-
 }
 
 ButtonScanner::~ButtonScanner()
@@ -101,7 +100,6 @@ void ButtonScanner::build_dlgProduceLineSet()
 void ButtonScanner::build_dlgProductSet()
 {
     this->dlgProductSet = new DlgProductSet(this);
-
 }
 
 void ButtonScanner::build_connect()
@@ -122,8 +120,6 @@ void ButtonScanner::build_connect()
     QObject::connect(ui->rbtn_downLight, &QPushButton::clicked, this, &ButtonScanner::rbtn_downLight_ckecked);
     QObject::connect(ui->rbtn_defect, &QPushButton::clicked, this, &ButtonScanner::rbtn_defect_ckecked);
     QObject::connect(ui->rbtn_ForAndAgainst, &QPushButton::clicked, this, &ButtonScanner::rbtn_ForAndAgainst_ckecked);
-
-
 }
 
 void ButtonScanner::read_config()
@@ -230,9 +226,7 @@ void ButtonScanner::read_config_productSetConfig()
     else {
         globalStruct.ReadDlgProductSetConfig();
     }
-
 }
-
 
 void ButtonScanner::build_camera()
 {
@@ -266,10 +260,7 @@ void ButtonScanner::build_imageProcessorModule()
         return;
     }
 
-
-
     //TODO：使用对话框提示用户
-
 
     globalStruct.enginePath = enginePathFull;
     globalStruct.namePath = namePathFull;
@@ -285,7 +276,6 @@ void ButtonScanner::build_imageProcessorModule()
         this, &ButtonScanner::onCamera3Display, Qt::DirectConnection);
     QObject::connect(globalStruct.imageProcessingModule4.get(), &ImageProcessingModule::imageReady,
         this, &ButtonScanner::onCamera4Display, Qt::DirectConnection);
-
 }
 
 void ButtonScanner::start_monitor()
@@ -302,34 +292,25 @@ void ButtonScanner::build_motion()
     auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
 
     //下面通过motionPtr进行操作
-   bool state= motionPtr.get()->OpenBoard((char*)"192.168.0.11");
+    bool state = motionPtr.get()->OpenBoard((char*)"192.168.0.11");
 
-
-
-
-
-   if (state) {
-    
-       motionPtr->SetLocationZero(0);
-       motionPtr->SetLocationZero(1);
-       motionPtr->SetLocationZero(2);
-       motionPtr->SetAxisType(1,3);
-       motionPtr->SetAxisType(2,3);
-       motionPtr->SetAxisPulse(1, globalStruct.dlgProduceLineSetConfig.codeWheel);
-       motionPtr->SetAxisPulse(2, globalStruct.dlgProduceLineSetConfig.codeWheel);
-
-   }
-
+    if (state) {
+        motionPtr->SetLocationZero(0);
+        motionPtr->SetLocationZero(1);
+        motionPtr->SetLocationZero(2);
+        motionPtr->SetAxisType(1, 3);
+        motionPtr->SetAxisType(2, 3);
+        motionPtr->SetAxisPulse(1, globalStruct.dlgProduceLineSetConfig.codeWheel);
+        motionPtr->SetAxisPulse(2, globalStruct.dlgProduceLineSetConfig.codeWheel);
+    }
 }
 
 void ButtonScanner::build_monitoringThread()
 {
     //线程内部
     QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
-
         while (mark_Thread)
         {
-
             //运动控制卡实时状态
             {
                 //这里获取全局变量
@@ -338,21 +319,17 @@ void ButtonScanner::build_monitoringThread()
                 //获取Zmotion
                 auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
 
-
                 bool  boardState = motionPtr.get()->getBoardState();
                 if (boardState == false)
                 {
                     motionPtr.get()->OpenBoard((char*)"192.168.0.11");
-
                 }
                 else
                 {
-
                 }
             }
             //获得相机链接状态
             {
-
                 auto& globalStruct = GlobalStruct::getInstance();
 
                 if (globalStruct.camera1) {
@@ -372,8 +349,6 @@ void ButtonScanner::build_monitoringThread()
                     }
                 }
 
-              
-
                 if (globalStruct.camera2) {
                     if (globalStruct.camera2->getConnectState()) {
                         QMetaObject::invokeMethod(qApp, [this]
@@ -391,9 +366,6 @@ void ButtonScanner::build_monitoringThread()
                     }
                 }
 
-               
-
-               
                 if (globalStruct.camera3) {
                     if (globalStruct.camera3->getConnectState()) {
                         QMetaObject::invokeMethod(qApp, [this]
@@ -411,53 +383,33 @@ void ButtonScanner::build_monitoringThread()
                     }
                 }
 
-               
-
-
-               if (globalStruct.camera4) {
-                   if (globalStruct.camera4->getConnectState()) {
-                       QMetaObject::invokeMethod(qApp, [this]
-                           {
-                               ui->label_camera4State->setText("连接成功");
-                               ui->label_camera4State->setStyleSheet(QString("QLabel{color:rgb(0, 230, 0);} "));
-                           });
-                   }
-                   else {
-                       QMetaObject::invokeMethod(qApp, [this]
-                           {
-                               ui->label_camera4State->setText("连接失败");
-                               ui->label_camera4State->setStyleSheet(QString("QLabel{color:rgb(230, 0, 0);} "));
-                           });
-                   }
-               }
-               
-
-
-
-
+                if (globalStruct.camera4) {
+                    if (globalStruct.camera4->getConnectState()) {
+                        QMetaObject::invokeMethod(qApp, [this]
+                            {
+                                ui->label_camera4State->setText("连接成功");
+                                ui->label_camera4State->setStyleSheet(QString("QLabel{color:rgb(0, 230, 0);} "));
+                            });
+                    }
+                    else {
+                        QMetaObject::invokeMethod(qApp, [this]
+                            {
+                                ui->label_camera4State->setText("连接失败");
+                                ui->label_camera4State->setStyleSheet(QString("QLabel{color:rgb(230, 0, 0);} "));
+                            });
+                    }
+                }
             }
 
             QThread::msleep(500);
-
-
-
         }
-
-
-
-
-
         });
-
-
 }
-
 
 void ButtonScanner::build_locationThread()
 {
     //线程内部
     QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
-
         while (mark_Thread)
         {
             //获得位置数据
@@ -471,31 +423,22 @@ void ButtonScanner::build_locationThread()
             zwy::scc::GlobalMotion::getInstance().motionPtr.get()->GetAxisLocation(1, lacation2);
 
             {
-            auto& work1 = GlobalStruct::getInstance().productPriorityQueue1;
+                auto& work1 = GlobalStruct::getInstance().productPriorityQueue1;
 
-            int i=work1.size();
-        
-            double tifeishijian1 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime1;
-            double tifeijuli1 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance1;
+                int i = work1.size();
 
-           
+                double tifeishijian1 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime1;
+                double tifeijuli1 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance1;
+
                 double nowlocation = work1.peek();
-                
-                if (nowlocation != 0 && (abs(lacation1- nowlocation)> tifeijuli1))
+
+                if (nowlocation != 0 && (abs(lacation1 - nowlocation) > tifeijuli1))
                 {
                     work1.top();
 
                     //吹气
                     zwy::scc::GlobalMotion::getInstance().motionPtr.get()->SetIOOut(5, 5, true, tifeishijian1);
-
-
                 }
-
-            
-
-
-
-
             }
             {
                 auto& work2 = GlobalStruct::getInstance().productPriorityQueue2;
@@ -503,24 +446,14 @@ void ButtonScanner::build_locationThread()
                 double tifeishijian2 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime2;
                 double tifeijuli2 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance2;
 
-              
-                    double nowlocation = work2.peek();
-                    if (nowlocation!=0&&(abs(lacation2 - nowlocation) > tifeijuli2))
-                    {
-                        work2.top();
+                double nowlocation = work2.peek();
+                if (nowlocation != 0 && (abs(lacation2 - nowlocation) > tifeijuli2))
+                {
+                    work2.top();
 
-                        //吹气
-                        zwy::scc::GlobalMotion::getInstance().motionPtr.get()->SetIOOut(1, 4, true, tifeishijian2);
-
-
-                    }
-
-                
-
-
-
-
-
+                    //吹气
+                    zwy::scc::GlobalMotion::getInstance().motionPtr.get()->SetIOOut(1, 4, true, tifeishijian2);
+                }
             }
 
             {
@@ -529,23 +462,14 @@ void ButtonScanner::build_locationThread()
                 double tifeishijian3 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime3;
                 double tifeijuli3 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance3;
 
-                    double nowlocation = work3.peek();
-                    if (nowlocation != 0 && abs(lacation1 - nowlocation) > tifeijuli3)
-                    {
-                        work3.top();
+                double nowlocation = work3.peek();
+                if (nowlocation != 0 && abs(lacation1 - nowlocation) > tifeijuli3)
+                {
+                    work3.top();
 
-                        //吹气
-                        zwy::scc::GlobalMotion::getInstance().motionPtr.get()->SetIOOut(2, 3, true, tifeishijian3);
-
-
-                    }
-
-                
-
-
-
-
-
+                    //吹气
+                    zwy::scc::GlobalMotion::getInstance().motionPtr.get()->SetIOOut(2, 3, true, tifeishijian3);
+                }
             }
 
             {
@@ -554,46 +478,29 @@ void ButtonScanner::build_locationThread()
                 double tifeishijian4 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime4;
                 double tifeijuli4 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance4;
 
-               
-                    double nowlocation = work4.peek();
-                    if (nowlocation != 0 && abs(lacation2 - nowlocation) > tifeijuli4)
-                    {
-                        work4.top();
+                double nowlocation = work4.peek();
+                if (nowlocation != 0 && abs(lacation2 - nowlocation) > tifeijuli4)
+                {
+                    work4.top();
 
-                        //吹气
-                        zwy::scc::GlobalMotion::getInstance().motionPtr.get()->SetIOOut(3, 2, true, tifeishijian4);
-
-
-                    }
-
-              
-
-
-
-
-
+                    //吹气
+                    zwy::scc::GlobalMotion::getInstance().motionPtr.get()->SetIOOut(3, 2, true, tifeishijian4);
+                }
             }
-
-
-
         }
         });
-
 }
 
 void ButtonScanner::build_ioThread()
 {
     //线程内部
     QtConcurrent::run([this]() {
-
-
         auto& globalStruct = GlobalStruct::getInstance();
         //获取Zmotion
         auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
 
         while (mark_Thread)
         {
-
             bool state = false;
             state = motionPtr->GetIOIn(2);
             //急停
@@ -605,7 +512,6 @@ void ButtonScanner::build_ioThread()
                 motionPtr->SetIOOut(1, false);
 
                 motionPtr->SetIOOut(7, false);
-
             }
             else
             {
@@ -615,8 +521,6 @@ void ButtonScanner::build_ioThread()
                 //启动程序
                 if (state == true)
                 {
-
-
                     //所有电机上电
                     QtConcurrent::run([this, &motionPtr]() {
                         QThread::msleep(500);
@@ -640,24 +544,18 @@ void ButtonScanner::build_ioThread()
                 if (state)
                 {
                     motionPtr->StopAllAxis();
-                    motionPtr->SetIOOut(1,false);
+                    motionPtr->SetIOOut(1, false);
                     motionPtr->SetIOOut(7, false);
-                    
-
-
-
-
                 }
 
                 //获取气压表数据
                 auto qiya = motionPtr->GetIOIn(7);
-                if (qiya==true) {
+                if (qiya == true) {
                     //气压正常
                     motionPtr->SetIOOut(8, true);
                 }
                 else {
                     motionPtr->SetIOOut(8, false);
-
                 }
 
                 if (globalStruct.mainWindowConfig.upLight) {
@@ -680,19 +578,11 @@ void ButtonScanner::build_ioThread()
                 else {
                     motionPtr->SetIOOut(0, false);
                 }
-
-
-               
-                            
             }
 
             QThread::msleep(100);
-
         }
-
-
         });
-
 }
 
 QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
@@ -709,7 +599,6 @@ QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
     else {
         return QImage();
     }
-
 }
 
 void ButtonScanner::onCamera1Display(QImage image)
@@ -739,7 +628,6 @@ void ButtonScanner::onCamera4Display(QImage image)
 void ButtonScanner::pbtn_set_clicked()
 {
     dlgProduceLineSet->exec();
-
 }
 
 void ButtonScanner::pbtn_newProduction_clicked()

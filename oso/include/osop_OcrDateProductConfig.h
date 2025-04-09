@@ -79,11 +79,8 @@ namespace rw {
             OcrDataProductConfig(const ObjectStoreAssembly& assembly);
             OcrDataProductConfig(std::shared_ptr<ObjectStoreAssembly> assembly);
             operator ObjectStoreAssembly()const;
-
         };
     }
 }
-
-
 
 #endif // OSOP_OCRDATEPRODUCTCONFIG_H_

@@ -1,10 +1,10 @@
-﻿#include "stdafx.h"
+#include "stdafx.h"
 #include "DlgProductSet.h"
 #include"NumKeyBord.h"
 
 #include "GlobalStruct.h"
 
-DlgProductSet::DlgProductSet(QWidget *parent)
+DlgProductSet::DlgProductSet(QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::DlgProductSetClass())
 {
@@ -20,7 +20,6 @@ DlgProductSet::~DlgProductSet()
 
 void DlgProductSet::build_ui()
 {
-
     read_config();
     read_image();
     build_radioButton();
@@ -162,7 +161,6 @@ void DlgProductSet::build_connect()
         this, &DlgProductSet::rbtn_blockEyeEnable_checked);
     QObject::connect(ui->rbtn_materialHeadEnable, &QPushButton::clicked,
         this, &DlgProductSet::rbtn_materialHeadEnable_checked);
-     
 }
 
 void DlgProductSet::build_radioButton()
@@ -171,7 +169,6 @@ void DlgProductSet::build_radioButton()
     ui->rbtn_paintEnable->setAutoExclusive(false);
     ui->rbtn_grindStoneEnable->setAutoExclusive(false);
     ui->rbtn_blockEyeEnable->setAutoExclusive(false);
-
 }
 
 void DlgProductSet::pbtn_outsideDiameterValue_clicked() {
@@ -179,7 +176,7 @@ void DlgProductSet::pbtn_outsideDiameterValue_clicked() {
     numKeyBoard->exec();
 
     auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.outsideDiameterValue=ui->pbtn_outsideDiameterValue->text().toDouble();
+    GlobalStruct.dlgProductSetConfig.outsideDiameterValue = ui->pbtn_outsideDiameterValue->text().toDouble();
 
     delete numKeyBoard;
 }

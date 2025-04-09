@@ -22,7 +22,7 @@ namespace rw
          * @details: Detailed description of the template class
          *
          */
-        template <class T, class Priority=size_t>
+        template <class T, class Priority = size_t>
         class IPriorityQueue
         {
         public:
@@ -66,9 +66,9 @@ namespace rw
              *
              */
             IPriorityQueue(
-                CompareNodeEqual compareNodeEqual ,
-                CompareNodePriority compareNodePriority )
-                :_compareNodeEqual(compareNodeEqual),_compareNodePriority(compareNodePriority) {
+                CompareNodeEqual compareNodeEqual,
+                CompareNodePriority compareNodePriority)
+                :_compareNodeEqual(compareNodeEqual), _compareNodePriority(compareNodePriority) {
             }
 
             IPriorityQueue() = default;
@@ -159,7 +159,6 @@ namespace rw
             */
             virtual size_t size() = 0;
 
-
             /**
              *@Parameters:
              *  void
@@ -190,7 +189,6 @@ namespace rw
                 }
                 this->_compareNodeEqual = compareNodeEqual;
             }
-
 
             /**
              *@Parameters:
@@ -227,7 +225,7 @@ namespace rw
              *
              */
             DHeap(size_t d = 4) :_d(d) {}
-            
+
             /**
             *@Parameters:
             *  -compareNodeEqual: The function to compare two elements
@@ -482,11 +480,9 @@ namespace rw
         private:
             size_t _d;
             std::vector<std::pair<T, Priority>> _heap_array;
-            std::mutex _mutex; 
+            std::mutex _mutex;
         };
-
     }
-
 }
 
 #endif //DSL_PRIORITY_QUEUE_H

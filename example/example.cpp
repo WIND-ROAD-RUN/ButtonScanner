@@ -1,6 +1,6 @@
 #include "example.h"
 
-example::example(QWidget *parent)
+example::example(QWidget* parent)
     : QMainWindow(parent)
     , ui(new Ui::exampleClass())
 {

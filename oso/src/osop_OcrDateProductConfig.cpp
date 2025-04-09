@@ -3,8 +3,7 @@
 namespace rw
 {
     namespace oso {
-
-        ObjectStoreAssembly 
+        ObjectStoreAssembly
             RecognizeRange::toObjectStoreAssembly
             (const RecognizeRange& recognizeRange)
         {
@@ -58,11 +57,11 @@ namespace rw
                 rightLowerCorner_y.setValueFromDouble(recognizeRange.rightLowerCorner.second);
                 assembly.addItem(makeObjectStoreItemSharedPtr(rightLowerCorner_y));
             }
-           
+
             return assembly;
         }
 
-        RecognizeRange 
+        RecognizeRange
             RecognizeRange::toRecognizeRange
             (const ObjectStoreAssembly& assembly)
         {
@@ -122,7 +121,7 @@ namespace rw
             return toObjectStoreAssembly(*this);
         }
 
-        ObjectStoreAssembly 
+        ObjectStoreAssembly
             ProductCheckCount::toObjectStoreAssembly
             (const ProductCheckCount& productCheckCount)
         {
@@ -153,7 +152,7 @@ namespace rw
             return assembly;
         }
 
-        ProductCheckCount 
+        ProductCheckCount
             ProductCheckCount::toProductCheckCount
             (const ObjectStoreAssembly& assembly)
         {
@@ -193,7 +192,7 @@ namespace rw
             return toObjectStoreAssembly(*this);
         }
 
-        ObjectStoreAssembly 
+        ObjectStoreAssembly
             RejectAttribute::toObjectStoreAssembly
             (const RejectAttribute& rejectAttribute)
         {
@@ -224,7 +223,7 @@ namespace rw
             return assembly;
         }
 
-        RejectAttribute 
+        RejectAttribute
             RejectAttribute::toRejectAttribute
             (const ObjectStoreAssembly& assembly)
         {
@@ -265,7 +264,7 @@ namespace rw
             return toObjectStoreAssembly(*this);
         }
 
-        ObjectStoreAssembly 
+        ObjectStoreAssembly
             OcrDataProductConfig::toObjectStoreAssembly
             (const OcrDataProductConfig& ocrDataProductConfig)
         {
@@ -307,7 +306,7 @@ namespace rw
             return assembly;
         }
 
-        OcrDataProductConfig 
+        OcrDataProductConfig
             OcrDataProductConfig::toOcrDataProductConfig
             (const ObjectStoreAssembly& assembly)
         {
@@ -338,7 +337,6 @@ namespace rw
                     {
                         static_assert(true, "Unknown item type");
                     }
-
                 }
                 else if (itemType == std::string("item")) {
                     auto nItem = ObjectStoreCoreToItem(item);
@@ -350,8 +348,6 @@ namespace rw
                         static_assert(true, "Unknown item type");
                     }
                 }
-                
-               
             }
 
             return ocrDataProductConfig;
@@ -371,7 +367,5 @@ namespace rw
         {
             return toObjectStoreAssembly(*this);
         }
-
-}
-
+    }
 }

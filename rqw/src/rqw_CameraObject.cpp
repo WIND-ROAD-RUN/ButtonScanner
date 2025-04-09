@@ -7,13 +7,12 @@ namespace rw
 {
     namespace rqw
     {
-
         CameraPassiveObject::CameraPassiveObject(QObject* parent)
         {
         }
 
         CameraPassiveObject::~CameraPassiveObject()
-        = default;
+            = default;
 
         void CameraPassiveObject::startMonitor() const
         {
@@ -92,7 +91,7 @@ namespace rw
             return _cameraPassive->getTriggerLine();
         }
 
-        void CameraPassiveObject::initCamera(const CameraMetaData & cameraMetaData, CameraObjectTrigger triggerMode)
+        void CameraPassiveObject::initCamera(const CameraMetaData& cameraMetaData, CameraObjectTrigger triggerMode)
         {
             _cameraMetaData = cameraMetaData;
             hoec::CameraIP hoecCameraIp;
@@ -111,9 +110,9 @@ namespace rw
 
             _cameraPassive = hoec::CameraFactory::CreatePassiveCamera(hoecCameraIp, hoecTrigger, [this](cv::Mat  mat)
                 {
-                auto & cameraObject = zwy::scc::GlobalMotion::getInstance();
-                float location=0;
-                cameraObject.motionPtr->GetModbus(motionInde, 1, location);
+                    auto& cameraObject = zwy::scc::GlobalMotion::getInstance();
+                    float location = 0;
+                    cameraObject.motionPtr->GetModbus(motionInde, 1, location);
 
                     cv::Mat matCopy;
                     mat.copyTo(matCopy);

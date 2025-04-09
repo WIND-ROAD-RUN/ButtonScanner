@@ -40,10 +40,10 @@ public:
     std::unique_ptr<rw::oso::StorageContext> storeContext{ nullptr };
 public:
     QString mainWindowFilePath;
-	QString dlgProduceLineSetFilePath;
+    QString dlgProduceLineSetFilePath;
     QString dlgProductSetFilePath;
     rw::cdm::ButtonScannerMainWindow mainWindowConfig{};
-	rw::cdm::ButtonScannerProduceLineSet dlgProduceLineSetConfig{};
+    rw::cdm::ButtonScannerProduceLineSet dlgProduceLineSetConfig{};
     rw::cdm::ButtonScannerDlgProductSet dlgProductSetConfig{};
 public:
     QString cameraIp1{ "11" };
@@ -94,5 +94,4 @@ private slots:
     void onCamera2ImageReady(bool isOk, float location);
     void onCamera3ImageReady(bool isOk, float location);
     void onCamera4ImageReady(bool isOk, float location);
-
 };

@@ -1,9 +1,8 @@
-﻿#ifndef MOTION_H
+#ifndef MOTION_H
 #define MOTION_H
 #include<QString>
 #include"zauxdll2.h"
 #include"zmotion.h"
-
 
 namespace zwy {
     namespace scc {
@@ -67,13 +66,8 @@ namespace zwy {
 
         private:
             ZMC_HANDLE g_handle = NULL;
-
-
         };
-    
     }
 }
-
-
 
 #endif // MOTION_H

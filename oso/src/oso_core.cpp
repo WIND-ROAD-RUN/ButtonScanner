@@ -8,8 +8,8 @@ namespace rw
     namespace oso
     {
         ObjectStoreItem::ObjectStoreItem(const ObjectStoreItem& item)
-         : ObjectStoreCore(item)
-     {
+            : ObjectStoreCore(item)
+        {
             _value = item._value;
             _type = item._type;
         }
@@ -175,12 +175,10 @@ namespace rw
 
         bool ObjectStoreItem::operator==(const ObjectStoreCore& other)const
         {
-
             if (const ObjectStoreItem* p = dynamic_cast<const ObjectStoreItem*>(&other)) {
                 return this->equlas(*p);
             }
             return false;
-
         }
 
         bool ObjectStoreItem::operator!=(const ObjectStoreCore& other)const
@@ -189,7 +187,6 @@ namespace rw
         }
 
         bool ObjectStoreItem::operator==(const ObjectStoreItem& other) const {
-            
             return this->equlas(other);
         }
 
@@ -198,7 +195,7 @@ namespace rw
         }
 
         ObjectStoreAssembly::ObjectStoreAssembly(const ObjectStoreAssembly& assembly)
-         : ObjectStoreCore(assembly)
+            : ObjectStoreCore(assembly)
         {
             for (auto& item : assembly._items)
             {
@@ -362,11 +359,9 @@ namespace rw
         {
             // 检查类型
             if (const ObjectStoreAssembly* p = dynamic_cast<const ObjectStoreAssembly*>(&other)) {
-               
                 return this->equlas(*p);
             }
             return false;
-
         }
 
         bool ObjectStoreAssembly::operator!=(const ObjectStoreCore& other) const {
@@ -398,7 +393,7 @@ namespace rw
         }
 
         std::shared_ptr<ObjectStoreCore>
-        ObjectStoreAssembly::getItem(const std::string& name) const
+            ObjectStoreAssembly::getItem(const std::string& name) const
         {
             for (auto& item : _items)
             {

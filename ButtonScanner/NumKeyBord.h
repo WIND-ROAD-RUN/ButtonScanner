@@ -6,34 +6,33 @@
 
 class QPushButton;
 
-class NumKeyBord 
-	: public QDialog
+class NumKeyBord
+    : public QDialog
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="parent"></param>
-	/// <param name="type">0:string,1:int,2:double</param>
-	NumKeyBord(QWidget* parent = nullptr, QPushButton* button = nullptr, int _type = 0);
-	~NumKeyBord();
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="parent"></param>
+    /// <param name="type">0:string,1:int,2:double</param>
+    NumKeyBord(QWidget* parent = nullptr, QPushButton* button = nullptr, int _type = 0);
+    ~NumKeyBord();
 
 private slots:
-	void handleButton();
-	void handleSpace();
-	void closeKeyboard();   // ´¦Àí¹Ø±Õ°´Å¥µã»÷
+    void handleButton();
+    void handleSpace();
+    void closeKeyboard();   // å¤„ç†å…³é—­æŒ‰é’®ç‚¹å‡»
 
 signals:
-	void closed();  // ×Ô¶¨Òå¹Ø±ÕĞÅºÅ
+    void closed();  // è‡ªå®šä¹‰å…³é—­ä¿¡å·
 
 private:
-	QLineEdit* inputLineEdit;
-	QWidget* keyboardWidget;
-	QPushButton* btn;
-	int type;
-
+    QLineEdit* inputLineEdit;
+    QWidget* keyboardWidget;
+    QPushButton* btn;
+    int type;
 };
 
 #endif // MAINWINDOW_H#pragma once

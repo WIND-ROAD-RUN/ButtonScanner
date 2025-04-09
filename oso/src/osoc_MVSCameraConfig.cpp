@@ -6,7 +6,7 @@
 
 namespace rw {
     namespace oso {
-        ObjectStoreAssembly 
+        ObjectStoreAssembly
             CameraAttributesBasic::toObjectStoreAssembly
             (const CameraAttributesBasic& cameraAttributesBasic)
         {
@@ -26,7 +26,7 @@ namespace rw {
             return assembly;
         }
 
-        CameraAttributesBasic 
+        CameraAttributesBasic
             CameraAttributesBasic::toCameraAttributesBasic
             (const ObjectStoreAssembly& assembly)
         {
@@ -63,7 +63,7 @@ namespace rw {
             *this = toCameraAttributesBasic(*assembly);
         }
 
-        ObjectStoreAssembly 
+        ObjectStoreAssembly
             CameraAttributesAdvanced::toObjectStoreAssembly
             (const CameraAttributesAdvanced& cameraAttributesBasic)
         {
@@ -88,7 +88,7 @@ namespace rw {
             return assembly;
         }
 
-        CameraAttributesAdvanced 
+        CameraAttributesAdvanced
             CameraAttributesAdvanced::toCameraAttributesAdvanced
             (const ObjectStoreAssembly& assembly)
         {
@@ -108,11 +108,9 @@ namespace rw {
                         cameraAttributesAdvanced.mode = CameraTriggerMode::Hardware;
                     }
                 }
-
             }
 
             return cameraAttributesAdvanced;
-
         }
 
         CameraAttributesAdvanced::CameraAttributesAdvanced(const ObjectStoreAssembly& assembly)
@@ -147,7 +145,4 @@ namespace rw {
             return assembly;
         }
     }
-
 }
-
-

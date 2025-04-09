@@ -11,18 +11,16 @@ namespace rw
 
         struct ProcessRectanglesResult
         {
-            Point left_top;							//×óÉÏ½Ç×ø±ê
-			Point right_bottom;						//ÓÒÏÂ½Ç×ø±ê
-			int classId;							//0Íâ¾¶ 1ÊÇ¿× 
-			int track_id;							//¸ú×Ùid
-			int label_len;							//Ãû³Æ³¤¶È
-			int mask_b;								//b·ÖÀàÖµ
-			int mask_g;								//g·ÖÁ¿Öµ
-			int mask_r;								//r·ÖÁ¿Öµ
-			double score;							//µÃ·Ö
-			std::string label_text;					//Ãû³Æ
+            Point left_top;							//å·¦ä¸Šè§’åæ ‡
+            Point right_bottom;						//å³ä¸‹è§’åæ ‡
+            int classId;							//0å¤–å¾„ 1æ˜¯å­”
+            int track_id;							//è·Ÿè¸ªid
+            int label_len;							//åç§°é•¿åº¦
+            int mask_b;								//båˆ†ç±»å€¼
+            int mask_g;								//gåˆ†é‡å€¼
+            int mask_r;								//råˆ†é‡å€¼
+            double score;							//å¾—åˆ†
+            std::string label_text;					//åç§°
         };
-
-
     }
 }

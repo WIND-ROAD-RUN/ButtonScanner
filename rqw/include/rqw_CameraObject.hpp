@@ -45,7 +45,6 @@ namespace rw {
     }
 
     namespace rqw {
-
         class CameraPassiveObject : public QObject
         {
             Q_OBJECT
@@ -84,11 +83,9 @@ namespace rw {
             void initCamera(const CameraMetaData& cameraMetaData, CameraObjectTrigger triggerMode);
             bool getConnectState();
         signals:
-            void frameCaptured(cv::Mat frame,float);
+            void frameCaptured(cv::Mat frame, float);
             void frameCapturedWithMetaData(cv::Mat frame, CameraMetaData cameraMetaData);
             void frameCapturedWithoutArgs();
         };
-
     } // namespace rqw
-
 } // namespace rw

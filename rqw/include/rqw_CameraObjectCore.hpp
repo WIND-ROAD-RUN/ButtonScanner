@@ -46,9 +46,7 @@ namespace rw {
             }
 
             ~CameraMetaData() = default;
-
         };
-
 
         enum class CameraObjectTrigger
         {
@@ -57,9 +55,6 @@ namespace rw {
             Undefined
         };
 
-
         QVector<CameraMetaData> CheckCameraList();
-
     } // namespace rqw
-
 } // namespace rw

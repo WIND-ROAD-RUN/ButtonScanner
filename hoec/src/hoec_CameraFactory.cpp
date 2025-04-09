@@ -7,7 +7,7 @@ namespace rw {
         std::vector<CameraIP> CameraFactory::checkAllCamera()
         {
             std::vector<CameraIP> cameraIPs;
-            auto cameraList=Camera_MVS::getCameraIpList();
+            auto cameraList = Camera_MVS::getCameraIpList();
             for (auto& ip : cameraList)
             {
                 CameraIP cameraIP;
@@ -17,18 +17,16 @@ namespace rw {
             }
 
             return cameraIPs;
-
         }
 
         std::unique_ptr<CameraActive> CameraFactory::CreateActiveCamera(CameraIP cameraIP,
             CameraTriggerMode triggerMode)
         {
             std::unique_ptr<CameraActive> result;
-            if (cameraIP.provider== CameraProvider::MVS)
+            if (cameraIP.provider == CameraProvider::MVS)
             {
-
                 auto camera = new Camera_MVS_Active();
-                result = std::make_unique<CameraActive>(camera,camera);
+                result = std::make_unique<CameraActive>(camera, camera);
                 result->setIP(cameraIP.ip);
                 result->connectCamera();
                 result->setTriggerMode(triggerMode);
@@ -36,9 +34,7 @@ namespace rw {
             else
             {
                 throw CameraCreateError("The camera provider is not supported.");
-
             }
-
 
             return result;
         }
@@ -49,9 +45,8 @@ namespace rw {
             std::unique_ptr<CameraPassive> result;
             if (cameraIP.provider == CameraProvider::MVS)
             {
-
                 auto camera = new Camera_MVS_Passive(userToCallBack);
-                result = std::make_unique<CameraPassive>(camera, camera,userToCallBack);
+                result = std::make_unique<CameraPassive>(camera, camera, userToCallBack);
                 result->setIP(cameraIP.ip);
                 result->connectCamera();
                 result->setTriggerMode(triggerMode);
@@ -61,9 +56,7 @@ namespace rw {
                 throw CameraCreateError("The camera provider is not supported.");
             }
 
-
             return result;
         }
     } // namespace sim
-
 } // namespace rw

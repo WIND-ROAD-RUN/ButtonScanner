@@ -54,11 +54,7 @@ namespace rw {
 
             operator ObjectStoreAssembly()const;
         };
-
     }
-
-    
 }
-
 
 #endif // !oso_cameraConfig_H_
