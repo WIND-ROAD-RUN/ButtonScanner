@@ -10,10 +10,13 @@
 #include"cdm_ButtonScannerMainWindow.h"
 #include"cdm_ButtonScannerDlgProductSet.h"
 #include"cdm_ButtonScannerDlgExposureTimeSet.h"
+#include "cdm_ButtonScannerProduceLineSet.h"
 #include"dsl_PriorityQueue.hpp"
 #include"oso_StorageContext.hpp"
+#include"rqw_ImageSaveEngine.h"
+
 #include<QString>
-#include <cdm_ButtonScannerProduceLineSet.h>
+
 #include<atomic>
 
 namespace zwy {
@@ -26,6 +29,8 @@ class GlobalStruct
     :public QObject
 {
     Q_OBJECT
+public:
+    std::atomic_bool isTakePictures{ false };
 public:
     void buildConfigManager(rw::oso::StorageType type);
 public:
@@ -79,6 +84,10 @@ public:
     std::unique_ptr<ImageProcessingModule> imageProcessingModule2{ nullptr };
     std::unique_ptr<ImageProcessingModule> imageProcessingModule3{ nullptr };
     std::unique_ptr<ImageProcessingModule> imageProcessingModule4{ nullptr };
+public: 
+    void buildImageSaveEngine();
+    void destroyImageSaveEngine();
+    std::unique_ptr<rw::rqw::ImageSaveEngine> imageSaveEngine{ nullptr };
 public:
     static GlobalStruct& getInstance()
     {

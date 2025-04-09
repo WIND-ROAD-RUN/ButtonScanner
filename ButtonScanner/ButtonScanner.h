@@ -68,6 +68,9 @@ private:
     void read_config_productSetConfig();
     void read_config_exposureTimeSetConfig();
 
+public:
+    void build_imageSaveEngine();
+
     void build_camera();
 
     void build_imageProcessorModule();

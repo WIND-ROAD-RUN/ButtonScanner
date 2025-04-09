@@ -16,7 +16,6 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
     std::vector<rw::ime::ProcessRectanglesResult> vecRecogResult;
     double t = (double)cv::getTickCount();
 
-    // Process the frame
     _modelEnginePtr->ProcessMask(frame.image, resultImage, maskImage, vecRecogResult);
 
     //剔除逻辑
@@ -27,6 +26,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 
 void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::ime::ProcessRectanglesResult>& processRectanglesResult)
 {
+    auto saveIamge = resultImage.clone();
     auto& globalStruct = GlobalStruct::getInstance();
 
     auto  systemConfig = &globalStruct.dlgProduceLineSetConfig;
@@ -282,9 +282,18 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
     }
 
     emit processResult(!isBad, frame.location);
+
+    if (globalStruct.isTakePictures) {
+        if (isBad) {
+            globalStruct.imageSaveEngine->pushImage(cvMatToQImage(saveIamge),"NG","Button");
+        }
+        else {
+            globalStruct.imageSaveEngine->pushImage(cvMatToQImage(saveIamge), "OK", "Button");
+        }
+    }
 }
 
-QImage ImageProcessor::cvMatToQImage(const cv::Mat& mat, const QVector<QString>& errorInfo)
+QImage ImageProcessor::cvMatToQImage(const cv::Mat& mat)
 {
     QImage result;
     if (mat.type() == CV_8UC1) {
@@ -299,8 +308,6 @@ QImage ImageProcessor::cvMatToQImage(const cv::Mat& mat, const QVector<QString>&
     else {
         result = QImage();
     }
-
-    ImagePainter::drawTextOnImage(result, errorInfo);
 
     return result;
 }
@@ -331,7 +338,8 @@ void ImageProcessor::run()
         cv::Mat result = processAI(frame, errorInfo);
 
         // 转换为QImage并绘制错误信息
-        QImage image = cvMatToQImage(result, errorInfo);
+        QImage image = cvMatToQImage(result);
+        ImagePainter::drawTextOnImage(image, errorInfo);
 
         // 显示到界面
         emit imageReady(image);

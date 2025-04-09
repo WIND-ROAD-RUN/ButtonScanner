@@ -106,13 +106,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\rqw_ImageSaveEngine.cpp" />
     <ClCompile Include="src\rqw_CameraObject.cpp" />
     <ClCompile Include="src\rqw_CameraObjectCore.cpp" />
     <ClCompile Include="src\rqw_CameraObjectThread.cpp" />
+    <QtMoc Include="include\rqw_ImageSaveEngine.h" />
     <QtMoc Include="include\rqw_CameraObject.hpp" />
     <ClInclude Include="include\rqw_CameraObjectCore.hpp" />
     <QtMoc Include="include\rqw_CameraObjectThread.hpp" />
-    <ClInclude Include="rqw_global.h" />
+    <ClInclude Include="include\rqw_global.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\hoec\hoec.vcxproj">

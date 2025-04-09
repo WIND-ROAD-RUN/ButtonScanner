@@ -65,7 +65,7 @@ private:
     cv::Mat processAI(MatInfo& frame, QVector<QString>& errorInfo);
     void eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::ime::ProcessRectanglesResult>& processRectanglesResult);
 
-    QImage cvMatToQImage(const cv::Mat& mat, const QVector<QString>& errorInfo);
+    QImage cvMatToQImage(const cv::Mat& mat);
 
     QQueue<MatInfo>& _queue;
     QMutex& _mutex;

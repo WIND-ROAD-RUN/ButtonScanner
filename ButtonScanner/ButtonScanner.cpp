@@ -81,6 +81,8 @@ ButtonScanner::ButtonScanner(QWidget* parent)
 
     build_imageProcessorModule();
 
+    build_imageSaveEngine();
+
     //监视相机运动控制卡线程
     build_monitoringThread();
 
@@ -98,6 +100,7 @@ ButtonScanner::~ButtonScanner()
     auto& globalStruct = GlobalStruct::getInstance();
     globalStruct.destroyCamera();
     globalStruct.destroyImageProcessingModule();
+    globalStruct.destroyImageSaveEngine();
     globalStruct.saveConfig();
 }
 
@@ -343,6 +346,18 @@ void ButtonScanner::read_config_exposureTimeSetConfig()
     else {
         globalStruct.ReadDlgExposureTimeSetConfig();
     }
+}
+
+void ButtonScanner::build_imageSaveEngine()
+{
+    QDir dir;
+    auto& globalStruct = GlobalStruct::getInstance();
+    globalStruct.buildImageSaveEngine();
+    QString imagesFilePath = R"(SavedImages)";
+    QString imagesFilePathFilePathFull = dir.absoluteFilePath(imagesFilePath);
+    globalStruct.imageSaveEngine->setRootPath(imagesFilePathFilePathFull);
+    globalStruct.imageSaveEngine->startEngine();
+
 }
 
 void ButtonScanner::build_camera()
@@ -794,6 +809,7 @@ void ButtonScanner::rbtn_takePicture_ckecked(bool checked)
     auto& GlobalStruct = GlobalStruct::getInstance();
     GlobalStruct.mainWindowConfig.isTakePictures = checked;
     GlobalStruct.saveConfig();
+    GlobalStruct.isTakePictures = checked;
 }
 
 void ButtonScanner::rbtn_removeFunc_ckecked(bool checked)

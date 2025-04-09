@@ -115,6 +115,7 @@ void GlobalStruct::ReadMainWindowConfig()
     auto loadMainWindowConfig = storeContext->load(mainWindowFilePath.toStdString());
     if (loadMainWindowConfig) {
         mainWindowConfig = *loadMainWindowConfig;
+        isTakePictures = mainWindowConfig.isTakePictures;
     }
     else {
         LOG()  "Load main window config failed.";
@@ -350,6 +351,17 @@ void GlobalStruct::destroyImageProcessingModule()
     imageProcessingModule2.reset();
     imageProcessingModule3.reset();
     imageProcessingModule4.reset();
+}
+
+void GlobalStruct::buildImageSaveEngine()
+{
+    imageSaveEngine = std::make_unique<rw::rqw::ImageSaveEngine>(this);
+}
+
+void GlobalStruct::destroyImageSaveEngine()
+{
+    imageSaveEngine->stop();
+    imageSaveEngine.reset();
 }
 
 GlobalStruct::GlobalStruct()
