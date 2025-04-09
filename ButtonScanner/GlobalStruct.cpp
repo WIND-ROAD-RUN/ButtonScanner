@@ -154,6 +154,7 @@ void GlobalStruct::buildCamera()
                 camera1->motionRedix = 2;
                 camera1->initCamera(cameraMetaData1, rw::rqw::CameraObjectTrigger::Hardware, 2);
                 camera1->cameraIndex = 1;
+                camera1->setHeartbeatTime(1000);
             }
             catch (const std::exception&)
             {
@@ -172,6 +173,7 @@ void GlobalStruct::buildCamera()
                 camera2->motionRedix = 4;
                 camera2->initCamera(cameraMetaData2, rw::rqw::CameraObjectTrigger::Hardware, 4);
                 camera2->cameraIndex = 2;
+                camera1->setHeartbeatTime(1000);
             }
             catch (const std::exception&)
             {
@@ -189,6 +191,7 @@ void GlobalStruct::buildCamera()
                 camera3->motionRedix = 6;
                 camera3->initCamera(cameraMetaData3, rw::rqw::CameraObjectTrigger::Hardware, 6);
                 camera3->cameraIndex = 3;
+                camera1->setHeartbeatTime(1000);
             }
             catch (const std::exception&)
             {
@@ -205,6 +208,7 @@ void GlobalStruct::buildCamera()
                 camera4->motionRedix = 8;
                 camera4->initCamera(cameraMetaData4, rw::rqw::CameraObjectTrigger::Hardware, 8);
                 camera4->cameraIndex = 4;
+                camera1->setHeartbeatTime(1000);
             }
             catch (const std::exception&)
             {

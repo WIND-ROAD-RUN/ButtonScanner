@@ -63,6 +63,14 @@ namespace rw
             }
         }
 
+        void CameraPassiveThread::setHeartbeatTime(size_t value) const
+        {
+            if (_cameraObject)
+            {
+                _cameraObject->setHeartbeatTime(value);
+            }
+        }
+
         void CameraPassiveThread::setExposureTime(size_t value) const
         {
             if (_cameraObject)

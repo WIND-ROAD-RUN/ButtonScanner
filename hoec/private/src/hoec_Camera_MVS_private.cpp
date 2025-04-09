@@ -206,6 +206,27 @@ namespace rw {
             return;
         }
 
+        void Camera_MVS::setHeartbeatTime(size_t heartBeatTime)
+        {
+            auto result = MV_CC_SetHeartBeatTimeout(m_cameraHandle, heartBeatTime);
+            if (result == MV_OK) {
+                return;
+            }
+            throw CameraSettingError("Failed to set heartbeat time");
+        }
+
+        size_t Camera_MVS::getHeartbeatTime(size_t heartBeatTime)
+        {
+            MVCC_INTVALUE heartbeatTime;
+            auto result= MV_CC_GetHeartBeatTimeout(m_cameraHandle, &heartbeatTime);
+            if (result == MV_OK) {
+                return static_cast<size_t>(heartbeatTime.nCurValue);
+            }
+            else {
+                throw CameraRetrievalError("Failed to get heartbeat time");
+            }
+        }
+
         void Camera_MVS::setExposureTime(size_t value)
         {
             float exposureTime = static_cast<float>(value);

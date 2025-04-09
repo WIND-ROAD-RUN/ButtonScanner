@@ -225,6 +225,9 @@ namespace rw
              */
             void setCameraInfo(const CameraInfo& cameraInfo);
         public:
+            virtual void setHeartbeatTime(size_t heartBeatTime)=0;
+
+            virtual size_t getHeartbeatTime(size_t heartBeatTime) = 0;
 
             /**
              *@Parameters:
@@ -453,6 +456,8 @@ namespace rw
         public:
             bool getConnectState()override;
         public:
+            void setHeartbeatTime(size_t heartBeatTime)override;
+            size_t getHeartbeatTime(size_t heartBeatTime) override;
             void startMonitor() override;
             void stopMonitor() override;
             void setExposureTime(size_t value) override;
@@ -493,6 +498,8 @@ namespace rw
         public:
             bool getConnectState()override;
         public:
+            void setHeartbeatTime(size_t heartBeatTime)override;
+            size_t getHeartbeatTime(size_t heartBeatTime) override;
             void startMonitor() override;
             void stopMonitor() override;
             void setExposureTime(size_t value) override;

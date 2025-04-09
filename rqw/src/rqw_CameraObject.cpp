@@ -24,6 +24,11 @@ namespace rw
             _cameraPassive->stopMonitor();
         }
 
+        void CameraPassiveObject::setHeartbeatTime(size_t value) const
+        {
+            _cameraPassive->setHeartbeatTime(value);
+        }
+
         void CameraPassiveObject::setExposureTime(size_t value) const
         {
             _cameraPassive->setExposureTime(value);
