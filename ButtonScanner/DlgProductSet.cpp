@@ -20,6 +20,14 @@ DlgProductSet::~DlgProductSet()
 
 void DlgProductSet::build_ui()
 {
+    //隐藏拍照延时栏，该功能已弃用
+    for (int i = 0; i < ui->hLayout_photography->count(); ++i) {
+        QWidget* widget = ui->hLayout_photography->itemAt(i)->widget();
+        if (widget) {
+            widget->hide(); // 隐藏子控件
+        }
+    }
+
     read_config();
     read_image();
     build_radioButton();

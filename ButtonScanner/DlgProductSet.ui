@@ -73,7 +73,7 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <layout class="QHBoxLayout" name="hLayout_photography">
           <item>
            <widget class="QLabel" name="label_2">
             <property name="text">
