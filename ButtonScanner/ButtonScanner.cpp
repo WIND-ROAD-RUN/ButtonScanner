@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+#include "stdafx.h"
 
 #include"rqw_CameraObjectThread.hpp"
 #include"rqw_CameraObject.hpp"
@@ -145,7 +145,7 @@ void ButtonScanner::read_config_mainWindowConfig()
     QString mainWindowFilePathFull = dir.absoluteFilePath(mainWindowFilePath);
     QFileInfo mainWindowFile(mainWindowFilePathFull);
 
-    globalStruct.mainwindowFilePath = mainWindowFilePathFull;
+    globalStruct.mainWindowFilePath = mainWindowFilePathFull;
 
     if (!mainWindowFile.exists()) {
         QDir configDir = QFileInfo(mainWindowFilePathFull).absoluteDir();
@@ -277,13 +277,13 @@ void ButtonScanner::build_ImageProcessorModule()
     globalStruct.buildImageProcessingModule(2);
 
     ////连接界面显示和图像处理模块
-    QObject::connect(globalStruct._imageProcessingModule1.get(), &ImageProcessingModule::imageReady,
+    QObject::connect(globalStruct.imageProcessingModule1.get(), &ImageProcessingModule::imageReady,
         this, &ButtonScanner::_camera1Display, Qt::DirectConnection);
-    QObject::connect(globalStruct._imageProcessingModule2.get(), &ImageProcessingModule::imageReady,
+    QObject::connect(globalStruct.imageProcessingModule2.get(), &ImageProcessingModule::imageReady,
         this, &ButtonScanner::_camera2Display, Qt::DirectConnection);
-    QObject::connect(globalStruct._imageProcessingModule3.get(), &ImageProcessingModule::imageReady,
+    QObject::connect(globalStruct.imageProcessingModule3.get(), &ImageProcessingModule::imageReady,
         this, &ButtonScanner::_camera3Display, Qt::DirectConnection);
-    QObject::connect(globalStruct._imageProcessingModule4.get(), &ImageProcessingModule::imageReady,
+    QObject::connect(globalStruct.imageProcessingModule4.get(), &ImageProcessingModule::imageReady,
         this, &ButtonScanner::_camera4Display, Qt::DirectConnection);
 
 }
@@ -355,8 +355,8 @@ void ButtonScanner::build_MonitoringThread()
 
                 auto& globalStruct = GlobalStruct::getInstance();
 
-                if (globalStruct._camera1) {
-                    if (globalStruct._camera1->getConnectState()) {
+                if (globalStruct.camera1) {
+                    if (globalStruct.camera1->getConnectState()) {
                         QMetaObject::invokeMethod(qApp, [this]
                             {
                                 ui->label_camera1State->setText("连接成功");
@@ -374,8 +374,8 @@ void ButtonScanner::build_MonitoringThread()
 
               
 
-                if (globalStruct._camera2) {
-                    if (globalStruct._camera2->getConnectState()) {
+                if (globalStruct.camera2) {
+                    if (globalStruct.camera2->getConnectState()) {
                         QMetaObject::invokeMethod(qApp, [this]
                             {
                                 ui->label_camera2State->setText("连接成功");
@@ -394,8 +394,8 @@ void ButtonScanner::build_MonitoringThread()
                
 
                
-                if (globalStruct._camera3) {
-                    if (globalStruct._camera3->getConnectState()) {
+                if (globalStruct.camera3) {
+                    if (globalStruct.camera3->getConnectState()) {
                         QMetaObject::invokeMethod(qApp, [this]
                             {
                                 ui->label_camera3State->setText("连接成功");
@@ -414,8 +414,8 @@ void ButtonScanner::build_MonitoringThread()
                
 
 
-               if (globalStruct._camera4) {
-                   if (globalStruct._camera4->getConnectState()) {
+               if (globalStruct.camera4) {
+                   if (globalStruct.camera4->getConnectState()) {
                        QMetaObject::invokeMethod(qApp, [this]
                            {
                                ui->label_camera4State->setText("连接成功");

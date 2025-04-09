@@ -37,9 +37,9 @@ public:
     void saveMainWindowConfig();
     void saveDlgProduceLineSetConfig();
     void saveDlgProductSetConfig();
-    std::unique_ptr<rw::oso::StorageContext> _StoreContext{ nullptr };
+    std::unique_ptr<rw::oso::StorageContext> storeContext{ nullptr };
 public:
-    QString mainwindowFilePath;
+    QString mainWindowFilePath;
 	QString dlgProduceLineSetFilePath;
     QString dlgProductSetFilePath;
     rw::cdm::ButtonScannerMainWindow mainWindowConfig{};
@@ -58,20 +58,20 @@ public:
     void buildCamera();
     void startMonitor();
     void destroyCamera();
-    std::unique_ptr<rw::rqw::CameraPassiveThread> _camera1{ nullptr };
-    std::unique_ptr<rw::rqw::CameraPassiveThread> _camera2{ nullptr };
-    std::unique_ptr<rw::rqw::CameraPassiveThread> _camera3{ nullptr };
-    std::unique_ptr<rw::rqw::CameraPassiveThread> _camera4{ nullptr };
+    std::unique_ptr<rw::rqw::CameraPassiveThread> camera1{ nullptr };
+    std::unique_ptr<rw::rqw::CameraPassiveThread> camera2{ nullptr };
+    std::unique_ptr<rw::rqw::CameraPassiveThread> camera3{ nullptr };
+    std::unique_ptr<rw::rqw::CameraPassiveThread> camera4{ nullptr };
 
 public:
-    //µ˜”√«∞»∑±£ƒ£–ÕŒƒº˛¥Ê‘⁄«““‘…Ë÷√
+    //Ë∞ÉÁî®ÂâçÁ°Æ‰øùÊ®°ÂûãÊñá‰ª∂Â≠òÂú®‰∏î‰ª•ËÆæÁΩÆ
     void buildImageProcessingModule(size_t num);
     void destroyImageProcessingModule();
 
-    std::unique_ptr<ImageProcessingModule> _imageProcessingModule1{ nullptr };
-    std::unique_ptr<ImageProcessingModule> _imageProcessingModule2{ nullptr };
-    std::unique_ptr<ImageProcessingModule> _imageProcessingModule3{ nullptr };
-    std::unique_ptr<ImageProcessingModule> _imageProcessingModule4{ nullptr };
+    std::unique_ptr<ImageProcessingModule> imageProcessingModule1{ nullptr };
+    std::unique_ptr<ImageProcessingModule> imageProcessingModule2{ nullptr };
+    std::unique_ptr<ImageProcessingModule> imageProcessingModule3{ nullptr };
+    std::unique_ptr<ImageProcessingModule> imageProcessingModule4{ nullptr };
 public:
     static GlobalStruct& getInstance()
     {

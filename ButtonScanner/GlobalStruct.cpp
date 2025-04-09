@@ -7,51 +7,51 @@
 
 void GlobalStruct::buildImageProcessingModule(size_t num)
 {
-    _imageProcessingModule1 = std::make_unique<ImageProcessingModule>(num,this);
-	_imageProcessingModule1->modelEnginePath = enginePath;
-	_imageProcessingModule1->modelNamePath = namePath;
-    _imageProcessingModule1->BuildModule();
+    imageProcessingModule1 = std::make_unique<ImageProcessingModule>(num,this);
+	imageProcessingModule1->modelEnginePath = enginePath;
+	imageProcessingModule1->modelNamePath = namePath;
+    imageProcessingModule1->BuildModule();
 
-    _imageProcessingModule2 = std::make_unique<ImageProcessingModule>(num,this);
-	_imageProcessingModule2->modelEnginePath = enginePath;
-	_imageProcessingModule2->modelNamePath = namePath;
-    _imageProcessingModule2->BuildModule();
+    imageProcessingModule2 = std::make_unique<ImageProcessingModule>(num,this);
+	imageProcessingModule2->modelEnginePath = enginePath;
+	imageProcessingModule2->modelNamePath = namePath;
+    imageProcessingModule2->BuildModule();
 
-    _imageProcessingModule3 = std::make_unique<ImageProcessingModule>(num,this);
-	_imageProcessingModule3->modelEnginePath = enginePath;
-	_imageProcessingModule3->modelNamePath = namePath;
-    _imageProcessingModule3->BuildModule();
+    imageProcessingModule3 = std::make_unique<ImageProcessingModule>(num,this);
+	imageProcessingModule3->modelEnginePath = enginePath;
+	imageProcessingModule3->modelNamePath = namePath;
+    imageProcessingModule3->BuildModule();
 
-    _imageProcessingModule4 = std::make_unique<ImageProcessingModule>(num,this);
-    _imageProcessingModule4->modelEnginePath = enginePath;
-    _imageProcessingModule4->modelNamePath = namePath;
-    _imageProcessingModule4->BuildModule();
+    imageProcessingModule4 = std::make_unique<ImageProcessingModule>(num,this);
+    imageProcessingModule4->modelEnginePath = enginePath;
+    imageProcessingModule4->modelNamePath = namePath;
+    imageProcessingModule4->BuildModule();
 
-    //¡¨Ω”œ‡ª˙∫ÕÕºœÒ¥¶¿Ìƒ£øÈ
-    QObject::connect(_camera1.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
-        _imageProcessingModule1.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
-	QObject::connect(_imageProcessingModule1.get(), &ImageProcessingModule::processResultModule,
+    //ËøûÊé•Áõ∏Êú∫ÂíåÂõæÂÉèÂ§ÑÁêÜÊ®°Âùó
+    QObject::connect(camera1.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
+        imageProcessingModule1.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
+	QObject::connect(imageProcessingModule1.get(), &ImageProcessingModule::processResultModule,
 		this, &GlobalStruct::onCamera1ImageReady,Qt::DirectConnection);
 
-	QObject::connect(_camera2.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
-		_imageProcessingModule2.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
-    QObject::connect(_imageProcessingModule2.get(), &ImageProcessingModule::processResultModule,
+	QObject::connect(camera2.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
+		imageProcessingModule2.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
+    QObject::connect(imageProcessingModule2.get(), &ImageProcessingModule::processResultModule,
         this, &GlobalStruct::onCamera2ImageReady, Qt::DirectConnection);
 
-	QObject::connect(_camera3.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
-		_imageProcessingModule3.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
-    QObject::connect(_imageProcessingModule3.get(), &ImageProcessingModule::processResultModule,
+	QObject::connect(camera3.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
+		imageProcessingModule3.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
+    QObject::connect(imageProcessingModule3.get(), &ImageProcessingModule::processResultModule,
 		this, &GlobalStruct::onCamera3ImageReady, Qt::DirectConnection);
 
-	QObject::connect(_camera4.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
-		_imageProcessingModule4.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
-	QObject::connect(_imageProcessingModule4.get(), &ImageProcessingModule::processResultModule,
+	QObject::connect(camera4.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
+		imageProcessingModule4.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
+	QObject::connect(imageProcessingModule4.get(), &ImageProcessingModule::processResultModule,
 		this, &GlobalStruct::onCamera4ImageReady, Qt::DirectConnection);
 }
 
 void GlobalStruct::buildConfigManager(rw::oso::StorageType type)
 {
-	_StoreContext = std::make_unique<rw::oso::StorageContext>(type);
+	storeContext = std::make_unique<rw::oso::StorageContext>(type);
 }
 
 void GlobalStruct::ReadConfig()
@@ -63,7 +63,7 @@ void GlobalStruct::ReadConfig()
 
 void GlobalStruct::ReadMainWindowConfig()
 {
-	auto loadMainWindowConfig = _StoreContext->load(mainwindowFilePath.toStdString());
+	auto loadMainWindowConfig = storeContext->load(mainWindowFilePath.toStdString());
 	if (loadMainWindowConfig) {
 		mainWindowConfig = *loadMainWindowConfig;
 	}
@@ -74,7 +74,7 @@ void GlobalStruct::ReadMainWindowConfig()
 
 void GlobalStruct::ReadDlgProduceLineSetConfig()
 {
-	auto loadDlgProduceLineSetConfig = _StoreContext->load(dlgProduceLineSetFilePath.toStdString());
+	auto loadDlgProduceLineSetConfig = storeContext->load(dlgProduceLineSetFilePath.toStdString());
 	if (loadDlgProduceLineSetConfig) {
 		dlgProduceLineSetConfig = *loadDlgProduceLineSetConfig;
 	}
@@ -85,7 +85,7 @@ void GlobalStruct::ReadDlgProduceLineSetConfig()
 
 void GlobalStruct::ReadDlgProductSetConfig()
 {
-	auto loadDlgProductSetConfig = _StoreContext->load(dlgProductSetFilePath.toStdString());
+	auto loadDlgProductSetConfig = storeContext->load(dlgProductSetFilePath.toStdString());
 	if (loadDlgProductSetConfig) {
 		dlgProductSetConfig = *loadDlgProductSetConfig;
 	}
@@ -103,18 +103,18 @@ void GlobalStruct::saveConfig()
 
 void GlobalStruct::saveMainWindowConfig()
 {
-	_StoreContext->save(mainWindowConfig, mainwindowFilePath.toStdString());
+	storeContext->save(mainWindowConfig, mainWindowFilePath.toStdString());
 }
 
 void GlobalStruct::saveDlgProduceLineSetConfig()
 {
-	_StoreContext->save(dlgProduceLineSetConfig, dlgProduceLineSetFilePath.toStdString());
+	storeContext->save(dlgProduceLineSetConfig, dlgProduceLineSetFilePath.toStdString());
 
 }
 
 void GlobalStruct::saveDlgProductSetConfig()
 {
-	_StoreContext->save(dlgProductSetConfig, dlgProductSetFilePath.toStdString());
+	storeContext->save(dlgProductSetConfig, dlgProductSetFilePath.toStdString());
 
 }
 
@@ -155,10 +155,10 @@ void GlobalStruct::buildCamera()
 		if (cameraMetaData1.ip != "0") {
 			try
 			{
-				_camera1 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
-				_camera1->motionRedix = 2;
-				_camera1->initCamera(cameraMetaData1, rw::rqw::CameraObjectTrigger::Hardware,2);
-				_camera1->cameraIndex = 1;
+				camera1 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
+				camera1->motionRedix = 2;
+				camera1->initCamera(cameraMetaData1, rw::rqw::CameraObjectTrigger::Hardware,2);
+				camera1->cameraIndex = 1;
 			}
 			catch (const std::exception&)
 			{
@@ -175,10 +175,10 @@ void GlobalStruct::buildCamera()
 		if (cameraMetaData2.ip != "0") {
 			try
 			{
-				_camera2 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
-				_camera2->motionRedix = 4;
-				_camera2->initCamera(cameraMetaData2, rw::rqw::CameraObjectTrigger::Hardware,4);
-				_camera2->cameraIndex = 2;
+				camera2 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
+				camera2->motionRedix = 4;
+				camera2->initCamera(cameraMetaData2, rw::rqw::CameraObjectTrigger::Hardware,4);
+				camera2->cameraIndex = 2;
 			}
 			catch (const std::exception&)
 			{
@@ -193,10 +193,10 @@ void GlobalStruct::buildCamera()
 		if (cameraMetaData3.ip != "0") {
 			try
 			{
-				_camera3 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
-				_camera3->motionRedix = 6;
-				_camera3->initCamera(cameraMetaData3, rw::rqw::CameraObjectTrigger::Hardware,6);
-				_camera3->cameraIndex = 3;
+				camera3 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
+				camera3->motionRedix = 6;
+				camera3->initCamera(cameraMetaData3, rw::rqw::CameraObjectTrigger::Hardware,6);
+				camera3->cameraIndex = 3;
 			}
 			catch (const std::exception&)
 			{
@@ -209,10 +209,10 @@ void GlobalStruct::buildCamera()
 		if (cameraMetaData4.ip != "0") {
 			try
 			{
-				_camera4 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
-				_camera4->motionRedix = 8;
-				_camera4->initCamera(cameraMetaData4, rw::rqw::CameraObjectTrigger::Hardware,8);
-				_camera4->cameraIndex = 4;
+				camera4 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
+				camera4->motionRedix = 8;
+				camera4->initCamera(cameraMetaData4, rw::rqw::CameraObjectTrigger::Hardware,8);
+				camera4->cameraIndex = 4;
 
 			}
 			catch (const std::exception&)
@@ -225,11 +225,11 @@ void GlobalStruct::buildCamera()
 
 void GlobalStruct::startMonitor()
 {
-	if (_camera1)
+	if (camera1)
 	{
 		try
 		{
-			_camera1->startMonitor();
+			camera1->startMonitor();
 		}
 		catch (rw::hoec::CameraMonitorError& e)
 		{
@@ -237,33 +237,33 @@ void GlobalStruct::startMonitor()
 		}
 
 	}
-	if (_camera2)
+	if (camera2)
 	{
 		try
 		{
-			_camera2->startMonitor();
+			camera2->startMonitor();
 		}
 		catch (rw::hoec::CameraMonitorError& e)
 		{
 			LOG()  "Camera 2 startMonitor failed: " << e.what();
 		}
 	}
-	if (_camera3)
+	if (camera3)
 	{
 		try
 		{
-			_camera3->startMonitor();
+			camera3->startMonitor();
 		}
 		catch (const rw::hoec::CameraMonitorError& e)
 		{
 			LOG()  "Camera 3 startMonitor failed: " << e.what();
 		}
 	}
-	if (_camera4)
+	if (camera4)
 	{
 		try
 		{
-			_camera4->startMonitor();
+			camera4->startMonitor();
 		}
 		catch (const rw::hoec::CameraMonitorError& e)
 		{
@@ -275,18 +275,18 @@ void GlobalStruct::startMonitor()
 
 void GlobalStruct::destroyCamera()
 {
-    _camera1.reset();
-    _camera2.reset();
-    _camera3.reset();
-    _camera4.reset();
+    camera1.reset();
+    camera2.reset();
+    camera3.reset();
+    camera4.reset();
 }
 
 void GlobalStruct::destroyImageProcessingModule()
 {
-    _imageProcessingModule1.reset();
-    _imageProcessingModule2.reset();
-    _imageProcessingModule3.reset();
-    _imageProcessingModule4.reset();
+    imageProcessingModule1.reset();
+    imageProcessingModule2.reset();
+    imageProcessingModule3.reset();
+    imageProcessingModule4.reset();
 }
 
 GlobalStruct::GlobalStruct()
