@@ -18,6 +18,9 @@ public:
 private:
     void build_ui();
     void build_connect();
+public:
+    void SetCamera();
+    void ResetCamera();
 private:
     Ui::DlgExposureTimeSetClass *ui;
 private slots:
