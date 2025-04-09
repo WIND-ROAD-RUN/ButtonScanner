@@ -80,7 +80,7 @@ void DlgAiLearn::Init()
 void DlgAiLearn::ToStep1()
 {
 	clearStep();
-
+	step = 1;
 	ui->label_stepTitle->setText("第一步:");
 	ui->label_stepDescribe->setText("放要筛选的纽扣");
 
@@ -100,7 +100,7 @@ void DlgAiLearn::ToStep1()
 void DlgAiLearn::ToStep2()
 {
 	clearStep();
-
+	step = 2;
 	ui->label_stepTitle->setText("第二步:");
 	ui->label_stepDescribe->setText("放好的纽扣");
 
@@ -168,7 +168,7 @@ void DlgAiLearn::pbtn_lookAllImage_clicked()
 		dir.mkpath(".");
 	}
 
-	auto wPath =path.toStdWString();
+	auto wPath = path.toStdWString();
 	auto wCharPath = wPath.c_str();
 	HINSTANCE result = ShellExecute(NULL, L"open", L"explorer.exe", wCharPath, NULL, SW_SHOW);
 }
@@ -189,9 +189,29 @@ void DlgAiLearn::rbtn_station4_checked(bool checked)
 {
 }
 
-void DlgAiLearn::onFrameCapturedBad(cv::Mat frame, float location, size_t index)
+void DlgAiLearn::onFrameCapturedBad(cv::Mat frame, std::vector<rw::ime::ProcessRectanglesResult> vecRecogResult, size_t index)
 {
+	std::vector<int> waiJingIndexs = std::vector<int>();
+	for (int i = 0; i < vecRecogResult.size(); i++)
+	{
+		switch (vecRecogResult[i].classId)
+		{
+		case 0: waiJingIndexs.push_back(i); continue;
+		default: continue;
+		}
+	}
 
+	if (waiJingIndexs.size() == 1) {
+		auto width = abs(vecRecogResult[waiJingIndexs[0]].right_bottom.first - vecRecogResult[waiJingIndexs[0]].left_top.first) / 2;
+		auto height = abs(vecRecogResult[waiJingIndexs[0]].right_bottom.second - vecRecogResult[waiJingIndexs[0]].left_top.second) / 2;
+		auto centerX = vecRecogResult[waiJingIndexs[0]].left_top.first + width;
+		auto centerY = vecRecogResult[waiJingIndexs[0]].left_top.second + height;
+
+		vecRecogResult[waiJingIndexs[0]].
+		auto dateTimeStr = QDateTime::currentDateTime().toString("yyyyMMddHHmmsszzz").toStdString();
+
+
+	}
 }
 
 

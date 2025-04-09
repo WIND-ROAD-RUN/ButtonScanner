@@ -6,9 +6,8 @@
 #include <qdir.h>
 #include <opencv2/opencv.hpp> 
 
-void AiLearnTools::SaveImage(cv::Mat frame, std::string learnInfoSign, bool isDad, int cameraNum)
+void AiLearnTools::SaveImage(cv::Mat frame, std::string learnInfoSign, std::string dateTimeStr, bool isDad, int cameraNum)
 {
-	auto dateTimeStr = QDateTime::currentDateTime().toString("yyyyMMddHHmmsszzz").toStdString();
 
 	QImage qImage;
 
@@ -47,7 +46,7 @@ void AiLearnTools::SaveImage(cv::Mat frame, std::string learnInfoSign, bool isDa
 	}*/
 	qImage.save(saveImagePath, "jpg");
 
-	QString saveDataImagePath = SaveDataImagePath(learnInfoSign, isDad,cameraNum, dateTimeStr);
+	QString saveDataImagePath = SaveDataImagePath(learnInfoSign, isDad, cameraNum, dateTimeStr);
 	QFileInfo saveDataImageFile(saveDataImagePath);
 	if (!saveDataImageFile.exists()) {
 		QDir dir = QFileInfo(saveDataImagePath).absoluteDir();
@@ -103,5 +102,12 @@ QString AiLearnTools::SaveDataImageTranPath(std::string learnInfoSign, std::stri
 QString AiLearnTools::SaveDataImageValPath(std::string learnInfoSign, std::string dateTimeStr)
 {
 	return QString::fromStdString(PathGlobalStruct::AiLearnData + "\\" + learnInfoSign + "\\" + PathGlobalStruct::AiLearnDataVal + "\\" + dateTimeStr + ".jpg");
+}
+
+void AiLearnTools::SaveYoloText(std::string learnInfoSign, std::string dateTimeStr,int step, int checkType, int centerX, int centerY, int width, int height)
+{
+	auto classId = step == 1 ? "0" : "1";
+
+	std::ofstream outFile("output.txt");
 }
 

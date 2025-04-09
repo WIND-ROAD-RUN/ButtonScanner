@@ -24,6 +24,7 @@ private:
 private:
 	Ui::DlgAiLearnClass* ui;
 	rw::cdm::ButtonScannerDlgAiLearn* aiLearnConfig;
+	int step{ 0 };
 	int moveLen{ 3000 };
 
 	int widget_create_rawX{ 160 };
@@ -51,6 +52,6 @@ private slots:
 	void rbtn_station3_checked(bool checked);
 	void rbtn_station4_checked(bool checked);
 
-	void  onFrameCapturedBad(cv::Mat frame, float location, size_t index);
+	void  onFrameCapturedBad(cv::Mat frame, std::vector<rw::ime::ProcessRectanglesResult> vecRecogResult, size_t index);
 
 };

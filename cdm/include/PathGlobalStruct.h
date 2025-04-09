@@ -13,4 +13,5 @@ struct PathGlobalStruct
 	static inline std::string AiLearnDataGood = R"(Good)";
 	static inline std::string AiLearnDataTran = R"(Tran)";
 	static inline std::string AiLearnDataVal = R"(Val)";
+	static inline std::string AiLearnDataYoloText = R"(YoloText)";
 };
