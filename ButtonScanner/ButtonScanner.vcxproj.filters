@@ -27,6 +27,12 @@
     <Filter Include="image">
       <UniqueIdentifier>{2931e0e0-c7e5-437b-949d-bc0835e2122c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ui">
+      <UniqueIdentifier>{a23448d4-07ec-4e73-97eb-c943a1a466b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui">
+      <UniqueIdentifier>{2e00b73c-e1ed-4934-873c-86ae8a442592}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="ButtonScanner.qrc">
@@ -35,12 +41,6 @@
     <QtUic Include="ButtonScanner.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtMoc Include="ButtonScanner.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <ClCompile Include="ButtonScanner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -52,43 +52,49 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DlgProductSet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DlgProduceLineSet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GlobalStruct.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ImageProcessorModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NumKeyBord.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="ButtonScanner.cpp">
+      <Filter>Source Files\ui</Filter>
     </ClCompile>
     <ClCompile Include="DlgExposureTimeSet.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgProduceLineSet.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgProductSet.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="NumKeyBord.cpp">
+      <Filter>Source Files\ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="DlgProductSet.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="DlgProduceLineSet.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="GlobalStruct.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="ImageProcessorModule.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="NumKeyBord.h">
-      <Filter>Header Files</Filter>
+    <QtMoc Include="ButtonScanner.h">
+      <Filter>Header Files\ui</Filter>
     </QtMoc>
     <QtMoc Include="DlgExposureTimeSet.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="DlgProduceLineSet.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="DlgProductSet.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="NumKeyBord.h">
+      <Filter>Header Files\ui</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
