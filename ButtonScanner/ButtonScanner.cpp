@@ -142,6 +142,7 @@ void ButtonScanner::build_mainWindowData()
     ui->rbtn_sideLight->setChecked(mainWindowConfig.sideLight);
     ui->rbtn_defect->setChecked(mainWindowConfig.isDefect);
     ui->rbtn_ForAndAgainst->setChecked(mainWindowConfig.isPositive);
+    ui->pbtn_beltSpeed->setText(QString::number(globalStruct.dlgProduceLineSetConfig.motorSpeed));
 }
 
 void ButtonScanner::build_dlgProduceLineSet()
@@ -174,8 +175,8 @@ void ButtonScanner::build_connect()
     QObject::connect(ui->pbtn_newProduction, &QPushButton::clicked,
         this, &ButtonScanner::pbtn_newProduction_clicked);
 
-    QObject::connect(ui->pbtn_lightValue, &QPushButton::clicked, 
-        this, &ButtonScanner::pbtn_lightValue_clicked);
+    QObject::connect(ui->pbtn_beltSpeed, &QPushButton::clicked, 
+        this, &ButtonScanner::pbtn_beltSpeed_clicked);
 
     QObject::connect(ui->pbtn_score,&QPushButton::clicked,
         this,&ButtonScanner::pbtn_score_clicked);
@@ -764,13 +765,13 @@ void ButtonScanner::pbtn_newProduction_clicked()
 
 }
 
-void ButtonScanner::pbtn_lightValue_clicked()
+void ButtonScanner::pbtn_beltSpeed_clicked()
 {
-    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_lightValue, 2);
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_beltSpeed, 2);
     numKeyBoard->exec();
 
     auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.mainWindowConfig.lightValue = ui->pbtn_lightValue->text().toDouble();
+    GlobalStruct.mainWindowConfig.beltSpeed = ui->pbtn_beltSpeed->text().toDouble();
 
     delete numKeyBoard;
 }

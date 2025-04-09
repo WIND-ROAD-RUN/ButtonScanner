@@ -70,11 +70,11 @@ rw::cdm::ButtonScannerMainWindow::ButtonScannerMainWindow(const rw::oso::ObjectS
     }
     sideLight = sideLightItem->getValueAsBool();
 
-    auto lightValueItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$lightValue$"));
+    auto lightValueItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$beltSpeed$"));
     if (!lightValueItem) {
-        throw std::runtime_error("$variable$lightValue is not found");
+        throw std::runtime_error("$variable$beltSpeed$ is not found");
     }
-    lightValue = lightValueItem->getValueAsDouble();
+    beltSpeed = lightValueItem->getValueAsDouble();
 
     auto speedItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$speed$"));
     if (!speedItem) {
@@ -102,7 +102,7 @@ rw::cdm::ButtonScannerMainWindow::ButtonScannerMainWindow(const ButtonScannerMai
     passRate = buttonScannerMainWindow.passRate;
     isDebugMode = buttonScannerMainWindow.isDebugMode;
     isTakePictures = buttonScannerMainWindow.isTakePictures;
-    lightValue = buttonScannerMainWindow.lightValue;
+    beltSpeed = buttonScannerMainWindow.beltSpeed;
     isEliminating = buttonScannerMainWindow.isEliminating;
     scrappingRate = buttonScannerMainWindow.scrappingRate;
     upLight = buttonScannerMainWindow.upLight;
@@ -119,7 +119,7 @@ rw::cdm::ButtonScannerMainWindow& rw::cdm::ButtonScannerMainWindow::operator=(co
         totalProduction = buttonScannerMainWindow.totalProduction;
         totalWaste = buttonScannerMainWindow.totalWaste;
         passRate = buttonScannerMainWindow.passRate;
-        lightValue = buttonScannerMainWindow.lightValue;
+        beltSpeed = buttonScannerMainWindow.beltSpeed;
         isDebugMode = buttonScannerMainWindow.isDebugMode;
         isTakePictures = buttonScannerMainWindow.isTakePictures;
         isEliminating = buttonScannerMainWindow.isEliminating;
@@ -180,8 +180,8 @@ rw::cdm::ButtonScannerMainWindow::operator rw::oso::ObjectStoreAssembly() const
     assembly.addItem(upLightItem);
 
     auto lightValueItem = std::make_shared<oso::ObjectStoreItem>();
-    lightValueItem->setName("$variable$lightValue$");
-    lightValueItem->setValueFromDouble(lightValue);
+    lightValueItem->setName("$variable$beltSpeed$");
+    lightValueItem->setValueFromDouble(beltSpeed);
     assembly.addItem(lightValueItem);
 
     auto downLightItem = std::make_shared<oso::ObjectStoreItem>();
@@ -217,7 +217,7 @@ bool rw::cdm::ButtonScannerMainWindow::operator==(const ButtonScannerMainWindow&
     return totalProduction == account.totalProduction &&
         totalWaste == account.totalWaste &&
         passRate == account.passRate &&
-        lightValue == account.lightValue &&
+        beltSpeed == account.beltSpeed &&
         isDebugMode == account.isDebugMode &&
         isTakePictures == account.isTakePictures &&
         isEliminating == account.isEliminating &&

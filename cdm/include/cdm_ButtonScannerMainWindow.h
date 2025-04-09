@@ -34,7 +34,7 @@ namespace rw
             bool downLight{ false };
             bool sideLight{ false };
             double speed{ 0 };
-            double lightValue{ 0 };
+            double beltSpeed{ 0 };
         public:
             bool isDefect{ false };
             bool isPositive{ false };
