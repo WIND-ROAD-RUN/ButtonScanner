@@ -7,7 +7,7 @@ DlgAiLearn::DlgAiLearn(QWidget* parent)
 	, ui(new Ui::DlgAiLearnClass())
 {
 	ui->setupUi(this);
-	//aiLearnConfig= rw::cdm::ButtonScannerDlgAiLearn::
+
 	Init();
 	connects();
 }
@@ -44,7 +44,7 @@ void DlgAiLearn::connects()
 		this, &DlgAiLearn::rbtn_station3_checked);
 	QObject::connect(ui->rbtn_station4, &QPushButton::clicked,
 		this, &DlgAiLearn::rbtn_station4_checked);
-	
+
 }
 
 void DlgAiLearn::clearStep()
@@ -61,6 +61,9 @@ void DlgAiLearn::clearStep()
 
 void DlgAiLearn::Init()
 {
+	if (rw::cdm::ButtonScannerDlgAiLearn::ReadLastConfig() == nullptr)
+		ui->pbtn_no->setVisible(false);
+
 	ui->rbtn_filterColorDiff->setEnabled(false);
 
 	ui->widget_create->move(widget_create_rawX, widget_create_rawY);
@@ -68,8 +71,7 @@ void DlgAiLearn::Init()
 	ui->widget_step->move(moveLen, 0);
 	ui->widget_pic->move(moveLen, 0);
 
-	/*if (aiLearnConfig->checkType == 0)
-		ui->pbtn_no->setVisible(false);*/
+
 }
 
 void DlgAiLearn::ToStep1()
@@ -82,10 +84,11 @@ void DlgAiLearn::ToStep1()
 	ui->widget_create->move(moveLen, 0);
 
 	ui->pbtn_pre->setVisible(false);
-	/*if (aiLearnConfig->checkType == 1)
+
+	if (aiLearnConfig->checkType == 1)
 		ui->rbtn_filterColorDiff->setChecked(true);
 	else
-		ui->rbtn_filterColorDiff->setChecked(false);*/
+		ui->rbtn_filterColorDiff->setChecked(false);
 
 	ui->widget_pic->move(widget_pic_rawX, widget_pic_rawY);
 	ui->widget_step->move(widget_step_rawX, widget_step_rawY);
@@ -101,10 +104,11 @@ void DlgAiLearn::ToStep2()
 	ui->widget_create->move(moveLen, 0);
 
 	ui->pbtn_pre->setVisible(true);
-	/*if (aiLearnConfig->checkType == 1)
+
+	if (aiLearnConfig->checkType == 1)
 		ui->rbtn_filterColorDiff->setChecked(true);
 	else
-		ui->rbtn_filterColorDiff->setChecked(false);*/
+		ui->rbtn_filterColorDiff->setChecked(false);
 
 	ui->widget_pic->move(widget_pic_rawX, widget_pic_rawY);
 	ui->widget_step->move(widget_step_rawX, widget_step_rawY);
@@ -116,20 +120,21 @@ void DlgAiLearn::pbtn_yes_clicked() {
 
 void DlgAiLearn::pbtn_no_clicked()
 {
+	aiLearnConfig = rw::cdm::ButtonScannerDlgAiLearn::ReadLastConfig();
 	ToStep1();
 }
 
 void DlgAiLearn::pbtn_checkColor_clicked()
 {
-	//aiLearnConfig->checkType = 1;
-	//GlobalStruct::getInstance().saveDlgAiLearnConfig();
+	aiLearnConfig->checkType = 1;
+	aiLearnConfig->Save();
 	ToStep1();
 }
 
 void DlgAiLearn::pbtn_checkKnifeShape_clicked()
 {
-	//aiLearnConfig->checkType = 2;
-	//GlobalStruct::getInstance().saveDlgAiLearnConfig();
+	aiLearnConfig->checkType = 2;
+	aiLearnConfig->Save();
 	ToStep1();
 }
 

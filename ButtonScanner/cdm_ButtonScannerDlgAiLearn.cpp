@@ -2,6 +2,10 @@
 #include "cdm_ButtonScannerDlgAiLearn.h"
 #include"oso_core.h"
 #include <qdir.h>
+#include <filesystem> 
+#include "PathGlobalStruct.h"
+
+namespace fs = std::filesystem;
 
 rw::cdm::ButtonScannerDlgAiLearn::ButtonScannerDlgAiLearn(const rw::oso::ObjectStoreAssembly& assembly)
 {
@@ -67,15 +71,31 @@ bool rw::cdm::ButtonScannerDlgAiLearn::operator!=(const ButtonScannerDlgAiLearn&
 
 void rw::cdm::ButtonScannerDlgAiLearn::Save()
 {
+	QString pathQt = QString::fromStdString(PathGlobalStruct::AiLearnConfig + "\\" + learnInfoSign);
+
+	QFileInfo dlgAiLearnFile(pathQt);
+	if (!dlgAiLearnFile.exists()) {
+		QDir configDir = QFileInfo(pathQt).absoluteDir();
+		if (!configDir.exists()) {
+			configDir.mkpath(".");
+		}
+		QFile file(pathQt);
+		if (file.open(QIODevice::WriteOnly)) {
+			file.close();
+		}
+	}
+
 	auto _StoreContext = std::make_unique<rw::oso::StorageContext>(rw::oso::StorageType::Xml);
-	_StoreContext->save(*this, "path" + learnInfoSign);
+	_StoreContext->save(*this, pathQt.toStdString());
 }
 
 rw::cdm::ButtonScannerDlgAiLearn* rw::cdm::ButtonScannerDlgAiLearn::GetNew(bool checkType)
 {
 	auto temp = new rw::cdm::ButtonScannerDlgAiLearn();
 	temp->checkType = checkType;
-	temp->checkType=
+	temp->learnInfoSign = QDateTime::currentDateTime().toString("yyyyMMddHHmmss").toStdString();
+	temp->Save();
+	return temp;
 }
 
 rw::cdm::ButtonScannerDlgAiLearn* rw::cdm::ButtonScannerDlgAiLearn::ReadConfig(std::string path)
@@ -83,29 +103,23 @@ rw::cdm::ButtonScannerDlgAiLearn* rw::cdm::ButtonScannerDlgAiLearn::ReadConfig(s
 	auto	_StoreContext = std::make_unique<rw::oso::StorageContext>(rw::oso::StorageType::Xml);
 	QDir dir;
 
-	QString dlgAiLearnFilePath = R"(config/dlgAiLearnConfig.xml)";
-	QString dlgAiLearnFilePathFull = dir.absoluteFilePath(dlgAiLearnFilePath);
-	QFileInfo dlgAiLearnFile(dlgAiLearnFilePathFull);
+	/*QString dlgAiLearnFilePath = R"(config/dlgAiLearnConfig.xml)";
+	QString dlgAiLearnFilePathFull = dir.absoluteFilePath(dlgAiLearnFilePath);*/
 
+	QString pathQt = QString::fromStdString(path);
 
+	QFileInfo dlgAiLearnFile(pathQt);
 	if (!dlgAiLearnFile.exists()) {
-		QDir configDir = QFileInfo(dlgAiLearnFilePathFull).absoluteDir();
-		if (!configDir.exists()) {
-			configDir.mkpath(".");
-		}
-		QFile file(dlgAiLearnFilePathFull);
-		if (file.open(QIODevice::WriteOnly)) {
-			file.close();
-		}
+
 
 		auto config = new rw::cdm::ButtonScannerDlgAiLearn();
 		config->Save();
 		return config;
 	}
 	else {
-		auto assembly = _StoreContext->load(dlgAiLearnFilePathFull.toStdString());
+		auto assembly = _StoreContext->load(pathQt.toStdString());
 		if (assembly) {
-			auto loadDlgAiLearnConfig=new rw::cdm::ButtonScannerDlgAiLearn(*assembly);
+			auto loadDlgAiLearnConfig = new rw::cdm::ButtonScannerDlgAiLearn(*assembly);
 			return loadDlgAiLearnConfig;
 		}
 
@@ -114,6 +128,55 @@ rw::cdm::ButtonScannerDlgAiLearn* rw::cdm::ButtonScannerDlgAiLearn::ReadConfig(s
 
 rw::cdm::ButtonScannerDlgAiLearn* rw::cdm::ButtonScannerDlgAiLearn::ReadLastConfig()
 {
-	return nullptr;
+	fs::path target_dir = PathGlobalStruct::AiLearnConfig; // Correct usage of the "fs" namespace
+
+	// 检查目录是否存在
+	if (!fs::exists(target_dir)) {
+		std::cerr << "错误: 目录不存在。\n";
+	}
+
+	std::vector<fs::directory_entry> files;
+
+	// 遍历目录，收集所有常规文件
+	for (const auto& entry : fs::directory_iterator(target_dir)) {
+		// 跳过隐藏文件（可选）
+		std::string filename = entry.path().filename().string();
+		if (filename.empty() || filename[0] == '.') {
+			continue;
+		}
+
+		// 仅考虑常规文件且非符号链接
+		if (fs::is_regular_file(entry.status()) && !fs::is_symlink(entry.status())) {
+			files.emplace_back(entry);
+		}
+	}
+
+	if (files.empty()) {
+		return nullptr;
+	}
+
+	// 提取文件名到字符串向量
+	std::vector<std::string> filenames;
+	filenames.reserve(files.size());
+	for (const auto& file : files) {
+		filenames.emplace_back(file.path().filename().string());
+	}
+
+	// 对文件名进行排序（默认字典顺序）
+	std::sort(filenames.begin(), filenames.end());
+
+	// 获取字典顺序最大的文件名
+	const std::string& max_filename = filenames.back();
+
+	// 查找对应的完整路径
+	std::optional<fs::path> max_file_path = std::nullopt;
+	for (const auto& file : files) {
+		if (file.path().filename().string() == max_filename) {
+			max_file_path = file.path();
+			break;
+		}
+	}
+
+	return ReadConfig(max_file_path.value().string());
 }
 
