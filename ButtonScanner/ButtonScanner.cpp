@@ -16,6 +16,49 @@
 #include<QDir>
 #include<QFileInfo>
 
+void ButtonScanner::updateExposureTimeTrigger()
+{
+    // 获取窗口的当前宽度和高度
+    auto windowWidth = ui->gBoix_ImageDisplay->width();
+    auto windowHeight = ui->gBoix_ImageDisplay->height();
+
+    // 计算目标区域的宽度和高度
+    int targetWidth = static_cast<int>(windowWidth * exposureTimeTriggerWidthRatio);
+    int targetHeight = static_cast<int>(windowHeight * exposureTimeTriggerRatio);
+
+    // 计算目标区域的左上角位置，使其居中
+    int targetX = (windowWidth - targetWidth) / 2;
+    int targetY = (windowHeight - targetHeight) / 2;
+
+    // 更新 targetArea
+    exposureTimeTriggerArea = QRect(targetX, targetY, targetWidth, targetHeight);
+
+}
+
+void ButtonScanner::onExposureTimeTriggerAreaClicked()
+{
+    dlgExposureTimeSet->exec(); // 显示对话框
+}
+
+void ButtonScanner::mousePressEvent(QMouseEvent* event)
+{
+    updateExposureTimeTrigger();
+    auto point = event->pos();
+    // 检查鼠标点击是否在 targetArea 内
+    if (exposureTimeTriggerArea.contains(event->pos())) {
+        onExposureTimeTriggerAreaClicked(); // 调用目标函数
+    }
+
+    QMainWindow::mousePressEvent(event);
+}
+
+void ButtonScanner::resizeEvent(QResizeEvent* event)
+{
+    // 当窗口大小发生变化时，更新 targetArea
+    updateExposureTimeTrigger();
+    QMainWindow::resizeEvent(event);
+}
+
 ButtonScanner::ButtonScanner(QWidget* parent)
     : QMainWindow(parent)
     , ui(new Ui::ButtonScannerClass())
@@ -75,6 +118,7 @@ void ButtonScanner::build_ui()
     build_mainWindowData();
     build_dlgProduceLineSet();
     build_dlgProductSet();
+    build_dlgExposureTimeSet();
 }
 
 void ButtonScanner::build_mainWindowData()
@@ -103,6 +147,15 @@ void ButtonScanner::build_dlgProduceLineSet()
 void ButtonScanner::build_dlgProductSet()
 {
     this->dlgProductSet = new DlgProductSet(this);
+}
+
+void ButtonScanner::build_dlgExposureTimeSet()
+{
+    this->dlgExposureTimeSet = new DlgExposureTimeSet(this);
+    //设置对话框的初始位置
+    int x = this->x() + (this->width() - dlgExposureTimeSet->width()) / 2;
+    int y = this->y() + (this->height() - dlgExposureTimeSet->height()) / 2;
+    dlgExposureTimeSet->move(x, y);
 }
 
 void ButtonScanner::build_connect()

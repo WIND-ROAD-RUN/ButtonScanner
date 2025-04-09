@@ -5,6 +5,7 @@
 
 #include"DlgProduceLineSet.h"
 #include"DlgProductSet.h"
+#include"DlgExposureTimeSet.h"
 
 #include"opencv2/opencv.hpp"
 
@@ -28,11 +29,21 @@ class ButtonScanner : public QMainWindow
 private:
     DlgProduceLineSet* dlgProduceLineSet = nullptr;
     DlgProductSet* dlgProductSet = nullptr;
+    DlgExposureTimeSet* dlgExposureTimeSet = nullptr;
 
 private:
     //变量监控线程关机的时候停止
     bool mark_Thread = false;
-
+public:
+    QRect exposureTimeTriggerArea; // 指定区域
+    float exposureTimeTriggerWidthRatio = 0.3f;  
+    float exposureTimeTriggerRatio = 0.3f; 
+private:
+    void updateExposureTimeTrigger();
+    void onExposureTimeTriggerAreaClicked();
+protected:
+    void mousePressEvent(QMouseEvent* event)override;
+    void resizeEvent(QResizeEvent* event) override;
 public:
     ButtonScanner(QWidget* parent = nullptr);
 
@@ -46,6 +57,7 @@ private:
     void build_mainWindowData();
     void build_dlgProduceLineSet();
     void build_dlgProductSet();
+    void build_dlgExposureTimeSet();
 
     void build_connect();
 private:

@@ -67,6 +67,9 @@
     <ClCompile Include="NumKeyBord.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DlgExposureTimeSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DlgProductSet.h">
@@ -84,12 +87,18 @@
     <QtMoc Include="NumKeyBord.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="DlgExposureTimeSet.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="DlgProductSet.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="DlgProduceLineSet.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DlgExposureTimeSet.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
