@@ -36,14 +36,24 @@ namespace rw {
             return _camera->getConnectState();
         }
 
+        void CameraActive::setFrameRate(float cameraFrameRate)
+        {
+            return _camera->setFrameRate(cameraFrameRate);
+        }
+
         void CameraActive::setHeartbeatTime(size_t heartBeatTime)
         {
             return _camera->setHeartbeatTime(heartBeatTime);
         }
 
-        size_t CameraActive::getHeartbeatTime(size_t heartBeatTime)
+        float CameraActive::getHeartbeatTime()
         {
             return _camera->getHeartbeatTime();
+        }
+
+        float CameraActive::getFrameRate()
+        {
+            return _camera->getFrameRate();
         }
 
         void CameraActive::startMonitor()
@@ -154,14 +164,24 @@ namespace rw {
             return _camera->getConnectState();
         }
 
+        void CameraPassive::setFrameRate(float cameraFrameRate)
+        {
+            _camera->setFrameRate(cameraFrameRate);
+        }
+
         void CameraPassive::setHeartbeatTime(size_t heartBeatTime)
         {
             _camera->setHeartbeatTime(heartBeatTime);
         }
 
-        size_t CameraPassive::getHeartbeatTime(size_t heartBeatTime)
+        float CameraPassive::getHeartbeatTime()
         {
             return _camera->getHeartbeatTime();
+        }
+
+        float CameraPassive::getFrameRate()
+        {
+            return _camera->getFrameRate();
         }
 
         void CameraPassive::startMonitor()

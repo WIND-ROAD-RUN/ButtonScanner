@@ -71,6 +71,32 @@ namespace rw
             }
         }
 
+        void CameraPassiveThread::setFrameRate(float value) const
+        {
+            if (_cameraObject)
+            {
+                _cameraObject->setFrameRate(value);
+            }
+        }
+
+        size_t CameraPassiveThread::getHeartbeatTime() const
+        {
+            if (_cameraObject)
+            {
+                return _cameraObject->getHeartbeatTime();
+            }
+            return 0;
+        }
+
+        float CameraPassiveThread::getFrameRate() const
+        {
+            if (_cameraObject)
+            {
+                return _cameraObject->getFrameRate();
+            }
+            return 0;
+        }
+
         void CameraPassiveThread::setExposureTime(size_t value) const
         {
             if (_cameraObject)

@@ -29,6 +29,21 @@ namespace rw
             _cameraPassive->setHeartbeatTime(value);
         }
 
+        void CameraPassiveObject::setFrameRate(float value) const
+        {
+            _cameraPassive->setFrameRate(value);
+        }
+
+        size_t CameraPassiveObject::getHeartbeatTime() const
+        {
+            return _cameraPassive->getHeartbeatTime();
+        }
+
+        float CameraPassiveObject::getFrameRate() const
+        {
+            return _cameraPassive->getFrameRate();
+        }
+
         void CameraPassiveObject::setExposureTime(size_t value) const
         {
             _cameraPassive->setExposureTime(value);

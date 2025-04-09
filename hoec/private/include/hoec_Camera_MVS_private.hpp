@@ -31,12 +31,14 @@ namespace rw {
         public:
             void connectCamera() override;
             bool getConnectState()override;
+            void setFrameRate(float cameraFrameRate) override;
+            float getFrameRate() override;
         public:
             void startMonitor() override;
             void stopMonitor() override;
         public:
             void setHeartbeatTime(size_t heartBeatTime)override;
-            size_t getHeartbeatTime(size_t heartBeatTime) override;
+            float getHeartbeatTime() override;
             void setExposureTime(size_t value) override;
             void setGain(size_t value) override;
             void setIOTime(size_t value) override;

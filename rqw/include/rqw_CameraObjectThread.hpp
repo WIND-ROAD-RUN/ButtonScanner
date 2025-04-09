@@ -34,6 +34,9 @@ namespace rw {
         public:
             //TODO: Add more functions
             void setHeartbeatTime(size_t value) const;
+            void setFrameRate(float value) const;
+            size_t getHeartbeatTime() const;
+            float getFrameRate() const;
             void setExposureTime(size_t value) const;
             void setGain(size_t value) const;
             void setIOTime(size_t value) const;

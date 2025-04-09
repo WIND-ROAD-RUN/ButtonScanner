@@ -179,6 +179,25 @@ namespace rw {
             return MV_CC_IsDeviceConnected(m_cameraHandle);
         }
 
+        void Camera_MVS::setFrameRate(float cameraFrameRate)
+        {
+            auto result = MV_CC_SetFrameRate(m_cameraHandle,cameraFrameRate);
+            if (result == MV_OK) {
+                return;
+            }
+            throw CameraSettingError("Failed to set camera frame rate");
+        }
+
+        float Camera_MVS::getFrameRate()
+        {
+            MVCC_FLOATVALUE frameRate;
+            auto result = MV_CC_GetFrameRate(m_cameraHandle,&frameRate);
+            if (result == MV_OK) {
+                return frameRate.fCurValue;
+            }
+
+        }
+
         void Camera_MVS::startMonitor()
         {
             if (_isMonitor) {
@@ -215,12 +234,12 @@ namespace rw {
             throw CameraSettingError("Failed to set heartbeat time");
         }
 
-        size_t Camera_MVS::getHeartbeatTime(size_t heartBeatTime)
+        float Camera_MVS::getHeartbeatTime()
         {
             MVCC_INTVALUE heartbeatTime;
             auto result= MV_CC_GetHeartBeatTimeout(m_cameraHandle, &heartbeatTime);
             if (result == MV_OK) {
-                return static_cast<size_t>(heartbeatTime.nCurValue);
+                return heartbeatTime.nCurValue;
             }
             else {
                 throw CameraRetrievalError("Failed to get heartbeat time");

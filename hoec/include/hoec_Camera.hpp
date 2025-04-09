@@ -227,7 +227,11 @@ namespace rw
         public:
             virtual void setHeartbeatTime(size_t heartBeatTime)=0;
 
-            virtual size_t getHeartbeatTime(size_t heartBeatTime) = 0;
+            virtual float getHeartbeatTime() = 0;
+
+            virtual void setFrameRate(float cameraFrameRate)=0;
+            virtual float getFrameRate() = 0;
+
 
             /**
              *@Parameters:
@@ -455,9 +459,11 @@ namespace rw
             void connectCamera() override;
         public:
             bool getConnectState()override;
+            void setFrameRate(float cameraFrameRate) override;
         public:
             void setHeartbeatTime(size_t heartBeatTime)override;
-            size_t getHeartbeatTime(size_t heartBeatTime) override;
+            float getHeartbeatTime() override;
+            float getFrameRate() override;
             void startMonitor() override;
             void stopMonitor() override;
             void setExposureTime(size_t value) override;
@@ -497,9 +503,11 @@ namespace rw
             void connectCamera() override;
         public:
             bool getConnectState()override;
-        public:
+            void setFrameRate(float cameraFrameRate) override;
+        public: 
             void setHeartbeatTime(size_t heartBeatTime)override;
-            size_t getHeartbeatTime(size_t heartBeatTime) override;
+            float getHeartbeatTime() override;
+            float getFrameRate() override;
             void startMonitor() override;
             void stopMonitor() override;
             void setExposureTime(size_t value) override;
