@@ -63,6 +63,9 @@ void ButtonScanner::set_radioButton()
     ui->rbtn_sideLight->setAutoExclusive(false);
     ui->rbtn_takePicture->setAutoExclusive(false);
     ui->rbtn_upLight->setAutoExclusive(false);
+
+    ui->rbtn_removeFunc->setAttribute(Qt::WA_TransparentForMouseEvents, true); // 禁止鼠标事件
+    ui->rbtn_removeFunc->setFocusPolicy(Qt::NoFocus); // 禁止键盘焦点
 }
 
 void ButtonScanner::build_ui()
