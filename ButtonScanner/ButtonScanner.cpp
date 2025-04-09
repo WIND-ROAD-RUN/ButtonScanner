@@ -104,22 +104,44 @@ void ButtonScanner::build_dlgProductSet()
 
 void ButtonScanner::build_connect()
 {
-    QObject::connect(ui->pbtn_exit, &QPushButton::clicked, this, &ButtonScanner::pbtn_exit_clicked);
+    QObject::connect(ui->pbtn_exit, &QPushButton::clicked, 
+        this, &ButtonScanner::pbtn_exit_clicked);
 
-    QObject::connect(ui->pbtn_set, &QPushButton::clicked, this, &ButtonScanner::pbtn_set_clicked);
+    QObject::connect(ui->pbtn_set, &QPushButton::clicked, 
+        this, &ButtonScanner::pbtn_set_clicked);
 
-    QObject::connect(ui->pbtn_newProduction, &QPushButton::clicked, this, &ButtonScanner::pbtn_newProduction_clicked);
+    QObject::connect(ui->pbtn_newProduction, &QPushButton::clicked,
+        this, &ButtonScanner::pbtn_newProduction_clicked);
 
-    QObject::connect(ui->pbtn_lightValue, &QPushButton::clicked, this, &ButtonScanner::pbtn_lightValue_clicked);
+    QObject::connect(ui->pbtn_lightValue, &QPushButton::clicked, 
+        this, &ButtonScanner::pbtn_lightValue_clicked);
 
-    QObject::connect(ui->rbtn_debug, &QPushButton::clicked, this, &ButtonScanner::rbtn_debug_ckecked);
-    QObject::connect(ui->rbtn_takePicture, &QPushButton::clicked, this, &ButtonScanner::rbtn_takePicture_ckecked);
-    QObject::connect(ui->rbtn_removeFunc, &QPushButton::clicked, this, &ButtonScanner::rbtn_removeFunc_ckecked);
-    QObject::connect(ui->rbtn_upLight, &QPushButton::clicked, this, &ButtonScanner::rbtn_upLight_ckecked);
-    QObject::connect(ui->rbtn_sideLight, &QPushButton::clicked, this, &ButtonScanner::rbtn_sideLight_ckecked);
-    QObject::connect(ui->rbtn_downLight, &QPushButton::clicked, this, &ButtonScanner::rbtn_downLight_ckecked);
-    QObject::connect(ui->rbtn_defect, &QPushButton::clicked, this, &ButtonScanner::rbtn_defect_ckecked);
-    QObject::connect(ui->rbtn_ForAndAgainst, &QPushButton::clicked, this, &ButtonScanner::rbtn_ForAndAgainst_ckecked);
+    QObject::connect(ui->pbtn_score,&QPushButton::clicked,
+        this,&ButtonScanner::pbtn_score_clicked);
+
+    QObject::connect(ui->rbtn_debug, &QPushButton::clicked, 
+        this, &ButtonScanner::rbtn_debug_ckecked);
+
+    QObject::connect(ui->rbtn_takePicture, &QPushButton::clicked, 
+        this, &ButtonScanner::rbtn_takePicture_ckecked);
+
+    QObject::connect(ui->rbtn_removeFunc, &QPushButton::clicked,
+        this, &ButtonScanner::rbtn_removeFunc_ckecked);
+
+    QObject::connect(ui->rbtn_upLight, &QPushButton::clicked, 
+        this, &ButtonScanner::rbtn_upLight_ckecked);
+
+    QObject::connect(ui->rbtn_sideLight, &QPushButton::clicked,
+        this, &ButtonScanner::rbtn_sideLight_ckecked);
+
+    QObject::connect(ui->rbtn_downLight, &QPushButton::clicked, 
+        this, &ButtonScanner::rbtn_downLight_ckecked);
+
+    QObject::connect(ui->rbtn_defect, &QPushButton::clicked, 
+        this, &ButtonScanner::rbtn_defect_ckecked);
+
+    QObject::connect(ui->rbtn_ForAndAgainst, &QPushButton::clicked, 
+        this, &ButtonScanner::rbtn_ForAndAgainst_ckecked);
 }
 
 void ButtonScanner::read_config()
@@ -627,12 +649,25 @@ void ButtonScanner::onCamera4Display(QImage image)
 
 void ButtonScanner::pbtn_set_clicked()
 {
-    dlgProduceLineSet->exec();
+    auto passwordValue = new QPushButton(this);
+    auto passwordDlg = new NumKeyBord(this, passwordValue, 2);
+    passwordDlg->exec();
+    auto password = passwordValue->text();
+    if (password=="32413135") {
+        dlgProduceLineSet->exec();
+    }
+    else {
+        QMessageBox::warning(this, "Error", "密码错误，请重新输入");
+    }
+
+    delete passwordValue;
+    delete passwordDlg;
+
 }
 
 void ButtonScanner::pbtn_newProduction_clicked()
 {
-    dlgProductSet->exec();
+
 }
 
 void ButtonScanner::pbtn_lightValue_clicked()
@@ -644,6 +679,11 @@ void ButtonScanner::pbtn_lightValue_clicked()
     GlobalStruct.mainWindowConfig.lightValue = ui->pbtn_lightValue->text().toDouble();
 
     delete numKeyBoard;
+}
+
+void ButtonScanner::pbtn_score_clicked()
+{
+    dlgProductSet->exec();
 }
 
 void ButtonScanner::rbtn_debug_ckecked(bool checked)
