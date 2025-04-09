@@ -39,7 +39,7 @@ namespace rw
 		
 		public:
 			void Save();
-			static ButtonScannerDlgAiLearn* GetNew(bool checkType);
+			static ButtonScannerDlgAiLearn* GetNew(int checkType);
 			static ButtonScannerDlgAiLearn* ReadConfig(std::string path);
 			static ButtonScannerDlgAiLearn* ReadLastConfig();
 			

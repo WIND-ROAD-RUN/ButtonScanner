@@ -77,15 +77,7 @@ void AiLearnTools::SaveImage(cv::Mat frame, std::string learnInfoSign, bool isDa
 	}
 	qImage.save(saveDataImageValPath, "jpg");
 
-	QString saveDataImageValPath = SaveDataImageValPath(learnInfoSign, dateTimeStr);
-	QFileInfo saveDataImageValFile(saveDataImageValPath);
-	if (!saveDataImageValFile.exists()) {
-		QDir dir = QFileInfo(saveDataImageValPath).absoluteDir();
-		if (!dir.exists()) {
-			dir.mkpath(".");
-		}
-	}
-	qImage.save(saveDataImageValPath, "jpg");
+
 }
 
 QString AiLearnTools::SaveImagePath(std::string learnInfoSign)

@@ -1,6 +1,9 @@
 ﻿#include "stdafx.h"
 #include "DlgAiLearn.h"
 #include <GlobalStruct.h>
+#include <PathGlobalStruct.h>
+#include <windows.h>
+#include <codecvt>
 
 DlgAiLearn::DlgAiLearn(QWidget* parent)
 	: QDialog(parent)
@@ -31,6 +34,8 @@ void DlgAiLearn::connects()
 	QObject::connect(ui->pbtn_checkKnifeShape, &QPushButton::clicked,
 		this, &DlgAiLearn::pbtn_checkKnifeShape_clicked);
 
+	QObject::connect(ui->pbtn_lookAllImage, &QPushButton::clicked,
+		this, &DlgAiLearn::pbtn_lookAllImage_clicked);
 	QObject::connect(ui->pbtn_pre, &QPushButton::clicked,
 		this, &DlgAiLearn::pbtn_pre_clicked);
 	QObject::connect(ui->pbtn_next, &QPushButton::clicked,
@@ -124,6 +129,7 @@ void DlgAiLearn::pbtn_no_clicked()
 
 void DlgAiLearn::pbtn_checkColor_clicked()
 {
+	aiLearnConfig = rw::cdm::ButtonScannerDlgAiLearn::GetNew(1);
 	aiLearnConfig->checkType = 1;
 	aiLearnConfig->Save();
 	ToStep1();
@@ -131,6 +137,7 @@ void DlgAiLearn::pbtn_checkColor_clicked()
 
 void DlgAiLearn::pbtn_checkKnifeShape_clicked()
 {
+	aiLearnConfig = rw::cdm::ButtonScannerDlgAiLearn::GetNew(2);
 	aiLearnConfig->checkType = 2;
 	aiLearnConfig->Save();
 	ToStep1();
@@ -149,6 +156,21 @@ void DlgAiLearn::pbtn_pre_clicked()
 void DlgAiLearn::pbtn_next_clicked()
 {
 	ToStep2();
+}
+
+void DlgAiLearn::pbtn_lookAllImage_clicked()
+{
+	auto path = QString::fromStdString(PathGlobalStruct::AiLearnData + "\\" + aiLearnConfig->learnInfoSign);
+
+	QDir dir = QDir(path);
+	qDebug() << "目录路径:" << dir.path();
+	if (!dir.exists()) {
+		dir.mkpath(".");
+	}
+
+	auto wPath =path.toStdWString();
+	auto wCharPath = wPath.c_str();
+	HINSTANCE result = ShellExecute(NULL, L"open", L"explorer.exe", wCharPath, NULL, SW_SHOW);
 }
 
 void DlgAiLearn::rbtn_station1_checked(bool checked)

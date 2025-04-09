@@ -25,7 +25,7 @@ rw::cdm::ButtonScannerDlgAiLearn::ButtonScannerDlgAiLearn(const rw::oso::ObjectS
 	if (!learnInfoSignItem) {
 		throw std::runtime_error("$variable$learnInfoSign is not found");
 	}
-	learnInfoSign = learnInfoSignItem->getValueAsInt();
+	learnInfoSign = learnInfoSignItem->getValueAsString();
 }
 
 rw::cdm::ButtonScannerDlgAiLearn::ButtonScannerDlgAiLearn(const ButtonScannerDlgAiLearn& buttonScannerMainWindow)
@@ -48,7 +48,7 @@ rw::cdm::ButtonScannerDlgAiLearn::operator rw::oso::ObjectStoreAssembly() const
 
 	auto checkTypeItem = std::make_shared<oso::ObjectStoreItem>();
 	checkTypeItem->setName("$variable$checkType$");
-	checkTypeItem->setValueFromBool(checkType);
+	checkTypeItem->setValueFromInt(checkType);
 	assembly.addItem(checkTypeItem);
 
 	auto learnInfoSignItem = std::make_shared<oso::ObjectStoreItem>();
@@ -89,7 +89,7 @@ void rw::cdm::ButtonScannerDlgAiLearn::Save()
 	_StoreContext->save(*this, pathQt.toStdString());
 }
 
-rw::cdm::ButtonScannerDlgAiLearn* rw::cdm::ButtonScannerDlgAiLearn::GetNew(bool checkType)
+rw::cdm::ButtonScannerDlgAiLearn* rw::cdm::ButtonScannerDlgAiLearn::GetNew(int checkType)
 {
 	auto temp = new rw::cdm::ButtonScannerDlgAiLearn();
 	temp->checkType = checkType;
@@ -132,7 +132,7 @@ rw::cdm::ButtonScannerDlgAiLearn* rw::cdm::ButtonScannerDlgAiLearn::ReadLastConf
 
 	// 检查目录是否存在
 	if (!fs::exists(target_dir)) {
-		std::cerr << "错误: 目录不存在。\n";
+		return nullptr;
 	}
 
 	std::vector<fs::directory_entry> files;

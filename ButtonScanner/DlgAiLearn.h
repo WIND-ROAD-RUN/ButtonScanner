@@ -44,6 +44,7 @@ private slots:
 	void pbtn_close_clicked();
 	void pbtn_pre_clicked();
 	void pbtn_next_clicked();
+	void pbtn_lookAllImage_clicked();
 
 	void rbtn_station1_checked(bool checked);
 	void rbtn_station2_checked(bool checked);
