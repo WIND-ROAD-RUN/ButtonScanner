@@ -778,6 +778,7 @@ void ButtonScanner::pbtn_beltSpeed_clicked()
 
 void ButtonScanner::pbtn_score_clicked()
 {
+    dlgProductSet->readConfig();
     dlgProductSet->exec();
 }
 

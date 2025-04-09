@@ -28,12 +28,12 @@ void DlgProductSet::build_ui()
         }
     }
 
-    read_config();
+    readConfig();
     read_image();
     build_radioButton();
 }
 
-void DlgProductSet::read_config()
+void DlgProductSet::readConfig()
 {
     auto& GlobalStruct = GlobalStruct::getInstance();
     ui->rbtn_outsideDiameterEnable->setChecked(GlobalStruct.dlgProductSetConfig.outsideDiameterEnable);
@@ -67,6 +67,18 @@ void DlgProductSet::read_config()
     ui->rbtn_blockEyeEnable->setChecked(GlobalStruct.dlgProductSetConfig.blockEyeEnable);
     ui->pbtn_holeCenterDistanceValue->setText(QString::number(GlobalStruct.dlgProductSetConfig.holeCenterDistanceValue));
     ui->rbtn_materialHeadEnable->setChecked(GlobalStruct.dlgProductSetConfig.materialHeadEnable);
+
+
+    ui->pbtn_blowTime->setText(QString::number(get_blowTime()));
+}
+
+float DlgProductSet::get_blowTime()
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    auto outsideDiameterValue = GlobalStruct.dlgProductSetConfig.outsideDiameterValue;
+    auto beltSpeed = GlobalStruct.dlgProduceLineSetConfig.motorSpeed;
+    auto blowTime = outsideDiameterValue / beltSpeed * 1000 / 2;
+    return blowTime;
 }
 
 void DlgProductSet::read_image()
@@ -185,6 +197,9 @@ void DlgProductSet::pbtn_outsideDiameterValue_clicked() {
 
     auto& GlobalStruct = GlobalStruct::getInstance();
     GlobalStruct.dlgProductSetConfig.outsideDiameterValue = ui->pbtn_outsideDiameterValue->text().toDouble();
+
+    ui->pbtn_blowTime->setText(QString::number(get_blowTime()));
+
 
     delete numKeyBoard;
 }

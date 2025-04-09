@@ -141,6 +141,15 @@ void DlgProduceLineSet::build_connect()
         this, &DlgProduceLineSet::pbtn_pulseFactor_clicked);
 }
 
+float DlgProduceLineSet::get_blowTime()
+{
+    auto& GlobalStruct = GlobalStruct::getInstance();
+    auto outsideDiameterValue = GlobalStruct.dlgProductSetConfig.outsideDiameterValue;
+    auto beltSpeed = GlobalStruct.dlgProduceLineSetConfig.motorSpeed;
+    auto blowTime = outsideDiameterValue / beltSpeed * 1000 / 2;
+    return blowTime;
+}
+
 void DlgProduceLineSet::pbtn_blowDistance1_clicked()
 {
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowDistance1, 2);
@@ -348,6 +357,8 @@ void DlgProduceLineSet::pbtn_motorSpeed_clicked()
     GlobalStruct.dlgProduceLineSetConfig.motorSpeed = ui->pbtn_motorSpeed->text().toDouble();
 
     delete numKeyBoard;
+
+    get_blowTime();
 }
 
 void DlgProduceLineSet::pbtn_beltReductionRatio_clicked()

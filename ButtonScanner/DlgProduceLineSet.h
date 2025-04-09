@@ -21,6 +21,8 @@ private:
 
     void build_connect();
 
+    float get_blowTime();
+
 private:
     Ui::DlgProduceLineSetClass* ui;
 

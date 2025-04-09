@@ -17,7 +17,10 @@ public:
 
 private:
     void build_ui();
-    void read_config();
+public:
+    void readConfig();
+private:
+    float get_blowTime();
     void read_image();
     void build_radioButton();
     void build_connect();
