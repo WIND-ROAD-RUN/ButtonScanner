@@ -9,6 +9,7 @@
 #include"rqw_CameraObjectThread.hpp"
 #include"cdm_ButtonScannerMainWindow.h"
 #include"cdm_ButtonScannerDlgProductSet.h"
+#include"cdm_ButtonScannerDlgExposureTimeSet.h"
 #include"dsl_PriorityQueue.hpp"
 #include"oso_StorageContext.hpp"
 #include<QString>
@@ -32,19 +33,23 @@ public:
     void ReadMainWindowConfig();
     void ReadDlgProduceLineSetConfig();
     void ReadDlgProductSetConfig();
+    void ReadDlgExposureTimeSetConfig();
 public:
     void saveConfig();
     void saveMainWindowConfig();
     void saveDlgProduceLineSetConfig();
     void saveDlgProductSetConfig();
+    void saveDlgExposureTimeSetConfig();
     std::unique_ptr<rw::oso::StorageContext> storeContext{ nullptr };
 public:
     QString mainWindowFilePath;
     QString dlgProduceLineSetFilePath;
     QString dlgProductSetFilePath;
+    QString dlgExposureTimeSetFilePath;
     rw::cdm::ButtonScannerMainWindow mainWindowConfig{};
     rw::cdm::ButtonScannerProduceLineSet dlgProduceLineSetConfig{};
     rw::cdm::ButtonScannerDlgProductSet dlgProductSetConfig{};
+    rw::cdm::ButtonScannerDlgExposureTimeSet dlgExposureTimeSetConfig{};
 public:
     QString cameraIp1{ "11" };
     QString cameraIp2{ "12" };

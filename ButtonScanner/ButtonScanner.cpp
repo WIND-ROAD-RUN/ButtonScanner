@@ -208,6 +208,7 @@ void ButtonScanner::read_config()
     read_config_mainWindowConfig();
     read_config_productSetConfig();
     read_config_produceLineConfig();
+    read_config_exposureTimeSetConfig();
 }
 
 void ButtonScanner::read_config_mainWindowConfig()
@@ -303,6 +304,38 @@ void ButtonScanner::read_config_productSetConfig()
     }
     else {
         globalStruct.ReadDlgProductSetConfig();
+    }
+}
+
+void ButtonScanner::read_config_exposureTimeSetConfig()
+{
+    auto& globalStruct = GlobalStruct::getInstance();
+    QDir dir;
+
+    QString exposureTimeSetConfigFilePath = R"(config/exposureTimeSetConfig.xml)";
+    QString exposureTimeSetConfigFilePathFull = dir.absoluteFilePath(exposureTimeSetConfigFilePath);
+    QFileInfo dlgProductSetFile(exposureTimeSetConfigFilePathFull);
+
+    globalStruct.dlgExposureTimeSetFilePath = exposureTimeSetConfigFilePathFull;
+
+    if (!dlgProductSetFile.exists()) {
+        QDir configDir = QFileInfo(exposureTimeSetConfigFilePathFull).absoluteDir();
+        if (!configDir.exists()) {
+            configDir.mkpath(".");
+        }
+        QFile file(exposureTimeSetConfigFilePathFull);
+        if (file.open(QIODevice::WriteOnly)) {
+            file.close();
+        }
+        else {
+            QMessageBox::critical(this, "Error", "无法创建配置文件exposureTimeSetConfig.xml");
+        }
+        globalStruct.dlgExposureTimeSetConfig = rw::cdm::ButtonScannerDlgExposureTimeSet();
+        globalStruct.saveDlgExposureTimeSetConfig();
+        return;
+    }
+    else {
+        globalStruct.ReadDlgExposureTimeSetConfig();
     }
 }
 

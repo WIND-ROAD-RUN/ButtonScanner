@@ -93,6 +93,17 @@ void GlobalStruct::ReadDlgProductSetConfig()
     }
 }
 
+void GlobalStruct::ReadDlgExposureTimeSetConfig()
+{
+    auto loadDlgExposureTimeSetConfig = storeContext->load(dlgExposureTimeSetFilePath.toStdString());
+    if (loadDlgExposureTimeSetConfig) {
+        dlgExposureTimeSetConfig = *loadDlgExposureTimeSetConfig;
+    }
+    else {
+        LOG()  "Load main window config failed.";
+    }
+}
+
 void GlobalStruct::saveConfig()
 {
     saveMainWindowConfig();
@@ -113,6 +124,11 @@ void GlobalStruct::saveDlgProduceLineSetConfig()
 void GlobalStruct::saveDlgProductSetConfig()
 {
     storeContext->save(dlgProductSetConfig, dlgProductSetFilePath.toStdString());
+}
+
+void GlobalStruct::saveDlgExposureTimeSetConfig()
+{
+    storeContext->save(dlgExposureTimeSetConfig, dlgExposureTimeSetFilePath.toStdString());
 }
 
 void GlobalStruct::buildCamera()
