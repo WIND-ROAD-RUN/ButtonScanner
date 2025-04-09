@@ -68,6 +68,8 @@ public:
     std::unique_ptr<rw::rqw::CameraPassiveThread> camera3{ nullptr };
     std::unique_ptr<rw::rqw::CameraPassiveThread> camera4{ nullptr };
 
+    void setCameraExposureTime(int cameraIndex, size_t exposureTime);
+
 public:
     //调用前确保模型文件存在且以设置
     void buildImageProcessingModule(size_t num);

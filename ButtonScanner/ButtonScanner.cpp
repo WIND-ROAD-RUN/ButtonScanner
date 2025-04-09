@@ -37,9 +37,12 @@ void ButtonScanner::updateExposureTimeTrigger()
 
 void ButtonScanner::onExposureTimeTriggerAreaClicked()
 {
-    dlgExposureTimeSet->SetCamera(); // 设置相机
-    dlgExposureTimeSet->exec(); // 显示对话框
-    dlgExposureTimeSet->ResetCamera(); // 重置相机
+    auto isRuning = ui->rbtn_removeFunc->isChecked();
+    if (!isRuning) {
+        dlgExposureTimeSet->SetCamera(); // 设置相机为实时采集
+        dlgExposureTimeSet->exec(); // 显示对话框
+        dlgExposureTimeSet->ResetCamera(); // 重置相机为硬件触发
+    }
 }
 
 void ButtonScanner::mousePressEvent(QMouseEvent* event)

@@ -4,6 +4,56 @@
 #include"hoec_CameraException.hpp"
 #include"rqw_CameraObjectThread.hpp"
 
+void GlobalStruct::setCameraExposureTime(int cameraIndex, size_t exposureTime)
+{
+    switch (cameraIndex) {
+    case 1:
+        if (camera1) {
+            camera1->setExposureTime(exposureTime);
+            if (exposureTime < 200) {
+                camera1->setGain(0);
+            }
+            else {
+                camera1->setGain(5);
+            }
+        }
+        break;
+    case 2:
+        if (camera2) {
+            camera2->setExposureTime(exposureTime);
+            if (exposureTime < 200) {
+                camera2->setGain(0);
+            }
+            else {
+                camera2->setGain(5);
+            }
+        }
+        break;
+    case 3:
+        if (camera3) {
+            camera3->setExposureTime(exposureTime);
+            if (exposureTime < 200) {
+                camera3->setGain(0);
+            }
+            else {
+                camera3->setGain(5);
+            }
+        }        break;
+    case 4:
+        if (camera4) {
+            camera4->setExposureTime(exposureTime);
+            if (exposureTime < 200) {
+                camera4->setGain(0);
+            }
+            else {
+                camera4->setGain(5);
+            }
+        }        break;
+    default:
+        break;
+    }
+}
+
 void GlobalStruct::buildImageProcessingModule(size_t num)
 {
     imageProcessingModule1 = std::make_unique<ImageProcessingModule>(num, this);
@@ -171,6 +221,7 @@ void GlobalStruct::buildCamera()
                 camera1->initCamera(cameraMetaData1, rw::rqw::CameraObjectTrigger::Hardware, 2);
                 camera1->cameraIndex = 1;
                 camera1->setHeartbeatTime(1000);
+                setCameraExposureTime(1, dlgExposureTimeSetConfig.expousureTime);
             }
             catch (const std::exception&)
             {
@@ -189,7 +240,8 @@ void GlobalStruct::buildCamera()
                 camera2->motionRedix = 4;
                 camera2->initCamera(cameraMetaData2, rw::rqw::CameraObjectTrigger::Hardware, 4);
                 camera2->cameraIndex = 2;
-                camera1->setHeartbeatTime(1000);
+                camera2->setHeartbeatTime(1000);
+                setCameraExposureTime(2, dlgExposureTimeSetConfig.expousureTime);
             }
             catch (const std::exception&)
             {
@@ -207,7 +259,8 @@ void GlobalStruct::buildCamera()
                 camera3->motionRedix = 6;
                 camera3->initCamera(cameraMetaData3, rw::rqw::CameraObjectTrigger::Hardware, 6);
                 camera3->cameraIndex = 3;
-                camera1->setHeartbeatTime(1000);
+                camera3->setHeartbeatTime(1000);
+                setCameraExposureTime(3, dlgExposureTimeSetConfig.expousureTime);
             }
             catch (const std::exception&)
             {
@@ -224,7 +277,8 @@ void GlobalStruct::buildCamera()
                 camera4->motionRedix = 8;
                 camera4->initCamera(cameraMetaData4, rw::rqw::CameraObjectTrigger::Hardware, 8);
                 camera4->cameraIndex = 4;
-                camera1->setHeartbeatTime(1000);
+                camera4->setHeartbeatTime(1000);
+                setCameraExposureTime(4, dlgExposureTimeSetConfig.expousureTime);
             }
             catch (const std::exception&)
             {

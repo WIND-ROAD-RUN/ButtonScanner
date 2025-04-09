@@ -105,47 +105,10 @@ void DlgExposureTimeSet::pbtn_exposureTimeValue_clicked()
     auto& globalStruct = GlobalStruct::getInstance();
     globalStruct.dlgExposureTimeSetConfig.expousureTime = newValue;
 
-    if (newValue<200) {
-        if (globalStruct.camera1) {
-            globalStruct.camera1->setGain(0);
-        }
-        if (globalStruct.camera2) {
-            globalStruct.camera2->setGain(0);
-        }
-        if (globalStruct.camera3) {
-            globalStruct.camera3->setGain(0);
-        }
-        if (globalStruct.camera4) {
-            globalStruct.camera4->setGain(0);
-        }
-    }
-    else {
-        if (globalStruct.camera1) {
-            globalStruct.camera1->setGain(5);
-        }
-        if (globalStruct.camera2) {
-            globalStruct.camera2->setGain(5);
-        }
-        if (globalStruct.camera3) {
-            globalStruct.camera3->setGain(5);
-        }
-        if (globalStruct.camera4) {
-            globalStruct.camera4->setGain(5);
-        }
-    }
-
-    if (globalStruct.camera1) {
-        globalStruct.camera1->setExposureTime(newValue);
-    }
-    if (globalStruct.camera2) {
-        globalStruct.camera2->setExposureTime(newValue);
-    }
-    if (globalStruct.camera3) {
-        globalStruct.camera3->setExposureTime(newValue);
-    }
-    if (globalStruct.camera4) {
-        globalStruct.camera4->setExposureTime(newValue);
-    }
+    globalStruct.setCameraExposureTime(1, newValue);
+    globalStruct.setCameraExposureTime(2, newValue);
+    globalStruct.setCameraExposureTime(3, newValue);
+    globalStruct.setCameraExposureTime(4, newValue);
 
 
     globalStruct.saveDlgExposureTimeSetConfig();
