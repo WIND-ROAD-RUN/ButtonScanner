@@ -584,7 +584,7 @@ void ButtonScanner::build_LocationThread()
 void ButtonScanner::build_IOThread()
 {
     //线程内部
-    QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
+    QtConcurrent::run([this]() {
 
 
         auto& globalStruct = GlobalStruct::getInstance();
@@ -707,7 +707,6 @@ QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
         return QImage(mat.data, mat.cols, mat.rows, mat.step[0], QImage::Format_RGBA8888);
     }
     else {
-        LOG()  "Unsupported image format";
         return QImage();
     }
 

@@ -17,19 +17,19 @@
 struct ImagePainter
 {
     enum Color {
-        WHITE,
-        RED,
-        GREEN,
-        BLUE,
-        YELLOW,
-        CYAN,
-        MAGENTA,
-        BLACK
+        White,
+        Red,
+        Green,
+        Blue,
+        Yellow,
+        Cyan,
+        Magenta,
+        Black
     };
 
     static QColor ColorToQColor(Color c);
 
-    static void drawTextOnImage(QImage& image, const QVector<QString>& texts, const QVector<Color>& colorList = { Color ::RED,Color::GREEN}, double proportion = 0.6);
+    static void drawTextOnImage(QImage& image, const QVector<QString>& texts, const QVector<Color>& colorList = { Color ::Red,Color::Green}, double proportion = 0.6);
 
     static void drawCirclesOnImage(cv::Mat& image, const std::vector<rw::ime::ProcessRectanglesResult>& rectangles);
 };
@@ -37,7 +37,7 @@ struct ImagePainter
 
 struct MatInfo {
     cv::Mat image;
-    float loaction;
+    float location;
     size_t index;
 };
 
@@ -48,10 +48,8 @@ public:
     ImageProcessor(QQueue<MatInfo>& queue,
         QMutex& mutex,
         QWaitCondition& condition,
-        int workindex,
+        int workIndex,
         QObject* parent = nullptr);
-    int count;
-
 protected:
     void run() override; 
 
@@ -66,13 +64,14 @@ public:
 
 private:
     cv::Mat processAI(MatInfo& frame,QVector<QString> & errorInfo);
+    void eliminationLogic(MatInfo& frame,cv::Mat & resultImage,QVector<QString>& errorInfo, std::vector<rw::ime::ProcessRectanglesResult> & processRectanglesResult);
 
     QImage cvMatToQImage(const cv::Mat& mat,const QVector<QString>& errorInfo);
 
-    QQueue<MatInfo>& queue;
-    QMutex& mutex;
-    QWaitCondition& condition;
-    int workindex;
+    QQueue<MatInfo>& _queue;
+    QMutex& _mutex;
+    QWaitCondition& _condition;
+    int _workIndex;
 };
 
 class ImageProcessingModule : public QObject {
@@ -96,10 +95,10 @@ signals:
     void processResultModule(bool isOk, float location);
 
 private:
-    QQueue<MatInfo> queue;
-    QMutex mutex;
-    QWaitCondition condition;
-    std::vector<ImageProcessor*> processors;
-    int numConsumers;
+    QQueue<MatInfo> _queue;
+    QMutex _mutex;
+    QWaitCondition _condition;
+    std::vector<ImageProcessor*> _processors;
+    int _numConsumers;
 };
 
