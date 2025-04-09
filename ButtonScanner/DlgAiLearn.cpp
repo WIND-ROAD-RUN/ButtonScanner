@@ -70,8 +70,6 @@ void DlgAiLearn::Init()
 	ui->widget_check->move(moveLen, 0);
 	ui->widget_step->move(moveLen, 0);
 	ui->widget_pic->move(moveLen, 0);
-
-
 }
 
 void DlgAiLearn::ToStep1()
@@ -167,6 +165,11 @@ void DlgAiLearn::rbtn_station3_checked(bool checked)
 
 void DlgAiLearn::rbtn_station4_checked(bool checked)
 {
+}
+
+void DlgAiLearn::onFrameCapturedBad(cv::Mat frame, float location, size_t index)
+{
+
 }
 
 

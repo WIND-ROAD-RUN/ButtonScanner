@@ -1,5 +1,5 @@
 #pragma once
-
+#include <opencv2/opencv.hpp>
 #include <QDialog>
 #include "ui_DlgAiLearn.h"
 #include "cdm_ButtonScannerDlgAiLearn.h"
@@ -49,5 +49,7 @@ private slots:
 	void rbtn_station2_checked(bool checked);
 	void rbtn_station3_checked(bool checked);
 	void rbtn_station4_checked(bool checked);
+
+	void  onFrameCapturedBad(cv::Mat frame, float location, size_t index);
 
 };
