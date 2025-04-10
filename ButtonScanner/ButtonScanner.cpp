@@ -518,16 +518,39 @@ void ButtonScanner::build_monitoringThread()
                 bool  boardState = motionPtr.get()->getBoardState();
                 if (boardState == false)
                 {
-                    motionPtr.get()->OpenBoard((char*)"192.168.0.11");
+                   auto openRusult= motionPtr.get()->OpenBoard((char*)"192.168.0.11");
+                   if (openRusult) {
+                       QMetaObject::invokeMethod(qApp, [this]
+                           {
+                               ui->label_cardState->setText("连接成功");
+                               ui->label_cardState->setStyleSheet(QString("QLabel{color:rgb(0, 230, 0);} "));
+                           });
+                   }
+                   else {
+                       QMetaObject::invokeMethod(qApp, [this]
+                           {
+                               ui->label_cardState->setText("连接失败");
+                               ui->label_cardState->setStyleSheet(QString("QLabel{color:rgb(230, 0, 0);} "));
+                           });
+                   }
                 }
                 else
                 {
+                    QMetaObject::invokeMethod(qApp, [this]
+                        {
+                            ui->label_cardState->setText("连接失败");
+                            ui->label_cardState->setStyleSheet(QString("QLabel{color:rgb(230, 0, 0);} "));
+                        });
                 }
             }
-            //获得相机链接状态
+
+
+
+            //相机实时状态
             {
                 auto& globalStruct = GlobalStruct::getInstance();
 
+                //相机1
                 if (globalStruct.camera1) {
                     if (globalStruct.camera1->getConnectState()) {
                         QMetaObject::invokeMethod(qApp, [this]
@@ -544,7 +567,15 @@ void ButtonScanner::build_monitoringThread()
                             });
                     }
                 }
+                else {
+                    QMetaObject::invokeMethod(qApp, [this]
+                        {
+                            ui->label_camera1State->setText("连接失败");
+                            ui->label_camera1State->setStyleSheet(QString("QLabel{color:rgb(230, 0, 0);} "));
+                        });
+                }
 
+                //相机2
                 if (globalStruct.camera2) {
                     if (globalStruct.camera2->getConnectState()) {
                         QMetaObject::invokeMethod(qApp, [this]
@@ -561,7 +592,15 @@ void ButtonScanner::build_monitoringThread()
                             });
                     }
                 }
+                else {
+                    QMetaObject::invokeMethod(qApp, [this]
+                        {
+                            ui->label_camera2State->setText("连接失败");
+                            ui->label_camera2State->setStyleSheet(QString("QLabel{color:rgb(230, 0, 0);} "));
+                        });
+                }
 
+                //相机3
                 if (globalStruct.camera3) {
                     if (globalStruct.camera3->getConnectState()) {
                         QMetaObject::invokeMethod(qApp, [this]
@@ -578,7 +617,15 @@ void ButtonScanner::build_monitoringThread()
                             });
                     }
                 }
+                else {
+                    QMetaObject::invokeMethod(qApp, [this]
+                        {
+                            ui->label_camera3State->setText("连接失败");
+                            ui->label_camera3State->setStyleSheet(QString("QLabel{color:rgb(230, 0, 0);} "));
+                        });
+                }
 
+                //相机4
                 if (globalStruct.camera4) {
                     if (globalStruct.camera4->getConnectState()) {
                         QMetaObject::invokeMethod(qApp, [this]
@@ -594,6 +641,13 @@ void ButtonScanner::build_monitoringThread()
                                 ui->label_camera4State->setStyleSheet(QString("QLabel{color:rgb(230, 0, 0);} "));
                             });
                     }
+                }
+                else {
+                    QMetaObject::invokeMethod(qApp, [this]
+                        {
+                            ui->label_camera4State->setText("连接失败");
+                            ui->label_camera4State->setStyleSheet(QString("QLabel{color:rgb(230, 0, 0);} "));
+                        });
                 }
             }
 
