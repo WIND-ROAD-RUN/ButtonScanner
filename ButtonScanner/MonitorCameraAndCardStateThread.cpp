@@ -56,10 +56,13 @@ void MonitorCameraAndCardStateThread::check_cameraState1()
             emit updateCameraLabelState(1, true);
         }
         else {
+            emit destroyCamera1();
             emit updateCameraLabelState(1, false);
         }
     }
     else {
+        emit buildCamera1();
+        emit startMonitor1();
         emit updateCameraLabelState(1, false);
     }
 }

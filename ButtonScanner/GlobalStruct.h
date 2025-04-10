@@ -114,6 +114,10 @@ public:
 
     void startMonitor();
     void destroyCamera();
+    void destroyCamera1();
+    void destroyCamera2();
+    void destroyCamera3();
+    void destroyCamera4();
     std::unique_ptr<rw::rqw::CameraPassiveThread> camera1{ nullptr };
     std::unique_ptr<rw::rqw::CameraPassiveThread> camera2{ nullptr };
     std::unique_ptr<rw::rqw::CameraPassiveThread> camera3{ nullptr };
@@ -156,4 +160,19 @@ private slots:
     void onCamera2ImageReady(bool isOk, float location);
     void onCamera3ImageReady(bool isOk, float location);
     void onCamera4ImageReady(bool isOk, float location);
+public slots:
+    void onBuildCamera1();
+    void onBuildCamera2();
+    void onBuildCamera3();
+    void onBuildCamera4();
+
+    void onDestroyCamera1();
+    void onDestroyCamera2();
+    void onDestroyCamera3();
+    void onDestroyCamera4();
+
+    void onStartMonitor1();
+    void onStartMonitor2();
+    void onStartMonitor3();
+    void onStartMonitor4();
 };
