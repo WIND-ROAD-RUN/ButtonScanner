@@ -71,6 +71,8 @@ private:
 public:
     void build_imageSaveEngine();
 
+    void clear_olderSavedImage();
+
     void build_camera();
 
     void build_imageProcessorModule();

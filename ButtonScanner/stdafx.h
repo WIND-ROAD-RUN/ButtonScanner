@@ -32,5 +32,6 @@
 #include <QSizePolicy>
 #include <QGuiApplication>
 #include <QScreen>
+#include<QDate>
 
 #define LOG(msg) qDebug() << "[" << __FILE__ << ":" << __LINE__ << "] INFO:" << msg
