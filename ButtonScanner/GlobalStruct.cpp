@@ -102,18 +102,6 @@ void GlobalStructData::buildImageProcessingModule(size_t num)
         this, &GlobalStructData::onCamera4ImageReady, Qt::DirectConnection);
 }
 
-void GlobalStructData::build_StatisticalInfoComputingThread()
-{
-    statisticalInfoComputingThread = std::make_unique<StatisticalInfoComputingThread>(this);
-    statisticalInfoComputingThread->startThread();
-}
-
-void GlobalStructData::destroy_StatisticalInfoComputingThread()
-{
-    statisticalInfoComputingThread->stopThread();
-    statisticalInfoComputingThread.reset();
-}
-
 void GlobalStructData::buildConfigManager(rw::oso::StorageType type)
 {
     storeContext = std::make_unique<rw::oso::StorageContext>(type);
@@ -416,4 +404,20 @@ void GlobalStructData::onCamera4ImageReady(bool isOk, float location)
     if (!isOk) {
         productPriorityQueue4.insert(location, location);
     }
+}
+
+void GlobalStructThread::buildDetachThread()
+{
+    statisticalInfoComputingThread = std::make_unique<StatisticalInfoComputingThread>(this);
+    statisticalInfoComputingThread->startThread();
+}
+
+void GlobalStructThread::destroyDetachThread()
+{
+    statisticalInfoComputingThread->stopThread();
+    statisticalInfoComputingThread.reset();
+}
+
+GlobalStructThread::GlobalStructThread()
+{
 }

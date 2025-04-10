@@ -93,19 +93,20 @@ ButtonScanner::ButtonScanner(QWidget* parent)
     start_monitor();
 
     build_locationThread();
-    build_StatisticalInfoComputingThread();
+    build_detachThread();
 }
 
 ButtonScanner::~ButtonScanner()
 {
     mark_Thread = false;
     delete ui;
-    auto& globalStruct = GlobalStructData::getInstance();
-    globalStruct.destroy_StatisticalInfoComputingThread();
-    globalStruct.destroyCamera();
-    globalStruct.destroyImageProcessingModule();
-    globalStruct.destroyImageSaveEngine();
-    globalStruct.saveConfig();
+    auto& globalStructThread = GlobalStructThread::getInstance();
+    globalStructThread.destroyDetachThread();
+    auto& globalStructData = GlobalStructData::getInstance();
+    globalStructData.destroyCamera();
+    globalStructData.destroyImageProcessingModule();
+    globalStructData.destroyImageSaveEngine();
+    globalStructData.saveConfig();
 }
 
 void ButtonScanner::set_radioButton()
@@ -833,10 +834,10 @@ void ButtonScanner::build_ioThread()
         });
 }
 
-void ButtonScanner::build_StatisticalInfoComputingThread()
+void ButtonScanner::build_detachThread()
 {
-    auto& globalStruct = GlobalStructData::getInstance();
-    globalStruct.build_StatisticalInfoComputingThread();
+    auto& globalStruct = GlobalStructThread::getInstance();
+    globalStruct.buildDetachThread();
     QObject::connect(globalStruct.statisticalInfoComputingThread.get(), &StatisticalInfoComputingThread::updateStatisticalInfo,
         this, &ButtonScanner::updateStatisticalInfoUI, Qt::QueuedConnection);
 }

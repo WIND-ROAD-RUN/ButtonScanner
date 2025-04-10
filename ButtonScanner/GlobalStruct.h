@@ -26,14 +26,36 @@ namespace zwy {
     }
 }
 
-class GlobalStructData
+class GlobalStructThread
     :public QObject
 {
     Q_OBJECT
 public:
     std::unique_ptr<StatisticalInfoComputingThread> statisticalInfoComputingThread{ nullptr };
-    void build_StatisticalInfoComputingThread();
-    void destroy_StatisticalInfoComputingThread();
+public:
+    void buildDetachThread();
+    void destroyDetachThread();
+public:
+    static GlobalStructThread& getInstance()
+    {
+        static GlobalStructThread instance;
+        return instance;
+    }
+
+    GlobalStructThread(const GlobalStructThread&) = delete;
+    GlobalStructThread& operator=(const GlobalStructThread&) = delete;
+
+private:
+    GlobalStructThread();
+    ~GlobalStructThread() = default;
+
+};
+
+
+class GlobalStructData
+    :public QObject
+{
+    Q_OBJECT
 public:
     struct StatisticalInfo
     {

@@ -89,7 +89,7 @@ public:
     //开启线程监控运动控制卡io点并且做出相应的逻辑
     void build_ioThread();
 
-    void build_StatisticalInfoComputingThread();
+    void build_detachThread();
 
 private:
     Ui::ButtonScannerClass* ui;
