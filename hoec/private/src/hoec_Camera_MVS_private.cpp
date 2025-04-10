@@ -25,8 +25,15 @@ namespace rw {
         Camera_MVS::~Camera_MVS()
         {
             //先停止采集
-            if (_isMonitor) {
-                Camera_MVS::stopMonitor();
+            try
+            {
+                if (_isMonitor) {
+                    Camera_MVS::stopMonitor();
+                }
+            }
+            catch (const std::exception&)
+            {
+
             }
             //关闭相机
             if (m_cameraHandle) {
@@ -422,11 +429,19 @@ namespace rw {
 
         Camera_MVS_Passive::~Camera_MVS_Passive()
         {
-            if (_isMonitor)
+            try
             {
-                this->Camera_MVS::stopMonitor();
-                _isMonitor = false;
+                if (_isMonitor)
+                {
+                    this->Camera_MVS::stopMonitor();
+                    _isMonitor = false;
+                }
             }
+            catch (const std::exception&)
+            {
+
+            }
+            
         }
 
         void Camera_MVS_Passive::RegisterCallBackFunc()

@@ -417,9 +417,11 @@ void GlobalStructThread::buildDetachThread()
 void GlobalStructThread::destroyDetachThread()
 {
     statisticalInfoComputingThread->stopThread();
+    statisticalInfoComputingThread->wait();
     statisticalInfoComputingThread.reset();
 
     monitorCameraAndCardStateThread->stopThread();
+    monitorCameraAndCardStateThread->wait();
     monitorCameraAndCardStateThread.reset();
 }
 

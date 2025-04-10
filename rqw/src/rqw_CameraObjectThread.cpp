@@ -1,6 +1,7 @@
 #include"rqw_CameraObjectThread.hpp"
 
 #include"rqw_CameraObject.hpp"
+#include"hoec_CameraException.hpp"
 
 namespace rw
 {
@@ -15,7 +16,20 @@ namespace rw
         {
             quit();
             wait();
-            delete _cameraObject;
+            if (_cameraObject->getConnectState()) {
+                delete _cameraObject;
+            }
+            else {
+                try
+                {
+                    delete _cameraObject;
+                }
+                catch (const std::exception&)
+                {
+
+                }
+            }
+
         }
 
         void CameraPassiveThread::initCamera(const rw::rqw::CameraMetaData& cameraMetaData,
