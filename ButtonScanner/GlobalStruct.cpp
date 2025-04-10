@@ -202,33 +202,34 @@ void GlobalStruct::saveDlgExposureTimeSetConfig()
     storeContext->save(dlgExposureTimeSetConfig, dlgExposureTimeSetFilePath.toStdString());
 }
 
+bool GlobalStruct::isTargetCamera(const QString& cameraIndex, const QString& targetName)
+{
+    QRegularExpression regex(R"((\d+)\.(\d+)\.(\d+)\.(\d+))");
+    QRegularExpressionMatch match = regex.match(targetName);
+
+    if (match.hasMatch()) {
+        auto matchString = match.captured(3);
+
+        return cameraIndex == matchString;
+    }
+
+    return false;
+}
+
+rw::rqw::CameraMetaData GlobalStruct::cameraMetaDataCheck(const QString& cameraIndex, const QVector<rw::rqw::CameraMetaData>& cameraInfo)
+{
+    for (const auto& cameraMetaData : cameraInfo) {
+        if (isTargetCamera(cameraIndex, cameraMetaData.ip)) {
+            return cameraMetaData;
+        }
+    }
+    rw::rqw::CameraMetaData error;
+    error.ip = "0";
+    return error;
+}
+
 void GlobalStruct::buildCamera()
 {
-    auto isTargetCamera = [](const QString& cameraIndex, const QString& targetName) {
-        QRegularExpression regex(R"((\d+)\.(\d+)\.(\d+)\.(\d+))");
-        QRegularExpressionMatch match = regex.match(targetName);
-
-        if (match.hasMatch()) {
-            auto matchString = match.captured(3);
-
-            return cameraIndex == matchString;
-        }
-
-        return false;
-        };
-
-    auto cameraMetaDataCheck =
-        [isTargetCamera](const QString& cameraIndex, const QVector<rw::rqw::CameraMetaData>& cameraInfo) {
-        for (const auto& cameraMetaData : cameraInfo) {
-            if (isTargetCamera(cameraIndex, cameraMetaData.ip)) {
-                return cameraMetaData;
-            }
-        }
-        rw::rqw::CameraMetaData error;
-        error.ip = "0";
-        return error;
-        };
-
     auto cameraList = rw::rqw::CheckCameraList();
 
     {

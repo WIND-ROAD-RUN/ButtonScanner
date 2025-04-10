@@ -544,8 +544,6 @@ void ButtonScanner::build_monitoringThread()
                 }
             }
 
-
-
             //相机实时状态
             {
                 auto& globalStruct = GlobalStruct::getInstance();
