@@ -379,7 +379,6 @@ GlobalStructData::GlobalStructData()
 
 void GlobalStructData::onCamera1ImageReady(bool isOk, float location)
 {
-    LOG()  "Camera 1 image ready: " << isOk << " location: " << location;
     if (!isOk) {
         productPriorityQueue1.insert(location, location);
     }
@@ -410,12 +409,18 @@ void GlobalStructThread::buildDetachThread()
 {
     statisticalInfoComputingThread = std::make_unique<StatisticalInfoComputingThread>(this);
     statisticalInfoComputingThread->startThread();
+
+    monitorCameraAndCardStateThread = std::make_unique<MonitorCameraAndCardStateThread>(this);
+    monitorCameraAndCardStateThread->startThread();
 }
 
 void GlobalStructThread::destroyDetachThread()
 {
     statisticalInfoComputingThread->stopThread();
     statisticalInfoComputingThread.reset();
+
+    monitorCameraAndCardStateThread->stopThread();
+    monitorCameraAndCardStateThread.reset();
 }
 
 GlobalStructThread::GlobalStructThread()

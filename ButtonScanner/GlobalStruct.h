@@ -15,6 +15,7 @@
 #include"oso_StorageContext.hpp"
 #include"rqw_ImageSaveEngine.h"
 #include"StatisticalInfoComputingThread.h"
+#include"MonitorCameraAndCardStateThread.h"
 
 #include<QString>
 
@@ -32,6 +33,7 @@ class GlobalStructThread
     Q_OBJECT
 public:
     std::unique_ptr<StatisticalInfoComputingThread> statisticalInfoComputingThread{ nullptr };
+    std::unique_ptr<MonitorCameraAndCardStateThread> monitorCameraAndCardStateThread{ nullptr };
 public:
     void buildDetachThread();
     void destroyDetachThread();

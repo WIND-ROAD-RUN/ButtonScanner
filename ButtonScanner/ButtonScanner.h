@@ -81,9 +81,6 @@ public:
 
     void build_motion();
 
-    //实时监控运动控制卡,相机状态（掉线重连）
-    void build_monitoringThread();
-
     //开启线程实施监控皮带运动位置
     void build_locationThread();
     //开启线程监控运动控制卡io点并且做出相应的逻辑
@@ -109,12 +106,16 @@ private slots:
     void updateStatisticalInfoUI();
 
 private slots:
+    void updateCameraLabelState(int cameraIndex,bool state);
+    void updateCardLabelState(bool state);
+
+private slots:
     void pbtn_exit_clicked();
     void pbtn_set_clicked();
     void pbtn_newProduction_clicked();
     void pbtn_beltSpeed_clicked();
     void pbtn_score_clicked();
-
+private slots:
     void rbtn_debug_ckecked(bool checked);
     void rbtn_takePicture_ckecked(bool checked);
     void rbtn_removeFunc_ckecked(bool checked);
