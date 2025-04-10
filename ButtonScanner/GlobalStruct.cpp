@@ -218,82 +218,96 @@ rw::rqw::CameraMetaData GlobalStructData::cameraMetaDataCheck(const QString& cam
 
 void GlobalStructData::buildCamera()
 {
+    buildCamera1();
+    buildCamera2();
+    buildCamera3();
+    buildCamera4();
+}
+
+void GlobalStructData::buildCamera1()
+{
     auto cameraList = rw::rqw::CheckCameraList();
 
-    {
-        auto cameraMetaData1 = cameraMetaDataCheck(cameraIp1, cameraList);
 
-        if (cameraMetaData1.ip != "0") {
-            try
-            {
-                camera1 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
-                camera1->motionRedix = 2;
-                camera1->initCamera(cameraMetaData1, rw::rqw::CameraObjectTrigger::Hardware, 2);
-                camera1->cameraIndex = 1;
-                camera1->setHeartbeatTime(1000);
-                setCameraExposureTime(1, dlgExposureTimeSetConfig.expousureTime);
-            }
-            catch (const std::exception&)
-            {
-                LOG()  "Camera 1 initialization failed.";
-            }
+    auto cameraMetaData1 = cameraMetaDataCheck(cameraIp1, cameraList);
+
+    if (cameraMetaData1.ip != "0") {
+        try
+        {
+            camera1 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
+            camera1->motionRedix = 2;
+            camera1->initCamera(cameraMetaData1, rw::rqw::CameraObjectTrigger::Hardware, 2);
+            camera1->cameraIndex = 1;
+            camera1->setHeartbeatTime(1000);
+            setCameraExposureTime(1, dlgExposureTimeSetConfig.expousureTime);
+        }
+        catch (const std::exception&)
+        {
+            LOG()  "Camera 1 initialization failed.";
         }
     }
 
-    {
-        auto cameraMetaData2 = cameraMetaDataCheck(cameraIp2, cameraList);
+}
 
-        if (cameraMetaData2.ip != "0") {
-            try
-            {
-                camera2 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
-                camera2->motionRedix = 4;
-                camera2->initCamera(cameraMetaData2, rw::rqw::CameraObjectTrigger::Hardware, 4);
-                camera2->cameraIndex = 2;
-                camera2->setHeartbeatTime(1000);
-                setCameraExposureTime(2, dlgExposureTimeSetConfig.expousureTime);
-            }
-            catch (const std::exception&)
-            {
-                LOG()  "Camera 2 initialization failed.";
-            }
+void GlobalStructData::buildCamera2()
+{
+    auto cameraList = rw::rqw::CheckCameraList();
+    auto cameraMetaData2 = cameraMetaDataCheck(cameraIp2, cameraList);
+    if (cameraMetaData2.ip != "0") {
+        try
+        {
+            camera2 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
+            camera2->motionRedix = 4;
+            camera2->initCamera(cameraMetaData2, rw::rqw::CameraObjectTrigger::Hardware, 4);
+            camera2->cameraIndex = 2;
+            camera2->setHeartbeatTime(1000);
+            setCameraExposureTime(2, dlgExposureTimeSetConfig.expousureTime);
+        }
+        catch (const std::exception&)
+        {
+            LOG()  "Camera 2 initialization failed.";
         }
     }
+}
 
-    {
-        auto cameraMetaData3 = cameraMetaDataCheck(cameraIp3, cameraList);
-        if (cameraMetaData3.ip != "0") {
-            try
-            {
-                camera3 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
-                camera3->motionRedix = 6;
-                camera3->initCamera(cameraMetaData3, rw::rqw::CameraObjectTrigger::Hardware, 6);
-                camera3->cameraIndex = 3;
-                camera3->setHeartbeatTime(1000);
-                setCameraExposureTime(3, dlgExposureTimeSetConfig.expousureTime);
-            }
-            catch (const std::exception&)
-            {
-                LOG()  "Camera 3 initialization failed.";
-            }
+void GlobalStructData::buildCamera3()
+{
+    auto cameraList = rw::rqw::CheckCameraList();
+    auto cameraMetaData3 = cameraMetaDataCheck(cameraIp3, cameraList);
+    if (cameraMetaData3.ip != "0") {
+        try
+        {
+            camera3 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
+            camera3->motionRedix = 6;
+            camera3->initCamera(cameraMetaData3, rw::rqw::CameraObjectTrigger::Hardware, 6);
+            camera3->cameraIndex = 3;
+            camera3->setHeartbeatTime(1000);
+            setCameraExposureTime(3, dlgExposureTimeSetConfig.expousureTime);
+        }
+        catch (const std::exception&)
+        {
+            LOG()  "Camera 3 initialization failed.";
         }
     }
-    {
-        auto cameraMetaData4 = cameraMetaDataCheck(cameraIp4, cameraList);
-        if (cameraMetaData4.ip != "0") {
-            try
-            {
-                camera4 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
-                camera4->motionRedix = 8;
-                camera4->initCamera(cameraMetaData4, rw::rqw::CameraObjectTrigger::Hardware, 8);
-                camera4->cameraIndex = 4;
-                camera4->setHeartbeatTime(1000);
-                setCameraExposureTime(4, dlgExposureTimeSetConfig.expousureTime);
-            }
-            catch (const std::exception&)
-            {
-                LOG()  "Camera 4 initialization failed.";
-            }
+}
+
+void GlobalStructData::buildCamera4()
+{
+    auto cameraList = rw::rqw::CheckCameraList();
+    auto cameraMetaData4 = cameraMetaDataCheck(cameraIp4, cameraList);
+    if (cameraMetaData4.ip != "0") {
+        try
+        {
+            camera4 = std::make_unique<rw::rqw::CameraPassiveThread>(this);
+            camera4->motionRedix = 8;
+            camera4->initCamera(cameraMetaData4, rw::rqw::CameraObjectTrigger::Hardware, 8);
+            camera4->cameraIndex = 4;
+            camera4->setHeartbeatTime(1000);
+            setCameraExposureTime(4, dlgExposureTimeSetConfig.expousureTime);
+        }
+        catch (const std::exception&)
+        {
+            LOG()  "Camera 4 initialization failed.";
         }
     }
 }
