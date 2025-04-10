@@ -35,38 +35,38 @@ void DlgProductSet::build_ui()
 
 void DlgProductSet::readConfig()
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    ui->rbtn_outsideDiameterEnable->setChecked(GlobalStruct.dlgProductSetConfig.outsideDiameterEnable);
-    ui->pbtn_outsideDiameterValue->setText(QString::number(GlobalStruct.dlgProductSetConfig.outsideDiameterValue));
-    ui->pbtn_outsideDiameterDeviation->setText(QString::number(GlobalStruct.dlgProductSetConfig.outsideDiameterDeviation));
-    ui->pbtn_photography->setText(QString::number(GlobalStruct.dlgProductSetConfig.photography));
-    ui->pbtn_blowTime->setText(QString::number(GlobalStruct.dlgProductSetConfig.blowTime));
-    ui->rbtn_edgeDamageEnable->setChecked(GlobalStruct.dlgProductSetConfig.edgeDamageEnable);
-    ui->rbtn_edgeDamageSimilarity->setText(QString::number(GlobalStruct.dlgProductSetConfig.edgeDamageSimilarity));
-    ui->rbtn_shieldingRangeEnable->setCheckable(GlobalStruct.dlgProductSetConfig.shieldingRangeEnable);
-    ui->pbtn_outerRadius->setText(QString::number(GlobalStruct.dlgProductSetConfig.outerRadius));
-    ui->pbtn_innerRadius->setText(QString::number(GlobalStruct.dlgProductSetConfig.innerRadius));
-    ui->rbtn_poreEnable->setChecked(GlobalStruct.dlgProductSetConfig.poreEnable);
-    ui->rbtn_paintEnable->setChecked(GlobalStruct.dlgProductSetConfig.paintEnable);
-    ui->rbtn_holesCountEnable->setChecked(GlobalStruct.dlgProductSetConfig.holesCountEnable);
-    ui->ptn_holesCountValue->setText(QString::number(GlobalStruct.dlgProductSetConfig.holesCountValue));
-    ui->rbtn_brokenEyeEnable->setChecked(GlobalStruct.dlgProductSetConfig.brokenEyeEnable);
-    ui->pbtn_brokenEyeSimilarity->setText(QString::number(GlobalStruct.dlgProductSetConfig.brokenEyeSimilarity));
-    ui->rbtn_crackEnable->setChecked(GlobalStruct.dlgProductSetConfig.crackEnable);
-    ui->pbtn_crackSimilarity->setText(QString::number(GlobalStruct.dlgProductSetConfig.crackSimilarity));
-    ui->rbtn_apertureEnable->setChecked(GlobalStruct.dlgProductSetConfig.apertureEnable);
-    ui->pbtn_apertureValue->setText(QString::number(GlobalStruct.dlgProductSetConfig.apertureValue));
-    ui->pbtn_apertureSimilarity->setText(QString::number(GlobalStruct.dlgProductSetConfig.apertureSimilarity));
-    ui->rbtn_specifyColorDifferenceEnable->setChecked(GlobalStruct.dlgProductSetConfig.specifyColorDifferenceEnable);
-    ui->pbtn_specifyColorDifferenceR->setText(QString::number(GlobalStruct.dlgProductSetConfig.specifyColorDifferenceR));
-    ui->pbtn_specifyColorDifferenceG->setText(QString::number(GlobalStruct.dlgProductSetConfig.specifyColorDifferenceG));
-    ui->pbtn_specifyColorDifferenceB->setText(QString::number(GlobalStruct.dlgProductSetConfig.specifyColorDifferenceB));
-    ui->rbtn_largeColorDifferenceEnable->setChecked(GlobalStruct.dlgProductSetConfig.largeColorDifferenceEnable);
-    ui->pbtn_largeColorDifferenceDeviation->setText(QString::number(GlobalStruct.dlgProductSetConfig.largeColorDifferenceDeviation));
-    ui->rbtn_grindStoneEnable->setChecked(GlobalStruct.dlgProductSetConfig.grindStoneEnable);
-    ui->rbtn_blockEyeEnable->setChecked(GlobalStruct.dlgProductSetConfig.blockEyeEnable);
-    ui->pbtn_holeCenterDistanceValue->setText(QString::number(GlobalStruct.dlgProductSetConfig.holeCenterDistanceValue));
-    ui->rbtn_materialHeadEnable->setChecked(GlobalStruct.dlgProductSetConfig.materialHeadEnable);
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    ui->rbtn_outsideDiameterEnable->setChecked(GlobalStructData.dlgProductSetConfig.outsideDiameterEnable);
+    ui->pbtn_outsideDiameterValue->setText(QString::number(GlobalStructData.dlgProductSetConfig.outsideDiameterValue));
+    ui->pbtn_outsideDiameterDeviation->setText(QString::number(GlobalStructData.dlgProductSetConfig.outsideDiameterDeviation));
+    ui->pbtn_photography->setText(QString::number(GlobalStructData.dlgProductSetConfig.photography));
+    ui->pbtn_blowTime->setText(QString::number(GlobalStructData.dlgProductSetConfig.blowTime));
+    ui->rbtn_edgeDamageEnable->setChecked(GlobalStructData.dlgProductSetConfig.edgeDamageEnable);
+    ui->rbtn_edgeDamageSimilarity->setText(QString::number(GlobalStructData.dlgProductSetConfig.edgeDamageSimilarity));
+    ui->rbtn_shieldingRangeEnable->setCheckable(GlobalStructData.dlgProductSetConfig.shieldingRangeEnable);
+    ui->pbtn_outerRadius->setText(QString::number(GlobalStructData.dlgProductSetConfig.outerRadius));
+    ui->pbtn_innerRadius->setText(QString::number(GlobalStructData.dlgProductSetConfig.innerRadius));
+    ui->rbtn_poreEnable->setChecked(GlobalStructData.dlgProductSetConfig.poreEnable);
+    ui->rbtn_paintEnable->setChecked(GlobalStructData.dlgProductSetConfig.paintEnable);
+    ui->rbtn_holesCountEnable->setChecked(GlobalStructData.dlgProductSetConfig.holesCountEnable);
+    ui->ptn_holesCountValue->setText(QString::number(GlobalStructData.dlgProductSetConfig.holesCountValue));
+    ui->rbtn_brokenEyeEnable->setChecked(GlobalStructData.dlgProductSetConfig.brokenEyeEnable);
+    ui->pbtn_brokenEyeSimilarity->setText(QString::number(GlobalStructData.dlgProductSetConfig.brokenEyeSimilarity));
+    ui->rbtn_crackEnable->setChecked(GlobalStructData.dlgProductSetConfig.crackEnable);
+    ui->pbtn_crackSimilarity->setText(QString::number(GlobalStructData.dlgProductSetConfig.crackSimilarity));
+    ui->rbtn_apertureEnable->setChecked(GlobalStructData.dlgProductSetConfig.apertureEnable);
+    ui->pbtn_apertureValue->setText(QString::number(GlobalStructData.dlgProductSetConfig.apertureValue));
+    ui->pbtn_apertureSimilarity->setText(QString::number(GlobalStructData.dlgProductSetConfig.apertureSimilarity));
+    ui->rbtn_specifyColorDifferenceEnable->setChecked(GlobalStructData.dlgProductSetConfig.specifyColorDifferenceEnable);
+    ui->pbtn_specifyColorDifferenceR->setText(QString::number(GlobalStructData.dlgProductSetConfig.specifyColorDifferenceR));
+    ui->pbtn_specifyColorDifferenceG->setText(QString::number(GlobalStructData.dlgProductSetConfig.specifyColorDifferenceG));
+    ui->pbtn_specifyColorDifferenceB->setText(QString::number(GlobalStructData.dlgProductSetConfig.specifyColorDifferenceB));
+    ui->rbtn_largeColorDifferenceEnable->setChecked(GlobalStructData.dlgProductSetConfig.largeColorDifferenceEnable);
+    ui->pbtn_largeColorDifferenceDeviation->setText(QString::number(GlobalStructData.dlgProductSetConfig.largeColorDifferenceDeviation));
+    ui->rbtn_grindStoneEnable->setChecked(GlobalStructData.dlgProductSetConfig.grindStoneEnable);
+    ui->rbtn_blockEyeEnable->setChecked(GlobalStructData.dlgProductSetConfig.blockEyeEnable);
+    ui->pbtn_holeCenterDistanceValue->setText(QString::number(GlobalStructData.dlgProductSetConfig.holeCenterDistanceValue));
+    ui->rbtn_materialHeadEnable->setChecked(GlobalStructData.dlgProductSetConfig.materialHeadEnable);
 
 
     ui->pbtn_blowTime->setText(QString::number(get_blowTime()));
@@ -74,9 +74,9 @@ void DlgProductSet::readConfig()
 
 float DlgProductSet::get_blowTime()
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    auto outsideDiameterValue = GlobalStruct.dlgProductSetConfig.outsideDiameterValue;
-    auto beltSpeed = GlobalStruct.dlgProduceLineSetConfig.motorSpeed;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    auto outsideDiameterValue = GlobalStructData.dlgProductSetConfig.outsideDiameterValue;
+    auto beltSpeed = GlobalStructData.dlgProduceLineSetConfig.motorSpeed;
     auto blowTime = outsideDiameterValue / beltSpeed * 1000 / 2;
     return blowTime;
 }
@@ -195,8 +195,8 @@ void DlgProductSet::pbtn_outsideDiameterValue_clicked() {
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_outsideDiameterValue, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.outsideDiameterValue = ui->pbtn_outsideDiameterValue->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.outsideDiameterValue = ui->pbtn_outsideDiameterValue->text().toDouble();
 
     ui->pbtn_blowTime->setText(QString::number(get_blowTime()));
 
@@ -209,8 +209,8 @@ void DlgProductSet::pbtn_outsideDiameterDeviation_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_outsideDiameterDeviation, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.outsideDiameterDeviation = ui->pbtn_outsideDiameterDeviation->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.outsideDiameterDeviation = ui->pbtn_outsideDiameterDeviation->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -220,8 +220,8 @@ void DlgProductSet::pbtn_photography_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_photography, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.photography = ui->pbtn_photography->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.photography = ui->pbtn_photography->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -231,8 +231,8 @@ void DlgProductSet::pbtn_blowTime_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.blowTime = ui->pbtn_blowTime->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.blowTime = ui->pbtn_blowTime->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -242,8 +242,8 @@ void DlgProductSet::rbtn_edgeDamageSimilarity_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->rbtn_edgeDamageSimilarity, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.edgeDamageSimilarity = ui->rbtn_edgeDamageSimilarity->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.edgeDamageSimilarity = ui->rbtn_edgeDamageSimilarity->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -253,8 +253,8 @@ void DlgProductSet::pbtn_outerRadius_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_outerRadius, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.outerRadius = ui->pbtn_outerRadius->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.outerRadius = ui->pbtn_outerRadius->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -264,8 +264,8 @@ void DlgProductSet::pbtn_innerRadius_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_innerRadius, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.innerRadius = ui->pbtn_innerRadius->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.innerRadius = ui->pbtn_innerRadius->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -275,8 +275,8 @@ void DlgProductSet::ptn_holesCountValue_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->ptn_holesCountValue, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.holesCountValue = ui->ptn_holesCountValue->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.holesCountValue = ui->ptn_holesCountValue->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -286,8 +286,8 @@ void DlgProductSet::pbtn_brokenEyeSimilarity_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_brokenEyeSimilarity, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.brokenEyeSimilarity = ui->pbtn_brokenEyeSimilarity->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.brokenEyeSimilarity = ui->pbtn_brokenEyeSimilarity->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -297,8 +297,8 @@ void DlgProductSet::pbtn_crackSimilarity_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_crackSimilarity, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.crackSimilarity = ui->pbtn_crackSimilarity->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.crackSimilarity = ui->pbtn_crackSimilarity->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -308,8 +308,8 @@ void DlgProductSet::pbtn_apertureValue_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_apertureValue, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.apertureValue = ui->pbtn_apertureValue->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.apertureValue = ui->pbtn_apertureValue->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -319,8 +319,8 @@ void DlgProductSet::pbtn_apertureSimilarity_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_apertureSimilarity, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.apertureSimilarity = ui->pbtn_apertureSimilarity->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.apertureSimilarity = ui->pbtn_apertureSimilarity->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -330,8 +330,8 @@ void DlgProductSet::pbtn_holeCenterDistanceValue_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_holeCenterDistanceValue, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.holeCenterDistanceValue = ui->pbtn_holeCenterDistanceValue->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.holeCenterDistanceValue = ui->pbtn_holeCenterDistanceValue->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -341,8 +341,8 @@ void DlgProductSet::pbtn_holeCenterDistanceSimilarity_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_holeCenterDistanceSimilarity, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.holeCenterDistanceSimilarity = ui->pbtn_holeCenterDistanceSimilarity->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.holeCenterDistanceSimilarity = ui->pbtn_holeCenterDistanceSimilarity->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -352,8 +352,8 @@ void DlgProductSet::pbtn_specifyColorDifferenceR_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_specifyColorDifferenceR, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.specifyColorDifferenceR = ui->pbtn_specifyColorDifferenceR->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.specifyColorDifferenceR = ui->pbtn_specifyColorDifferenceR->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -363,8 +363,8 @@ void DlgProductSet::pbtn_specifyColorDifferenceG_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_specifyColorDifferenceG, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.specifyColorDifferenceG = ui->pbtn_specifyColorDifferenceG->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.specifyColorDifferenceG = ui->pbtn_specifyColorDifferenceG->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -374,8 +374,8 @@ void DlgProductSet::pbtn_specifyColorDifferenceB_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_specifyColorDifferenceB, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.specifyColorDifferenceB = ui->pbtn_specifyColorDifferenceB->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.specifyColorDifferenceB = ui->pbtn_specifyColorDifferenceB->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -385,8 +385,8 @@ void DlgProductSet::pbtn_specifyColorDifferenceDeviation_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_specifyColorDifferenceDeviation, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.specifyColorDifferenceDeviation = ui->pbtn_specifyColorDifferenceDeviation->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.specifyColorDifferenceDeviation = ui->pbtn_specifyColorDifferenceDeviation->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -396,103 +396,103 @@ void DlgProductSet::pbtn_largeColorDifferenceDeviation_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_largeColorDifferenceDeviation, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.largeColorDifferenceDeviation = ui->pbtn_largeColorDifferenceDeviation->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.largeColorDifferenceDeviation = ui->pbtn_largeColorDifferenceDeviation->text().toDouble();
 
     delete numKeyBoard;
 }
 
 void DlgProductSet::rbtn_outsideDiameterEnable_checked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.outsideDiameterEnable = checked;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.outsideDiameterEnable = checked;
 }
 
 void DlgProductSet::rbtn_edgeDamageEnable_checked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.edgeDamageEnable = checked;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.edgeDamageEnable = checked;
 }
 
 void DlgProductSet::rbtn_shieldingRangeEnable_checked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.shieldingRangeEnable = checked;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.shieldingRangeEnable = checked;
 }
 
 void DlgProductSet::rbtn_poreEnable_checked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.poreEnable = checked;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.poreEnable = checked;
 }
 
 void DlgProductSet::rbtn_paintEnable_checked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.paintEnable = checked;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.paintEnable = checked;
 }
 
 void DlgProductSet::rbtn_holesCountEnable_checked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.holesCountEnable = checked;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.holesCountEnable = checked;
 }
 
 void DlgProductSet::rbtn_brokenEyeEnable_checked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.brokenEyeEnable = checked;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.brokenEyeEnable = checked;
 }
 
 void DlgProductSet::rbtn_crackEnable_checked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.crackEnable = checked;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.crackEnable = checked;
 }
 
 void DlgProductSet::rbtn_apertureEnable_checked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.apertureEnable = checked;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.apertureEnable = checked;
 }
 
 void DlgProductSet::rbtn_holeCenterDistanceEnable_checked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.holeCenterDistanceEnable = checked;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.holeCenterDistanceEnable = checked;
 }
 
 void DlgProductSet::rbtn_specifyColorDifferenceEnable_checked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.specifyColorDifferenceEnable = checked;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.specifyColorDifferenceEnable = checked;
 }
 
 void DlgProductSet::rbtn_largeColorDifferenceEnable_checked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.largeColorDifferenceEnable = checked;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.largeColorDifferenceEnable = checked;
 }
 
 void DlgProductSet::rbtn_grindStoneEnable_checked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.grindStoneEnable = checked;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.grindStoneEnable = checked;
 }
 
 void DlgProductSet::rbtn_blockEyeEnable_checked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.blockEyeEnable = checked;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.blockEyeEnable = checked;
 }
 
 void DlgProductSet::rbtn_materialHeadEnable_checked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProductSetConfig.materialHeadEnable = checked;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.materialHeadEnable = checked;
 }
 
 void DlgProductSet::pbtn_close_clicked() {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.saveConfig();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.saveConfig();
 }

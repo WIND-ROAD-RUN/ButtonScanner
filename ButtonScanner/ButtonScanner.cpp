@@ -100,7 +100,7 @@ ButtonScanner::~ButtonScanner()
 {
     mark_Thread = false;
     delete ui;
-    auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStructData::getInstance();
     globalStruct.destroy_StatisticalInfoComputingThread();
     globalStruct.destroyCamera();
     globalStruct.destroyImageProcessingModule();
@@ -135,7 +135,7 @@ void ButtonScanner::build_ui()
 
 void ButtonScanner::build_mainWindowData()
 {
-    auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStructData::getInstance();
     auto& mainWindowConfig = globalStruct.mainWindowConfig;
     ui->label_produceTotalValue->setText(QString::number(mainWindowConfig.totalProduction));
     ui->label_wasteProductsValue->setText(QString::number(mainWindowConfig.totalWaste));
@@ -215,7 +215,7 @@ void ButtonScanner::build_connect()
 
 void ButtonScanner::read_config()
 {
-    auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStructData::getInstance();
     globalStruct.buildConfigManager(rw::oso::StorageType::Xml);
 
     read_config_mainWindowConfig();
@@ -226,7 +226,7 @@ void ButtonScanner::read_config()
 
 void ButtonScanner::read_config_mainWindowConfig()
 {
-    auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStructData::getInstance();
 
     QString mainWindowFilePath = R"(config/mainWindowConfig.xml)";
     QDir dir;
@@ -258,7 +258,7 @@ void ButtonScanner::read_config_mainWindowConfig()
 
 void ButtonScanner::read_config_produceLineConfig()
 {
-    auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStructData::getInstance();
     QDir dir;
 
     QString dlgProduceLineSetFilePath = R"(config/dlgProduceLineSetConfig.xml)";
@@ -290,7 +290,7 @@ void ButtonScanner::read_config_produceLineConfig()
 
 void ButtonScanner::read_config_productSetConfig()
 {
-    auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStructData::getInstance();
     QDir dir;
 
     QString dlgProductSetFilePath = R"(config/dlgProdutSetConfig.xml)";
@@ -322,7 +322,7 @@ void ButtonScanner::read_config_productSetConfig()
 
 void ButtonScanner::read_config_exposureTimeSetConfig()
 {
-    auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStructData::getInstance();
     QDir dir;
 
     QString exposureTimeSetConfigFilePath = R"(config/exposureTimeSetConfig.xml)";
@@ -361,7 +361,7 @@ void ButtonScanner::build_imageSaveEngine()
 
     //获取当前日期并设置保存路径
     QString currentDate = QDate::currentDate().toString("yyyy_MM_dd");
-    auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStructData::getInstance();
     globalStruct.buildImageSaveEngine();
     QString imageSaveEnginePath = imageSavePath + currentDate;
 
@@ -426,7 +426,7 @@ void ButtonScanner::clear_olderSavedImage()
 
 void ButtonScanner::build_camera()
 {
-    auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStructData::getInstance();
     globalStruct.cameraIp1 = "11";
     globalStruct.cameraIp2 = "12";
     globalStruct.cameraIp3 = "13";
@@ -437,7 +437,7 @@ void ButtonScanner::build_camera()
 
 void ButtonScanner::build_imageProcessorModule()
 {
-    auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStructData::getInstance();
 
     //
     QString enginePath = R"(model/model.engine)";
@@ -476,13 +476,13 @@ void ButtonScanner::build_imageProcessorModule()
 
 void ButtonScanner::start_monitor()
 {
-    auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStructData::getInstance();
     globalStruct.startMonitor();
 }
 
 void ButtonScanner::build_motion()
 {
-    auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStructData::getInstance();
 
     //获取Zmotion
     auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
@@ -510,7 +510,7 @@ void ButtonScanner::build_monitoringThread()
             //运动控制卡实时状态
             {
                 //这里获取全局变量
-                auto& globalStruct = GlobalStruct::getInstance();
+                auto& globalStruct = GlobalStructData::getInstance();
 
                 //获取Zmotion
                 auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
@@ -546,7 +546,7 @@ void ButtonScanner::build_monitoringThread()
 
             //相机实时状态
             {
-                auto& globalStruct = GlobalStruct::getInstance();
+                auto& globalStruct = GlobalStructData::getInstance();
 
                 //相机1
                 if (globalStruct.camera1) {
@@ -671,12 +671,12 @@ void ButtonScanner::build_locationThread()
             zwy::scc::GlobalMotion::getInstance().motionPtr.get()->GetAxisLocation(1, lacation2);
 
             {
-                auto& work1 = GlobalStruct::getInstance().productPriorityQueue1;
+                auto& work1 = GlobalStructData::getInstance().productPriorityQueue1;
 
                 int i = work1.size();
 
-                double tifeishijian1 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime1;
-                double tifeijuli1 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance1;
+                double tifeishijian1 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowTime1;
+                double tifeijuli1 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowDistance1;
 
                 double nowlocation = work1.peek();
 
@@ -689,10 +689,10 @@ void ButtonScanner::build_locationThread()
                 }
             }
             {
-                auto& work2 = GlobalStruct::getInstance().productPriorityQueue2;
+                auto& work2 = GlobalStructData::getInstance().productPriorityQueue2;
 
-                double tifeishijian2 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime2;
-                double tifeijuli2 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance2;
+                double tifeishijian2 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowTime2;
+                double tifeijuli2 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowDistance2;
 
                 double nowlocation = work2.peek();
                 if (nowlocation != 0 && (abs(lacation2 - nowlocation) > tifeijuli2))
@@ -705,10 +705,10 @@ void ButtonScanner::build_locationThread()
             }
 
             {
-                auto& work3 = GlobalStruct::getInstance().productPriorityQueue3;
+                auto& work3 = GlobalStructData::getInstance().productPriorityQueue3;
 
-                double tifeishijian3 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime3;
-                double tifeijuli3 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance3;
+                double tifeishijian3 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowTime3;
+                double tifeijuli3 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowDistance3;
 
                 double nowlocation = work3.peek();
                 if (nowlocation != 0 && abs(lacation1 - nowlocation) > tifeijuli3)
@@ -721,10 +721,10 @@ void ButtonScanner::build_locationThread()
             }
 
             {
-                auto& work4 = GlobalStruct::getInstance().productPriorityQueue4;
+                auto& work4 = GlobalStructData::getInstance().productPriorityQueue4;
 
-                double tifeishijian4 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowTime4;
-                double tifeijuli4 = GlobalStruct::getInstance().dlgProduceLineSetConfig.blowDistance4;
+                double tifeishijian4 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowTime4;
+                double tifeijuli4 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowDistance4;
 
                 double nowlocation = work4.peek();
                 if (nowlocation != 0 && abs(lacation2 - nowlocation) > tifeijuli4)
@@ -743,7 +743,7 @@ void ButtonScanner::build_ioThread()
 {
     //线程内部
     QtConcurrent::run([this]() {
-        auto& globalStruct = GlobalStruct::getInstance();
+        auto& globalStruct = GlobalStructData::getInstance();
         //获取Zmotion
         auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
 
@@ -775,12 +775,12 @@ void ButtonScanner::build_ioThread()
                         motionPtr->SetIOOut(1, true);
                         //启动电机
                         motionPtr->SetAxisType(0, 1);
-                        double unit = GlobalStruct::getInstance().dlgProduceLineSetConfig.pulseFactor;
+                        double unit = GlobalStructData::getInstance().dlgProduceLineSetConfig.pulseFactor;
                         motionPtr->SetAxisPulse(0, unit);
-                        double acc = GlobalStruct::getInstance().dlgProduceLineSetConfig.accelerationAndDeceleration;
+                        double acc = GlobalStructData::getInstance().dlgProduceLineSetConfig.accelerationAndDeceleration;
                         motionPtr->SetAxisAcc(0, acc);
                         motionPtr->SetAxisDec(0, acc);
-                        double speed = GlobalStruct::getInstance().dlgProduceLineSetConfig.motorSpeed;
+                        double speed = GlobalStructData::getInstance().dlgProduceLineSetConfig.motorSpeed;
                         motionPtr->SetAxisRunSpeed(0, speed);
                         // pidaimove->start(100);
                         motionPtr->AxisRun(0, -1);
@@ -835,7 +835,7 @@ void ButtonScanner::build_ioThread()
 
 void ButtonScanner::build_StatisticalInfoComputingThread()
 {
-    auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStructData::getInstance();
     globalStruct.build_StatisticalInfoComputingThread();
     QObject::connect(globalStruct.statisticalInfoComputingThread.get(), &StatisticalInfoComputingThread::updateStatisticalInfo,
         this, &ButtonScanner::updateStatisticalInfoUI, Qt::QueuedConnection);
@@ -883,7 +883,7 @@ void ButtonScanner::onCamera4Display(QImage image)
 
 void ButtonScanner::updateStatisticalInfoUI()
 {
-    auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStructData::getInstance();
     auto& mainWindowConfig = globalStruct.mainWindowConfig;
     auto productionYield = globalStruct.statisticalInfo.productionYield.load();
     auto produceCount = globalStruct.statisticalInfo.produceCount.load();
@@ -927,8 +927,8 @@ void ButtonScanner::pbtn_beltSpeed_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_beltSpeed, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.mainWindowConfig.beltSpeed = ui->pbtn_beltSpeed->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.mainWindowConfig.beltSpeed = ui->pbtn_beltSpeed->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -941,59 +941,59 @@ void ButtonScanner::pbtn_score_clicked()
 
 void ButtonScanner::rbtn_debug_ckecked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.mainWindowConfig.isDebugMode = checked;
-    GlobalStruct.saveConfig();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.mainWindowConfig.isDebugMode = checked;
+    GlobalStructData.saveConfig();
 }
 
 void ButtonScanner::rbtn_takePicture_ckecked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.mainWindowConfig.isTakePictures = checked;
-    GlobalStruct.saveConfig();
-    GlobalStruct.isTakePictures = checked;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.mainWindowConfig.isTakePictures = checked;
+    GlobalStructData.saveConfig();
+    GlobalStructData.isTakePictures = checked;
 }
 
 void ButtonScanner::rbtn_removeFunc_ckecked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.mainWindowConfig.isEliminating = checked;
-    GlobalStruct.saveConfig();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.mainWindowConfig.isEliminating = checked;
+    GlobalStructData.saveConfig();
 }
 
 void ButtonScanner::rbtn_upLight_ckecked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.mainWindowConfig.upLight = checked;
-    GlobalStruct.saveConfig();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.mainWindowConfig.upLight = checked;
+    GlobalStructData.saveConfig();
 }
 
 void ButtonScanner::rbtn_sideLight_ckecked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.mainWindowConfig.sideLight = checked;
-    GlobalStruct.saveConfig();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.mainWindowConfig.sideLight = checked;
+    GlobalStructData.saveConfig();
 }
 
 void ButtonScanner::rbtn_downLight_ckecked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.mainWindowConfig.downLight = checked;
-    GlobalStruct.saveConfig();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.mainWindowConfig.downLight = checked;
+    GlobalStructData.saveConfig();
 }
 
 void ButtonScanner::rbtn_defect_ckecked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.mainWindowConfig.isDefect = checked;
-    GlobalStruct.saveConfig();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.mainWindowConfig.isDefect = checked;
+    GlobalStructData.saveConfig();
 }
 
 void ButtonScanner::rbtn_ForAndAgainst_ckecked(bool checked)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.mainWindowConfig.isPositive = checked;
-    GlobalStruct.saveConfig();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.mainWindowConfig.isPositive = checked;
+    GlobalStructData.saveConfig();
 }
 
 void ButtonScanner::pbtn_exit_clicked()

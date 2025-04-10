@@ -26,7 +26,7 @@ void DlgProduceLineSet::build_ui()
 
 void DlgProduceLineSet::read_config()
 {
-    auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStructData::getInstance();
     ui->pbtn_blowDistance1->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowDistance1));
     ui->pbtn_blowDistance2->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowDistance2));
     ui->pbtn_blowDistance3->setText(QString::number(globalStruct.dlgProduceLineSetConfig.blowDistance3));
@@ -143,9 +143,9 @@ void DlgProduceLineSet::build_connect()
 
 float DlgProduceLineSet::get_blowTime()
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    auto outsideDiameterValue = GlobalStruct.dlgProductSetConfig.outsideDiameterValue;
-    auto beltSpeed = GlobalStruct.dlgProduceLineSetConfig.motorSpeed;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    auto outsideDiameterValue = GlobalStructData.dlgProductSetConfig.outsideDiameterValue;
+    auto beltSpeed = GlobalStructData.dlgProduceLineSetConfig.motorSpeed;
     auto blowTime = outsideDiameterValue / beltSpeed * 1000 / 2;
     return blowTime;
 }
@@ -155,8 +155,8 @@ void DlgProduceLineSet::pbtn_blowDistance1_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowDistance1, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.blowDistance1 = ui->pbtn_blowDistance1->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.blowDistance1 = ui->pbtn_blowDistance1->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -166,8 +166,8 @@ void DlgProduceLineSet::pbtn_blowTime1_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime1, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.blowTime1 = ui->pbtn_blowTime1->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.blowTime1 = ui->pbtn_blowTime1->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -177,8 +177,8 @@ void DlgProduceLineSet::pbtn_blowDistance2_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowDistance2, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.blowDistance2 = ui->pbtn_blowDistance2->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.blowDistance2 = ui->pbtn_blowDistance2->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -188,8 +188,8 @@ void DlgProduceLineSet::pbtn_blowTime2_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime2, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.blowTime2 = ui->pbtn_blowTime2->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.blowTime2 = ui->pbtn_blowTime2->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -199,8 +199,8 @@ void DlgProduceLineSet::pbtn_blowDistance3_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowDistance3, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.blowDistance3 = ui->pbtn_blowDistance3->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.blowDistance3 = ui->pbtn_blowDistance3->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -210,8 +210,8 @@ void DlgProduceLineSet::pbtn_blowTime3_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime3, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.blowTime3 = ui->pbtn_blowTime3->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.blowTime3 = ui->pbtn_blowTime3->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -221,8 +221,8 @@ void DlgProduceLineSet::pbtn_blowDistance4_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowDistance4, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.blowDistance4 = ui->pbtn_blowDistance4->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.blowDistance4 = ui->pbtn_blowDistance4->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -232,8 +232,8 @@ void DlgProduceLineSet::pbtn_blowTime4_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime4, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.blowTime4 = ui->pbtn_blowTime4->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.blowTime4 = ui->pbtn_blowTime4->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -243,8 +243,8 @@ void DlgProduceLineSet::pbtn_pixelEquivalent1_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pixelEquivalent1, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.pixelEquivalent1 = ui->pbtn_pixelEquivalent1->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.pixelEquivalent1 = ui->pbtn_pixelEquivalent1->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -254,8 +254,8 @@ void DlgProduceLineSet::pbtn_pixelEquivalent2_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pixelEquivalent2, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.pixelEquivalent2 = ui->pbtn_pixelEquivalent2->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.pixelEquivalent2 = ui->pbtn_pixelEquivalent2->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -265,8 +265,8 @@ void DlgProduceLineSet::pbtn_pixelEquivalent3_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pixelEquivalent3, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.pixelEquivalent3 = ui->pbtn_pixelEquivalent3->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.pixelEquivalent3 = ui->pbtn_pixelEquivalent3->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -276,8 +276,8 @@ void DlgProduceLineSet::pbtn_pixelEquivalent4_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pixelEquivalent4, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.pixelEquivalent4 = ui->pbtn_pixelEquivalent4->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.pixelEquivalent4 = ui->pbtn_pixelEquivalent4->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -287,8 +287,8 @@ void DlgProduceLineSet::pbtn_limit1_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_limit1, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.limit1 = ui->pbtn_limit1->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.limit1 = ui->pbtn_limit1->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -298,8 +298,8 @@ void DlgProduceLineSet::pbtn_limit2_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_limit2, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.limit2 = ui->pbtn_limit2->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.limit2 = ui->pbtn_limit2->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -309,8 +309,8 @@ void DlgProduceLineSet::pbtn_limit3_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_limit3, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.limit3 = ui->pbtn_limit3->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.limit3 = ui->pbtn_limit3->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -320,8 +320,8 @@ void DlgProduceLineSet::pbtn_limit4_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_limit4, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.limit4 = ui->pbtn_limit4->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.limit4 = ui->pbtn_limit4->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -331,8 +331,8 @@ void DlgProduceLineSet::pbtn_minBrightness_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_minBrightness, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.minBrightness = ui->pbtn_minBrightness->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.minBrightness = ui->pbtn_minBrightness->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -342,8 +342,8 @@ void DlgProduceLineSet::pbtn_maxBrightness_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_maxBrightness, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.maxBrightness = ui->pbtn_maxBrightness->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.maxBrightness = ui->pbtn_maxBrightness->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -353,8 +353,8 @@ void DlgProduceLineSet::pbtn_motorSpeed_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_motorSpeed, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.motorSpeed = ui->pbtn_motorSpeed->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.motorSpeed = ui->pbtn_motorSpeed->text().toDouble();
 
     delete numKeyBoard;
 
@@ -366,8 +366,8 @@ void DlgProduceLineSet::pbtn_beltReductionRatio_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_beltReductionRatio, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.beltReductionRatio = ui->pbtn_beltReductionRatio->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.beltReductionRatio = ui->pbtn_beltReductionRatio->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -377,8 +377,8 @@ void DlgProduceLineSet::pbtn_accelerationAndDeceleration_clicked()
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_accelerationAndDeceleration, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.accelerationAndDeceleration = ui->pbtn_accelerationAndDeceleration->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.accelerationAndDeceleration = ui->pbtn_accelerationAndDeceleration->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -387,8 +387,8 @@ void DlgProduceLineSet::pbtn_codeWheel_clicked() {
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_codeWheel, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.codeWheel = ui->pbtn_codeWheel->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.codeWheel = ui->pbtn_codeWheel->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -397,74 +397,74 @@ void DlgProduceLineSet::pbtn_pulseFactor_clicked() {
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pulseFactor, 2);
     numKeyBoard->exec();
 
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.pulseFactor = ui->pbtn_pulseFactor->text().toDouble();
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.pulseFactor = ui->pbtn_pulseFactor->text().toDouble();
 
     delete numKeyBoard;
 }
 
 void DlgProduceLineSet::cbox_powerOn_checked(bool ischeck)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.powerOn = ischeck;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.powerOn = ischeck;
 }
 
 void DlgProduceLineSet::cbox_blowingEnable1_checked(bool ischeck)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.blowingEnable1 = ischeck;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.blowingEnable1 = ischeck;
 }
 
 void DlgProduceLineSet::cbox_blowingEnable2_checked(bool ischeck)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.blowingEnable2 = ischeck;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.blowingEnable2 = ischeck;
 }
 
 void DlgProduceLineSet::cbox_blowingEnable3_checked(bool ischeck)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.blowingEnable3 = ischeck;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.blowingEnable3 = ischeck;
 }
 
 void DlgProduceLineSet::cbox_blowingEnable4_checked(bool ischeck)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.blowingEnable4 = ischeck;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.blowingEnable4 = ischeck;
 }
 
 void DlgProduceLineSet::cbox_none_checked(bool ischeck)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.none = ischeck;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.none = ischeck;
 }
 
 void DlgProduceLineSet::cbox_run_checked(bool ischeck)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.run = ischeck;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.run = ischeck;
 }
 
 void DlgProduceLineSet::cbox_alarm_checked(bool ischeck)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.alarm = ischeck;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.alarm = ischeck;
 }
 
 void DlgProduceLineSet::cbox_workstationProtection12_checked(bool ischeck)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.workstationProtection12 = ischeck;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.workstationProtection12 = ischeck;
 }
 
 void DlgProduceLineSet::cbox_workstationProtection34_checked(bool ischeck)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.workstationProtection34 = ischeck;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.workstationProtection34 = ischeck;
 }
 
 void DlgProduceLineSet::cbox_debugMode_checked(bool ischeck)
 {
-    auto& GlobalStruct = GlobalStruct::getInstance();
-    GlobalStruct.dlgProduceLineSetConfig.debugMode = ischeck;
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProduceLineSetConfig.debugMode = ischeck;
 }

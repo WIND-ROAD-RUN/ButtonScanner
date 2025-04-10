@@ -4,7 +4,7 @@
 #include"hoec_CameraException.hpp"
 #include"rqw_CameraObjectThread.hpp"
 
-void GlobalStruct::setCameraExposureTime(int cameraIndex, size_t exposureTime)
+void GlobalStructData::setCameraExposureTime(int cameraIndex, size_t exposureTime)
 {
     switch (cameraIndex) {
     case 1:
@@ -54,7 +54,7 @@ void GlobalStruct::setCameraExposureTime(int cameraIndex, size_t exposureTime)
     }
 }
 
-void GlobalStruct::buildImageProcessingModule(size_t num)
+void GlobalStructData::buildImageProcessingModule(size_t num)
 {
     imageProcessingModule1 = std::make_unique<ImageProcessingModule>(num, this);
     imageProcessingModule1->modelEnginePath = enginePath;
@@ -84,49 +84,49 @@ void GlobalStruct::buildImageProcessingModule(size_t num)
     QObject::connect(camera1.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
         imageProcessingModule1.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
     QObject::connect(imageProcessingModule1.get(), &ImageProcessingModule::processResultModule,
-        this, &GlobalStruct::onCamera1ImageReady, Qt::DirectConnection);
+        this, &GlobalStructData::onCamera1ImageReady, Qt::DirectConnection);
 
     QObject::connect(camera2.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
         imageProcessingModule2.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
     QObject::connect(imageProcessingModule2.get(), &ImageProcessingModule::processResultModule,
-        this, &GlobalStruct::onCamera2ImageReady, Qt::DirectConnection);
+        this, &GlobalStructData::onCamera2ImageReady, Qt::DirectConnection);
 
     QObject::connect(camera3.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
         imageProcessingModule3.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
     QObject::connect(imageProcessingModule3.get(), &ImageProcessingModule::processResultModule,
-        this, &GlobalStruct::onCamera3ImageReady, Qt::DirectConnection);
+        this, &GlobalStructData::onCamera3ImageReady, Qt::DirectConnection);
 
     QObject::connect(camera4.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
         imageProcessingModule4.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
     QObject::connect(imageProcessingModule4.get(), &ImageProcessingModule::processResultModule,
-        this, &GlobalStruct::onCamera4ImageReady, Qt::DirectConnection);
+        this, &GlobalStructData::onCamera4ImageReady, Qt::DirectConnection);
 }
 
-void GlobalStruct::build_StatisticalInfoComputingThread()
+void GlobalStructData::build_StatisticalInfoComputingThread()
 {
     statisticalInfoComputingThread = std::make_unique<StatisticalInfoComputingThread>(this);
     statisticalInfoComputingThread->startThread();
 }
 
-void GlobalStruct::destroy_StatisticalInfoComputingThread()
+void GlobalStructData::destroy_StatisticalInfoComputingThread()
 {
     statisticalInfoComputingThread->stopThread();
     statisticalInfoComputingThread.reset();
 }
 
-void GlobalStruct::buildConfigManager(rw::oso::StorageType type)
+void GlobalStructData::buildConfigManager(rw::oso::StorageType type)
 {
     storeContext = std::make_unique<rw::oso::StorageContext>(type);
 }
 
-void GlobalStruct::ReadConfig()
+void GlobalStructData::ReadConfig()
 {
     ReadMainWindowConfig();
     ReadDlgProduceLineSetConfig();
     ReadDlgProductSetConfig();
 }
 
-void GlobalStruct::ReadMainWindowConfig()
+void GlobalStructData::ReadMainWindowConfig()
 {
     auto loadMainWindowConfig = storeContext->load(mainWindowFilePath.toStdString());
     if (loadMainWindowConfig) {
@@ -142,7 +142,7 @@ void GlobalStruct::ReadMainWindowConfig()
     }
 }
 
-void GlobalStruct::ReadDlgProduceLineSetConfig()
+void GlobalStructData::ReadDlgProduceLineSetConfig()
 {
     auto loadDlgProduceLineSetConfig = storeContext->load(dlgProduceLineSetFilePath.toStdString());
     if (loadDlgProduceLineSetConfig) {
@@ -153,7 +153,7 @@ void GlobalStruct::ReadDlgProduceLineSetConfig()
     }
 }
 
-void GlobalStruct::ReadDlgProductSetConfig()
+void GlobalStructData::ReadDlgProductSetConfig()
 {
     auto loadDlgProductSetConfig = storeContext->load(dlgProductSetFilePath.toStdString());
     if (loadDlgProductSetConfig) {
@@ -164,7 +164,7 @@ void GlobalStruct::ReadDlgProductSetConfig()
     }
 }
 
-void GlobalStruct::ReadDlgExposureTimeSetConfig()
+void GlobalStructData::ReadDlgExposureTimeSetConfig()
 {
     auto loadDlgExposureTimeSetConfig = storeContext->load(dlgExposureTimeSetFilePath.toStdString());
     if (loadDlgExposureTimeSetConfig) {
@@ -175,34 +175,34 @@ void GlobalStruct::ReadDlgExposureTimeSetConfig()
     }
 }
 
-void GlobalStruct::saveConfig()
+void GlobalStructData::saveConfig()
 {
     saveMainWindowConfig();
     saveDlgProduceLineSetConfig();
     saveDlgProductSetConfig();
 }
 
-void GlobalStruct::saveMainWindowConfig()
+void GlobalStructData::saveMainWindowConfig()
 {
     storeContext->save(mainWindowConfig, mainWindowFilePath.toStdString());
 }
 
-void GlobalStruct::saveDlgProduceLineSetConfig()
+void GlobalStructData::saveDlgProduceLineSetConfig()
 {
     storeContext->save(dlgProduceLineSetConfig, dlgProduceLineSetFilePath.toStdString());
 }
 
-void GlobalStruct::saveDlgProductSetConfig()
+void GlobalStructData::saveDlgProductSetConfig()
 {
     storeContext->save(dlgProductSetConfig, dlgProductSetFilePath.toStdString());
 }
 
-void GlobalStruct::saveDlgExposureTimeSetConfig()
+void GlobalStructData::saveDlgExposureTimeSetConfig()
 {
     storeContext->save(dlgExposureTimeSetConfig, dlgExposureTimeSetFilePath.toStdString());
 }
 
-bool GlobalStruct::isTargetCamera(const QString& cameraIndex, const QString& targetName)
+bool GlobalStructData::isTargetCamera(const QString& cameraIndex, const QString& targetName)
 {
     QRegularExpression regex(R"((\d+)\.(\d+)\.(\d+)\.(\d+))");
     QRegularExpressionMatch match = regex.match(targetName);
@@ -216,7 +216,7 @@ bool GlobalStruct::isTargetCamera(const QString& cameraIndex, const QString& tar
     return false;
 }
 
-rw::rqw::CameraMetaData GlobalStruct::cameraMetaDataCheck(const QString& cameraIndex, const QVector<rw::rqw::CameraMetaData>& cameraInfo)
+rw::rqw::CameraMetaData GlobalStructData::cameraMetaDataCheck(const QString& cameraIndex, const QVector<rw::rqw::CameraMetaData>& cameraInfo)
 {
     for (const auto& cameraMetaData : cameraInfo) {
         if (isTargetCamera(cameraIndex, cameraMetaData.ip)) {
@@ -228,7 +228,7 @@ rw::rqw::CameraMetaData GlobalStruct::cameraMetaDataCheck(const QString& cameraI
     return error;
 }
 
-void GlobalStruct::buildCamera()
+void GlobalStructData::buildCamera()
 {
     auto cameraList = rw::rqw::CheckCameraList();
 
@@ -310,7 +310,7 @@ void GlobalStruct::buildCamera()
     }
 }
 
-void GlobalStruct::startMonitor()
+void GlobalStructData::startMonitor()
 {
     if (camera1)
     {
@@ -358,7 +358,7 @@ void GlobalStruct::startMonitor()
     }
 }
 
-void GlobalStruct::destroyCamera()
+void GlobalStructData::destroyCamera()
 {
     camera1.reset();
     camera2.reset();
@@ -366,7 +366,7 @@ void GlobalStruct::destroyCamera()
     camera4.reset();
 }
 
-void GlobalStruct::destroyImageProcessingModule()
+void GlobalStructData::destroyImageProcessingModule()
 {
     imageProcessingModule1.reset();
     imageProcessingModule2.reset();
@@ -374,22 +374,22 @@ void GlobalStruct::destroyImageProcessingModule()
     imageProcessingModule4.reset();
 }
 
-void GlobalStruct::buildImageSaveEngine()
+void GlobalStructData::buildImageSaveEngine()
 {
     imageSaveEngine = std::make_unique<rw::rqw::ImageSaveEngine>(this);
 }
 
-void GlobalStruct::destroyImageSaveEngine()
+void GlobalStructData::destroyImageSaveEngine()
 {
     imageSaveEngine->stop();
     imageSaveEngine.reset();
 }
 
-GlobalStruct::GlobalStruct()
+GlobalStructData::GlobalStructData()
 {
 }
 
-void GlobalStruct::onCamera1ImageReady(bool isOk, float location)
+void GlobalStructData::onCamera1ImageReady(bool isOk, float location)
 {
     LOG()  "Camera 1 image ready: " << isOk << " location: " << location;
     if (!isOk) {
@@ -397,21 +397,21 @@ void GlobalStruct::onCamera1ImageReady(bool isOk, float location)
     }
 }
 
-void GlobalStruct::onCamera2ImageReady(bool isOk, float location)
+void GlobalStructData::onCamera2ImageReady(bool isOk, float location)
 {
     if (!isOk) {
         productPriorityQueue2.insert(location, location);
     }
 }
 
-void GlobalStruct::onCamera3ImageReady(bool isOk, float location)
+void GlobalStructData::onCamera3ImageReady(bool isOk, float location)
 {
     if (!isOk) {
         productPriorityQueue3.insert(location, location);
     }
 }
 
-void GlobalStruct::onCamera4ImageReady(bool isOk, float location)
+void GlobalStructData::onCamera4ImageReady(bool isOk, float location)
 {
     if (!isOk) {
         productPriorityQueue4.insert(location, location);

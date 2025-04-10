@@ -28,7 +28,7 @@ void StatisticalInfoComputingThread::stopThread()
 
 void StatisticalInfoComputingThread::run()
 {
-    auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStructData::getInstance();
     auto& statisticalInfo = globalStruct.statisticalInfo;
     while (running) {
         auto olderWasteCount = statisticalInfo.wasteCount.load();

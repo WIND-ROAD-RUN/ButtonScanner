@@ -33,6 +33,12 @@
     <Filter Include="Source Files\ui">
       <UniqueIdentifier>{2e00b73c-e1ed-4934-873c-86ae8a442592}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\DetachThread">
+      <UniqueIdentifier>{3c38a4d6-5c39-4a48-992f-df07f518b253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DetachThread">
+      <UniqueIdentifier>{d08aaaa7-ddc0-459b-832b-e381f4ea514e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="ButtonScanner.qrc">
@@ -74,7 +80,10 @@
       <Filter>Source Files\ui</Filter>
     </ClCompile>
     <ClCompile Include="StatisticalInfoComputingThread.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\DetachThread</Filter>
+    </ClCompile>
+    <ClCompile Include="MonitorCameraAndCardStateThread.cpp">
+      <Filter>Source Files\DetachThread</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -100,7 +109,10 @@
       <Filter>Header Files\ui</Filter>
     </QtMoc>
     <QtMoc Include="StatisticalInfoComputingThread.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\DetachThread</Filter>
+    </QtMoc>
+    <QtMoc Include="MonitorCameraAndCardStateThread.h">
+      <Filter>Header Files\DetachThread</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

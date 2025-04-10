@@ -26,7 +26,7 @@ namespace zwy {
     }
 }
 
-class GlobalStruct
+class GlobalStructData
     :public QObject
 {
     Q_OBJECT
@@ -111,22 +111,22 @@ public:
     void destroyImageSaveEngine();
     std::unique_ptr<rw::rqw::ImageSaveEngine> imageSaveEngine{ nullptr };
 public:
-    static GlobalStruct& getInstance()
+    static GlobalStructData& getInstance()
     {
-        static GlobalStruct instance;
+        static GlobalStructData instance;
         return instance;
     }
 
-    GlobalStruct(const GlobalStruct&) = delete;
-    GlobalStruct& operator=(const GlobalStruct&) = delete;
+    GlobalStructData(const GlobalStructData&) = delete;
+    GlobalStructData& operator=(const GlobalStructData&) = delete;
 public:
     rw::dsl::ThreadSafeDHeap<float, float> productPriorityQueue1;
     rw::dsl::ThreadSafeDHeap<float, float> productPriorityQueue2;
     rw::dsl::ThreadSafeDHeap<float, float> productPriorityQueue3;
     rw::dsl::ThreadSafeDHeap<float, float> productPriorityQueue4;
 private:
-    GlobalStruct();
-    ~GlobalStruct() = default;
+    GlobalStructData();
+    ~GlobalStructData() = default;
 private slots:
     void onCamera1ImageReady(bool isOk, float location);
     void onCamera2ImageReady(bool isOk, float location);

@@ -10,7 +10,7 @@ void ImageProcessor::buildModelEngine(const QString& enginePath, const QString& 
 
 cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 {
-    auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStructData::getInstance();
 
     cv::Mat resultImage;
     cv::Mat maskImage = cv::Mat::zeros(frame.image.size(), CV_8UC1);
@@ -28,7 +28,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
 void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::ime::ProcessRectanglesResult>& processRectanglesResult)
 {
     auto saveIamge = resultImage.clone();
-    auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStructData::getInstance();
 
     auto  systemConfig = &globalStruct.dlgProduceLineSetConfig;
     auto  checkConfig = &globalStruct.dlgProductSetConfig;
@@ -389,7 +389,7 @@ ImageProcessingModule::~ImageProcessingModule()
 
 void ImageProcessingModule::onProcessResult(bool isOk, float location)
 {
-    auto& globalStruct = GlobalStruct::getInstance();
+    auto& globalStruct = GlobalStructData::getInstance();
     emit processResultModule(isOk, location);
 
     if (!isOk) {
