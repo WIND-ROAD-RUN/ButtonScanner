@@ -77,10 +77,9 @@ ButtonScanner::ButtonScanner(QWidget* parent)
 
     build_motion();
 
-    build_camera();
-
     build_imageProcessorModule();
 
+    build_camera();
 
     clear_olderSavedImage();
     build_imageSaveEngine();

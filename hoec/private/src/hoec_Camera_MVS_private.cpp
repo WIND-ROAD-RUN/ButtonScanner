@@ -339,6 +339,7 @@ namespace rw {
             {
                 throw CameraSettingError("Invalid trigger mode");
             }
+
             if (MV_CC_SetTriggerMode(m_cameraHandle, modeValue) == MV_OK)
             {
                 return;

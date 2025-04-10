@@ -80,24 +80,16 @@ void GlobalStructData::buildImageProcessingModule(size_t num)
     imageProcessingModule1->index = 4;
     imageProcessingModule4->BuildModule();
 
-    //连接相机和图像处理模块
-    QObject::connect(camera1.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
-        imageProcessingModule1.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
+
     QObject::connect(imageProcessingModule1.get(), &ImageProcessingModule::processResultModule,
         this, &GlobalStructData::onCamera1ImageReady, Qt::DirectConnection);
 
-    QObject::connect(camera2.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
-        imageProcessingModule2.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
     QObject::connect(imageProcessingModule2.get(), &ImageProcessingModule::processResultModule,
         this, &GlobalStructData::onCamera2ImageReady, Qt::DirectConnection);
 
-    QObject::connect(camera3.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
-        imageProcessingModule3.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
     QObject::connect(imageProcessingModule3.get(), &ImageProcessingModule::processResultModule,
         this, &GlobalStructData::onCamera3ImageReady, Qt::DirectConnection);
 
-    QObject::connect(camera4.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
-        imageProcessingModule4.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
     QObject::connect(imageProcessingModule4.get(), &ImageProcessingModule::processResultModule,
         this, &GlobalStructData::onCamera4ImageReady, Qt::DirectConnection);
 }
@@ -240,6 +232,8 @@ void GlobalStructData::buildCamera1()
             camera1->cameraIndex = 1;
             camera1->setHeartbeatTime(1000);
             setCameraExposureTime(1, dlgExposureTimeSetConfig.expousureTime);
+            QObject::connect(camera1.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
+                imageProcessingModule1.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
         }
         catch (const std::exception&)
         {
@@ -262,6 +256,8 @@ void GlobalStructData::buildCamera2()
             camera2->cameraIndex = 2;
             camera2->setHeartbeatTime(1000);
             setCameraExposureTime(2, dlgExposureTimeSetConfig.expousureTime);
+            QObject::connect(camera2.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
+                imageProcessingModule2.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
         }
         catch (const std::exception&)
         {
@@ -283,6 +279,8 @@ void GlobalStructData::buildCamera3()
             camera3->cameraIndex = 3;
             camera3->setHeartbeatTime(1000);
             setCameraExposureTime(3, dlgExposureTimeSetConfig.expousureTime);
+            QObject::connect(camera3.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
+                imageProcessingModule3.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
         }
         catch (const std::exception&)
         {
@@ -304,6 +302,8 @@ void GlobalStructData::buildCamera4()
             camera4->cameraIndex = 4;
             camera4->setHeartbeatTime(1000);
             setCameraExposureTime(4, dlgExposureTimeSetConfig.expousureTime);
+            QObject::connect(camera4.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
+                imageProcessingModule4.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
         }
         catch (const std::exception&)
         {
@@ -362,9 +362,37 @@ void GlobalStructData::startMonitor()
 
 void GlobalStructData::destroyCamera()
 {
+    destroyCamera1();
+    destroyCamera2();
+    destroyCamera3();
+    destroyCamera4();
+}
+
+void GlobalStructData::destroyCamera1()
+{
+    QObject::disconnect(camera1.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
+        imageProcessingModule1.get(), &ImageProcessingModule::onFrameCaptured);
     camera1.reset();
+}
+
+void GlobalStructData::destroyCamera2()
+{
+    QObject::disconnect(camera2.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
+        imageProcessingModule2.get(), &ImageProcessingModule::onFrameCaptured);
     camera2.reset();
+}
+
+void GlobalStructData::destroyCamera3()
+{
+    QObject::disconnect(camera3.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
+        imageProcessingModule3.get(), &ImageProcessingModule::onFrameCaptured);
     camera3.reset();
+}
+
+void GlobalStructData::destroyCamera4()
+{
+    QObject::disconnect(camera4.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
+        imageProcessingModule4.get(), &ImageProcessingModule::onFrameCaptured);
     camera4.reset();
 }
 
@@ -419,24 +447,151 @@ void GlobalStructData::onCamera4ImageReady(bool isOk, float location)
     }
 }
 
+void GlobalStructData::onBuildCamera1()
+{
+    buildCamera1();
+}
+
+void GlobalStructData::onBuildCamera2()
+{
+    buildCamera2();
+}
+
+void GlobalStructData::onBuildCamera3()
+{
+    buildCamera3();
+}
+
+void GlobalStructData::onBuildCamera4()
+{
+    buildCamera4();
+}
+
+void GlobalStructData::onDestroyCamera1()
+{
+    destroyCamera1();
+}
+
+void GlobalStructData::onDestroyCamera2()
+{
+    destroyCamera2();
+}
+
+void GlobalStructData::onDestroyCamera3()
+{
+    destroyCamera3();
+}
+
+void GlobalStructData::onDestroyCamera4()
+{
+    destroyCamera4();
+}
+
+void GlobalStructData::onStartMonitor1()
+{
+    if (camera1)
+    {
+        try
+        {
+            camera1->startMonitor();
+        }
+        catch (rw::hoec::CameraMonitorError& e)
+        {
+            LOG()  "Camera 1 startMonitor failed: " << e.what();
+        }
+    }
+}
+
+void GlobalStructData::onStartMonitor2()
+{
+    if (camera2)
+    {
+        try
+        {
+            camera2->startMonitor();
+        }
+        catch (rw::hoec::CameraMonitorError& e)
+        {
+            LOG()  "Camera 2 startMonitor failed: " << e.what();
+        }
+    }
+}
+
+void GlobalStructData::onStartMonitor3()
+{
+    if (camera3)
+    {
+        try
+        {
+            camera3->startMonitor();
+        }
+        catch (rw::hoec::CameraMonitorError& e)
+        {
+            LOG()  "Camera 3 startMonitor failed: " << e.what();
+        }
+    }
+}
+
+void GlobalStructData::onStartMonitor4()
+{
+    if (camera4)
+    {
+        try
+        {
+            camera4->startMonitor();
+        }
+        catch (rw::hoec::CameraMonitorError& e)
+        {
+            LOG()  "Camera 4 startMonitor failed: " << e.what();
+        }
+    }
+}
+
 void GlobalStructThread::buildDetachThread()
 {
+    auto& instance = GlobalStructData::getInstance();
     statisticalInfoComputingThread = std::make_unique<StatisticalInfoComputingThread>(this);
     statisticalInfoComputingThread->startThread();
 
     monitorCameraAndCardStateThread = std::make_unique<MonitorCameraAndCardStateThread>(this);
+    QObject::connect(monitorCameraAndCardStateThread.get(), &MonitorCameraAndCardStateThread::buildCamera1,
+        &instance, &GlobalStructData::onBuildCamera1, Qt::QueuedConnection);
+    QObject::connect(monitorCameraAndCardStateThread.get(), &MonitorCameraAndCardStateThread::buildCamera2,
+        &instance, &GlobalStructData::onBuildCamera2, Qt::QueuedConnection);
+    QObject::connect(monitorCameraAndCardStateThread.get(), &MonitorCameraAndCardStateThread::buildCamera3,
+        &instance, &GlobalStructData::onBuildCamera3, Qt::QueuedConnection);
+    QObject::connect(monitorCameraAndCardStateThread.get(), &MonitorCameraAndCardStateThread::buildCamera4,
+        &instance, &GlobalStructData::onBuildCamera4, Qt::QueuedConnection);
+    QObject::connect(monitorCameraAndCardStateThread.get(), &MonitorCameraAndCardStateThread::destroyCamera1,
+        &instance, &GlobalStructData::onDestroyCamera1, Qt::QueuedConnection);
+    QObject::connect(monitorCameraAndCardStateThread.get(), &MonitorCameraAndCardStateThread::destroyCamera2,
+        &instance, &GlobalStructData::onDestroyCamera2, Qt::QueuedConnection);
+    QObject::connect(monitorCameraAndCardStateThread.get(), &MonitorCameraAndCardStateThread::destroyCamera3,
+        &instance, &GlobalStructData::onDestroyCamera3, Qt::QueuedConnection);
+    QObject::connect(monitorCameraAndCardStateThread.get(), &MonitorCameraAndCardStateThread::destroyCamera4,
+        &instance, &GlobalStructData::onDestroyCamera4, Qt::QueuedConnection);
+    QObject::connect(monitorCameraAndCardStateThread.get(), &MonitorCameraAndCardStateThread::startMonitor1,
+        &instance, &GlobalStructData::onStartMonitor1, Qt::QueuedConnection);
+    QObject::connect(monitorCameraAndCardStateThread.get(), &MonitorCameraAndCardStateThread::startMonitor2,
+        &instance, &GlobalStructData::onStartMonitor2, Qt::QueuedConnection);
+    QObject::connect(monitorCameraAndCardStateThread.get(), &MonitorCameraAndCardStateThread::startMonitor3,
+        &instance, &GlobalStructData::onStartMonitor3, Qt::QueuedConnection);
+    QObject::connect(monitorCameraAndCardStateThread.get(), &MonitorCameraAndCardStateThread::startMonitor4,
+        &instance, &GlobalStructData::onStartMonitor4, Qt::QueuedConnection);
+
     monitorCameraAndCardStateThread->startThread();
 }
 
 void GlobalStructThread::destroyDetachThread()
 {
     statisticalInfoComputingThread->stopThread();
-    statisticalInfoComputingThread->wait();
-    statisticalInfoComputingThread.reset();
-
     monitorCameraAndCardStateThread->stopThread();
-    monitorCameraAndCardStateThread->wait();
+
+    statisticalInfoComputingThread->wait();
+    statisticalInfoComputingThread->wait();
+
     monitorCameraAndCardStateThread.reset();
+    statisticalInfoComputingThread.reset();
 }
 
 GlobalStructThread::GlobalStructThread()

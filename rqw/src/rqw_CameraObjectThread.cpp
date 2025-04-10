@@ -17,12 +17,17 @@ namespace rw
             quit();
             wait();
             if (_cameraObject->getConnectState()) {
-                delete _cameraObject;
+                if (_cameraObject) {
+                    delete _cameraObject;
+                }
             }
             else {
                 try
                 {
-                    delete _cameraObject;
+                    if (_cameraObject) {
+                        delete _cameraObject;
+                    }
+                   
                 }
                 catch (const std::exception&)
                 {
