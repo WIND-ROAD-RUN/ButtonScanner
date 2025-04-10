@@ -62,10 +62,12 @@ public:
     void buildModelEngine(const QString& enginePath, const QString& namePath);
 
 private:
-    cv::Mat processAI(MatInfo& frame, QVector<QString>& errorInfo);
+    cv::Mat processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::ime::ProcessRectanglesResult>& vecRecogResult);
     void eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::ime::ProcessRectanglesResult>& processRectanglesResult);
 
     QImage cvMatToQImage(const cv::Mat& mat);
+
+    void drawErrorLocate(QImage & image,std::vector<rw::ime::ProcessRectanglesResult>& vecRecogResult);
 
     QQueue<MatInfo>& _queue;
     QMutex& _mutex;

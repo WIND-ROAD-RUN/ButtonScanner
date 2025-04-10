@@ -8,13 +8,12 @@ void ImageProcessor::buildModelEngine(const QString& enginePath, const QString& 
     _modelEnginePtr = std::make_unique<rw::ime::ModelEngine>(enginePath.toStdString(), namePath.toStdString());
 }
 
-cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo)
+cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo , std::vector<rw::ime::ProcessRectanglesResult>& vecRecogResult)
 {
     auto& globalStruct = GlobalStructData::getInstance();
 
     cv::Mat resultImage;
     cv::Mat maskImage = cv::Mat::zeros(frame.image.size(), CV_8UC1);
-    std::vector<rw::ime::ProcessRectanglesResult> vecRecogResult;
     double t = (double)cv::getTickCount();
 
     _modelEnginePtr->ProcessMask(frame.image, resultImage, maskImage, vecRecogResult);
@@ -313,6 +312,24 @@ QImage ImageProcessor::cvMatToQImage(const cv::Mat& mat)
     return result;
 }
 
+void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::ime::ProcessRectanglesResult>& vecRecogResult)
+{
+    if (image.isNull()) {
+        return;
+    }
+    for (const auto & item: vecRecogResult) {
+        auto leftTop = item.left_top;
+        auto rightBottom = item.right_bottom;
+        // 绘制矩形框
+        QPainter painter(&image);
+        painter.setPen(QPen(Qt::red, 2));
+        painter.drawRect(QRect(leftTop.first, leftTop.second, rightBottom.first - leftTop.first, rightBottom.second - leftTop.second));
+        // 绘制文字
+        QString text = QString::number(item.classId);
+        painter.drawText(leftTop.first, leftTop.second - 5, text);
+    }
+}
+
 ImageProcessor::ImageProcessor(QQueue<MatInfo>& queue, QMutex& mutex, QWaitCondition& condition, int workIndex, QObject* parent)
     : QThread(parent), _queue(queue), _mutex(mutex), _condition(condition), _workIndex(workIndex) {
 }
@@ -335,12 +352,17 @@ void ImageProcessor::run()
         QVector<QString> errorInfo;
         errorInfo.reserve(20);
 
-        // AI识别处理
-        cv::Mat result = processAI(frame, errorInfo);
+        std::vector<rw::ime::ProcessRectanglesResult> vecRecogResult;
 
-        // 转换为QImage并绘制错误信息
+        // AI识别处理
+        cv::Mat result = processAI(frame, errorInfo,vecRecogResult);
+
         QImage image = cvMatToQImage(result);
+        // 绘制错误信息
         ImagePainter::drawTextOnImage(image, errorInfo);
+
+        // 绘制错误定位
+        drawErrorLocate(image, vecRecogResult);
 
         // 显示到界面
         emit imageReady(image);
