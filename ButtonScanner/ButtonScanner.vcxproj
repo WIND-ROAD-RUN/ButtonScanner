@@ -134,6 +134,7 @@ xcopy /Y /R /D "$(ProjectDir)image\*.png" "$(OutDir)\image\"
   </ItemDefinitionGroup>
   <ItemGroup>
     <QtMoc Include="DlgExposureTimeSet.h" />
+    <QtMoc Include="StatisticalInfoComputingThread.h" />
     <ClInclude Include="ThreadSafePriorityQueue.h" />
     <QtRcc Include="ButtonScanner.qrc" />
     <QtUic Include="ButtonScanner.ui" />
@@ -152,6 +153,7 @@ xcopy /Y /R /D "$(ProjectDir)image\*.png" "$(OutDir)\image\"
     <QtMoc Include="NumKeyBord.h" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="NumKeyBord.cpp" />
+    <ClCompile Include="StatisticalInfoComputingThread.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">Create</PrecompiledHeader>

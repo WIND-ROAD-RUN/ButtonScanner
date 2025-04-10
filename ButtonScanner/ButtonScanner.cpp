@@ -93,6 +93,7 @@ ButtonScanner::ButtonScanner(QWidget* parent)
     start_monitor();
 
     build_locationThread();
+    build_StatisticalInfoComputingThread();
 }
 
 ButtonScanner::~ButtonScanner()
@@ -100,6 +101,7 @@ ButtonScanner::~ButtonScanner()
     mark_Thread = false;
     delete ui;
     auto& globalStruct = GlobalStruct::getInstance();
+    globalStruct.destroy_StatisticalInfoComputingThread();
     globalStruct.destroyCamera();
     globalStruct.destroyImageProcessingModule();
     globalStruct.destroyImageSaveEngine();
@@ -779,6 +781,14 @@ void ButtonScanner::build_ioThread()
         });
 }
 
+void ButtonScanner::build_StatisticalInfoComputingThread()
+{
+    auto& globalStruct = GlobalStruct::getInstance();
+    globalStruct.build_StatisticalInfoComputingThread();
+    QObject::connect(globalStruct.statisticalInfoComputingThread.get(), &StatisticalInfoComputingThread::updateStatisticalInfo,
+        this, &ButtonScanner::updateStatisticalInfoUI, Qt::QueuedConnection);
+}
+
 QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
 {
     if (mat.type() == CV_8UC1) {
@@ -817,6 +827,24 @@ void ButtonScanner::onCamera4Display(QImage image)
 {
     QPixmap pixmap = QPixmap::fromImage(image);
     ui->label_imgDisplay_4->setPixmap(pixmap.scaled(ui->label_imgDisplay_4->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+}
+
+void ButtonScanner::updateStatisticalInfoUI()
+{
+    auto& globalStruct = GlobalStruct::getInstance();
+    auto& mainWindowConfig = globalStruct.mainWindowConfig;
+    auto productionYield = globalStruct.statisticalInfo.productionYield.load();
+    auto produceCount = globalStruct.statisticalInfo.produceCount.load();
+    auto wasteCount = globalStruct.statisticalInfo.wasteCount.load();
+    auto removeRate = globalStruct.statisticalInfo.removeRate.load();
+    mainWindowConfig.passRate = productionYield;
+    mainWindowConfig.totalProduction = produceCount;
+    mainWindowConfig.totalWaste = wasteCount;
+    mainWindowConfig.scrappingRate = removeRate;
+    ui->label_produceTotalValue->setText(QString::number(produceCount));
+    ui->label_wasteProductsValue->setText(QString::number(wasteCount));
+    ui->label_productionYieldValue->setText(QString::number(productionYield) + QString(" %"));
+    ui->label_removeRate->setText(QString::number(removeRate) + QString(" /min"));
 }
 
 void ButtonScanner::pbtn_set_clicked()

@@ -59,21 +59,25 @@ void GlobalStruct::buildImageProcessingModule(size_t num)
     imageProcessingModule1 = std::make_unique<ImageProcessingModule>(num, this);
     imageProcessingModule1->modelEnginePath = enginePath;
     imageProcessingModule1->modelNamePath = namePath;
+    imageProcessingModule1->index = 1;
     imageProcessingModule1->BuildModule();
 
     imageProcessingModule2 = std::make_unique<ImageProcessingModule>(num, this);
     imageProcessingModule2->modelEnginePath = enginePath;
     imageProcessingModule2->modelNamePath = namePath;
+    imageProcessingModule1->index = 2;
     imageProcessingModule2->BuildModule();
 
     imageProcessingModule3 = std::make_unique<ImageProcessingModule>(num, this);
     imageProcessingModule3->modelEnginePath = enginePath;
     imageProcessingModule3->modelNamePath = namePath;
+    imageProcessingModule1->index = 3;
     imageProcessingModule3->BuildModule();
 
     imageProcessingModule4 = std::make_unique<ImageProcessingModule>(num, this);
     imageProcessingModule4->modelEnginePath = enginePath;
     imageProcessingModule4->modelNamePath = namePath;
+    imageProcessingModule1->index = 4;
     imageProcessingModule4->BuildModule();
 
     //连接相机和图像处理模块
@@ -98,6 +102,18 @@ void GlobalStruct::buildImageProcessingModule(size_t num)
         this, &GlobalStruct::onCamera4ImageReady, Qt::DirectConnection);
 }
 
+void GlobalStruct::build_StatisticalInfoComputingThread()
+{
+    statisticalInfoComputingThread = std::make_unique<StatisticalInfoComputingThread>(this);
+    statisticalInfoComputingThread->startThread();
+}
+
+void GlobalStruct::destroy_StatisticalInfoComputingThread()
+{
+    statisticalInfoComputingThread->stopThread();
+    statisticalInfoComputingThread.reset();
+}
+
 void GlobalStruct::buildConfigManager(rw::oso::StorageType type)
 {
     storeContext = std::make_unique<rw::oso::StorageContext>(type);
@@ -116,6 +132,10 @@ void GlobalStruct::ReadMainWindowConfig()
     if (loadMainWindowConfig) {
         mainWindowConfig = *loadMainWindowConfig;
         isTakePictures = mainWindowConfig.isTakePictures;
+        statisticalInfo.produceCount = mainWindowConfig.totalProduction;
+        statisticalInfo.wasteCount = mainWindowConfig.totalWaste;
+        statisticalInfo.productionYield = mainWindowConfig.passRate;
+        statisticalInfo.removeRate = mainWindowConfig.scrappingRate;
     }
     else {
         LOG()  "Load main window config failed.";

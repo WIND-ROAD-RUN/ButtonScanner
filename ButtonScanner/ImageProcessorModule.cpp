@@ -1,6 +1,7 @@
 #include"stdafx.h"
 #include "GlobalStruct.h"
 #include"ImageProcessorModule.h"
+#include"StatisticalInfoComputingThread.h"
 
 void ImageProcessor::buildModelEngine(const QString& enginePath, const QString& namePath)
 {
@@ -388,7 +389,16 @@ ImageProcessingModule::~ImageProcessingModule()
 
 void ImageProcessingModule::onProcessResult(bool isOk, float location)
 {
+    auto& globalStruct = GlobalStruct::getInstance();
     emit processResultModule(isOk, location);
+
+    if (!isOk) {
+        globalStruct.statisticalInfo.wasteCount++;
+    }
+
+    if (index == 2 || index == 4) {
+        globalStruct.statisticalInfo.produceCount++;
+    }
 }
 
 void ImageProcessingModule::onFrameCaptured(cv::Mat frame, float location, size_t index)

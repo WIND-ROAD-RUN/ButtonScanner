@@ -53,7 +53,7 @@ protected:
     void run() override;
 
 signals:
-    void imageReady(const QImage& image);
+    void imageReady(QImage image);
     void processResult(bool isOk, float location);
 
 private:
@@ -90,7 +90,7 @@ public slots:
     void onProcessResult(bool isOk, float location);
 
 signals:
-    void imageReady(const QImage& image);
+    void imageReady(QImage image);
     void processResultModule(bool isOk, float location);
 
 private:
@@ -99,4 +99,6 @@ private:
     QWaitCondition _condition;
     std::vector<ImageProcessor*> _processors;
     int _numConsumers;
+public:
+    size_t index;
 };

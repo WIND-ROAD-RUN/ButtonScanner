@@ -89,6 +89,8 @@ public:
     //开启线程监控运动控制卡io点并且做出相应的逻辑
     void build_ioThread();
 
+    void build_StatisticalInfoComputingThread();
+
 private:
     Ui::ButtonScannerClass* ui;
 
@@ -103,6 +105,8 @@ private slots:
     void onCamera3Display(QImage image);
 
     void onCamera4Display(QImage image);
+private slots:
+    void updateStatisticalInfoUI();
 
 private slots:
     void pbtn_exit_clicked();

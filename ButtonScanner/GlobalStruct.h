@@ -14,6 +14,7 @@
 #include"dsl_PriorityQueue.hpp"
 #include"oso_StorageContext.hpp"
 #include"rqw_ImageSaveEngine.h"
+#include"StatisticalInfoComputingThread.h"
 
 #include<QString>
 
@@ -30,7 +31,20 @@ class GlobalStruct
 {
     Q_OBJECT
 public:
+    std::unique_ptr<StatisticalInfoComputingThread> statisticalInfoComputingThread{ nullptr };
+    void build_StatisticalInfoComputingThread();
+    void destroy_StatisticalInfoComputingThread();
+public:
+    struct StatisticalInfo
+    {
+        std::atomic_uint64_t produceCount{ 0 };
+        std::atomic_uint64_t wasteCount{ 0 };
+        std::atomic<double> productionYield{ 0 };
+        std::atomic<double> removeRate{ 0 };
+    } statisticalInfo;
+public:
     std::atomic_bool isTakePictures{ false };
+    std::atomic_bool isOpenRemoveFunc{false};
 public:
     void buildConfigManager(rw::oso::StorageType type);
 public:

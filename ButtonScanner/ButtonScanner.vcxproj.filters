@@ -73,6 +73,9 @@
     <ClCompile Include="NumKeyBord.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
+    <ClCompile Include="StatisticalInfoComputingThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="GlobalStruct.h">
@@ -95,6 +98,9 @@
     </QtMoc>
     <QtMoc Include="NumKeyBord.h">
       <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="StatisticalInfoComputingThread.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
