@@ -3,6 +3,7 @@
 #include"rqw_CameraObjectThread.hpp"
 #include"rqw_CameraObject.hpp"
 #include"hoec_CameraException.hpp"
+#include"LoadingDialog.h"
 
 #include "ButtonScanner.h"
 #include"DlgProductSet.h"
@@ -69,43 +70,59 @@ ButtonScanner::ButtonScanner(QWidget* parent)
     , ui(new Ui::ButtonScannerClass())
 {
     ui->setupUi(this);
-    mark_Thread = true;
-    read_config();
-
-    build_ui();
-    build_connect();
-
-    build_motion();
-
-    stop_all_axis();
-
-    build_imageProcessorModule();
-
-    build_camera();
-
-    clear_olderSavedImage();
-    build_imageSaveEngine();
-
-    build_ioThread();
-
-    start_monitor();
-
-    build_locationThread();
-    build_detachThread();
+    initializeComponents();
 }
 
 ButtonScanner::~ButtonScanner()
 {
+    // 创建加载框
+    LoadingDialog loadingDialog(this);
+    loadingDialog.show();
+
+    // 停止线程标志
+    loadingDialog.updateMessage("正在停止线程...");
+    QCoreApplication::processEvents();
     mark_Thread = false;
-    delete ui;
+
+    // 销毁分离线程
+    loadingDialog.updateMessage("正在销毁后台线程...");
+    QCoreApplication::processEvents();
     auto& globalStructThread = GlobalStructThread::getInstance();
     globalStructThread.destroyDetachThread();
-    auto& globalStructData = GlobalStructData::getInstance();
+
+    // 停止所有轴
+    loadingDialog.updateMessage("正在停止所有轴...");
+    QCoreApplication::processEvents();
     stop_all_axis();
+
+    // 销毁相机
+    loadingDialog.updateMessage("正在销毁相机...");
+    QCoreApplication::processEvents();
+    auto& globalStructData = GlobalStructData::getInstance();
     globalStructData.destroyCamera();
+
+    // 销毁图像处理模块
+    loadingDialog.updateMessage("正在销毁图像处理模块...");
+    QCoreApplication::processEvents();
     globalStructData.destroyImageProcessingModule();
+
+    // 销毁图像保存引擎
+    loadingDialog.updateMessage("正在销毁图像保存引擎...");
+    QCoreApplication::processEvents();
     globalStructData.destroyImageSaveEngine();
+
+    // 保存配置
+    loadingDialog.updateMessage("正在保存配置...");
+    QCoreApplication::processEvents();
     globalStructData.saveConfig();
+
+    // 删除 UI
+    loadingDialog.updateMessage("正在清理界面...");
+    QCoreApplication::processEvents();
+    delete ui;
+
+    // 隐藏加载框
+    loadingDialog.close();
 }
 
 void ButtonScanner::set_radioButton()
@@ -121,6 +138,83 @@ void ButtonScanner::set_radioButton()
 
     ui->rbtn_removeFunc->setAttribute(Qt::WA_TransparentForMouseEvents, true); // 禁止鼠标事件
     ui->rbtn_removeFunc->setFocusPolicy(Qt::NoFocus); // 禁止键盘焦点
+}
+
+void ButtonScanner::initializeComponents()
+{
+    mark_Thread = true;
+
+    // 创建加载框
+    LoadingDialog loadingDialog(this);
+    loadingDialog.show();
+
+    // 加载配置
+    loadingDialog.updateMessage("正在加载配置...");
+    QCoreApplication::processEvents(); // 保持 UI 响应
+    read_config();
+
+    // 构建 UI
+    loadingDialog.updateMessage("正在构建界面...");
+    QCoreApplication::processEvents();
+    build_ui();
+
+    // 连接信号与槽
+    loadingDialog.updateMessage("正在建立信号与槽连接...");
+    QCoreApplication::processEvents();
+    build_connect();
+
+    // 初始化运动控制
+    loadingDialog.updateMessage("正在初始化运动控制...");
+    QCoreApplication::processEvents();
+    build_motion();
+
+    // 停止所有轴
+    loadingDialog.updateMessage("正在停止所有轴...");
+    QCoreApplication::processEvents();
+    stop_all_axis();
+
+    // 构建图像处理模块
+    loadingDialog.updateMessage("正在构建图像处理模块...");
+    QCoreApplication::processEvents();
+    build_imageProcessorModule();
+
+    // 构建相机
+    loadingDialog.updateMessage("正在构建相机...");
+    QCoreApplication::processEvents();
+    build_camera();
+
+    // 清理旧数据
+    loadingDialog.updateMessage("正在清理旧数据...");
+    QCoreApplication::processEvents();
+    clear_olderSavedImage();
+
+    // 构建图像保存引擎
+    loadingDialog.updateMessage("正在构建图像保存引擎...");
+    QCoreApplication::processEvents();
+    build_imageSaveEngine();
+
+    // 构建 IO 线程
+    loadingDialog.updateMessage("正在构建 IO 线程...");
+    QCoreApplication::processEvents();
+    build_ioThread();
+
+    // 启动监控
+    loadingDialog.updateMessage("正在启动监控...");
+    QCoreApplication::processEvents();
+    start_monitor();
+
+    // 构建位置线程
+    loadingDialog.updateMessage("正在构建位置线程...");
+    QCoreApplication::processEvents();
+    build_locationThread();
+
+    // 构建分离线程
+    loadingDialog.updateMessage("正在构建后台线程...");
+    QCoreApplication::processEvents();
+    build_detachThread();
+
+    // 隐藏加载框
+    loadingDialog.close();
 }
 
 void ButtonScanner::build_ui()

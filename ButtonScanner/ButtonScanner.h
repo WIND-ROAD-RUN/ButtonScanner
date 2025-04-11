@@ -53,6 +53,8 @@ private:
     void set_radioButton();
 
 private:
+    void initializeComponents();
+
     void build_ui();
     void build_mainWindowData();
     void build_dlgProduceLineSet();
