@@ -317,7 +317,11 @@ void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::ime::Process
     if (image.isNull()) {
         return;
     }
+    int i =0;
     for (const auto & item: vecRecogResult) {
+        if (i==0||i==1) {
+            return;
+        }
         auto leftTop = item.left_top;
         auto rightBottom = item.right_bottom;
         // 绘制矩形框
@@ -325,8 +329,52 @@ void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::ime::Process
         painter.setPen(QPen(Qt::red, 2));
         painter.drawRect(QRect(leftTop.first, leftTop.second, rightBottom.first - leftTop.first, rightBottom.second - leftTop.second));
         // 绘制文字
-        QString text = QString::number(item.classId);
+        QString text;
+
+        switch (item.classId)
+        {
+        case 2:
+            text = "破边";
+            break;
+        case 3:
+            text = "气孔";
+            break;
+        case 4:
+            text = "堵眼";
+            break;
+        case 5:
+            text = "磨石";
+            break;
+        case 6:
+            text = "料头";
+            break;
+        case 7:
+            text = "脏污";
+            break;
+        case 8:
+            text = "裂痕";
+            break;
+        case 9:
+            text = "破眼";
+            break;
+        case 10:
+            text = "小气孔";
+            break;
+        case 11:
+            text = "毛发";
+            break;
+        case 12:
+            text = "小破边";
+            break;
+        case 13:
+            text = "白边";
+            break;
+        default:
+            text = QString::number(item.classId);
+            break;
+        }
         painter.drawText(leftTop.first, leftTop.second - 5, text);
+        ++i;
     }
 }
 
@@ -512,7 +560,11 @@ void ImagePainter::drawTextOnImage(QImage& image, const QVector<QString>& texts,
 
 void ImagePainter::drawCirclesOnImage(cv::Mat& image, const std::vector<rw::ime::ProcessRectanglesResult>& rectangles)
 {
+    int i = 0;
     for (const auto& rect : rectangles) {
+        if (i==2) {
+            return;
+        }
         // 计算矩形中心点
         int centerX = (rect.left_top.first + rect.right_bottom.first) / 2;
         int centerY = (rect.left_top.second + rect.right_bottom.second) / 2;
@@ -529,5 +581,7 @@ void ImagePainter::drawCirclesOnImage(cv::Mat& image, const std::vector<rw::ime:
 
         // 在图像上绘制圆
         cv::circle(image, cv::Point(centerX, centerY), radius, color, 5); // 2 表示线宽
+        
+        ++i;
     }
 }
