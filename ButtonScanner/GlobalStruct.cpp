@@ -51,7 +51,6 @@ void GlobalStruct::ReadConfig()
 	ReadMainWindowConfig();
 	ReadDlgProduceLineSetConfig();
 	ReadDlgProductSetConfig();
-	//ReadDlgAiLearnConfig();
 }
 
 void GlobalStruct::ReadMainWindowConfig()
@@ -87,23 +86,11 @@ void GlobalStruct::ReadDlgProductSetConfig()
 	}
 }
 
-//void GlobalStruct::ReadDlgAiLearnConfig()
-//{
-//	auto loadDlgAiLearnConfig = _StoreContext->load(dlgAiLearnFilePath.toStdString());
-//	if (loadDlgAiLearnConfig) {
-//		dlgAiLearnConfig = *loadDlgAiLearnConfig;
-//	}
-//	else {
-//		LOG()  "Load main window config failed.";
-//	}
-//}
-
 void GlobalStruct::saveConfig()
 {
 	saveMainWindowConfig();
 	saveDlgProduceLineSetConfig();
 	saveDlgProductSetConfig();
-	//saveDlgAiLearnConfig();
 }
 
 void GlobalStruct::saveMainWindowConfig()
@@ -120,11 +107,6 @@ void GlobalStruct::saveDlgProductSetConfig()
 {
 	_StoreContext->save(dlgProductSetConfig, dlgProductSetFilePath.toStdString());
 }
-
-//void GlobalStruct::saveDlgAiLearnConfig()
-//{
-//	_StoreContext->save(dlgAiLearnConfig, dlgAiLearnFilePath.toStdString());
-//}
 
 void GlobalStruct::buildCamera()
 {

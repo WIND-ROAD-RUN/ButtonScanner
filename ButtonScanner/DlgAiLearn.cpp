@@ -4,6 +4,8 @@
 #include <PathGlobalStruct.h>
 #include <windows.h>
 #include <codecvt>
+#include <AiLearnTools.h>
+#include"ime_ModelEngine.h"
 
 DlgAiLearn::DlgAiLearn(QWidget* parent)
 	: QDialog(parent)
@@ -11,12 +13,21 @@ DlgAiLearn::DlgAiLearn(QWidget* parent)
 {
 	ui->setupUi(this);
 
+	ui->label_pic1->setScaledContents(true);
+	ui->label_pic2->setScaledContents(true);
+	ui->label_pic3->setScaledContents(true);
+	ui->label_pic4->setScaledContents(true);
+
 	Init();
 	connects();
 }
 
 DlgAiLearn::~DlgAiLearn()
 {
+	delete aiLearnConfig;
+
+	delete _modelEnginePtr;
+
 	delete ui;
 }
 
@@ -36,6 +47,8 @@ void DlgAiLearn::connects()
 
 	QObject::connect(ui->pbtn_lookAllImage, &QPushButton::clicked,
 		this, &DlgAiLearn::pbtn_lookAllImage_clicked);
+	QObject::connect(ui->pbtn_train, &QPushButton::clicked,
+		this, &DlgAiLearn::pbtn_train_clicked);
 	QObject::connect(ui->pbtn_pre, &QPushButton::clicked,
 		this, &DlgAiLearn::pbtn_pre_clicked);
 	QObject::connect(ui->pbtn_next, &QPushButton::clicked,
@@ -50,6 +63,8 @@ void DlgAiLearn::connects()
 	QObject::connect(ui->rbtn_station4, &QPushButton::clicked,
 		this, &DlgAiLearn::rbtn_station4_checked);
 
+	QObject::connect(ui->pbtn_test, &QPushButton::clicked,
+		this, &DlgAiLearn::pbtn_test_clicked);
 }
 
 void DlgAiLearn::clearStep()
@@ -66,8 +81,14 @@ void DlgAiLearn::clearStep()
 
 void DlgAiLearn::Init()
 {
-	if (rw::cdm::ButtonScannerDlgAiLearn::ReadLastConfig() == nullptr)
+	auto& globalStruct = GlobalStruct::getInstance();
+
+	_modelEnginePtr = new rw::ime::ModelEngine(globalStruct.enginePath.toStdString(), globalStruct.namePath.toStdString());
+
+	auto tempConfig = rw::cdm::ButtonScannerDlgAiLearn::ReadLastConfig();
+	if (tempConfig == nullptr)
 		ui->pbtn_no->setVisible(false);
+	delete tempConfig;
 
 	ui->rbtn_filterColorDiff->setEnabled(false);
 
@@ -162,11 +183,7 @@ void DlgAiLearn::pbtn_lookAllImage_clicked()
 {
 	auto path = QString::fromStdString(PathGlobalStruct::AiLearnData + "\\" + aiLearnConfig->learnInfoSign);
 
-	QDir dir = QDir(path);
-	qDebug() << "目录路径:" << dir.path();
-	if (!dir.exists()) {
-		dir.mkpath(".");
-	}
+	AiLearnTools::MakeDir(path);
 
 	auto wPath = path.toStdWString();
 	auto wCharPath = wPath.c_str();
@@ -189,8 +206,13 @@ void DlgAiLearn::rbtn_station4_checked(bool checked)
 {
 }
 
-void DlgAiLearn::onFrameCapturedBad(cv::Mat frame, std::vector<rw::ime::ProcessRectanglesResult> vecRecogResult, size_t index)
+void DlgAiLearn::onFrameCapturedBad(cv::Mat frame, size_t index)
 {
+	std::vector<rw::ime::ProcessRectanglesResult> vecRecogResult;
+	cv::Mat resultImage;
+	cv::Mat maskImage = cv::Mat::zeros(frame.size(), CV_8UC1);
+	_modelEnginePtr->ProcessMask(frame, resultImage, maskImage, vecRecogResult);
+
 	std::vector<int> waiJingIndexs = std::vector<int>();
 	for (int i = 0; i < vecRecogResult.size(); i++)
 	{
@@ -207,12 +229,155 @@ void DlgAiLearn::onFrameCapturedBad(cv::Mat frame, std::vector<rw::ime::ProcessR
 		auto centerX = vecRecogResult[waiJingIndexs[0]].left_top.first + width;
 		auto centerY = vecRecogResult[waiJingIndexs[0]].left_top.second + height;
 
-		vecRecogResult[waiJingIndexs[0]].
 		auto dateTimeStr = QDateTime::currentDateTime().toString("yyyyMMddHHmmsszzz").toStdString();
+		bool isBad = step == 1;
 
+		AiLearnTools::SaveImage(frame, aiLearnConfig->learnInfoSign, dateTimeStr, isBad, index);
+		AiLearnTools::SaveYoloText(aiLearnConfig->learnInfoSign, dateTimeStr, isBad, aiLearnConfig->checkType,
+			centerX, centerY, width, height, frame.cols, frame.rows);
+
+		auto qImage = AiLearnTools::cvMat2QImage(frame);
+		QPixmap qPixmap = QPixmap::fromImage(qImage);
+		if (index == 1)
+			QMetaObject::invokeMethod(ui->label_pic1, "setPixmap", Qt::QueuedConnection, Q_ARG(QPixmap, qPixmap));
+		if (index == 2)
+			QMetaObject::invokeMethod(ui->label_pic2, "setPixmap", Qt::QueuedConnection, Q_ARG(QPixmap, qPixmap));
+		if (index == 3)
+			QMetaObject::invokeMethod(ui->label_pic3, "setPixmap", Qt::QueuedConnection, Q_ARG(QPixmap, qPixmap));
+		if (index == 4)
+			QMetaObject::invokeMethod(ui->label_pic4, "setPixmap", Qt::QueuedConnection, Q_ARG(QPixmap, qPixmap));
+	}
+
+	auto dateTimeStr = QDateTime::currentDateTime().toString("yyyyMMddHHmmsszzz").toStdString();
+	AiLearnTools::SaveImage(frame, aiLearnConfig->learnInfoSign, dateTimeStr, true, index);
+	AiLearnTools::SaveYoloText(aiLearnConfig->learnInfoSign, dateTimeStr, true, aiLearnConfig->checkType,
+		500, 500, 200, 210, frame.cols, frame.rows);
+
+	auto qImage = AiLearnTools::cvMat2QImage(frame);
+	QPixmap qPixmap = QPixmap::fromImage(qImage);
+	if (index == 1)
+		QMetaObject::invokeMethod(ui->label_pic1, "setPixmap", Qt::QueuedConnection, Q_ARG(QPixmap, qPixmap));
+	if (index == 2)
+		QMetaObject::invokeMethod(ui->label_pic2, "setPixmap", Qt::QueuedConnection, Q_ARG(QPixmap, qPixmap));
+	if (index == 3)
+		QMetaObject::invokeMethod(ui->label_pic3, "setPixmap", Qt::QueuedConnection, Q_ARG(QPixmap, qPixmap));
+	if (index == 4)
+		QMetaObject::invokeMethod(ui->label_pic4, "setPixmap", Qt::QueuedConnection, Q_ARG(QPixmap, qPixmap));
+}
+
+void DlgAiLearn::pbtn_train_clicked()
+{
+	//训练之前删除之前的train
+	QDir dir("D:\\y\\yolov5-master\\runs\\train");
+	dir.rmdir(dir.absolutePath());
+
+	disconnect(&m_Process, &QProcess::readyReadStandardError, this, &DlgAiLearn::ProcessReadStandardError);//读就绪
+	disconnect(&m_Process, &QProcess::readyReadStandardOutput, this, &DlgAiLearn::ProcessReadStandardOutput);//标准读就绪
+	disconnect(&m_Process, &QProcess::finished, this, &DlgAiLearn::ProcessFinished);//进程完成
+	connect(&m_Process, &QProcess::readyReadStandardError, this, &DlgAiLearn::ProcessReadStandardError);//读就绪
+	connect(&m_Process, &QProcess::readyReadStandardOutput, this, &DlgAiLearn::ProcessReadStandardOutput);//标准读就绪
+	connect(&m_Process, &QProcess::finished, this, &DlgAiLearn::ProcessFinished);//进程完成
+
+	m_Process.start("cmd.exe", { "/c", "activate yolov5 && cd /d D:\\y\\yolov5-master\\ && python train.py" });
+
+	//QString mess = "activate yolov5";
+	//mess.append("\r\n");
+	//char* ch;
+	//QByteArray ba = mess.toLatin1(); //
+	//ch = ba.data();
+	//m_Process.write(ch);
+	
+	//mess = "cd /d D:\\y\\yolov5-master\\";
+	//mess.append("\r\n");
+	//ba = mess.toLatin1(); //
+	//ch = ba.data();
+	//m_Process.write(ch);
+
+	//auto dataYamlPath = AiLearnTools::SaveYoloDataYaml(aiLearnConfig->learnInfoSign);
+	////mess = QString("python train.py --data \"%1\"").arg(QString::fromStdString(dataYamlPath));
+	//mess = QString("python train.py");
+	//mess.append("\r\n");
+	//ba = mess.toLatin1(); //
+	//ch = ba.data();
+	//m_Process.write(ch);
+
+}
+
+void DlgAiLearn::pbtn_test_clicked()
+{
+	std::string image_path = R"(C:\Users\admin\Desktop\111705305392.jpg)";  // Windows 示例
+
+	// 读取图片到 cv::Mat
+	cv::Mat image = cv::imread(image_path, cv::IMREAD_COLOR);  // 默认以彩色模式读取
+
+	if (ui->rbtn_station1->isChecked())
+		onFrameCapturedBad(image, 1);
+	if (ui->rbtn_station2->isChecked())
+		onFrameCapturedBad(image, 2);
+	if (ui->rbtn_station3->isChecked())
+		onFrameCapturedBad(image, 3);
+	if (ui->rbtn_station4->isChecked())
+		onFrameCapturedBad(image, 4);
+
+}
+
+void DlgAiLearn::ProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
+{
+	if (exitStatus == QProcess::NormalExit)
+	{
+		qDebug() << "进来";
+		//QProcess* processRobot_1 = new QProcess();
+		//processRobot_1->start("cmd.exe");
+		//processRobot_1->write("activate yolov5");
+		//processRobot_1->write("&&");
+		////qDebug()<<mess;
+		// //processRobot_1->write((char*)(mess.toStdString().c_str()));
+		//processRobot_1->write("cd /d D:\\y\\yolov5-6.0\\ && start python export.py\n ");
+
+	}
+	else
+	{
+		//程序异常结束
+		qDebug() << "进来2";
 
 	}
 }
 
+void DlgAiLearn::ProcessReadStandardOutput()
+{
+	qDebug() << "Output" << m_Process.readAllStandardOutput().toStdString();
+	//QString lastend = "Optimizer stripped from runs\\train\\exp\\weights\\last.pt";
+	//int bpos = msg.indexOf(lastend);
+	//if (bpos != -1)
+	//{
 
+	//	emit isfinishTrain();
+
+	//}
+	//lastend = "--weights runs\\train\\exp\\weights\\best.onnx";
+	//bpos = msg.indexOf(lastend);
+	//if (bpos != -1)
+	//{
+
+	//	emit isfinishExport();
+
+	//}
+
+	//dvalue = dvalue + 0.5;
+
+
+
+	//value = dvalue;
+	//if (value < 90)
+	//{
+
+	//	ui->progressBar->setValue(value);  // 当前进度
+
+	//}
+}
+
+void DlgAiLearn::ProcessReadStandardError()
+{
+	qDebug()<<"Error" << m_Process.readAllStandardError().toStdString();
+}
 

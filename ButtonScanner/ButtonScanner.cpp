@@ -25,7 +25,6 @@ ButtonScanner::ButtonScanner(QWidget* parent)
 
 	read_config();
 
-	build_ui();
 	build_connect();
 
 	build_Motion();
@@ -33,6 +32,8 @@ ButtonScanner::ButtonScanner(QWidget* parent)
 	build_camera();
 
     build_ImageProcessorModule();
+
+	build_ui();
 
 	//监视相机运动控制卡线程
 	build_MonitoringThread();
@@ -135,7 +136,7 @@ void ButtonScanner::read_config()
 	read_config_mainWindowConfig();
 	read_config_productSetConfig();
 	read_config_produceLineConfig();
-	//read_config_DlgAiLearnConfig();
+	
 }
 
 void ButtonScanner::read_config_mainWindowConfig()
@@ -235,37 +236,7 @@ void ButtonScanner::read_config_productSetConfig()
 
 }
 
-//void ButtonScanner::read_config_DlgAiLearnConfig()
-//{
-//	auto& globalStruct = GlobalStruct::getInstance();
-//	QDir dir;
-//
-//	QString dlgAiLearnFilePath = R"(config/dlgAiLearnConfig.xml)";
-//	QString dlgAiLearnFilePathFull = dir.absoluteFilePath(dlgAiLearnFilePath);
-//	QFileInfo dlgAiLearnFile(dlgAiLearnFilePathFull);
-//
-//	globalStruct.dlgAiLearnFilePath = dlgAiLearnFilePathFull;
-//
-//	if (!dlgAiLearnFile.exists()) {
-//		QDir configDir = QFileInfo(dlgAiLearnFilePathFull).absoluteDir();
-//		if (!configDir.exists()) {
-//			configDir.mkpath(".");
-//		}
-//		QFile file(dlgAiLearnFilePathFull);
-//		if (file.open(QIODevice::WriteOnly)) {
-//			file.close();
-//		}
-//		else {
-//			QMessageBox::critical(this, "Error", "无法创建配置文件dlgAiLearnConfig.xml");
-//		}
-//		globalStruct.dlgAiLearnConfig = rw::cdm::ButtonScannerDlgAiLearn();
-//		globalStruct.saveDlgProductSetConfig();
-//		return;
-//	}
-//	else {
-//		globalStruct.ReadDlgAiLearnConfig();
-//	}
-//}
+
 
 
 void ButtonScanner::build_camera()

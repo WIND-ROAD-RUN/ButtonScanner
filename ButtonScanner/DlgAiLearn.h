@@ -3,6 +3,8 @@
 #include <QDialog>
 #include "ui_DlgAiLearn.h"
 #include "cdm_ButtonScannerDlgAiLearn.h"
+#include"ImageProcessorModule.h"
+#include"ime_ModelEngine.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class DlgAiLearnClass; };
@@ -22,8 +24,11 @@ private:
 	void connects();
 	void clearStep();
 private:
-	Ui::DlgAiLearnClass* ui;
-	rw::cdm::ButtonScannerDlgAiLearn* aiLearnConfig;
+	Ui::DlgAiLearnClass* ui{ nullptr };
+	rw::ime::ModelEngine* _modelEnginePtr{ nullptr };
+	rw::cdm::ButtonScannerDlgAiLearn* aiLearnConfig{ nullptr };
+	QProcess  m_Process;
+	double progress;
 	int step{ 0 };
 	int moveLen{ 3000 };
 
@@ -33,9 +38,9 @@ private:
 	int widget_check_rawY{ 50 };
 	int widget_step_rawX{ 970 };
 	int widget_step_rawY{ 100 };
-	int widget_pic_rawX{20};
-	int widget_pic_rawY{30};
-		 
+	int widget_pic_rawX{ 20 };
+	int widget_pic_rawY{ 30 };
+
 
 private slots:
 	void pbtn_yes_clicked();
@@ -52,6 +57,11 @@ private slots:
 	void rbtn_station3_checked(bool checked);
 	void rbtn_station4_checked(bool checked);
 
-	void  onFrameCapturedBad(cv::Mat frame, std::vector<rw::ime::ProcessRectanglesResult> vecRecogResult, size_t index);
+	void onFrameCapturedBad(cv::Mat frame, size_t index);
+	void pbtn_train_clicked();
+	void pbtn_test_clicked();
 
+	void ProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
+	void ProcessReadStandardOutput(); 
+	void ProcessReadStandardError();
 };

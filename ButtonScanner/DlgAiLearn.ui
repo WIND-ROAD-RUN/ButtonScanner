@@ -158,7 +158,7 @@
      <x>970</x>
      <y>100</y>
      <width>301</width>
-     <height>741</height>
+     <height>821</height>
     </rect>
    </property>
    <widget class="QLabel" name="label_stepTitle">
@@ -214,6 +214,9 @@
     <property name="text">
      <string>筛选色差</string>
     </property>
+    <property name="autoExclusive">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QRadioButton" name="rbtn_station1">
     <property name="geometry">
@@ -231,6 +234,9 @@
     </property>
     <property name="text">
      <string>一工位</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QRadioButton" name="rbtn_station2">
@@ -291,7 +297,7 @@
     <property name="geometry">
      <rect>
       <x>170</x>
-      <y>640</y>
+      <y>700</y>
       <width>101</width>
       <height>51</height>
      </rect>
@@ -308,10 +314,10 @@
    <widget class="QPushButton" name="pbtn_lookAllImage">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>500</y>
-      <width>171</width>
-      <height>101</height>
+      <x>80</x>
+      <y>480</y>
+      <width>151</width>
+      <height>81</height>
      </rect>
     </property>
     <property name="font">
@@ -327,7 +333,7 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>640</y>
+      <y>700</y>
       <width>101</width>
       <height>51</height>
      </rect>
@@ -339,6 +345,24 @@
     </property>
     <property name="text">
      <string>上一步</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbtn_train">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>580</y>
+      <width>151</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>训练</string>
     </property>
    </widget>
   </widget>
@@ -403,6 +427,24 @@
      <string/>
     </property>
    </widget>
+  </widget>
+  <widget class="QPushButton" name="pbtn_test">
+   <property name="geometry">
+    <rect>
+     <x>1060</x>
+     <y>30</y>
+     <width>101</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>13</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>测试</string>
+   </property>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
