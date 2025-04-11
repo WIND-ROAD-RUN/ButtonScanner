@@ -88,14 +88,14 @@ void DlgExposureTimeSet::pbtn_exposureTimeValue_clicked()
     delete numKeyBord;
 
     auto newValue = ui->pbtn_exposureTimeValue->text().toInt();
-    if (newValue<=0) {
+    if (newValue<100) {
         ui->pbtn_exposureTimeValue->setText(QString::number(olderValue));
-        QMessageBox::warning(this, "错误", "曝光时间范围应设置为0~700");
+        QMessageBox::warning(this, "错误", "曝光时间范围应设置为100~700");
         return;
     }
     if (newValue>700) {
         ui->pbtn_exposureTimeValue->setText(QString::number(olderValue));
-        QMessageBox::warning(this, "错误", "曝光时间范围应设置为0~700");
+        QMessageBox::warning(this, "错误", "曝光时间范围应设置为100~700");
         return;
     }
     if (newValue == olderValue) {
