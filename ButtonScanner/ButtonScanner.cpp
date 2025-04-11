@@ -220,6 +220,9 @@ void ButtonScanner::build_connect()
 
     QObject::connect(ui->rbtn_ForAndAgainst, &QPushButton::clicked, 
         this, &ButtonScanner::rbtn_ForAndAgainst_ckecked);
+
+    QObject::connect(ui->pbtn_resetProduct, &QPushButton::clicked,
+        this, &ButtonScanner::pbtn_resetProduct_clicked);
 }
 
 void ButtonScanner::read_config()
@@ -876,6 +879,24 @@ void ButtonScanner::pbtn_score_clicked()
 {
     dlgProductSet->readConfig();
     dlgProductSet->exec();
+}
+
+void ButtonScanner::pbtn_resetProduct_clicked()
+{
+    auto& globalStruct = GlobalStructData::getInstance();
+    globalStruct.mainWindowConfig.totalProduction = 0;
+    globalStruct.mainWindowConfig.totalWaste = 0;
+    globalStruct.mainWindowConfig.passRate = 0;
+    globalStruct.mainWindowConfig.scrappingRate = 0;
+    ui->label_produceTotalValue->setText(QString::number(globalStruct.mainWindowConfig.totalProduction));
+    ui->label_wasteProductsValue->setText(QString::number(globalStruct.mainWindowConfig.totalWaste));
+    ui->label_productionYieldValue->setText(QString::number(globalStruct.mainWindowConfig.passRate) + QString(" %"));
+    ui->label_removeRate->setText(QString::number(globalStruct.mainWindowConfig.scrappingRate) + QString(" /min"));
+    globalStruct.statisticalInfo.produceCount = 0;
+    globalStruct.statisticalInfo.wasteCount = 0;
+    globalStruct.statisticalInfo.productionYield = 0;
+    globalStruct.statisticalInfo.removeRate = 0;
+    globalStruct.saveConfig();
 }
 
 void ButtonScanner::rbtn_debug_ckecked(bool checked)

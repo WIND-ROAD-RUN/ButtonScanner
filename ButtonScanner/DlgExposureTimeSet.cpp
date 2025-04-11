@@ -64,18 +64,22 @@ void DlgExposureTimeSet::ResetCamera()
     if (globalStruct.camera1)
     {
         globalStruct.camera1->setTriggerMode(rw::rqw::CameraObjectTrigger::Hardware);
+        globalStruct.camera1->setFrameRate(40);
     }
     if (globalStruct.camera2)
     {
         globalStruct.camera2->setTriggerMode(rw::rqw::CameraObjectTrigger::Hardware);
+        globalStruct.camera2->setFrameRate(40);
     }
     if (globalStruct.camera3)
     {
         globalStruct.camera3->setTriggerMode(rw::rqw::CameraObjectTrigger::Hardware);
+        globalStruct.camera3->setFrameRate(40);
     }
     if (globalStruct.camera4)
     {
         globalStruct.camera4->setTriggerMode(rw::rqw::CameraObjectTrigger::Hardware);
+        globalStruct.camera4->setFrameRate(40);
     }
 
 }

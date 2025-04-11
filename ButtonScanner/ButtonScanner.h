@@ -117,6 +117,7 @@ private slots:
     void pbtn_newProduction_clicked();
     void pbtn_beltSpeed_clicked();
     void pbtn_score_clicked();
+    void pbtn_resetProduct_clicked();
 private slots:
     void rbtn_debug_ckecked(bool checked);
     void rbtn_takePicture_ckecked(bool checked);
