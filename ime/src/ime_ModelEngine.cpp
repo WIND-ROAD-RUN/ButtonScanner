@@ -26,7 +26,7 @@ namespace rw
         {
             _modelPath = modelPath;
             _nameFilePath = nameFilePath;
-            _index = yolov5v6_seg_trt_create((char*)(modelPath.c_str()), (char*)(nameFilePath.c_str()), 0.25, 0.25, 0.45, 0.5, 0, 1);
+            _index = yolov5v6_seg_trt_create((char*)(modelPath.c_str()), (char*)(nameFilePath.c_str()), 0.1, 0.1, 0.1, 0.1, 0, 1);
             if (_index < 0) {
                 _isCreated = false;
                 throw std::runtime_error("Failed to create task with error code: " + std::to_string(_index));
