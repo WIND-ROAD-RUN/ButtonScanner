@@ -414,12 +414,14 @@ void ImageProcessingModule::onProcessResult(bool isOk, float location)
     auto& globalStruct = GlobalStructData::getInstance();
     emit processResultModule(isOk, location);
 
-    if (!isOk) {
-        globalStruct.statisticalInfo.wasteCount++;
-    }
+    if (globalStruct.isOpenRemoveFunc) {
+        if (!isOk) {
+            globalStruct.statisticalInfo.wasteCount++;
+        }
 
-    if (index == 2 || index == 4) {
-        globalStruct.statisticalInfo.produceCount++;
+        if (index == 2 || index == 4) {
+            globalStruct.statisticalInfo.produceCount++;
+        }
     }
 }
 
