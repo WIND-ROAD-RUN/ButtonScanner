@@ -18,8 +18,10 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo , 
 
     _modelEnginePtr->ProcessMask(frame.image, resultImage, maskImage, vecRecogResult);
 
-    //剔除逻辑
-    eliminationLogic(frame, resultImage, errorInfo, vecRecogResult);
+    if (globalStruct.isOpenRemoveFunc) {
+        eliminationLogic(frame, resultImage, errorInfo, vecRecogResult);
+    }
+   
 
     return resultImage.clone();
 }
