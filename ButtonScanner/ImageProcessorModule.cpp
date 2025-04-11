@@ -408,15 +408,15 @@ void ImageProcessor::run()
         // AI识别处理
         cv::Mat result = processAI(frame, errorInfo,vecRecogResult);
 
-        // image = cvMatToQImage(result);
+        auto  image = cvMatToQImage(result);
         // 绘制错误信息
-        //ImagePainter::drawTextOnImage(image, errorInfo);
+        ImagePainter::drawTextOnImage(image, errorInfo);
 
         // 绘制错误定位
-        //drawErrorLocate(image, vecRecogResult);
+        drawErrorLocate(image, vecRecogResult);
 
         // 显示到界面
-        //emit imageReady(image);
+        emit imageReady(image);
     }
 }
 

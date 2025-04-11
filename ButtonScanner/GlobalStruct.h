@@ -16,6 +16,7 @@
 #include"rqw_ImageSaveEngine.h"
 #include"StatisticalInfoComputingThread.h"
 #include"MonitorCameraAndCardStateThread.h"
+#include"dsl_ThreadSafeMinHeap.h"
 
 #include<QString>
 
@@ -149,10 +150,10 @@ public:
     GlobalStructData(const GlobalStructData&) = delete;
     GlobalStructData& operator=(const GlobalStructData&) = delete;
 public:
-    rw::dsl::ThreadSafeDHeap<float, float> productPriorityQueue1;
-    rw::dsl::ThreadSafeDHeap<float, float> productPriorityQueue2;
-    rw::dsl::ThreadSafeDHeap<float, float> productPriorityQueue3;
-    rw::dsl::ThreadSafeDHeap<float, float> productPriorityQueue4;
+    ThreadSafeMinHeap productPriorityQueue1;
+    ThreadSafeMinHeap productPriorityQueue2;
+    ThreadSafeMinHeap productPriorityQueue3;
+    ThreadSafeMinHeap productPriorityQueue4;
 private:
     GlobalStructData();
     ~GlobalStructData() = default;

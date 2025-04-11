@@ -133,10 +133,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\dsl_ThreadSafeMinHeap.h" />
     <ClInclude Include="include\dsl_core.hpp" />
     <ClInclude Include="include\dsl_PriorityQueue.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\dsl_ThreadSafeMinHeap.cpp" />
     <ClCompile Include="src\dsl_PriorityQueue.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

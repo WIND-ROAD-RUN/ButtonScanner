@@ -21,9 +21,15 @@
     <ClInclude Include="include\dsl_core.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="include\dsl_ThreadSafeMinHeap.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dsl_PriorityQueue.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dsl_ThreadSafeMinHeap.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

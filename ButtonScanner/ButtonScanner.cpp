@@ -626,16 +626,16 @@ void ButtonScanner::build_locationThread()
             {
                 auto& work1 = GlobalStructData::getInstance().productPriorityQueue1;
 
-                int i = work1.size();
 
                 double tifeishijian1 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowTime1;
                 double tifeijuli1 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowDistance1;
 
-                double nowlocation = work1.peek();
+                float olderlacation1 = 0;
+                bool isGet = work1.tryGetMin(olderlacation1);
 
-                if (nowlocation != 0 && (abs(lacation1 - nowlocation) > tifeijuli1))
+                if (isGet != false && (abs(lacation1 - olderlacation1) > tifeijuli1))
                 {
-                    work1.top();
+                    work1.tryPopMin(olderlacation1);
 
                     //吹气
                     zwy::scc::GlobalMotion::getInstance().motionPtr.get()->SetIOOut(5, 5, true, tifeishijian1);
@@ -647,10 +647,11 @@ void ButtonScanner::build_locationThread()
                 double tifeishijian2 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowTime2;
                 double tifeijuli2 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowDistance2;
 
-                double nowlocation = work2.peek();
-                if (nowlocation != 0 && (abs(lacation2 - nowlocation) > tifeijuli2))
+                float olderlacation2 = 0;
+                bool isGet = work2.tryGetMin(olderlacation2);
+                if (olderlacation2 != false && (abs(lacation2 - olderlacation2) > tifeijuli2))
                 {
-                    work2.top();
+                    work2.tryPopMin(olderlacation2);
 
                     //吹气
                     zwy::scc::GlobalMotion::getInstance().motionPtr.get()->SetIOOut(1, 4, true, tifeishijian2);
@@ -663,10 +664,11 @@ void ButtonScanner::build_locationThread()
                 double tifeishijian3 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowTime3;
                 double tifeijuli3 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowDistance3;
 
-                double nowlocation = work3.peek();
-                if (nowlocation != 0 && abs(lacation1 - nowlocation) > tifeijuli3)
+                float olderlacation3 = 0;
+                bool isGet = work3.tryGetMin(olderlacation3);
+                if (isGet != false && abs(lacation1 - olderlacation3) > tifeijuli3)
                 {
-                    work3.top();
+                    work3.tryPopMin(olderlacation3);
 
                     //吹气
                     zwy::scc::GlobalMotion::getInstance().motionPtr.get()->SetIOOut(2, 3, true, tifeishijian3);
@@ -679,10 +681,11 @@ void ButtonScanner::build_locationThread()
                 double tifeishijian4 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowTime4;
                 double tifeijuli4 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowDistance4;
 
-                double nowlocation = work4.peek();
-                if (nowlocation != 0 && abs(lacation2 - nowlocation) > tifeijuli4)
+                float olderlacation4 = 0;
+                bool isGet = work4.tryGetMin(olderlacation4);
+                if (isGet != false && abs(lacation2 - olderlacation4) > tifeijuli4)
                 {
-                    work4.top();
+                    work4.tryPopMin(olderlacation4);
 
                     //吹气
                     zwy::scc::GlobalMotion::getInstance().motionPtr.get()->SetIOOut(3, 2, true, tifeishijian4);
@@ -796,7 +799,7 @@ void ButtonScanner::build_ioThread()
                 }
             }
 
-            QThread::msleep(30);
+            QThread::msleep(200);
         }
         });
 }

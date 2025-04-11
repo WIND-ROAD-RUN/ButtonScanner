@@ -94,6 +94,10 @@ public slots:
 signals:
     void imageReady(QImage image);
     void processResultModule(bool isOk, float location);
+public:
+    std::vector<ImageProcessor*> getProcessors() const {
+        return _processors;
+    }
 
 private:
     QQueue<MatInfo> _queue;

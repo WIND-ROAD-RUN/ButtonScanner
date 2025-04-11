@@ -61,37 +61,47 @@ void GlobalStructData::buildImageProcessingModule(size_t num)
     imageProcessingModule1->modelNamePath = namePath;
     imageProcessingModule1->index = 1;
     imageProcessingModule1->BuildModule();
+    auto processers1 = imageProcessingModule1->getProcessors();
+    for (auto& processer : processers1) {
+
+           QObject::connect(processer, &ImageProcessor::processResult,
+               this, &GlobalStructData::onCamera1ImageReady, Qt::QueuedConnection);  
+        
+    }
 
     imageProcessingModule2 = std::make_unique<ImageProcessingModule>(num, this);
     imageProcessingModule2->modelEnginePath = enginePath;
     imageProcessingModule2->modelNamePath = namePath;
     imageProcessingModule1->index = 2;
     imageProcessingModule2->BuildModule();
+    auto processers2 = imageProcessingModule2->getProcessors();
+    for (auto& processer : processers2) {
+        QObject::connect(processer, &ImageProcessor::processResult,
+            this, &GlobalStructData::onCamera1ImageReady, Qt::QueuedConnection);
+    }
 
     imageProcessingModule3 = std::make_unique<ImageProcessingModule>(num, this);
     imageProcessingModule3->modelEnginePath = enginePath;
     imageProcessingModule3->modelNamePath = namePath;
     imageProcessingModule1->index = 3;
     imageProcessingModule3->BuildModule();
+    auto processers3 = imageProcessingModule3->getProcessors();
+    for (auto& processer : processers3) {
+        QObject::connect(processer, &ImageProcessor::processResult,
+            this, &GlobalStructData::onCamera1ImageReady, Qt::QueuedConnection);
+    }
 
     imageProcessingModule4 = std::make_unique<ImageProcessingModule>(num, this);
     imageProcessingModule4->modelEnginePath = enginePath;
     imageProcessingModule4->modelNamePath = namePath;
     imageProcessingModule1->index = 4;
     imageProcessingModule4->BuildModule();
+    auto processers4 = imageProcessingModule4->getProcessors();
+    for (auto& processer : processers4) {
+        QObject::connect(processer, &ImageProcessor::processResult,
+            this, &GlobalStructData::onCamera1ImageReady, Qt::QueuedConnection);
+    }
 
-
-    QObject::connect(imageProcessingModule1.get(), &ImageProcessingModule::processResultModule,
-        this, &GlobalStructData::onCamera1ImageReady, Qt::DirectConnection);
-
-    QObject::connect(imageProcessingModule2.get(), &ImageProcessingModule::processResultModule,
-        this, &GlobalStructData::onCamera2ImageReady, Qt::DirectConnection);
-
-    QObject::connect(imageProcessingModule3.get(), &ImageProcessingModule::processResultModule,
-        this, &GlobalStructData::onCamera3ImageReady, Qt::DirectConnection);
-
-    QObject::connect(imageProcessingModule4.get(), &ImageProcessingModule::processResultModule,
-        this, &GlobalStructData::onCamera4ImageReady, Qt::DirectConnection);
 }
 
 void GlobalStructData::buildConfigManager(rw::oso::StorageType type)
@@ -421,29 +431,51 @@ GlobalStructData::GlobalStructData()
 
 void GlobalStructData::onCamera1ImageReady(bool isOk, float location)
 {
-    if (!isOk) {
-        productPriorityQueue1.insert(location, location);
+    auto& globalStruct = GlobalStructData::getInstance();
+
+    if (globalStruct.isOpenRemoveFunc) {
+        if (!isOk) {
+            globalStruct.statisticalInfo.wasteCount++;
+            productPriorityQueue1.push(location);
+        }
+
     }
 }
 
 void GlobalStructData::onCamera2ImageReady(bool isOk, float location)
 {
-    if (!isOk) {
-        productPriorityQueue2.insert(location, location);
+    auto& globalStruct = GlobalStructData::getInstance();
+    if (globalStruct.isOpenRemoveFunc) {
+        if (!isOk) {
+            globalStruct.statisticalInfo.wasteCount++;
+            productPriorityQueue2.push(location);
+        }
+        globalStruct.statisticalInfo.produceCount++;
     }
 }
 
 void GlobalStructData::onCamera3ImageReady(bool isOk, float location)
 {
-    if (!isOk) {
-        productPriorityQueue3.insert(location, location);
+    auto& globalStruct = GlobalStructData::getInstance();
+
+    if (globalStruct.isOpenRemoveFunc) {
+        if (!isOk) {
+            globalStruct.statisticalInfo.wasteCount++;
+            productPriorityQueue3.push(location);
+        }
+
     }
 }
 
 void GlobalStructData::onCamera4ImageReady(bool isOk, float location)
 {
-    if (!isOk) {
-        productPriorityQueue4.insert(location, location);
+    auto& globalStruct = GlobalStructData::getInstance();
+    if (globalStruct.isOpenRemoveFunc) {
+        if (!isOk) {
+            globalStruct.statisticalInfo.wasteCount++;
+            productPriorityQueue4.push(location);
+        }
+        globalStruct.statisticalInfo.produceCount++;
     }
 }
 
