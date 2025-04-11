@@ -599,6 +599,11 @@ void ButtonScanner::build_ioThread()
 
             if (state == true)
             {
+                globalStruct.isOpenRemoveFunc = false;
+                QMetaObject::invokeMethod(qApp, [this, state]
+                    {
+                        ui->rbtn_removeFunc->setChecked(false);
+                    });
                 // pidaimove->stop();
                 motionPtr->StopAllAxis();
                 motionPtr->SetIOOut(1, false);
@@ -613,6 +618,11 @@ void ButtonScanner::build_ioThread()
                 //启动程序
                 if (state == true)
                 {
+                    globalStruct.isOpenRemoveFunc = true;
+                    QMetaObject::invokeMethod(qApp, [this, state]
+                        {
+                            ui->rbtn_removeFunc->setChecked(true);
+                        });
                     //所有电机上电
                     QtConcurrent::run([this, &motionPtr]() {
                         QThread::msleep(500);
@@ -635,6 +645,11 @@ void ButtonScanner::build_ioThread()
                 state = motionPtr->GetIOIn(2);
                 if (state)
                 {
+                    globalStruct.isOpenRemoveFunc = false;
+                    QMetaObject::invokeMethod(qApp, [this, state]
+                        {
+                            ui->rbtn_removeFunc->setChecked(false);
+                        });
                     motionPtr->StopAllAxis();
                     motionPtr->SetIOOut(1, false);
                     motionPtr->SetIOOut(7, false);
