@@ -18,7 +18,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo , 
 
     _modelEnginePtr->ProcessMask(frame.image, resultImage, maskImage, vecRecogResult);
 
-    if (globalStruct.isOpenRemoveFunc) {
+    if (globalStruct.isOpenRemoveFunc&&(!globalStruct.isDebugMode)) {
         eliminationLogic(frame, resultImage, errorInfo, vecRecogResult);
     }
    
@@ -127,6 +127,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
     if (checkConfig->holesCountEnable)
     {
         ImagePainter::drawCirclesOnImage(resultImage, hole);
+        LOG()"孔径数量" << konJingIndexs.size()<<"&" << checkConfig->holesCountValue;
         if (konJingIndexs.size() != checkConfig->holesCountValue)
         {
             isBad = true;

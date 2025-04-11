@@ -904,6 +904,7 @@ void ButtonScanner::rbtn_debug_ckecked(bool checked)
     auto& GlobalStructData = GlobalStructData::getInstance();
     GlobalStructData.mainWindowConfig.isDebugMode = checked;
     GlobalStructData.saveConfig();
+    GlobalStructData.isDebugMode = checked;
 }
 
 void ButtonScanner::rbtn_takePicture_ckecked(bool checked)
