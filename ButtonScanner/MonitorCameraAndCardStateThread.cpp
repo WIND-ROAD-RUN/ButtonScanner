@@ -192,7 +192,7 @@ void MonitorCameraAndCardStateThread::check_cardState()
     }
     else
     {
-        emit updateCardLabelState(false);
+        emit updateCardLabelState(true);
     }
 
 }
