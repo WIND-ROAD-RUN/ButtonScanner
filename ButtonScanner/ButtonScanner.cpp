@@ -77,6 +77,8 @@ ButtonScanner::ButtonScanner(QWidget* parent)
 
     build_motion();
 
+    stop_all_axis();
+
     build_imageProcessorModule();
 
     build_camera();
@@ -99,6 +101,7 @@ ButtonScanner::~ButtonScanner()
     auto& globalStructThread = GlobalStructThread::getInstance();
     globalStructThread.destroyDetachThread();
     auto& globalStructData = GlobalStructData::getInstance();
+    stop_all_axis();
     globalStructData.destroyCamera();
     globalStructData.destroyImageProcessingModule();
     globalStructData.destroyImageSaveEngine();
@@ -166,6 +169,15 @@ void ButtonScanner::build_dlgExposureTimeSet()
     int x = this->x() + (this->width() - dlgExposureTimeSet->width()) / 2;
     int y = this->y() + (this->height() - dlgExposureTimeSet->height()) / 2;
     dlgExposureTimeSet->move(x, y);
+}
+
+void ButtonScanner::stop_all_axis()
+{
+    auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
+    motionPtr->StopAllAxis();
+    motionPtr->SetIOOut(1, false);
+
+    motionPtr->SetIOOut(7, false);
 }
 
 void ButtonScanner::build_connect()

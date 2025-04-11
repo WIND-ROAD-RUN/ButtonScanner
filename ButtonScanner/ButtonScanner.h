@@ -59,6 +59,8 @@ private:
     void build_dlgProductSet();
     void build_dlgExposureTimeSet();
 
+    void stop_all_axis();
+
     void build_connect();
 private:
     //read_cofig必须在最前面运行
