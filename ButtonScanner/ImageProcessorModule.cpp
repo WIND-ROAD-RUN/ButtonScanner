@@ -31,19 +31,19 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
     auto saveIamge = resultImage.clone();
     auto& globalStruct = GlobalStructData::getInstance();
 
-    auto  systemConfig = &globalStruct.dlgProduceLineSetConfig;
-    auto  checkConfig = &globalStruct.dlgProductSetConfig;
-    double pixEquivalent = systemConfig->pixelEquivalent1;
+    auto & systemConfig = globalStruct.dlgProduceLineSetConfig;
+    auto & checkConfig = globalStruct.dlgProductSetConfig;
+    double &pixEquivalent = systemConfig.pixelEquivalent1;
     switch (frame.index)
     {
     case 2:
-        pixEquivalent = systemConfig->pixelEquivalent2;
+        pixEquivalent = systemConfig.pixelEquivalent2;
         break;
     case 3:
-        pixEquivalent = systemConfig->pixelEquivalent3;
+        pixEquivalent = systemConfig.pixelEquivalent3;
         break;
     case 4:
-        pixEquivalent = systemConfig->pixelEquivalent4;
+        pixEquivalent = systemConfig.pixelEquivalent4;
         break;
     default:
         break;
@@ -54,31 +54,31 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
     cv::Mat resultMat;
     cv::Mat maskmat;
 
-    std::vector<int> waiJingIndexs = std::vector<int>();
-    std::vector<int> konJingIndexs = std::vector<int>();
-    std::vector<int> daPoBianIndexs = std::vector<int>();
-    std::vector<int> qiKonIndexs = std::vector<int>();
-    std::vector<int> duYanIndexs = std::vector<int>();
-    std::vector<int> moShiIndexs = std::vector<int>();
-    std::vector<int> liaoTouIndexs = std::vector<int>();
-    std::vector<int> youQiIndexs = std::vector<int>();
-    std::vector<int> lieHenIndexs = std::vector<int>();
-    std::vector<int> poYanIndexs = std::vector<int>();
+    //std::vector<int> waiJingIndexs = std::vector<int>();
+    size_t holesCount = 0;
+    //std::vector<int> daPoBianIndexs = std::vector<int>();
+    //std::vector<int> qiKonIndexs = std::vector<int>();
+    //std::vector<int> duYanIndexs = std::vector<int>();
+    //std::vector<int> moShiIndexs = std::vector<int>();
+    //std::vector<int> liaoTouIndexs = std::vector<int>();
+    //std::vector<int> youQiIndexs = std::vector<int>();
+    //std::vector<int> lieHenIndexs = std::vector<int>();
+    //std::vector<int> poYanIndexs = std::vector<int>();
 
     for (int i = 0; i < processRectanglesResult.size(); i++)
     {
         switch (processRectanglesResult[i].classId)
         {
-        case 0: waiJingIndexs.push_back(i); continue;
-        case 1: konJingIndexs.push_back(i); continue;
-        case 2: daPoBianIndexs.push_back(i); continue;
-        case 3: qiKonIndexs.push_back(i); continue;
-        case 4: duYanIndexs.push_back(i); continue;
-        case 5: moShiIndexs.push_back(i); continue;
-        case 6: liaoTouIndexs.push_back(i); continue;
-        case 7: youQiIndexs.push_back(i); continue;
-        case 8: lieHenIndexs.push_back(i); continue;
-        case 9: poYanIndexs.push_back(i); continue;
+        //case 0: waiJingIndexs.push_back(i); continue;
+        case 1: holesCount++; continue;
+        //case 2: daPoBianIndexs.push_back(i); continue;
+        //case 3: qiKonIndexs.push_back(i); continue;
+        //case 4: duYanIndexs.push_back(i); continue;
+        //case 5: moShiIndexs.push_back(i); continue;
+        //case 6: liaoTouIndexs.push_back(i); continue;
+        //case 7: youQiIndexs.push_back(i); continue;
+        //case 8: lieHenIndexs.push_back(i); continue;
+        //case 9: poYanIndexs.push_back(i); continue;
 
         default: continue;
         }
@@ -97,7 +97,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
         }
     }
 
-    if (checkConfig->outsideDiameterEnable)
+   /* if (checkConfig.outsideDiameterEnable)
     {
         ImagePainter::drawCirclesOnImage(resultImage, body);
         if (waiJingIndexs.size() == 0)
@@ -123,18 +123,18 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
                     errorInfo.emplace_back("外径 " + QString::number(zuoYouPianCha * pixEquivalent));
             }
         }
-    }
-    if (checkConfig->holesCountEnable)
+    }*/
+    if (checkConfig.holesCountEnable)
     {
         ImagePainter::drawCirclesOnImage(resultImage, hole);
-        LOG()"孔径数量" << konJingIndexs.size()<<"&" << checkConfig->holesCountValue;
-        if (konJingIndexs.size() != checkConfig->holesCountValue)
+        LOG()"孔径数量" << holesCount<<"&" << checkConfig.holesCountValue;
+        if (holesCount != checkConfig.holesCountValue)
         {
             isBad = true;
-            errorInfo.emplace_back("只找到" + QString::number(konJingIndexs.size()) + "个孔");
+            errorInfo.emplace_back("只找到" + QString::number(holesCount) + "个孔");
         }
     }
-    if (checkConfig->apertureEnable)
+    /*if (checkConfig.apertureEnable)
     {
         for (int i = 0; i < konJingIndexs.size(); i++)
         {
@@ -155,8 +155,8 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
                     errorInfo.emplace_back("孔径 " + QString::number(zuoYouPianCha * pixEquivalent));
             }
         }
-    }
-    if (checkConfig->holeCenterDistanceEnable)
+    }*/
+    /*if (checkConfig.holeCenterDistanceEnable)
     {
         for (int i = 0; i < konJingIndexs.size(); i++)
         {
@@ -173,8 +173,8 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
                 errorInfo.emplace_back("孔心距 " + QString::number(pianCha * pixEquivalent));
             }
         }
-    }
-    if (checkConfig->edgeDamageEnable)
+    }*/
+    /*if (checkConfig.edgeDamageEnable)
     {
         for (int i = 0; i < daPoBianIndexs.size(); i++)
         {
@@ -186,9 +186,9 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
                 errorInfo.emplace_back("破边 " + QString::number(score));
             }
         }
-    }
+    }*/
 
-    if (checkConfig->brokenEyeEnable)
+    /*if (checkConfig.brokenEyeEnable)
     {
         for (int i = 0; i < poYanIndexs.size(); i++)
         {
@@ -201,9 +201,9 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
                 errorInfo.emplace_back("破眼 " + QString::number(score));
             }
         }
-    }
+    }*/
 
-    if (checkConfig->crackEnable)
+    /* if (checkConfig.crackEnable)
     {
         for (int i = 0; i < lieHenIndexs.size(); i++)
         {
@@ -217,9 +217,9 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
                 errorInfo.emplace_back("裂痕 " + QString::number(score));
             }
         }
-    }
+    }*/
 
-    if (checkConfig->poreEnable)
+    /*if (checkConfig.poreEnable)
     {
         for (int i = 0; i < qiKonIndexs.size(); i++)
         {
@@ -230,9 +230,9 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
                 errorInfo.emplace_back("气孔 " + QString::number(score));
             }
         }
-    }
+    }*/
 
-    if (checkConfig->paintEnable)
+    /*if (checkConfig.paintEnable)
     {
         for (int i = 0; i < youQiIndexs.size(); i++)
         {
@@ -243,9 +243,9 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
                 errorInfo.emplace_back("油漆 " + QString::number(score));
             }
         }
-    }
+    }*/
 
-    if (checkConfig->grindStoneEnable)
+    /*if (checkConfig.grindStoneEnable)
     {
         for (int i = 0; i < moShiIndexs.size(); i++)
         {
@@ -256,9 +256,9 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
                 errorInfo.emplace_back("磨石 " + QString::number(score));
             }
         }
-    }
+    }*/
 
-    if (checkConfig->blockEyeEnable)
+    /*if (checkConfig.blockEyeEnable)
     {
         for (int i = 0; i < duYanIndexs.size(); i++)
         {
@@ -269,9 +269,9 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
                 errorInfo.emplace_back("堵眼 " + QString::number(score));
             }
         }
-    }
+    }*/
 
-    if (checkConfig->materialHeadEnable)
+    /*if (checkConfig.materialHeadEnable)
     {
         for (int i = 0; i < liaoTouIndexs.size(); i++)
         {
@@ -282,7 +282,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
                 errorInfo.emplace_back("料头 " + QString::number(score));
             }
         }
-    }
+    }*/
 
     emit processResult(!isBad, frame.location);
 
@@ -408,15 +408,15 @@ void ImageProcessor::run()
         // AI识别处理
         cv::Mat result = processAI(frame, errorInfo,vecRecogResult);
 
-        QImage image = cvMatToQImage(result);
+        // image = cvMatToQImage(result);
         // 绘制错误信息
-        ImagePainter::drawTextOnImage(image, errorInfo);
+        //ImagePainter::drawTextOnImage(image, errorInfo);
 
         // 绘制错误定位
-        drawErrorLocate(image, vecRecogResult);
+        //drawErrorLocate(image, vecRecogResult);
 
         // 显示到界面
-        emit imageReady(image);
+        //emit imageReady(image);
     }
 }
 
@@ -563,9 +563,8 @@ void ImagePainter::drawTextOnImage(QImage& image, const QVector<QString>& texts,
 
 void ImagePainter::drawCirclesOnImage(cv::Mat& image, const std::vector<rw::ime::ProcessRectanglesResult>& rectangles)
 {
-    int i = 0;
     for (const auto& rect : rectangles) {
-        if (i==2) {
+        if (rect.classId!=1) {
             return;
         }
         // 计算矩形中心点
@@ -585,6 +584,5 @@ void ImagePainter::drawCirclesOnImage(cv::Mat& image, const std::vector<rw::ime:
         // 在图像上绘制圆
         cv::circle(image, cv::Point(centerX, centerY), radius, color, 5); // 2 表示线宽
         
-        ++i;
     }
 }

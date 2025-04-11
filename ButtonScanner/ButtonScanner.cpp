@@ -702,7 +702,7 @@ void ButtonScanner::build_ioThread()
                 }
             }
 
-            QThread::msleep(20);
+            QThread::msleep(30);
         }
         });
 }
