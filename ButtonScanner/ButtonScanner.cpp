@@ -841,8 +841,9 @@ void ButtonScanner::pbtn_set_clicked()
     auto passwordDlg = new NumKeyBord(this, passwordValue, 2);
     passwordDlg->exec();
     auto password = passwordValue->text();
-    if (password=="32413135") {
+    if (password=="1234") {
         dlgProduceLineSet->exec();
+        ui->pbtn_beltSpeed->setText(QString::number(GlobalStructData::getInstance().dlgProduceLineSetConfig.motorSpeed));
     }
     else {
         QMessageBox::warning(this, "Error", "密码错误，请重新输入");
@@ -865,8 +866,10 @@ void ButtonScanner::pbtn_beltSpeed_clicked()
 
     auto& GlobalStructData = GlobalStructData::getInstance();
     GlobalStructData.mainWindowConfig.beltSpeed = ui->pbtn_beltSpeed->text().toDouble();
+    GlobalStructData.dlgProduceLineSetConfig.motorSpeed = ui->pbtn_beltSpeed->text().toDouble();
 
     delete numKeyBoard;
+    dlgProduceLineSet->updateBeltSpeed();
 }
 
 void ButtonScanner::pbtn_score_clicked()

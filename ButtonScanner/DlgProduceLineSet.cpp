@@ -150,6 +150,11 @@ float DlgProduceLineSet::get_blowTime()
     return blowTime;
 }
 
+void DlgProduceLineSet::updateBeltSpeed()
+{
+    ui->pbtn_motorSpeed->setText(QString::number(GlobalStructData::getInstance().dlgProduceLineSetConfig.motorSpeed));
+}
+
 void DlgProduceLineSet::pbtn_blowDistance1_clicked()
 {
     auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowDistance1, 2);

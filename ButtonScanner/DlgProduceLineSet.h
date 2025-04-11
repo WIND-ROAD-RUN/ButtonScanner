@@ -22,6 +22,8 @@ private:
     void build_connect();
 
     float get_blowTime();
+public:
+    void updateBeltSpeed();
 
 private:
     Ui::DlgProduceLineSetClass* ui;
