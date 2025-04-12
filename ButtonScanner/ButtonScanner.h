@@ -100,13 +100,13 @@ private:
     QImage cvMatToQImage(const cv::Mat& mat);
 
 private slots:
-    void onCamera1Display(QImage image);
+    void onCamera1Display(QPixmap pixmap);
 
-    void onCamera2Display(QImage image);
+    void onCamera2Display(QPixmap pixmap);
 
-    void onCamera3Display(QImage image);
+    void onCamera3Display(QPixmap pixmap);
 
-    void onCamera4Display(QImage image);
+    void onCamera4Display(QPixmap pixmap);
 private slots:
     void updateStatisticalInfoUI();
 

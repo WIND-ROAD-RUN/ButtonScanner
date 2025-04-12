@@ -841,27 +841,23 @@ QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
     }
 }
 
-void ButtonScanner::onCamera1Display(QImage image)
+void ButtonScanner::onCamera1Display(QPixmap pixmap)
 {
-    QPixmap pixmap = QPixmap::fromImage(image);
     ui->label_imgDisplay->setPixmap(pixmap.scaled(ui->label_imgDisplay->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
-void ButtonScanner::onCamera2Display(QImage image)
+void ButtonScanner::onCamera2Display(QPixmap pixmap)
 {
-    QPixmap pixmap = QPixmap::fromImage(image);
     ui->label_imgDisplay_2->setPixmap(pixmap.scaled(ui->label_imgDisplay_2->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
-void ButtonScanner::onCamera3Display(QImage image)
+void ButtonScanner::onCamera3Display(QPixmap pixmap)
 {
-    QPixmap pixmap = QPixmap::fromImage(image);
     ui->label_imgDisplay_3->setPixmap(pixmap.scaled(ui->label_imgDisplay_3->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
-void ButtonScanner::onCamera4Display(QImage image)
+void ButtonScanner::onCamera4Display(QPixmap pixmap)
 {
-    QPixmap pixmap = QPixmap::fromImage(image);
     ui->label_imgDisplay_4->setPixmap(pixmap.scaled(ui->label_imgDisplay_4->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
