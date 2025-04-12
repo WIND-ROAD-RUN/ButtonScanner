@@ -55,7 +55,7 @@ protected:
     void run() override;
 
 signals:
-    void imageReady(QImage image);
+    void imageReady(QPixmap image);
 
 private:
     std::unique_ptr<rw::ime::ModelEngine> _modelEnginePtr;
@@ -94,7 +94,7 @@ public slots:
     void onFrameCaptured(cv::Mat frame, float location, size_t index);
 
 signals:
-    void imageReady(QImage image);
+    void imageReady(QPixmap image);
 public:
     std::vector<ImageProcessor*> getProcessors() const {
         return _processors;

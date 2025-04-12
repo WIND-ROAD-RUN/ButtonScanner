@@ -10,9 +10,7 @@
 #include"DlgProduceLineSet.h"
 #include"GlobalStruct.h"
 #include"NumKeyBord.h"
-#include"CameraDisplayRender.h"
 
-#include "CameraDisplayRender.h" // 添加此行以包含 OpenGLImageRenderer 的定义
 #include<qdebug>
 #include<QtConcurrent>
 #include <future>
@@ -71,23 +69,7 @@ ButtonScanner::ButtonScanner(QWidget* parent)
     , ui(new Ui::ButtonScannerClass())
 {
     ui->setupUi(this);
-    cameraDisplay1 = new CameraDisplayRender(this);
-    ui->gBoix_ImageDisplay->layout()->replaceWidget(ui->label_imgDisplay, cameraDisplay1);
-    delete ui->label_imgDisplay; // 删除旧的 QLabel
-
-    cameraDisplay2 = new CameraDisplayRender(this);
-    ui->gBoix_ImageDisplay->layout()->replaceWidget(ui->label_imgDisplay_2, cameraDisplay2);
-    delete ui->label_imgDisplay_2; // 删除旧的 QLabel
-
-    cameraDisplay3 = new CameraDisplayRender(this);
-    ui->gBoix_ImageDisplay->layout()->replaceWidget(ui->label_imgDisplay_3, cameraDisplay3);
-    delete ui->label_imgDisplay_3; // 删除旧的 QLabel
-
-    cameraDisplay4 = new CameraDisplayRender(this);
-    ui->gBoix_ImageDisplay->layout()->replaceWidget(ui->label_imgDisplay_4, cameraDisplay4);
-    delete ui->label_imgDisplay_4; // 删除旧的 QLabel
-
-
+   
     initializeComponents();
 }
 
@@ -859,24 +841,24 @@ QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
     }
 }
 
-void ButtonScanner::onCamera1Display(QImage image)
+void ButtonScanner::onCamera1Display(QPixmap image)
 {
-    cameraDisplay1->setImage(image);
+    ui->label_imgDisplay->setPixmap(image);
 }
 
-void ButtonScanner::onCamera2Display(QImage image)
+void ButtonScanner::onCamera2Display(QPixmap image)
 {
-    cameraDisplay2->setImage(image);
+    ui->label_imgDisplay_2->setPixmap(image);
 }
 
-void ButtonScanner::onCamera3Display(QImage image)
+void ButtonScanner::onCamera3Display(QPixmap image)
 {
-    cameraDisplay3->setImage(image);
+    ui->label_imgDisplay_3->setPixmap(image);
 }
 
-void ButtonScanner::onCamera4Display(QImage image)
+void ButtonScanner::onCamera4Display(QPixmap image)
 {
-    cameraDisplay4->setImage(image);
+    ui->label_imgDisplay_4->setPixmap(image);
 }
 
 void ButtonScanner::updateCameraLabelState(int cameraIndex, bool state)

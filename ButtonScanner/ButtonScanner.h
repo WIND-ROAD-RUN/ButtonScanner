@@ -7,8 +7,6 @@
 #include"DlgProductSet.h"
 #include"DlgExposureTimeSet.h"
 
-#include"CameraDisplayRender.h"
-
 #include"opencv2/opencv.hpp"
 
 #include<QImage>
@@ -46,11 +44,6 @@ private:
 protected:
     void mousePressEvent(QMouseEvent* event)override;
     void resizeEvent(QResizeEvent* event) override;
-private:
-    CameraDisplayRender* cameraDisplay1 = nullptr;
-    CameraDisplayRender* cameraDisplay2 = nullptr;
-    CameraDisplayRender* cameraDisplay3 = nullptr;
-    CameraDisplayRender* cameraDisplay4 = nullptr;
 public:
     ButtonScanner(QWidget* parent = nullptr);
 
@@ -107,13 +100,13 @@ private:
     QImage cvMatToQImage(const cv::Mat& mat);
 
 private slots:
-    void onCamera1Display(QImage image);
+    void onCamera1Display(QPixmap image);
 
-    void onCamera2Display(QImage image);
+    void onCamera2Display(QPixmap image);
 
-    void onCamera3Display(QImage image);
+    void onCamera3Display(QPixmap image);
 
-    void onCamera4Display(QImage image);
+    void onCamera4Display(QPixmap image);
 private slots:
     void updateStatisticalInfoUI();
 

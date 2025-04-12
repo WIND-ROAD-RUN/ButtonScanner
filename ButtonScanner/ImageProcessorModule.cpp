@@ -477,8 +477,9 @@ void ImageProcessor::run()
         // 绘制错误定位
         drawErrorLocate(image, vecRecogResult);
 
+        QPixmap pixmap = QPixmap::fromImage(image);
         // 显示到界面
-        emit imageReady(image);
+        emit imageReady(pixmap);
     }
 }
 
