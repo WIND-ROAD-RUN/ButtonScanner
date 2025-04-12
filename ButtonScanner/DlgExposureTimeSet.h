@@ -12,7 +12,7 @@ class DlgExposureTimeSet : public QDialog
     Q_OBJECT
 
 public:
-    DlgExposureTimeSet(QWidget *parent = nullptr);
+    DlgExposureTimeSet(QWidget* parent = nullptr);
     ~DlgExposureTimeSet();
 
 private:
@@ -22,7 +22,7 @@ public:
     void SetCamera();
     void ResetCamera();
 private:
-    Ui::DlgExposureTimeSetClass *ui;
+    Ui::DlgExposureTimeSetClass* ui;
 private slots:
     void pbtn_exposureTimeValue_clicked();
 };

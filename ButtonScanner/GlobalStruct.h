@@ -51,9 +51,7 @@ public:
 private:
     GlobalStructThread();
     ~GlobalStructThread() = default;
-
 };
-
 
 class GlobalStructData
     :public QObject
@@ -69,7 +67,7 @@ public:
     } statisticalInfo;
 public:
     std::atomic_bool isTakePictures{ false };
-    std::atomic_bool isOpenRemoveFunc{false};
+    std::atomic_bool isOpenRemoveFunc{ false };
     std::atomic_bool isDebugMode{ false };
 public:
     void buildConfigManager(rw::oso::StorageType type);
@@ -113,7 +111,6 @@ public:
     void buildCamera3();
     void buildCamera4();
 
-
     void startMonitor();
     void destroyCamera();
     void destroyCamera1();
@@ -136,7 +133,7 @@ public:
     std::unique_ptr<ImageProcessingModule> imageProcessingModule2{ nullptr };
     std::unique_ptr<ImageProcessingModule> imageProcessingModule3{ nullptr };
     std::unique_ptr<ImageProcessingModule> imageProcessingModule4{ nullptr };
-public: 
+public:
     void buildImageSaveEngine();
     void destroyImageSaveEngine();
     std::unique_ptr<rw::rqw::ImageSaveEngine> imageSaveEngine{ nullptr };

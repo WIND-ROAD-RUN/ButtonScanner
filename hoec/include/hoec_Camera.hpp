@@ -225,13 +225,12 @@ namespace rw
              */
             void setCameraInfo(const CameraInfo& cameraInfo);
         public:
-            virtual void setHeartbeatTime(size_t heartBeatTime)=0;
+            virtual void setHeartbeatTime(size_t heartBeatTime) = 0;
 
             virtual float getHeartbeatTime() = 0;
 
-            virtual void setFrameRate(float cameraFrameRate)=0;
+            virtual void setFrameRate(float cameraFrameRate) = 0;
             virtual float getFrameRate() = 0;
-
 
             /**
              *@Parameters:
@@ -504,7 +503,7 @@ namespace rw
         public:
             bool getConnectState()override;
             void setFrameRate(float cameraFrameRate) override;
-        public: 
+        public:
             void setHeartbeatTime(size_t heartBeatTime)override;
             float getHeartbeatTime() override;
             float getFrameRate() override;

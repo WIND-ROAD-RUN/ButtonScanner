@@ -37,5 +37,5 @@ private:
     QProgressBar* progressBar;
 
 private:
-    Ui::LoadingDialogClass *ui;
+    Ui::LoadingDialogClass* ui;
 };

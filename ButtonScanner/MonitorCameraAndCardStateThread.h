@@ -11,7 +11,6 @@ private:
 public:
     explicit MonitorCameraAndCardStateThread(QObject* parent = nullptr);
 
-
     ~MonitorCameraAndCardStateThread() override;
 
     void startThread();

@@ -39,6 +39,12 @@
     <Filter Include="Source Files\DetachThread">
       <UniqueIdentifier>{d08aaaa7-ddc0-459b-832b-e381f4ea514e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\opengl">
+      <UniqueIdentifier>{ab79543f-d9b5-452b-a071-32cd5ff73095}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\opengl">
+      <UniqueIdentifier>{1962bc24-3cee-4195-acb0-3173e1a6e1ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="ButtonScanner.qrc">
@@ -88,6 +94,9 @@
     <ClCompile Include="LoadingDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CameraDisplayRender.cpp">
+      <Filter>Source Files\opengl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="GlobalStruct.h">
@@ -119,6 +128,9 @@
     </QtMoc>
     <QtMoc Include="LoadingDialog.h">
       <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="CameraDisplayRender.h">
+      <Filter>Header Files\opengl</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

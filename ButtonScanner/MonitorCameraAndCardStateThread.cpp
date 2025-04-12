@@ -16,20 +16,20 @@ MonitorCameraAndCardStateThread::MonitorCameraAndCardStateThread(QObject* parent
 MonitorCameraAndCardStateThread::~MonitorCameraAndCardStateThread()
 {
     stopThread();
-    wait(); 
+    wait();
 }
 
 void MonitorCameraAndCardStateThread::startThread()
 {
     running = true;
     if (!isRunning()) {
-        start(); 
+        start();
     }
 }
 
 void MonitorCameraAndCardStateThread::stopThread()
 {
-    running = false; 
+    running = false;
 }
 
 void MonitorCameraAndCardStateThread::run()
@@ -59,7 +59,7 @@ void MonitorCameraAndCardStateThread::check_cameraState1()
 
     auto& globalStruct = GlobalStructData::getInstance();
 
-    if (runtimeCounts !=0) {
+    if (runtimeCounts != 0) {
         return;
     }
     if (globalStruct.camera1) {
@@ -88,7 +88,7 @@ void MonitorCameraAndCardStateThread::check_cameraState2()
 
     auto& globalStruct = GlobalStructData::getInstance();
 
-    if (runtimeCounts !=1) {
+    if (runtimeCounts != 1) {
         return;
     }
 
@@ -110,7 +110,6 @@ void MonitorCameraAndCardStateThread::check_cameraState2()
         emit updateCameraLabelState(2, false);
         isUpdateSate = false;
     }
-
 }
 
 void MonitorCameraAndCardStateThread::check_cameraState3()
@@ -119,7 +118,7 @@ void MonitorCameraAndCardStateThread::check_cameraState3()
 
     auto& globalStruct = GlobalStructData::getInstance();
 
-    if (runtimeCounts!=2) {
+    if (runtimeCounts != 2) {
         return;
     }
 
@@ -146,7 +145,6 @@ void MonitorCameraAndCardStateThread::check_cameraState3()
 void MonitorCameraAndCardStateThread::check_cameraState4()
 {
     static bool isUpdateSate = false;
-
 
     if (runtimeCounts != 3) {
         return;
@@ -194,5 +192,4 @@ void MonitorCameraAndCardStateThread::check_cardState()
     {
         emit updateCardLabelState(true);
     }
-
 }

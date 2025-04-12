@@ -10,7 +10,9 @@
 #include"DlgProduceLineSet.h"
 #include"GlobalStruct.h"
 #include"NumKeyBord.h"
+#include"CameraDisplayRender.h"
 
+#include "CameraDisplayRender.h" // 添加此行以包含 OpenGLImageRenderer 的定义
 #include<qdebug>
 #include<QtConcurrent>
 #include <future>
@@ -33,7 +35,6 @@ void ButtonScanner::updateExposureTimeTrigger()
 
     // 更新 targetArea
     exposureTimeTriggerArea = QRect(targetX, targetY, targetWidth, targetHeight);
-
 }
 
 void ButtonScanner::onExposureTimeTriggerAreaClicked()
@@ -70,6 +71,22 @@ ButtonScanner::ButtonScanner(QWidget* parent)
     , ui(new Ui::ButtonScannerClass())
 {
     ui->setupUi(this);
+    cameraDisplay1 = new CameraDisplayRender(this);
+    ui->gBoix_ImageDisplay->layout()->replaceWidget(ui->label_imgDisplay, cameraDisplay1);
+    delete ui->label_imgDisplay; // 删除旧的 QLabel
+
+    cameraDisplay2 = new CameraDisplayRender(this);
+    ui->gBoix_ImageDisplay->layout()->replaceWidget(ui->label_imgDisplay_2, cameraDisplay2);
+    delete ui->label_imgDisplay_2; // 删除旧的 QLabel
+
+    cameraDisplay3 = new CameraDisplayRender(this);
+    ui->gBoix_ImageDisplay->layout()->replaceWidget(ui->label_imgDisplay_3, cameraDisplay3);
+    delete ui->label_imgDisplay_3; // 删除旧的 QLabel
+
+    cameraDisplay4 = new CameraDisplayRender(this);
+    ui->gBoix_ImageDisplay->layout()->replaceWidget(ui->label_imgDisplay_4, cameraDisplay4);
+    delete ui->label_imgDisplay_4; // 删除旧的 QLabel
+
     initializeComponents();
 }
 
@@ -78,8 +95,6 @@ ButtonScanner::~ButtonScanner()
     destoryComponects();
 
     delete ui;
-
-
 }
 
 void ButtonScanner::set_radioButton()
@@ -129,7 +144,7 @@ void ButtonScanner::initializeComponents()
     loadingDialog.updateMessage("正在停止所有轴...");
     QCoreApplication::processEvents();
     //stop_all_axis();
-   
+
     // 构建图像处理模块
     loadingDialog.updateMessage("正在构建图像处理模块...");
     QCoreApplication::processEvents();
@@ -285,43 +300,43 @@ void ButtonScanner::stop_all_axis()
 
 void ButtonScanner::build_connect()
 {
-    QObject::connect(ui->pbtn_exit, &QPushButton::clicked, 
+    QObject::connect(ui->pbtn_exit, &QPushButton::clicked,
         this, &ButtonScanner::pbtn_exit_clicked);
 
-    QObject::connect(ui->pbtn_set, &QPushButton::clicked, 
+    QObject::connect(ui->pbtn_set, &QPushButton::clicked,
         this, &ButtonScanner::pbtn_set_clicked);
 
     QObject::connect(ui->pbtn_newProduction, &QPushButton::clicked,
         this, &ButtonScanner::pbtn_newProduction_clicked);
 
-    QObject::connect(ui->pbtn_beltSpeed, &QPushButton::clicked, 
+    QObject::connect(ui->pbtn_beltSpeed, &QPushButton::clicked,
         this, &ButtonScanner::pbtn_beltSpeed_clicked);
 
-    QObject::connect(ui->pbtn_score,&QPushButton::clicked,
-        this,&ButtonScanner::pbtn_score_clicked);
+    QObject::connect(ui->pbtn_score, &QPushButton::clicked,
+        this, &ButtonScanner::pbtn_score_clicked);
 
-    QObject::connect(ui->rbtn_debug, &QPushButton::clicked, 
+    QObject::connect(ui->rbtn_debug, &QPushButton::clicked,
         this, &ButtonScanner::rbtn_debug_ckecked);
 
-    QObject::connect(ui->rbtn_takePicture, &QPushButton::clicked, 
+    QObject::connect(ui->rbtn_takePicture, &QPushButton::clicked,
         this, &ButtonScanner::rbtn_takePicture_ckecked);
 
     QObject::connect(ui->rbtn_removeFunc, &QPushButton::clicked,
         this, &ButtonScanner::rbtn_removeFunc_ckecked);
 
-    QObject::connect(ui->rbtn_upLight, &QPushButton::clicked, 
+    QObject::connect(ui->rbtn_upLight, &QPushButton::clicked,
         this, &ButtonScanner::rbtn_upLight_ckecked);
 
     QObject::connect(ui->rbtn_sideLight, &QPushButton::clicked,
         this, &ButtonScanner::rbtn_sideLight_ckecked);
 
-    QObject::connect(ui->rbtn_downLight, &QPushButton::clicked, 
+    QObject::connect(ui->rbtn_downLight, &QPushButton::clicked,
         this, &ButtonScanner::rbtn_downLight_ckecked);
 
-    QObject::connect(ui->rbtn_defect, &QPushButton::clicked, 
+    QObject::connect(ui->rbtn_defect, &QPushButton::clicked,
         this, &ButtonScanner::rbtn_defect_ckecked);
 
-    QObject::connect(ui->rbtn_ForAndAgainst, &QPushButton::clicked, 
+    QObject::connect(ui->rbtn_ForAndAgainst, &QPushButton::clicked,
         this, &ButtonScanner::rbtn_ForAndAgainst_ckecked);
 
     QObject::connect(ui->pbtn_resetProduct, &QPushButton::clicked,
@@ -473,7 +488,6 @@ void ButtonScanner::build_imageSaveEngine()
     QString imageSavePath = R"(SavedImages/)";
     //清理旧的数据
 
-
     //获取当前日期并设置保存路径
     QString currentDate = QDate::currentDate().toString("yyyy_MM_dd");
     auto& globalStruct = GlobalStructData::getInstance();
@@ -483,7 +497,6 @@ void ButtonScanner::build_imageSaveEngine()
     QString imagesFilePathFilePathFull = dir.absoluteFilePath(imageSaveEnginePath);
     globalStruct.imageSaveEngine->setRootPath(imagesFilePathFilePathFull);
     globalStruct.imageSaveEngine->startEngine();
-
 }
 
 void ButtonScanner::clear_olderSavedImage()
@@ -536,7 +549,6 @@ void ButtonScanner::clear_olderSavedImage()
             QDir(folderPath).removeRecursively();
         }
     }
-
 }
 
 void ButtonScanner::build_camera()
@@ -616,9 +628,9 @@ void ButtonScanner::build_motion()
 
         globalStruct.isOpenRemoveFunc = true;
         QMetaObject::invokeMethod(qApp, [this, state]
-        {
-            ui->rbtn_removeFunc->setChecked(true);
-        });
+            {
+                ui->rbtn_removeFunc->setChecked(true);
+            });
     }
 }
 
@@ -641,13 +653,12 @@ void ButtonScanner::build_locationThread()
             {
                 auto& work1 = GlobalStructData::getInstance().productPriorityQueue1;
 
-
                 double tifeishijian1 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowTime1;
                 double tifeijuli1 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowDistance1;
 
                 float olderlacation1 = 0;
                 bool isGet = work1.tryGetMin(olderlacation1);
-              
+
                 if (isGet != false && (abs(lacation1 - olderlacation1) >= -tifeijuli1))
                 {
                     work1.tryPopMin(olderlacation1);
@@ -655,7 +666,6 @@ void ButtonScanner::build_locationThread()
                     //吹气
                     zwy::scc::GlobalMotion::getInstance().motionPtr.get()->SetIOOut(5, 5, true, tifeishijian1);
                 }
-               
             }
             {
                 auto& work2 = GlobalStructData::getInstance().productPriorityQueue2;
@@ -732,11 +742,11 @@ void ButtonScanner::build_ioThread()
                     {
                         ui->rbtn_removeFunc->setChecked(false);
                     });
-                // pidaimove->stop();
-                motionPtr->StopAllAxis();
-                motionPtr->SetIOOut(1, false);
+                    // pidaimove->stop();
+                    motionPtr->StopAllAxis();
+                    motionPtr->SetIOOut(1, false);
 
-                motionPtr->SetIOOut(7, false);
+                    motionPtr->SetIOOut(7, false);
             }
             else
             {
@@ -751,23 +761,23 @@ void ButtonScanner::build_ioThread()
                         {
                             ui->rbtn_removeFunc->setChecked(true);
                         });
-                    //所有电机上电
-                    QtConcurrent::run([this, &motionPtr]() {
-                        QThread::msleep(500);
-                        motionPtr->SetIOOut(1, true);
-                        //启动电机
-                        motionPtr->SetAxisType(0, 1);
-                        double unit = GlobalStructData::getInstance().dlgProduceLineSetConfig.pulseFactor;
-                        motionPtr->SetAxisPulse(0, unit);
-                        double acc = GlobalStructData::getInstance().dlgProduceLineSetConfig.accelerationAndDeceleration;
-                        motionPtr->SetAxisAcc(0, acc);
-                        motionPtr->SetAxisDec(0, acc);
-                        double speed = GlobalStructData::getInstance().dlgProduceLineSetConfig.motorSpeed;
-                        motionPtr->SetAxisRunSpeed(0, speed);
-                        // pidaimove->start(100);
-                        motionPtr->AxisRun(0, -1);
-                        motionPtr->SetIOOut(7, true);
-                        });
+                        //所有电机上电
+                        QtConcurrent::run([this, &motionPtr]() {
+                            QThread::msleep(500);
+                            motionPtr->SetIOOut(1, true);
+                            //启动电机
+                            motionPtr->SetAxisType(0, 1);
+                            double unit = GlobalStructData::getInstance().dlgProduceLineSetConfig.pulseFactor;
+                            motionPtr->SetAxisPulse(0, unit);
+                            double acc = GlobalStructData::getInstance().dlgProduceLineSetConfig.accelerationAndDeceleration;
+                            motionPtr->SetAxisAcc(0, acc);
+                            motionPtr->SetAxisDec(0, acc);
+                            double speed = GlobalStructData::getInstance().dlgProduceLineSetConfig.motorSpeed;
+                            motionPtr->SetAxisRunSpeed(0, speed);
+                            // pidaimove->start(100);
+                            motionPtr->AxisRun(0, -1);
+                            motionPtr->SetIOOut(7, true);
+                            });
                 }
                 //停止点
                 state = motionPtr->GetIOIn(2);
@@ -778,9 +788,9 @@ void ButtonScanner::build_ioThread()
                         {
                             ui->rbtn_removeFunc->setChecked(false);
                         });
-                    motionPtr->StopAllAxis();
-                    motionPtr->SetIOOut(1, false);
-                    motionPtr->SetIOOut(7, false);
+                        motionPtr->StopAllAxis();
+                        motionPtr->SetIOOut(1, false);
+                        motionPtr->SetIOOut(7, false);
                 }
 
                 //获取气压表数据
@@ -848,24 +858,24 @@ QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
     }
 }
 
-void ButtonScanner::onCamera1Display(QPixmap pixmap)
+void ButtonScanner::onCamera1Display(QImage image)
 {
-    ui->label_imgDisplay->setPixmap(pixmap.scaled(ui->label_imgDisplay->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    cameraDisplay1->setImage(image);
 }
 
-void ButtonScanner::onCamera2Display(QPixmap pixmap)
+void ButtonScanner::onCamera2Display(QImage image)
 {
-    ui->label_imgDisplay_2->setPixmap(pixmap.scaled(ui->label_imgDisplay_2->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    cameraDisplay2->setImage(image);
 }
 
-void ButtonScanner::onCamera3Display(QPixmap pixmap)
+void ButtonScanner::onCamera3Display(QImage image)
 {
-    ui->label_imgDisplay_3->setPixmap(pixmap.scaled(ui->label_imgDisplay_3->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    cameraDisplay3->setImage(image);
 }
 
-void ButtonScanner::onCamera4Display(QPixmap pixmap)
+void ButtonScanner::onCamera4Display(QImage image)
 {
-    ui->label_imgDisplay_4->setPixmap(pixmap.scaled(ui->label_imgDisplay_4->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    cameraDisplay4->setImage(image);
 }
 
 void ButtonScanner::updateCameraLabelState(int cameraIndex, bool state)
@@ -953,7 +963,7 @@ void ButtonScanner::pbtn_set_clicked()
     auto passwordDlg = new NumKeyBord(this, passwordValue, 2);
     passwordDlg->exec();
     auto password = passwordValue->text();
-    if (password=="1234") {
+    if (password == "1234") {
         dlgProduceLineSet->exec();
         ui->pbtn_beltSpeed->setText(QString::number(GlobalStructData::getInstance().dlgProduceLineSetConfig.motorSpeed));
     }
@@ -963,12 +973,10 @@ void ButtonScanner::pbtn_set_clicked()
 
     delete passwordValue;
     delete passwordDlg;
-
 }
 
 void ButtonScanner::pbtn_newProduction_clicked()
 {
-
 }
 
 void ButtonScanner::pbtn_beltSpeed_clicked()
@@ -1024,7 +1032,6 @@ void ButtonScanner::rbtn_debug_ckecked(bool checked)
             GlobalStructData.isDebugMode = checked;
             dlgExposureTimeSet->ResetCamera(); // 重置相机为硬件触发
         }
-       
     }
     else {
         ui->rbtn_debug->setChecked(false);

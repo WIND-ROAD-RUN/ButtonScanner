@@ -27,14 +27,11 @@ namespace rw
                     if (_cameraObject) {
                         delete _cameraObject;
                     }
-                   
                 }
                 catch (const std::exception&)
                 {
-
                 }
             }
-
         }
 
         void CameraPassiveThread::initCamera(const rw::rqw::CameraMetaData& cameraMetaData,

@@ -50,7 +50,5 @@ namespace rw {
             int threadCount;              // 消费者线程数量
             std::vector<QThread*> workerThreads;
         };
-    
     }
-
 }

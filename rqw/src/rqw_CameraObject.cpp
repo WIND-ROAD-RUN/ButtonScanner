@@ -135,7 +135,6 @@ namespace rw
                     cameraObject.motionPtr->GetModbus(motionInde, 1, location);
 
                     emit frameCaptured(std::move(mat), location);
-    
                 });
 
             _cameraPassive->RegisterCallBackFunc();

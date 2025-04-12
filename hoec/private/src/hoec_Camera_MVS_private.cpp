@@ -33,7 +33,6 @@ namespace rw {
             }
             catch (const std::exception&)
             {
-
             }
             //关闭相机
             if (m_cameraHandle) {
@@ -188,7 +187,7 @@ namespace rw {
 
         void Camera_MVS::setFrameRate(float cameraFrameRate)
         {
-            auto result = MV_CC_SetFrameRate(m_cameraHandle,cameraFrameRate);
+            auto result = MV_CC_SetFrameRate(m_cameraHandle, cameraFrameRate);
             if (result == MV_OK) {
                 return;
             }
@@ -198,11 +197,10 @@ namespace rw {
         float Camera_MVS::getFrameRate()
         {
             MVCC_FLOATVALUE frameRate;
-            auto result = MV_CC_GetFrameRate(m_cameraHandle,&frameRate);
+            auto result = MV_CC_GetFrameRate(m_cameraHandle, &frameRate);
             if (result == MV_OK) {
                 return frameRate.fCurValue;
             }
-
         }
 
         void Camera_MVS::startMonitor()
@@ -244,7 +242,7 @@ namespace rw {
         float Camera_MVS::getHeartbeatTime()
         {
             MVCC_INTVALUE heartbeatTime;
-            auto result= MV_CC_GetHeartBeatTimeout(m_cameraHandle, &heartbeatTime);
+            auto result = MV_CC_GetHeartBeatTimeout(m_cameraHandle, &heartbeatTime);
             if (result == MV_OK) {
                 return heartbeatTime.nCurValue;
             }
@@ -440,9 +438,7 @@ namespace rw {
             }
             catch (const std::exception&)
             {
-
             }
-            
         }
 
         void Camera_MVS_Passive::RegisterCallBackFunc()

@@ -102,6 +102,5 @@ namespace rw {
                 std::cerr << "Failed to save image: " << fileName.toStdString() << std::endl;
             }
         }
-
     }
 }

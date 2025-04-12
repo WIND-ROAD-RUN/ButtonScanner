@@ -55,7 +55,7 @@ protected:
     void run() override;
 
 signals:
-    void imageReady(QPixmap pixmap);
+    void imageReady(QImage image);
 
 private:
     std::unique_ptr<rw::ime::ModelEngine> _modelEnginePtr;
@@ -68,7 +68,7 @@ private:
 
     QImage cvMatToQImage(const cv::Mat& mat);
 
-    void drawErrorLocate(QImage & image,std::vector<rw::ime::ProcessRectanglesResult>& vecRecogResult);
+    void drawErrorLocate(QImage& image, std::vector<rw::ime::ProcessRectanglesResult>& vecRecogResult);
 
     QQueue<MatInfo>& _queue;
     QMutex& _mutex;
@@ -94,7 +94,7 @@ public slots:
     void onFrameCaptured(cv::Mat frame, float location, size_t index);
 
 signals:
-    void imageReady(QPixmap pixmap);
+    void imageReady(QImage image);
 public:
     std::vector<ImageProcessor*> getProcessors() const {
         return _processors;

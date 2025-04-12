@@ -6,7 +6,6 @@ namespace rw {
     }
 }
 
-
 namespace rw
 {
     namespace cdm {
@@ -25,7 +24,7 @@ namespace rw
             bool operator!=(const ButtonScannerDlgExposureTimeSet& account) const;
 
         public:
-            size_t expousureTime{1000};
+            size_t expousureTime{ 1000 };
         };
     }
 }

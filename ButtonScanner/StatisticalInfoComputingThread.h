@@ -4,12 +4,11 @@
 #include <QDebug>
 #include <atomic>
 
-class StatisticalInfoComputingThread: public QThread
+class StatisticalInfoComputingThread : public QThread
 {
     Q_OBJECT
 public:
     explicit StatisticalInfoComputingThread(QObject* parent = nullptr);
-       
 
     ~StatisticalInfoComputingThread() override;
 

@@ -50,6 +50,5 @@ namespace rw {
         {
             return !(*this == account);
         }
-
     }
 }

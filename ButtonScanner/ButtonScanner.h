@@ -7,6 +7,8 @@
 #include"DlgProductSet.h"
 #include"DlgExposureTimeSet.h"
 
+#include"CameraDisplayRender.h"
+
 #include"opencv2/opencv.hpp"
 
 #include<QImage>
@@ -36,14 +38,19 @@ private:
     bool mark_Thread = false;
 public:
     QRect exposureTimeTriggerArea; // 指定区域
-    float exposureTimeTriggerWidthRatio = 0.3f;  
-    float exposureTimeTriggerRatio = 0.3f; 
+    float exposureTimeTriggerWidthRatio = 0.3f;
+    float exposureTimeTriggerRatio = 0.3f;
 private:
     void updateExposureTimeTrigger();
     void onExposureTimeTriggerAreaClicked();
 protected:
     void mousePressEvent(QMouseEvent* event)override;
     void resizeEvent(QResizeEvent* event) override;
+private:
+    CameraDisplayRender* cameraDisplay1 = nullptr;
+    CameraDisplayRender* cameraDisplay2 = nullptr;
+    CameraDisplayRender* cameraDisplay3 = nullptr;
+    CameraDisplayRender* cameraDisplay4 = nullptr;
 public:
     ButtonScanner(QWidget* parent = nullptr);
 
@@ -100,18 +107,18 @@ private:
     QImage cvMatToQImage(const cv::Mat& mat);
 
 private slots:
-    void onCamera1Display(QPixmap pixmap);
+    void onCamera1Display(QImage image);
 
-    void onCamera2Display(QPixmap pixmap);
+    void onCamera2Display(QImage image);
 
-    void onCamera3Display(QPixmap pixmap);
+    void onCamera3Display(QImage image);
 
-    void onCamera4Display(QPixmap pixmap);
+    void onCamera4Display(QImage image);
 private slots:
     void updateStatisticalInfoUI();
 
 private slots:
-    void updateCameraLabelState(int cameraIndex,bool state);
+    void updateCameraLabelState(int cameraIndex, bool state);
     void updateCardLabelState(bool state);
 
 private slots:

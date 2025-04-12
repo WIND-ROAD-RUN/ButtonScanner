@@ -28,7 +28,7 @@ int main() {
     image.fill(Qt::red);
 
     for (int i = 0; i < 2400; ++i) {
-        engine.pushImage(image, "Category1","NG");
+        engine.pushImage(image, "Category1", "NG");
     }
 
     QThread::sleep(5); // 模拟其他操作

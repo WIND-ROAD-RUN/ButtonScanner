@@ -8,7 +8,7 @@ void ImageProcessor::buildModelEngine(const QString& enginePath, const QString& 
     _modelEnginePtr = std::make_unique<rw::ime::ModelEngine>(enginePath.toStdString(), namePath.toStdString());
 }
 
-cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo , std::vector<rw::ime::ProcessRectanglesResult>& vecRecogResult)
+cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::ime::ProcessRectanglesResult>& vecRecogResult)
 {
     auto& globalStruct = GlobalStructData::getInstance();
 
@@ -18,10 +18,9 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo , 
 
     _modelEnginePtr->ProcessMask(frame.image, resultImage, maskImage, vecRecogResult);
 
-    if (globalStruct.isOpenRemoveFunc||(globalStruct.isDebugMode)) {
+    if (globalStruct.isOpenRemoveFunc || (globalStruct.isDebugMode)) {
         eliminationLogic(frame, resultImage, errorInfo, vecRecogResult);
     }
-   
 
     return resultImage.clone();
 }
@@ -31,9 +30,9 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
     auto saveIamge = resultImage.clone();
     auto& globalStruct = GlobalStructData::getInstance();
 
-    auto & systemConfig = globalStruct.dlgProduceLineSetConfig;
-    auto & checkConfig = globalStruct.dlgProductSetConfig;
-    double &pixEquivalent = systemConfig.pixelEquivalent1;
+    auto& systemConfig = globalStruct.dlgProduceLineSetConfig;
+    auto& checkConfig = globalStruct.dlgProductSetConfig;
+    double& pixEquivalent = systemConfig.pixelEquivalent1;
     switch (frame.index)
     {
     case 2:
@@ -69,16 +68,16 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
     {
         switch (processRectanglesResult[i].classId)
         {
-        //case 0: waiJingIndexs.push_back(i); continue;
+            //case 0: waiJingIndexs.push_back(i); continue;
         case 1: holesCount++; continue;
-        //case 2: daPoBianIndexs.push_back(i); continue;
-        //case 3: qiKonIndexs.push_back(i); continue;
-        //case 4: duYanIndexs.push_back(i); continue;
-        //case 5: moShiIndexs.push_back(i); continue;
-        //case 6: liaoTouIndexs.push_back(i); continue;
-        //case 7: youQiIndexs.push_back(i); continue;
-        //case 8: lieHenIndexs.push_back(i); continue;
-        //case 9: poYanIndexs.push_back(i); continue;
+            //case 2: daPoBianIndexs.push_back(i); continue;
+            //case 3: qiKonIndexs.push_back(i); continue;
+            //case 4: duYanIndexs.push_back(i); continue;
+            //case 5: moShiIndexs.push_back(i); continue;
+            //case 6: liaoTouIndexs.push_back(i); continue;
+            //case 7: youQiIndexs.push_back(i); continue;
+            //case 8: lieHenIndexs.push_back(i); continue;
+            //case 9: poYanIndexs.push_back(i); continue;
 
         default: continue;
         }
@@ -97,33 +96,33 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
         }
     }
 
-   /* if (checkConfig.outsideDiameterEnable)
-    {
-        ImagePainter::drawCirclesOnImage(resultImage, body);
-        if (waiJingIndexs.size() == 0)
-        {
-            isBad = true;
-            errorInfo.emplace_back("没找到外径");
-        }
-        else
-        {
-            auto shangXiaPianCha = processRectanglesResult[waiJingIndexs[0]].right_bottom.second - processRectanglesResult[waiJingIndexs[0]].left_top.second - checkConfig->outsideDiameterValue / pixEquivalent;
-            auto zuoYouPianCha = processRectanglesResult[waiJingIndexs[0]].right_bottom.first - processRectanglesResult[waiJingIndexs[0]].left_top.first - checkConfig->outsideDiameterValue / pixEquivalent;
+    /* if (checkConfig.outsideDiameterEnable)
+     {
+         ImagePainter::drawCirclesOnImage(resultImage, body);
+         if (waiJingIndexs.size() == 0)
+         {
+             isBad = true;
+             errorInfo.emplace_back("没找到外径");
+         }
+         else
+         {
+             auto shangXiaPianCha = processRectanglesResult[waiJingIndexs[0]].right_bottom.second - processRectanglesResult[waiJingIndexs[0]].left_top.second - checkConfig->outsideDiameterValue / pixEquivalent;
+             auto zuoYouPianCha = processRectanglesResult[waiJingIndexs[0]].right_bottom.first - processRectanglesResult[waiJingIndexs[0]].left_top.first - checkConfig->outsideDiameterValue / pixEquivalent;
 
-            auto shangXiaPianChaAbs = abs(shangXiaPianCha);
-            auto zuoYouPianChaAbs = abs(zuoYouPianCha);
+             auto shangXiaPianChaAbs = abs(shangXiaPianCha);
+             auto zuoYouPianChaAbs = abs(zuoYouPianCha);
 
-            if (shangXiaPianChaAbs > checkConfig->outsideDiameterDeviation / pixEquivalent || zuoYouPianChaAbs > checkConfig->outsideDiameterDeviation / pixEquivalent)
-            {
-                isBad = true;
+             if (shangXiaPianChaAbs > checkConfig->outsideDiameterDeviation / pixEquivalent || zuoYouPianChaAbs > checkConfig->outsideDiameterDeviation / pixEquivalent)
+             {
+                 isBad = true;
 
-                if (shangXiaPianChaAbs >= zuoYouPianChaAbs)
-                    errorInfo.emplace_back("外径 " + QString::number(shangXiaPianCha * pixEquivalent));
-                else
-                    errorInfo.emplace_back("外径 " + QString::number(zuoYouPianCha * pixEquivalent));
-            }
-        }
-    }*/
+                 if (shangXiaPianChaAbs >= zuoYouPianChaAbs)
+                     errorInfo.emplace_back("外径 " + QString::number(shangXiaPianCha * pixEquivalent));
+                 else
+                     errorInfo.emplace_back("外径 " + QString::number(zuoYouPianCha * pixEquivalent));
+             }
+         }
+     }*/
     if (checkConfig.holesCountEnable)
     {
         ImagePainter::drawCirclesOnImage(resultImage, hole);
@@ -142,7 +141,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 
         // 打印孔径数量和当前时间
         LOG()  "孔径数量: " << holesCount << " & " << checkConfig.holesCountValue
-            << " 当前时间: " << timeStream.str() <<"相机id:" << imageProcessingModuleIndex<<"frameCount:"<< frameCount;
+            << " 当前时间: " << timeStream.str() << "相机id:" << imageProcessingModuleIndex << "frameCount:" << frameCount;
         if (holesCount != checkConfig.holesCountValue)
         {
             isBad = true;
@@ -326,12 +325,9 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
         }
     }
 
-
-    
-
     if (globalStruct.isTakePictures) {
         if (isBad) {
-            globalStruct.imageSaveEngine->pushImage(cvMatToQImage(saveIamge),"NG","Button");
+            globalStruct.imageSaveEngine->pushImage(cvMatToQImage(saveIamge), "NG", "Button");
         }
         else {
             globalStruct.imageSaveEngine->pushImage(cvMatToQImage(saveIamge), "OK", "Button");
@@ -363,9 +359,9 @@ void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::ime::Process
     if (image.isNull()) {
         return;
     }
-    int i =0;
-    for (const auto & item: vecRecogResult) {
-        if (i==0||i==1) {
+    int i = 0;
+    for (const auto& item : vecRecogResult) {
+        if (i == 0 || i == 1) {
             return;
         }
         auto leftTop = item.left_top;
@@ -471,7 +467,7 @@ void ImageProcessor::run()
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
 
         // 打印处理时间
-        LOG() "processAI 处理时间: " << duration << " ms" << "frameIndex"<<frameCount;
+        LOG() "processAI 处理时间: " << duration << " ms" << "frameIndex" << frameCount;
         frameCount++;
 
         auto  image = cvMatToQImage(result);
@@ -481,10 +477,8 @@ void ImageProcessor::run()
         // 绘制错误定位
         drawErrorLocate(image, vecRecogResult);
 
-
-        QPixmap pixmap = QPixmap::fromImage(image);
         // 显示到界面
-        emit imageReady(pixmap);
+        emit imageReady(image);
     }
 }
 
@@ -527,7 +521,6 @@ ImageProcessingModule::~ImageProcessingModule()
         delete processor;
     }
 }
-
 
 void ImageProcessingModule::onFrameCaptured(cv::Mat frame, float location, size_t index)
 {
@@ -621,7 +614,7 @@ void ImagePainter::drawTextOnImage(QImage& image, const QVector<QString>& texts,
 void ImagePainter::drawCirclesOnImage(cv::Mat& image, const std::vector<rw::ime::ProcessRectanglesResult>& rectangles)
 {
     for (const auto& rect : rectangles) {
-        if (rect.classId!=1) {
+        if (rect.classId != 1) {
             return;
         }
         // 计算矩形中心点
@@ -640,6 +633,5 @@ void ImagePainter::drawCirclesOnImage(cv::Mat& image, const std::vector<rw::ime:
 
         // 在图像上绘制圆
         cv::circle(image, cv::Point(centerX, centerY), radius, color, 5); // 2 表示线宽
-        
     }
 }

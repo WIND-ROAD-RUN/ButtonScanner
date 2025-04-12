@@ -81,7 +81,6 @@ void GlobalStructData::buildImageProcessingModule(size_t num)
     imageProcessingModule4->index = 4;
     imageProcessingModule4->BuildModule();
     auto processers4 = imageProcessingModule4->getProcessors();
-
 }
 
 void GlobalStructData::buildConfigManager(rw::oso::StorageType type)
@@ -210,7 +209,6 @@ void GlobalStructData::buildCamera1()
 {
     auto cameraList = rw::rqw::CheckCameraList();
 
-
     auto cameraMetaData1 = cameraMetaDataCheck(cameraIp1, cameraList);
 
     if (cameraMetaData1.ip != "0") {
@@ -230,7 +228,6 @@ void GlobalStructData::buildCamera1()
             LOG()  "Camera 1 initialization failed.";
         }
     }
-
 }
 
 void GlobalStructData::buildCamera2()
@@ -408,7 +405,6 @@ void GlobalStructData::destroyImageSaveEngine()
 GlobalStructData::GlobalStructData()
 {
 }
-
 
 void GlobalStructData::onBuildCamera1()
 {

@@ -4,7 +4,7 @@
 #include"NumKeyBord.h"
 #include"GlobalStruct.h"
 
-DlgExposureTimeSet::DlgExposureTimeSet(QWidget *parent)
+DlgExposureTimeSet::DlgExposureTimeSet(QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::DlgExposureTimeSetClass())
 {
@@ -28,8 +28,8 @@ void DlgExposureTimeSet::build_ui()
 
 void DlgExposureTimeSet::build_connect()
 {
-    QObject::connect(ui->pbtn_exposureTimeValue,&QPushButton::clicked,
-        this,&DlgExposureTimeSet::pbtn_exposureTimeValue_clicked);
+    QObject::connect(ui->pbtn_exposureTimeValue, &QPushButton::clicked,
+        this, &DlgExposureTimeSet::pbtn_exposureTimeValue_clicked);
 }
 
 void DlgExposureTimeSet::SetCamera()
@@ -81,23 +81,22 @@ void DlgExposureTimeSet::ResetCamera()
         globalStruct.camera4->setTriggerMode(rw::rqw::CameraObjectTrigger::Hardware);
         globalStruct.camera4->setFrameRate(40);
     }
-
 }
 
 void DlgExposureTimeSet::pbtn_exposureTimeValue_clicked()
 {
-    auto olderValue=ui->pbtn_exposureTimeValue->text().toInt();
-    auto numKeyBord = new NumKeyBord(this,ui->pbtn_exposureTimeValue,1);
+    auto olderValue = ui->pbtn_exposureTimeValue->text().toInt();
+    auto numKeyBord = new NumKeyBord(this, ui->pbtn_exposureTimeValue, 1);
     numKeyBord->exec();
     delete numKeyBord;
 
     auto newValue = ui->pbtn_exposureTimeValue->text().toInt();
-    if (newValue<100) {
+    if (newValue < 100) {
         ui->pbtn_exposureTimeValue->setText(QString::number(olderValue));
         QMessageBox::warning(this, "错误", "曝光时间范围应设置为100~700");
         return;
     }
-    if (newValue>700) {
+    if (newValue > 700) {
         ui->pbtn_exposureTimeValue->setText(QString::number(olderValue));
         QMessageBox::warning(this, "错误", "曝光时间范围应设置为100~700");
         return;
@@ -114,7 +113,5 @@ void DlgExposureTimeSet::pbtn_exposureTimeValue_clicked()
     globalStruct.setCameraExposureTime(3, newValue);
     globalStruct.setCameraExposureTime(4, newValue);
 
-
     globalStruct.saveDlgExposureTimeSetConfig();
-
 }

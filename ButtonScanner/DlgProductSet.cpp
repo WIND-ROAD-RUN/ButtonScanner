@@ -68,7 +68,6 @@ void DlgProductSet::readConfig()
     ui->pbtn_holeCenterDistanceValue->setText(QString::number(GlobalStructData.dlgProductSetConfig.holeCenterDistanceValue));
     ui->rbtn_materialHeadEnable->setChecked(GlobalStructData.dlgProductSetConfig.materialHeadEnable);
 
-
     ui->pbtn_blowTime->setText(QString::number(get_blowTime()));
 }
 
@@ -199,7 +198,6 @@ void DlgProductSet::pbtn_outsideDiameterValue_clicked() {
     GlobalStructData.dlgProductSetConfig.outsideDiameterValue = ui->pbtn_outsideDiameterValue->text().toDouble();
 
     ui->pbtn_blowTime->setText(QString::number(get_blowTime()));
-
 
     delete numKeyBoard;
 }
