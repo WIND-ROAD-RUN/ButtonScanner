@@ -142,7 +142,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 
         // 打印孔径数量和当前时间
         LOG()  "孔径数量: " << holesCount << " & " << checkConfig.holesCountValue
-            << " 当前时间: " << timeStream.str() <<"相机id:" << imageProcessingModuleIndex;
+            << " 当前时间: " << timeStream.str() <<"相机id:" << imageProcessingModuleIndex<<"frameCount:"<< frameCount;
         if (holesCount != checkConfig.holesCountValue)
         {
             isBad = true;
@@ -420,8 +420,21 @@ void ImageProcessor::run()
 
         std::vector<rw::ime::ProcessRectanglesResult> vecRecogResult;
 
-        // AI识别处理
-        cv::Mat result = processAI(frame, errorInfo,vecRecogResult);
+        // 开始计时
+        auto startTime = std::chrono::high_resolution_clock::now();
+
+        // 调用 processAI 函数
+        cv::Mat result = processAI(frame, errorInfo, vecRecogResult);
+
+        // 结束计时
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        // 计算耗时
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
+
+        // 打印处理时间
+        LOG() "processAI 处理时间: " << duration << " ms" << "frameIndex"<<frameCount;
+        frameCount++;
 
         auto  image = cvMatToQImage(result);
         // 绘制错误信息
