@@ -397,7 +397,7 @@ void GlobalStructData::destroyImageProcessingModule()
 
 void GlobalStructData::buildImageSaveEngine()
 {
-    imageSaveEngine = std::make_unique<rw::rqw::ImageSaveEngine>(this,30);
+    imageSaveEngine = std::make_unique<rw::rqw::ImageSaveEngine>(this,4);
 }
 
 void GlobalStructData::destroyImageSaveEngine()
