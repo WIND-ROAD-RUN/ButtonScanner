@@ -22,5 +22,16 @@ namespace rw
             double score;							//得分
             std::string label_text;					//名称
         };
+
+
+        struct ProcessRectanglesResultOnnx
+        {
+            Point left_top;							
+            Point right_bottom;						
+            int classID;							
+            int track_id;							
+            double score;							
+            std::string label_text;
+        };
     }
 }

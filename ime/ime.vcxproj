@@ -85,7 +85,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6\include;$(ProjectDir)\include;$(VcpkgRoot)\installed\x64-windows\include\opencv4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6OnnxRuntime\include;$(SolutionDir)\ThirdLibrary\YOLOV5V6\include;$(ProjectDir)\include;$(VcpkgRoot)\installed\x64-windows\include\opencv4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,7 +103,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6\include;$(ProjectDir)\include;$(VcpkgRoot)\installed\x64-windows\include\opencv4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6OnnxRuntime\include;$(SolutionDir)\ThirdLibrary\YOLOV5V6\include;$(ProjectDir)\include;$(VcpkgRoot)\installed\x64-windows\include\opencv4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -121,7 +121,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6\include;$(ProjectDir)\include;$(VcpkgRoot)\installed\x64-windows\include\opencv4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6OnnxRuntime\include;$(SolutionDir)\ThirdLibrary\YOLOV5V6\include;$(ProjectDir)\include;$(VcpkgRoot)\installed\x64-windows\include\opencv4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,7 +139,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6\include;$(ProjectDir)\include;$(VcpkgRoot)\installed\x64-windows\include\opencv4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6OnnxRuntime\include;$(SolutionDir)\ThirdLibrary\YOLOV5V6\include;$(ProjectDir)\include;$(VcpkgRoot)\installed\x64-windows\include\opencv4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,10 +151,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ime_modelOnnxRuntime.h" />
     <ClInclude Include="include\ime_ModelEngine.h" />
     <ClInclude Include="include\ime_ModelEngineCore.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ime_modelOnnxRuntime.cpp" />
     <ClCompile Include="src\ime_ModelEngine.cpp" />
     <ClCompile Include="src\ime_ModelEngineCore.cpp" />
   </ItemGroup>
