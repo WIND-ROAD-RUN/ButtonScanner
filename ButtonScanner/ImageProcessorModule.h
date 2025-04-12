@@ -56,7 +56,6 @@ protected:
 
 signals:
     void imageReady(QImage image);
-    void processResult(bool isOk, float location);
 
 private:
     std::unique_ptr<rw::ime::ModelEngine> _modelEnginePtr;
@@ -93,11 +92,9 @@ public:
 
 public slots:
     void onFrameCaptured(cv::Mat frame, float location, size_t index);
-    void onProcessResult(bool isOk, float location);
 
 signals:
     void imageReady(QImage image);
-    void processResultModule(bool isOk, float location);
 public:
     std::vector<ImageProcessor*> getProcessors() const {
         return _processors;

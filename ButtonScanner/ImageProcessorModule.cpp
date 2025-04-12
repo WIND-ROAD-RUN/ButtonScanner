@@ -299,7 +299,35 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
         }
     }*/
 
-    emit processResult(!isBad, frame.location);
+    if (globalStruct.isOpenRemoveFunc) {
+        if (isBad) {
+            globalStruct.statisticalInfo.wasteCount++;
+        }
+
+        if (imageProcessingModuleIndex == 2 || imageProcessingModuleIndex == 4) {
+            globalStruct.statisticalInfo.produceCount++;
+        }
+        switch (imageProcessingModuleIndex)
+        {
+        case 1:
+            globalStruct.productPriorityQueue1.push(frame.location);
+            break;
+        case 2:
+            globalStruct.productPriorityQueue2.push(frame.location);
+            break;
+        case 3:
+            globalStruct.productPriorityQueue3.push(frame.location);
+            break;
+        case 4:
+            globalStruct.productPriorityQueue4.push(frame.location);
+            break;
+        default:
+            break;
+        }
+    }
+
+
+    
 
     if (globalStruct.isTakePictures) {
         if (isBad) {
@@ -457,7 +485,6 @@ void ImageProcessingModule::BuildModule()
         processor->buildModelEngine(modelEnginePath, modelNamePath);
         processor->imageProcessingModuleIndex = index;
         connect(processor, &ImageProcessor::imageReady, this, &ImageProcessingModule::imageReady, Qt::QueuedConnection);
-        connect(processor, &ImageProcessor::processResult, this, &ImageProcessingModule::onProcessResult, Qt::QueuedConnection);
         _processors.push_back(processor);
         processor->start();
     }
@@ -489,21 +516,6 @@ ImageProcessingModule::~ImageProcessingModule()
     }
 }
 
-void ImageProcessingModule::onProcessResult(bool isOk, float location)
-{
-    auto& globalStruct = GlobalStructData::getInstance();
-    emit processResultModule(isOk, location);
-
-    if (globalStruct.isOpenRemoveFunc) {
-        if (!isOk) {
-            globalStruct.statisticalInfo.wasteCount++;
-        }
-
-        if (index == 2 || index == 4) {
-            globalStruct.statisticalInfo.produceCount++;
-        }
-    }
-}
 
 void ImageProcessingModule::onFrameCaptured(cv::Mat frame, float location, size_t index)
 {

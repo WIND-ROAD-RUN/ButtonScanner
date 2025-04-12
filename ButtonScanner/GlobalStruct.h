@@ -157,11 +157,6 @@ public:
 private:
     GlobalStructData();
     ~GlobalStructData() = default;
-private slots:
-    void onCamera1ImageReady(bool isOk, float location);
-    void onCamera2ImageReady(bool isOk, float location);
-    void onCamera3ImageReady(bool isOk, float location);
-    void onCamera4ImageReady(bool isOk, float location);
 public slots:
     void onBuildCamera1();
     void onBuildCamera2();

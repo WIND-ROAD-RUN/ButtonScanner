@@ -61,24 +61,12 @@ void GlobalStructData::buildImageProcessingModule(size_t num)
     imageProcessingModule1->modelNamePath = namePath;
     imageProcessingModule1->index = 1;
     imageProcessingModule1->BuildModule();
-    auto processers1 = imageProcessingModule1->getProcessors();
-    for (auto& processer : processers1) {
-
-           QObject::connect(processer, &ImageProcessor::processResult,
-               this, &GlobalStructData::onCamera1ImageReady, Qt::QueuedConnection);  
-        
-    }
 
     imageProcessingModule2 = std::make_unique<ImageProcessingModule>(num, this);
     imageProcessingModule2->modelEnginePath = enginePath;
     imageProcessingModule2->modelNamePath = namePath;
     imageProcessingModule2->index = 2;
     imageProcessingModule2->BuildModule();
-    auto processers2 = imageProcessingModule2->getProcessors();
-    for (auto& processer : processers2) {
-        QObject::connect(processer, &ImageProcessor::processResult,
-            this, &GlobalStructData::onCamera2ImageReady, Qt::QueuedConnection);
-    }
 
     imageProcessingModule3 = std::make_unique<ImageProcessingModule>(num, this);
     imageProcessingModule3->modelEnginePath = enginePath;
@@ -86,10 +74,6 @@ void GlobalStructData::buildImageProcessingModule(size_t num)
     imageProcessingModule3->index = 3;
     imageProcessingModule3->BuildModule();
     auto processers3 = imageProcessingModule3->getProcessors();
-    for (auto& processer : processers3) {
-        QObject::connect(processer, &ImageProcessor::processResult,
-            this, &GlobalStructData::onCamera3ImageReady, Qt::QueuedConnection);
-    }
 
     imageProcessingModule4 = std::make_unique<ImageProcessingModule>(num, this);
     imageProcessingModule4->modelEnginePath = enginePath;
@@ -97,10 +81,6 @@ void GlobalStructData::buildImageProcessingModule(size_t num)
     imageProcessingModule4->index = 4;
     imageProcessingModule4->BuildModule();
     auto processers4 = imageProcessingModule4->getProcessors();
-    for (auto& processer : processers4) {
-        QObject::connect(processer, &ImageProcessor::processResult,
-            this, &GlobalStructData::onCamera4ImageReady, Qt::QueuedConnection);
-    }
 
 }
 
@@ -429,55 +409,6 @@ GlobalStructData::GlobalStructData()
 {
 }
 
-void GlobalStructData::onCamera1ImageReady(bool isOk, float location)
-{
-    auto& globalStruct = GlobalStructData::getInstance();
-
-    if (globalStruct.isOpenRemoveFunc) {
-        if (!isOk) {
-            globalStruct.statisticalInfo.wasteCount++;
-            productPriorityQueue1.push(location);
-        }
-
-    }
-}
-
-void GlobalStructData::onCamera2ImageReady(bool isOk, float location)
-{
-    auto& globalStruct = GlobalStructData::getInstance();
-    if (globalStruct.isOpenRemoveFunc) {
-        if (!isOk) {
-            globalStruct.statisticalInfo.wasteCount++;
-            productPriorityQueue2.push(location);
-        }
-        globalStruct.statisticalInfo.produceCount++;
-    }
-}
-
-void GlobalStructData::onCamera3ImageReady(bool isOk, float location)
-{
-    auto& globalStruct = GlobalStructData::getInstance();
-
-    if (globalStruct.isOpenRemoveFunc) {
-        if (!isOk) {
-            globalStruct.statisticalInfo.wasteCount++;
-            productPriorityQueue3.push(location);
-        }
-
-    }
-}
-
-void GlobalStructData::onCamera4ImageReady(bool isOk, float location)
-{
-    auto& globalStruct = GlobalStructData::getInstance();
-    if (globalStruct.isOpenRemoveFunc) {
-        if (!isOk) {
-            globalStruct.statisticalInfo.wasteCount++;
-            productPriorityQueue4.push(location);
-        }
-        globalStruct.statisticalInfo.produceCount++;
-    }
-}
 
 void GlobalStructData::onBuildCamera1()
 {
