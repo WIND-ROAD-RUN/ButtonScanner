@@ -142,7 +142,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 
         // 打印孔径数量和当前时间
         LOG()  "孔径数量: " << holesCount << " & " << checkConfig.holesCountValue
-            << " 当前时间: " << timeStream.str();
+            << " 当前时间: " << timeStream.str() <<"相机id:" << imageProcessingModuleIndex;
         if (holesCount != checkConfig.holesCountValue)
         {
             isBad = true;
@@ -442,6 +442,7 @@ void ImageProcessingModule::BuildModule()
         ImageProcessor* processor = new ImageProcessor(_queue, _mutex, _condition, workIndexCount, this);
         workIndexCount++;
         processor->buildModelEngine(modelEnginePath, modelNamePath);
+        processor->imageProcessingModuleIndex = index;
         connect(processor, &ImageProcessor::imageReady, this, &ImageProcessingModule::imageReady, Qt::QueuedConnection);
         connect(processor, &ImageProcessor::processResult, this, &ImageProcessingModule::onProcessResult, Qt::QueuedConnection);
         _processors.push_back(processor);
