@@ -54,6 +54,7 @@ private:
 
 private:
     void initializeComponents();
+    void destoryComponects();
 
     void build_ui();
     void build_mainWindowData();

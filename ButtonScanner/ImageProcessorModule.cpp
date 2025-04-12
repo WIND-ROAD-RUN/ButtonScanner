@@ -18,7 +18,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo , 
 
     _modelEnginePtr->ProcessMask(frame.image, resultImage, maskImage, vecRecogResult);
 
-    if (globalStruct.isOpenRemoveFunc&&(!globalStruct.isDebugMode)) {
+    if (globalStruct.isOpenRemoveFunc||(globalStruct.isDebugMode)) {
         eliminationLogic(frame, resultImage, errorInfo, vecRecogResult);
     }
    

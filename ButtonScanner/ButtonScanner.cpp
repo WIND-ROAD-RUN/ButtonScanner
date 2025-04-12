@@ -75,54 +75,11 @@ ButtonScanner::ButtonScanner(QWidget* parent)
 
 ButtonScanner::~ButtonScanner()
 {
-    // 创建加载框
-    LoadingDialog loadingDialog(this);
-    loadingDialog.show();
+    destoryComponects();
 
-    // 停止线程标志
-    loadingDialog.updateMessage("正在停止线程...");
-    QCoreApplication::processEvents();
-    mark_Thread = false;
-
-    // 销毁分离线程
-    loadingDialog.updateMessage("正在销毁后台线程...");
-    QCoreApplication::processEvents();
-    auto& globalStructThread = GlobalStructThread::getInstance();
-    globalStructThread.destroyDetachThread();
-
-    // 停止所有轴
-    loadingDialog.updateMessage("正在停止所有轴...");
-    QCoreApplication::processEvents();
-    stop_all_axis();
-
-    // 销毁相机
-    loadingDialog.updateMessage("正在销毁相机...");
-    QCoreApplication::processEvents();
-    auto& globalStructData = GlobalStructData::getInstance();
-    globalStructData.destroyCamera();
-
-    // 销毁图像处理模块
-    loadingDialog.updateMessage("正在销毁图像处理模块...");
-    QCoreApplication::processEvents();
-    globalStructData.destroyImageProcessingModule();
-
-    // 销毁图像保存引擎
-    loadingDialog.updateMessage("正在销毁图像保存引擎...");
-    QCoreApplication::processEvents();
-    globalStructData.destroyImageSaveEngine();
-
-    // 保存配置
-    loadingDialog.updateMessage("正在保存配置...");
-    QCoreApplication::processEvents();
-    globalStructData.saveConfig();
-
-    // 删除 UI
-    loadingDialog.updateMessage("正在清理界面...");
-    QCoreApplication::processEvents();
     delete ui;
 
-    // 隐藏加载框
-    loadingDialog.close();
+
 }
 
 void ButtonScanner::set_radioButton()
@@ -212,6 +169,58 @@ void ButtonScanner::initializeComponents()
     loadingDialog.updateMessage("正在构建后台线程...");
     QCoreApplication::processEvents();
     build_detachThread();
+
+    // 隐藏加载框
+    loadingDialog.close();
+}
+
+void ButtonScanner::destoryComponects()
+{
+    // 创建加载框
+    LoadingDialog loadingDialog(this);
+    loadingDialog.show();
+
+    // 停止线程标志
+    loadingDialog.updateMessage("正在停止线程...");
+    QCoreApplication::processEvents();
+    mark_Thread = false;
+
+    // 销毁分离线程
+    loadingDialog.updateMessage("正在销毁后台线程...");
+    QCoreApplication::processEvents();
+    auto& globalStructThread = GlobalStructThread::getInstance();
+    globalStructThread.destroyDetachThread();
+
+    // 停止所有轴
+    loadingDialog.updateMessage("正在停止所有轴...");
+    QCoreApplication::processEvents();
+    stop_all_axis();
+
+    // 销毁相机
+    loadingDialog.updateMessage("正在销毁相机...");
+    QCoreApplication::processEvents();
+    auto& globalStructData = GlobalStructData::getInstance();
+    globalStructData.destroyCamera();
+
+    // 销毁图像处理模块
+    loadingDialog.updateMessage("正在销毁图像处理模块...");
+    QCoreApplication::processEvents();
+    globalStructData.destroyImageProcessingModule();
+
+    // 销毁图像保存引擎
+    loadingDialog.updateMessage("正在销毁图像保存引擎...");
+    QCoreApplication::processEvents();
+    globalStructData.destroyImageSaveEngine();
+
+    // 保存配置
+    loadingDialog.updateMessage("正在保存配置...");
+    QCoreApplication::processEvents();
+    globalStructData.mainWindowConfig.isDebugMode = false;
+    globalStructData.saveConfig();
+
+    // 删除 UI
+    loadingDialog.updateMessage("正在清理界面...");
+    QCoreApplication::processEvents();
 
     // 隐藏加载框
     loadingDialog.close();
@@ -998,10 +1007,25 @@ void ButtonScanner::pbtn_resetProduct_clicked()
 
 void ButtonScanner::rbtn_debug_ckecked(bool checked)
 {
-    auto& GlobalStructData = GlobalStructData::getInstance();
-    GlobalStructData.mainWindowConfig.isDebugMode = checked;
-    GlobalStructData.saveConfig();
-    GlobalStructData.isDebugMode = checked;
+    auto isRuning = ui->rbtn_removeFunc->isChecked();
+    if (!isRuning) {
+        if (checked) {
+            dlgExposureTimeSet->SetCamera(); // 设置相机为实时采集
+            auto& GlobalStructData = GlobalStructData::getInstance();
+            GlobalStructData.mainWindowConfig.isDebugMode = checked;
+            GlobalStructData.isDebugMode = checked;
+        }
+        else {
+            auto& GlobalStructData = GlobalStructData::getInstance();
+            GlobalStructData.mainWindowConfig.isDebugMode = checked;
+            GlobalStructData.isDebugMode = checked;
+            dlgExposureTimeSet->ResetCamera(); // 重置相机为硬件触发
+        }
+       
+    }
+    else {
+        ui->rbtn_debug->setChecked(false);
+    }
 }
 
 void ButtonScanner::rbtn_takePicture_ckecked(bool checked)
