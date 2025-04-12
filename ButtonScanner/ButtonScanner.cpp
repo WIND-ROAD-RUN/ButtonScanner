@@ -847,22 +847,22 @@ QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
 
 void ButtonScanner::onCamera1Display(QPixmap image)
 {
-    ui->label_imgDisplay->setPixmap(image);
+    ui->label_imgDisplay->setPixmap(image.scaled(ui->label_imgDisplay->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 void ButtonScanner::onCamera2Display(QPixmap image)
 {
-    ui->label_imgDisplay_2->setPixmap(image);
+    ui->label_imgDisplay_2->setPixmap(image.scaled(ui->label_imgDisplay->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 void ButtonScanner::onCamera3Display(QPixmap image)
 {
-    ui->label_imgDisplay_3->setPixmap(image);
+    ui->label_imgDisplay_3->setPixmap(image.scaled(ui->label_imgDisplay->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 void ButtonScanner::onCamera4Display(QPixmap image)
 {
-    ui->label_imgDisplay_4->setPixmap(image);
+    ui->label_imgDisplay_4->setPixmap(image.scaled(ui->label_imgDisplay->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 void ButtonScanner::updateCameraLabelState(int cameraIndex, bool state)

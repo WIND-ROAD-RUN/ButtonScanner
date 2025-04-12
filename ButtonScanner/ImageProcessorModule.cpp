@@ -494,6 +494,8 @@ void ImageProcessor::run()
         // 绘制错误定位
         drawErrorLocate(image, vecRecogResult);
 
+        GlobalStructData::getInstance().imageSaveEngine->pushImage(image, "Mark", "Button");
+
         QPixmap pixmap = QPixmap::fromImage(image);
         // 显示到界面
         emit imageReady(pixmap);
