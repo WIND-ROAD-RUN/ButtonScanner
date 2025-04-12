@@ -87,6 +87,7 @@ ButtonScanner::ButtonScanner(QWidget* parent)
     ui->gBoix_ImageDisplay->layout()->replaceWidget(ui->label_imgDisplay_4, cameraDisplay4);
     delete ui->label_imgDisplay_4; // 删除旧的 QLabel
 
+
     initializeComponents();
 }
 

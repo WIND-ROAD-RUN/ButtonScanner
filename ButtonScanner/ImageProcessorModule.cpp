@@ -472,7 +472,7 @@ void ImageProcessor::run()
 
         auto  image = cvMatToQImage(result);
         // 绘制错误信息
-        ImagePainter::drawTextOnImage(image, errorInfo);
+        ImagePainter::drawTextOnImage(image, errorInfo, { ImagePainter::Color::Red,ImagePainter::Color::Green },0.8);
 
         // 绘制错误定位
         drawErrorLocate(image, vecRecogResult);
@@ -575,15 +575,13 @@ void ImagePainter::drawTextOnImage(QImage& image, const QVector<QString>& texts,
     font.setPixelSize(fontSize);
     painter.setFont(font);
 
-    // 计算动态字体大小
-    for (const auto& text : texts) {
-        QRect textRect(0, 0, image.width(), textAreaHeight);
-        QFontMetrics metrics(font);
-        if (metrics.height() * texts.size() > textAreaHeight) {
-            fontSize = static_cast<int>(fontSize * 0.9); // 缩小字体
-            font.setPixelSize(fontSize);
-            painter.setFont(font);
-        }
+    // 动态调整字体大小，确保文字适合区域
+    QFontMetrics metrics(font);
+    while (metrics.height() * texts.size() > textAreaHeight) {
+        fontSize = static_cast<int>(fontSize * 0.9); // 缩小字体
+        font.setPixelSize(fontSize);
+        painter.setFont(font);
+        metrics = QFontMetrics(font);
     }
 
     // 绘制文字
@@ -591,21 +589,23 @@ void ImagePainter::drawTextOnImage(QImage& image, const QVector<QString>& texts,
         // 确定颜色
         Color textColor = Color::White; // 默认白色
         if (!colorList.empty()) {
-            if (i < colorList.size()) {
-                textColor = colorList[i];
-            }
-            else {
-                textColor = colorList.back(); // 使用最后一个颜色
-            }
+            textColor = (i < colorList.size()) ? colorList[i] : colorList.back();
         }
 
         // 设置颜色
         painter.setPen(ColorToQColor(textColor));
 
+        // 检查是否超出绘制区域
+        if (yOffset + metrics.height() > textAreaHeight) {
+            break; // 超出区域，停止绘制
+        }
+
         // 绘制文字
         QString qText = texts[i];
-        painter.drawText(10, yOffset + fontSize, qText); // 左上角偏移量为 (10, yOffset)
-        yOffset += fontSize + 5; // 行间距
+        QRect textRect(10, yOffset, image.width() - 20, metrics.height());
+        painter.drawText(textRect, Qt::AlignLeft | Qt::AlignVCenter, qText);
+
+        yOffset += metrics.height() + 5; // 行间距
     }
 
     painter.end();
