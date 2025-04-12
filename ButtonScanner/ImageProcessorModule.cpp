@@ -127,7 +127,22 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
     if (checkConfig.holesCountEnable)
     {
         ImagePainter::drawCirclesOnImage(resultImage, hole);
-        LOG()"孔径数量" << holesCount<<"&" << checkConfig.holesCountValue;
+        // 获取当前时间
+        auto now = std::chrono::system_clock::now();
+        auto duration = now.time_since_epoch();
+        auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() % 1000;
+        auto seconds = std::chrono::duration_cast<std::chrono::seconds>(duration).count() % 60;
+        auto minutes = std::chrono::duration_cast<std::chrono::minutes>(duration).count() % 60;
+
+        // 格式化时间
+        std::ostringstream timeStream;
+        timeStream << std::setfill('0') << std::setw(2) << minutes << "_"
+            << std::setfill('0') << std::setw(2) << seconds << "_"
+            << std::setfill('0') << std::setw(3) << millis;
+
+        // 打印孔径数量和当前时间
+        LOG()  "孔径数量: " << holesCount << " & " << checkConfig.holesCountValue
+            << " 当前时间: " << timeStream.str();
         if (holesCount != checkConfig.holesCountValue)
         {
             isBad = true;
