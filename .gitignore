@@ -370,3 +370,4 @@ FodyWeavers.xsd
 /ThirdLibrary/YOLOV5V6/dll/zlib.dll
 /ThirdLibrary/ZMotion/dll/zauxdll.dll
 /ThirdLibrary/ZMotion/dll/zmotion.dll
+/ThirdLibrary/YOLOV5V6OnnxRuntime/dll
