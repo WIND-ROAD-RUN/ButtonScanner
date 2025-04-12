@@ -173,7 +173,7 @@ void MonitorCameraAndCardStateThread::check_cameraState4()
 
 void MonitorCameraAndCardStateThread::check_cardState()
 {
-    auto& globalStruct = GlobalStructData::getInstance();
+    /*auto& globalStruct = GlobalStructData::getInstance();
 
     auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
 
@@ -191,5 +191,5 @@ void MonitorCameraAndCardStateThread::check_cardState()
     else
     {
         emit updateCardLabelState(true);
-    }
+    }*/
 }
