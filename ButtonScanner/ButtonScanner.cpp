@@ -646,7 +646,7 @@ void ButtonScanner::build_locationThread()
                 float olderlacation1 = 0;
                 bool isGet = work1.tryGetMin(olderlacation1);
 
-                if (isGet != false && (abs(lacation1 - olderlacation1) >= -tifeijuli1))
+                if (isGet != false && (abs(lacation1 - olderlacation1) >tifeijuli1))
                 {
                     work1.tryPopMin(olderlacation1);
                     LOG()"输出";
