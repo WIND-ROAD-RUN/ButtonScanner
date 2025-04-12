@@ -128,8 +128,8 @@ void ButtonScanner::initializeComponents()
     // 停止所有轴
     loadingDialog.updateMessage("正在停止所有轴...");
     QCoreApplication::processEvents();
-    stop_all_axis();
-
+    //stop_all_axis();
+   
     // 构建图像处理模块
     loadingDialog.updateMessage("正在构建图像处理模块...");
     QCoreApplication::processEvents();
@@ -613,6 +613,12 @@ void ButtonScanner::build_motion()
         motionPtr->SetAxisType(2, 3);
         motionPtr->SetAxisPulse(1, globalStruct.dlgProduceLineSetConfig.codeWheel);
         motionPtr->SetAxisPulse(2, globalStruct.dlgProduceLineSetConfig.codeWheel);
+
+        globalStruct.isOpenRemoveFunc = true;
+        QMetaObject::invokeMethod(qApp, [this, state]
+        {
+            ui->rbtn_removeFunc->setChecked(true);
+        });
     }
 }
 
@@ -629,8 +635,8 @@ void ButtonScanner::build_locationThread()
             //2，4相机
             float lacation2 = 0;
             //获取两个位置
-            zwy::scc::GlobalMotion::getInstance().motionPtr.get()->GetAxisLocation(2, lacation1);
-            zwy::scc::GlobalMotion::getInstance().motionPtr.get()->GetAxisLocation(1, lacation2);
+            zwy::scc::GlobalMotion::getInstance().motionPtr.get()->GetAxisLocation(0, lacation1);
+            zwy::scc::GlobalMotion::getInstance().motionPtr.get()->GetAxisLocation(0, lacation2);
 
             {
                 auto& work1 = GlobalStructData::getInstance().productPriorityQueue1;
@@ -641,14 +647,15 @@ void ButtonScanner::build_locationThread()
 
                 float olderlacation1 = 0;
                 bool isGet = work1.tryGetMin(olderlacation1);
-
-                if (isGet != false && (abs(lacation1 - olderlacation1) > tifeijuli1))
+              
+                if (isGet != false && (abs(lacation1 - olderlacation1) >= -tifeijuli1))
                 {
                     work1.tryPopMin(olderlacation1);
-
+                    LOG()"输出";
                     //吹气
                     zwy::scc::GlobalMotion::getInstance().motionPtr.get()->SetIOOut(5, 5, true, tifeishijian1);
                 }
+               
             }
             {
                 auto& work2 = GlobalStructData::getInstance().productPriorityQueue2;
