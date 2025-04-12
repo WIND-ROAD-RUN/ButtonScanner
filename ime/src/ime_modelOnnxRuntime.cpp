@@ -41,7 +41,7 @@ namespace rw
             }
         }
 
-        bool ModelEngineOnnxRuntime::ProcessMask(cv::Mat& img, cv::Mat& resultMat, cv::Mat& maskMat, std::vector<ProcessRectanglesResultOnnx>& result)
+        bool ModelEngineOnnxRuntime::ProcessMask(cv::Mat& img, cv::Mat& resultMat, std::vector<ProcessRectanglesResultOnnx>& result)
         {
             try
             {

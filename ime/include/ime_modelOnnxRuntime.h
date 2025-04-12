@@ -20,7 +20,7 @@ namespace rw
             ModelEngineOnnxRuntime(std::string modelPath, std::string nameFilePath);
             ~ModelEngineOnnxRuntime();
         public:
-            bool ProcessMask(cv::Mat& img, cv::Mat& resultMat, cv::Mat& maskMat, std::vector<ProcessRectanglesResultOnnx>& vecRecogResult);
+            bool ProcessMask(cv::Mat& img, cv::Mat& resultMat, std::vector<ProcessRectanglesResultOnnx>& vecRecogResult);
         };
     }
 }

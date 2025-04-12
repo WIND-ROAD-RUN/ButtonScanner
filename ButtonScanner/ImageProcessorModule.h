@@ -13,6 +13,7 @@
 #include <string>
 
 #include"ime_ModelEngine.h"
+#include"ime_modelOnnxRuntime.h"
 
 struct ImagePainter
 {
@@ -59,8 +60,13 @@ signals:
 
 private:
     std::unique_ptr<rw::ime::ModelEngine> _modelEnginePtr;
+
+    std::unique_ptr<rw::ime::ModelEngineOnnxRuntime> _modelEnginePtrOnnx;
+
 public:
     void buildModelEngine(const QString& enginePath, const QString& namePath);
+
+    void buildModelEngineOnnx(const QString& enginePath, const QString& namePath);
 
 private:
     cv::Mat processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::ime::ProcessRectanglesResult>& vecRecogResult);
@@ -83,6 +89,7 @@ class ImageProcessingModule : public QObject {
 public:
     QString modelEnginePath;
     QString modelNamePath;
+    QString modelEnginePathOnnx;
 public:
     void BuildModule();
 public:

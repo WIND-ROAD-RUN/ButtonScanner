@@ -151,12 +151,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ime_modelOnnxRuntime.h" />
+    <ClInclude Include="include\ime_modelOnnxRuntime.h" />
     <ClInclude Include="include\ime_ModelEngine.h" />
     <ClInclude Include="include\ime_ModelEngineCore.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ime_modelOnnxRuntime.cpp" />
+    <ClCompile Include="src\ime_modelOnnxRuntime.cpp" />
     <ClCompile Include="src\ime_ModelEngine.cpp" />
     <ClCompile Include="src\ime_ModelEngineCore.cpp" />
   </ItemGroup>

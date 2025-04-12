@@ -69,13 +69,14 @@
       <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\ZMotion\include;$(SolutionDir)\dsl\include\;$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\cdm\include;$(SolutionDir)\oso\include;$(SolutionDir)\hoec\include;$(SolutionDir)\scc\include;$(SolutionDir)\ime\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6\lib;$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>yolov5v6_seg_trt.lib;MvCameraControl.lib;zauxdll.lib;zmotion.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6OnnxRuntime\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6\lib;$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>yolov5_det_ort_hasptr.lib;yolov5v6_seg_trt.lib;MvCameraControl.lib;zauxdll.lib;zmotion.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6\dll\*.dll" "$(OutDir)"
 xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\ZMotion\dll\*.dll" "$(OutDir)"
-xcopy /Y /R /D "$(ProjectDir)image\*.png" "$(OutDir)\image\"</Command>
+xcopy /Y /R /D "$(ProjectDir)image\*.png" "$(OutDir)\image\"
+xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6OnnxRuntime\dll\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -84,14 +85,16 @@ xcopy /Y /R /D "$(ProjectDir)image\*.png" "$(OutDir)\image\"</Command>
       <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\ZMotion\include;$(SolutionDir)\dsl\include\;$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\cdm\include;$(SolutionDir)\oso\include;$(SolutionDir)\hoec\include;$(SolutionDir)\scc\include;$(SolutionDir)\ime\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6\lib;$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>yolov5v6_seg_trt.lib;MvCameraControl.lib;zauxdll.lib;zmotion.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6OnnxRuntime\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6\lib;$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>yolov5_det_ort_hasptr.lib;yolov5v6_seg_trt.lib;MvCameraControl.lib;zauxdll.lib;zmotion.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6\dll\*.dll" "$(OutDir)"
 xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\ZMotion\dll\*.dll" "$(OutDir)"
 xcopy /Y /R /D "$(ProjectDir)image\*.png" "$(OutDir)\image\"
-"$(QT_ROOT)\6.7.3\msvc2019_64\bin\windeployqt.exe" "$(TargetPath)"</Command>
+"$(QT_ROOT)\6.7.3\msvc2019_64\bin\windeployqt.exe" "$(TargetPath)"
+xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6OnnxRuntime\dll\*.dll" "$(OutDir)"
+xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6OnnxRuntime\dll\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">

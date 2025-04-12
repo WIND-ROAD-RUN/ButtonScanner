@@ -101,6 +101,8 @@ public:
 public:
     QString enginePath{ R"(C:\Users\34615\Desktop\best.engine)" };
     QString namePath{ R"(C:\Users\34615\Desktop\index.names)" };
+    QString onnxEnginePath1{ R"(C:\Users\34615\Desktop\modelOnnx.onnx)" };
+
 public:
 
     bool isTargetCamera(const QString& cameraIndex, const QString& targetName);

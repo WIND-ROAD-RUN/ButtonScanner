@@ -2,21 +2,38 @@
 #include "GlobalStruct.h"
 #include"ImageProcessorModule.h"
 #include"StatisticalInfoComputingThread.h"
+#include"ime_modelOnnxRuntime.h"
+#include <QtConcurrent> 
 
 void ImageProcessor::buildModelEngine(const QString& enginePath, const QString& namePath)
 {
     _modelEnginePtr = std::make_unique<rw::ime::ModelEngine>(enginePath.toStdString(), namePath.toStdString());
 }
 
+void ImageProcessor::buildModelEngineOnnx(const QString& enginePath, const QString& namePath)
+{
+    _modelEnginePtrOnnx = std::make_unique<rw::ime::ModelEngineOnnxRuntime>(enginePath.toStdString(), namePath.toStdString());
+}
+
 cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::ime::ProcessRectanglesResult>& vecRecogResult)
 {
     auto& globalStruct = GlobalStructData::getInstance();
 
+
+    cv::Mat resultImage1;
+    std::vector<rw::ime::ProcessRectanglesResultOnnx > vecRecogResultOnnx;
+    // 使用 QtConcurrent::run 将 _modelEnginePtrOnnx->ProcessMask 放到后台线程中执行
+    QFuture<void> onnxFuture = QtConcurrent::run([&]() {
+        _modelEnginePtrOnnx->ProcessMask(frame.image, resultImage1, vecRecogResultOnnx);
+        });
+
     cv::Mat resultImage;
     cv::Mat maskImage = cv::Mat::zeros(frame.image.size(), CV_8UC1);
-    double t = (double)cv::getTickCount();
 
     _modelEnginePtr->ProcessMask(frame.image, resultImage, maskImage, vecRecogResult);
+
+    onnxFuture.waitForFinished();
+
 
     if (globalStruct.isOpenRemoveFunc || (globalStruct.isDebugMode)) {
         eliminationLogic(frame, resultImage, errorInfo, vecRecogResult);
@@ -490,6 +507,7 @@ void ImageProcessingModule::BuildModule()
         ImageProcessor* processor = new ImageProcessor(_queue, _mutex, _condition, workIndexCount, this);
         workIndexCount++;
         processor->buildModelEngine(modelEnginePath, modelNamePath);
+        processor->buildModelEngineOnnx(modelEnginePath, modelNamePath);
         processor->imageProcessingModuleIndex = index;
         connect(processor, &ImageProcessor::imageReady, this, &ImageProcessingModule::imageReady, Qt::QueuedConnection);
         _processors.push_back(processor);
