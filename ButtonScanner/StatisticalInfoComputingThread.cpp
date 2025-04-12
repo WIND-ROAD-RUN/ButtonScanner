@@ -33,7 +33,7 @@ void StatisticalInfoComputingThread::run()
     while (running) {
         auto olderWasteCount = statisticalInfo.wasteCount.load();
         // 每3秒计算一次
-        QThread::sleep(3); 
+        QThread::sleep(1); 
         // 计算去除率
         auto newWasteCount = statisticalInfo.wasteCount.load();
         auto rate = static_cast<double>(newWasteCount - olderWasteCount) *12;
