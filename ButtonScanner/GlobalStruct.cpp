@@ -240,7 +240,7 @@ void GlobalStructData::buildCamera1()
             camera1->motionRedix = 2;
             camera1->initCamera(cameraMetaData1, rw::rqw::CameraObjectTrigger::Hardware, 2);
             camera1->cameraIndex = 1;
-            camera1->setHeartbeatTime(1000);
+            camera1->setHeartbeatTime(5000);
             setCameraExposureTime(1, dlgExposureTimeSetConfig.expousureTime);
             QObject::connect(camera1.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
                 imageProcessingModule1.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
@@ -264,7 +264,7 @@ void GlobalStructData::buildCamera2()
             camera2->motionRedix = 4;
             camera2->initCamera(cameraMetaData2, rw::rqw::CameraObjectTrigger::Hardware, 4);
             camera2->cameraIndex = 2;
-            camera2->setHeartbeatTime(1000);
+            camera2->setHeartbeatTime(5000);
             setCameraExposureTime(2, dlgExposureTimeSetConfig.expousureTime);
             QObject::connect(camera2.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
                 imageProcessingModule2.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
@@ -287,7 +287,7 @@ void GlobalStructData::buildCamera3()
             camera3->motionRedix = 6;
             camera3->initCamera(cameraMetaData3, rw::rqw::CameraObjectTrigger::Hardware, 6);
             camera3->cameraIndex = 3;
-            camera3->setHeartbeatTime(1000);
+            camera3->setHeartbeatTime(5000);
             setCameraExposureTime(3, dlgExposureTimeSetConfig.expousureTime);
             QObject::connect(camera3.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
                 imageProcessingModule3.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
@@ -310,7 +310,7 @@ void GlobalStructData::buildCamera4()
             camera4->motionRedix = 8;
             camera4->initCamera(cameraMetaData4, rw::rqw::CameraObjectTrigger::Hardware, 8);
             camera4->cameraIndex = 4;
-            camera4->setHeartbeatTime(1000);
+            camera4->setHeartbeatTime(5000);
             setCameraExposureTime(4, dlgExposureTimeSetConfig.expousureTime);
             QObject::connect(camera4.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
                 imageProcessingModule4.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
