@@ -77,7 +77,7 @@ void GlobalStructData::buildImageProcessingModule(size_t num)
     auto processers2 = imageProcessingModule2->getProcessors();
     for (auto& processer : processers2) {
         QObject::connect(processer, &ImageProcessor::processResult,
-            this, &GlobalStructData::onCamera1ImageReady, Qt::QueuedConnection);
+            this, &GlobalStructData::onCamera2ImageReady, Qt::QueuedConnection);
     }
 
     imageProcessingModule3 = std::make_unique<ImageProcessingModule>(num, this);
@@ -88,7 +88,7 @@ void GlobalStructData::buildImageProcessingModule(size_t num)
     auto processers3 = imageProcessingModule3->getProcessors();
     for (auto& processer : processers3) {
         QObject::connect(processer, &ImageProcessor::processResult,
-            this, &GlobalStructData::onCamera1ImageReady, Qt::QueuedConnection);
+            this, &GlobalStructData::onCamera3ImageReady, Qt::QueuedConnection);
     }
 
     imageProcessingModule4 = std::make_unique<ImageProcessingModule>(num, this);
@@ -99,7 +99,7 @@ void GlobalStructData::buildImageProcessingModule(size_t num)
     auto processers4 = imageProcessingModule4->getProcessors();
     for (auto& processer : processers4) {
         QObject::connect(processer, &ImageProcessor::processResult,
-            this, &GlobalStructData::onCamera1ImageReady, Qt::QueuedConnection);
+            this, &GlobalStructData::onCamera4ImageReady, Qt::QueuedConnection);
     }
 
 }

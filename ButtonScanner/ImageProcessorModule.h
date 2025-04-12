@@ -73,6 +73,8 @@ private:
     QMutex& _mutex;
     QWaitCondition& _condition;
     int _workIndex;
+public:
+    int imageProcessingModuleIndex;
 };
 
 class ImageProcessingModule : public QObject {
