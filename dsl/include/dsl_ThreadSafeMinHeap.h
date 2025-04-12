@@ -7,6 +7,13 @@
 
 class ThreadSafeMinHeap {
 public:
+    // 构造函数，允许预设容量
+    explicit ThreadSafeMinHeap(size_t initialCapacity = 50) {
+        // 使用临时容器预分配容量
+        reserveCapacity(minHeap1_, initialCapacity);
+        reserveCapacity(minHeap2_, initialCapacity);
+    }
+
     // 插入元素
     void push(float value) {
         std::unique_lock<std::shared_mutex> lock(mutex_);
@@ -77,9 +84,23 @@ public:
         return true;
     }
 
+    // 获取当前存储的元素总数
+    size_t size() const {
+        std::shared_lock<std::shared_mutex> lock(mutex_);
+        return minHeap1_.size() + minHeap2_.size();
+    }
+
 private:
+    // 自定义的最小堆，底层容器为 std::vector
     std::priority_queue<float, std::vector<float>, std::greater<float>> minHeap1_; // 第一个最小堆
     std::priority_queue<float, std::vector<float>, std::greater<float>> minHeap2_; // 第二个最小堆
     mutable std::shared_mutex mutex_; // 读写锁
     size_t insertCount_ = 0; // 插入计数器，用于分片
+
+    // 工具函数：为优先队列的底层容器预分配容量
+    void reserveCapacity(std::priority_queue<float, std::vector<float>, std::greater<float>>& heap, size_t capacity) {
+        std::vector<float> temp;
+        temp.reserve(capacity);
+        heap = std::priority_queue<float, std::vector<float>, std::greater<float>>(std::greater<float>(), std::move(temp));
+    }
 };
