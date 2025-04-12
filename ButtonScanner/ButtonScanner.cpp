@@ -71,6 +71,7 @@ ButtonScanner::ButtonScanner(QWidget* parent)
 {
     ui->setupUi(this);
     initializeComponents();
+    GlobalStructData::getInstance().isOpenRemoveFunc = true;
 }
 
 ButtonScanner::~ButtonScanner()
