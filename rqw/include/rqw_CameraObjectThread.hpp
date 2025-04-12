@@ -52,9 +52,6 @@ namespace rw {
 
         signals:
             void frameCaptured(cv::Mat frame, float location, size_t index);
-            void frameCapturedWithMetaData(cv::Mat frame, rw::rqw::CameraMetaData cameraMetaData);
-            void frameCapturedWithoutArgs();
-
         protected:
             void run() override;
 
@@ -62,8 +59,6 @@ namespace rw {
             CameraPassiveObject* _cameraObject;
         private slots:
             void onFrameCaptured(cv::Mat frame, float location);
-            void onFrameCapturedWithMetaData(cv::Mat frame, rw::rqw::CameraMetaData cameraMetaData);
-            void onFrameCapturedWithoutArgs();
         };
     } // namespace rqw
 } // namespace rw

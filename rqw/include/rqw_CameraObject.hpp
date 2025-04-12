@@ -88,8 +88,6 @@ namespace rw {
             bool getConnectState();
         signals:
             void frameCaptured(cv::Mat frame, float);
-            void frameCapturedWithMetaData(cv::Mat frame, CameraMetaData cameraMetaData);
-            void frameCapturedWithoutArgs();
         };
     } // namespace rqw
 } // namespace rw

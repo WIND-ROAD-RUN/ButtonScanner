@@ -134,11 +134,8 @@ namespace rw
                     float location = 0;
                     cameraObject.motionPtr->GetModbus(motionInde, 1, location);
 
-                    cv::Mat matCopy;
-                    mat.copyTo(matCopy);
                     emit frameCaptured(std::move(mat), location);
-                    emit frameCapturedWithoutArgs();
-                    emit frameCapturedWithMetaData(std::move(matCopy), _cameraMetaData);
+    
                 });
 
             _cameraPassive->RegisterCallBackFunc();
