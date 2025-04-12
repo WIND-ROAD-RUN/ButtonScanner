@@ -16,4 +16,7 @@ struct PathGlobalStruct
 	static inline std::string AiLearnDataValImages = R"(val\images)";
 	static inline std::string AiLearnDataTranLabel = R"(tran\labels)";
 	static inline std::string AiLearnDataValLabel = R"(val\labels)";
+	static inline std::string AiLearnYoloPath = R"(D:\y\yolov5-master\)";
+
+
 };

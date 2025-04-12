@@ -28,7 +28,6 @@ private:
 	rw::ime::ModelEngine* _modelEnginePtr{ nullptr };
 	rw::cdm::ButtonScannerDlgAiLearn* aiLearnConfig{ nullptr };
 	QProcess  m_Process;
-	double progress;
 	int step{ 0 };
 	int moveLen{ 3000 };
 
@@ -36,11 +35,16 @@ private:
 	int widget_create_rawY{ 120 };
 	int widget_check_rawX{ 580 };
 	int widget_check_rawY{ 50 };
-	int widget_step_rawX{ 970 };
-	int widget_step_rawY{ 100 };
+	int widget_step_rawX{ 720 };
+	int widget_step_rawY{ 10 };
 	int widget_pic_rawX{ 20 };
 	int widget_pic_rawY{ 30 };
-
+	int widget_progress_rawX{ 50 };
+	int widget_progress_rawY{ 50 };
+	int txt_log_rawX{ 50 };
+	int txt_log_rawY{ 230 };
+	int pbtn_tranCompelete_rawX{ 350 };
+	int pbtn_tranCompelete_rawY{ 135 };
 
 private slots:
 	void pbtn_yes_clicked();
@@ -60,8 +64,9 @@ private slots:
 	void onFrameCapturedBad(cv::Mat frame, size_t index);
 	void pbtn_train_clicked();
 	void pbtn_test_clicked();
+	void pbtn_tranCompelete_clicked();
 
 	void ProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
-	void ProcessReadStandardOutput(); 
-	void ProcessReadStandardError();
+
+	void ProcessReadOut();
 };

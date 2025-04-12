@@ -34,42 +34,56 @@ void AiLearnTools::SaveImage(cv::Mat frame, std::string learnInfoSign, std::stri
 
 }
 
-QString AiLearnTools::SaveImagePath(std::string learnInfoSign)
-{
-	return   QString::fromStdString(PathGlobalStruct::AiLearnImage + "\\" + learnInfoSign + ".jpg");
-}
 
-QString AiLearnTools::SaveDataImagePath(std::string learnInfoSign, bool isBad, int cameraNum, std::string dateTimeStr)
+
+void AiLearnTools::MoveImageToDataSet(std::string learnInfoSign,bool isSeg)
 {
-	if (isBad) {
-		return QString::fromStdString(PathGlobalStruct::AiLearnData + "\\" + learnInfoSign + "\\" + PathGlobalStruct::AiLearnDataBad + std::to_string(cameraNum) + "\\" + dateTimeStr + ".jpg");
+	//定义文件夹
+	QDir tranImageDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "datasets\\mydataset\\tran\\images");
+	QDir tranLableDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "datasets\\mydataset\\tran\\labels");
+
+	QDir valImageDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "datasets\\mydataset\\val\\images");
+	QDir valLableDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "datasets\\mydataset\\val\\labels");
+
+	QDir tesImageDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "datasets\\mydataset\\tes");
+
+	if (isSeg) {
+		QDir tranImageDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\tran\\images");
+		QDir tranLableDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\tran\\labels");
+
+		QDir valImageDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\val\\images");
+		QDir valLableDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\val\\labels");
+
+		QDir tesImageDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\tes");
 	}
-	else {
-		return QString::fromStdString(PathGlobalStruct::AiLearnData + "\\" + learnInfoSign + "\\" + PathGlobalStruct::AiLearnDataGood + std::to_string(cameraNum) + "\\" + dateTimeStr + ".jpg");
-	}
-}
 
-QString AiLearnTools::SaveDataImageTranPath(std::string learnInfoSign)
-{
-	return QString::fromStdString(PathGlobalStruct::AiLearnData + "\\" + learnInfoSign + "\\" + PathGlobalStruct::AiLearnDataTranImages);
-}
+	//删除文件夹
+	tranImageDir.rmdir(tranImageDir.absolutePath());
+	tranLableDir.rmdir(tranLableDir.absolutePath());
 
-QString AiLearnTools::SaveDataImageValPath(std::string learnInfoSign)
-{
-	return QString::fromStdString(PathGlobalStruct::AiLearnData + "\\" + learnInfoSign + "\\" + PathGlobalStruct::AiLearnDataValImages);
-}
+	valImageDir.rmdir(valImageDir.absolutePath());
+	valLableDir.rmdir(valLableDir.absolutePath());
 
-void AiLearnTools::MakeDir(QString path)
-{
-	/*QFileInfo file(path);
-	if (!file.exists()) {*/
-	QDir dir = QFileInfo(path).absoluteDir();
-	if (!dir.exists()) {
-		dir.mkpath(".");
-	}
-	//}
-}
+	tesImageDir.rmdir(tesImageDir.absolutePath());
 
+	//创建文件夹
+	tranImageDir.mkdir(".");
+	tranLableDir.mkdir(".");
+
+	valImageDir.mkdir(".");
+	valLableDir.mkdir(".");
+
+	tesImageDir.mkdir(".");
+
+	//复制文件
+	CopyDirectory(SaveDataImageTranPath(learnInfoSign), tranImageDir.absolutePath());
+	CopyDirectory(SaveDataLabelTranPath(learnInfoSign), tranLableDir.absolutePath());
+
+	CopyDirectory(SaveDataImageValPath(learnInfoSign), valImageDir.absolutePath());
+	CopyDirectory(SaveDataLabelValPath(learnInfoSign), valLableDir.absolutePath());
+
+	CopyDirectory(SaveDataImageValPath(learnInfoSign), tesImageDir.absolutePath());
+}
 void AiLearnTools::SaveYoloText(std::string learnInfoSign, std::string dateTimeStr, bool  isBad, int checkType, int centerX, int centerY, int width, int height, int imageWidth, int imageHeight)
 {
 	std::string classId = isBad ? "0" : "1";
@@ -111,13 +125,13 @@ void AiLearnTools::SaveYoloText(std::string learnInfoSign, std::string dateTimeS
 				textStr += ",";
 		}
 	}
-	auto tranPath = PathGlobalStruct::AiLearnData + "\\" + learnInfoSign + "\\" + PathGlobalStruct::AiLearnDataTranLabel + "\\" + dateTimeStr + ".txt";
+	auto tranPath = SaveDataLabelTranPath(learnInfoSign).toStdString() + "\\" + dateTimeStr + ".txt";
 	MakeDir(QString::fromStdString(tranPath));
 	std::ofstream tranOfs(tranPath);
 	tranOfs << textStr;
 	tranOfs.close();
 
-	auto valPath = PathGlobalStruct::AiLearnData + "\\" + learnInfoSign + "\\" + PathGlobalStruct::AiLearnDataValLabel + "\\" + dateTimeStr + ".txt";
+	auto valPath = SaveDataLabelValPath(learnInfoSign).toStdString() + "\\" + dateTimeStr + ".txt";
 	MakeDir(QString::fromStdString(valPath));
 	std::ofstream valOfs(valPath);
 	valOfs << textStr;
@@ -148,6 +162,84 @@ std::string AiLearnTools::SaveYoloDataYaml(std::string learnInfoSign)
 	return savePath;
 }
 
+QString AiLearnTools::SaveImagePath(std::string learnInfoSign)
+{
+	return   QString::fromStdString(PathGlobalStruct::AiLearnImage + "\\" + learnInfoSign + ".jpg");
+}
+
+QString AiLearnTools::SaveDataImagePath(std::string learnInfoSign, bool isBad, int cameraNum, std::string dateTimeStr)
+{
+	if (isBad) {
+		return QString::fromStdString(PathGlobalStruct::AiLearnData + "\\" + learnInfoSign + "\\" + PathGlobalStruct::AiLearnDataBad + std::to_string(cameraNum) + "\\" + dateTimeStr + ".jpg");
+	}
+	else {
+		return QString::fromStdString(PathGlobalStruct::AiLearnData + "\\" + learnInfoSign + "\\" + PathGlobalStruct::AiLearnDataGood + std::to_string(cameraNum) + "\\" + dateTimeStr + ".jpg");
+	}
+}
+
+QString AiLearnTools::SaveDataImageTranPath(std::string learnInfoSign)
+{
+	return QString::fromStdString(PathGlobalStruct::AiLearnData + "\\" + learnInfoSign + "\\" + PathGlobalStruct::AiLearnDataTranImages);
+}
+
+QString AiLearnTools::SaveDataImageValPath(std::string learnInfoSign)
+{
+	return QString::fromStdString(PathGlobalStruct::AiLearnData + "\\" + learnInfoSign + "\\" + PathGlobalStruct::AiLearnDataValImages);
+}
+
+QString AiLearnTools::SaveDataLabelTranPath(std::string learnInfoSign)
+{
+	return	 QString::fromStdString(PathGlobalStruct::AiLearnData + "\\" + learnInfoSign + "\\" + PathGlobalStruct::AiLearnDataTranLabel);
+}
+
+QString AiLearnTools::SaveDataLabelValPath(std::string learnInfoSign)
+{
+	return	 QString::fromStdString(PathGlobalStruct::AiLearnData + "\\" + learnInfoSign + "\\" + PathGlobalStruct::AiLearnDataValLabel);
+}
+
+void AiLearnTools::CopyDirectory(const QString& srcPath, const QString& dstPath)
+{
+	QDir srcDir(srcPath);
+
+	QDir dstDir(dstPath);
+
+	// 遍历所有文件和子目录（排除 . 和 ..）
+	const QFileInfoList entries = srcDir.entryInfoList(
+		QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot
+	);
+
+	for (const QFileInfo& entry : entries) {
+		const QString srcItemPath = entry.absoluteFilePath();
+		const QString dstItemPath = dstDir.absoluteFilePath(entry.fileName());
+
+		if (entry.isDir()) {
+			// 递归复制子目录
+			CopyDirectory(srcItemPath, dstItemPath);
+		}
+		else if (entry.isFile()) {
+			// 处理文件覆盖
+			if (QFile::exists(dstItemPath)) {
+				QFile::remove(dstItemPath);
+			}
+			// 复制文件
+			if (!QFile::copy(srcItemPath, dstItemPath)) {
+				qWarning() << "Failed to copy file:" << srcItemPath << "to" << dstItemPath;
+				throw "AiLearnTools复制文件出错!";
+			}
+		}
+	}
+}
+
+void AiLearnTools::MakeDir(QString path)
+{
+	/*QFileInfo file(path);
+	if (!file.exists()) {*/
+	QDir dir = QFileInfo(path).absoluteDir();
+	if (!dir.exists()) {
+		dir.mkpath(".");
+	}
+	//}
+}
 
 QImage AiLearnTools::cvMat2QImage(const cv::Mat& mat) {
 	// 1. 检查输入有效性

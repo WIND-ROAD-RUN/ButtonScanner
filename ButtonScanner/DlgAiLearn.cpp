@@ -6,6 +6,7 @@
 #include <codecvt>
 #include <AiLearnTools.h>
 #include"ime_ModelEngine.h"
+#include <algorithm> // Add this include for std::sort
 
 DlgAiLearn::DlgAiLearn(QWidget* parent)
 	: QDialog(parent)
@@ -63,8 +64,11 @@ void DlgAiLearn::connects()
 	QObject::connect(ui->rbtn_station4, &QPushButton::clicked,
 		this, &DlgAiLearn::rbtn_station4_checked);
 
+	QObject::connect(ui->pbtn_tranCompelete, &QPushButton::clicked,
+		this, &DlgAiLearn::pbtn_tranCompelete_clicked);
 	QObject::connect(ui->pbtn_test, &QPushButton::clicked,
 		this, &DlgAiLearn::pbtn_test_clicked);
+
 }
 
 void DlgAiLearn::clearStep()
@@ -92,10 +96,17 @@ void DlgAiLearn::Init()
 
 	ui->rbtn_filterColorDiff->setEnabled(false);
 
+	ui->widget_progress->move(moveLen, 0);
 	ui->widget_create->move(widget_create_rawX, widget_create_rawY);
 	ui->widget_check->move(moveLen, 0);
 	ui->widget_step->move(moveLen, 0);
 	ui->widget_pic->move(moveLen, 0);
+	ui->pbtn_tranCompelete->move(moveLen, 0);
+
+	ui->txt_log->move(moveLen, 0);
+	ui->txt_log->setReadOnly(true);
+	ui->txt_log->setWordWrapMode(QTextOption::WordWrap);
+
 }
 
 void DlgAiLearn::ToStep1()
@@ -267,40 +278,28 @@ void DlgAiLearn::onFrameCapturedBad(cv::Mat frame, size_t index)
 
 void DlgAiLearn::pbtn_train_clicked()
 {
-	//训练之前删除之前的train
-	QDir dir("D:\\y\\yolov5-master\\runs\\train");
-	dir.rmdir(dir.absolutePath());
+	setAttribute(Qt::WA_TransparentForMouseEvents, true);
+	ui->pbtn_tranCompelete->setAttribute(Qt::WA_TransparentForMouseEvents, false);
+	ui->widget_progress->move(widget_progress_rawX, widget_progress_rawY);
+	ui->progress_learn->setRange(0, 100);
+	ui->label_state->setText("训练中");
+	ui->progress_learn->setValue(0);
+	ui->txt_log->setPlainText("");
+	ui->txt_log->move(txt_log_rawX, txt_log_rawY);
 
-	disconnect(&m_Process, &QProcess::readyReadStandardError, this, &DlgAiLearn::ProcessReadStandardError);//读就绪
-	disconnect(&m_Process, &QProcess::readyReadStandardOutput, this, &DlgAiLearn::ProcessReadStandardOutput);//标准读就绪
+	//训练之前删除之前的train
+	QDir dir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "runs\\train");
+	AiLearnTools::MoveImageToDataSet(aiLearnConfig->learnInfoSign, aiLearnConfig->checkType == 1);
+
+	disconnect(&m_Process, &QProcess::readyRead, this, &DlgAiLearn::ProcessReadOut);//读就绪
+	disconnect(&m_Process, &QProcess::readyReadStandardError, this, &DlgAiLearn::ProcessReadOut);//读就绪
 	disconnect(&m_Process, &QProcess::finished, this, &DlgAiLearn::ProcessFinished);//进程完成
-	connect(&m_Process, &QProcess::readyReadStandardError, this, &DlgAiLearn::ProcessReadStandardError);//读就绪
-	connect(&m_Process, &QProcess::readyReadStandardOutput, this, &DlgAiLearn::ProcessReadStandardOutput);//标准读就绪
+	connect(&m_Process, &QProcess::readyRead, this, &DlgAiLearn::ProcessReadOut);//读就绪
+	connect(&m_Process, &QProcess::readyReadStandardError, this, &DlgAiLearn::ProcessReadOut);//读就绪
 	connect(&m_Process, &QProcess::finished, this, &DlgAiLearn::ProcessFinished);//进程完成
 
-	m_Process.start("cmd.exe", { "/c", "activate yolov5 && cd /d D:\\y\\yolov5-master\\ && python train.py" });
-
-	//QString mess = "activate yolov5";
-	//mess.append("\r\n");
-	//char* ch;
-	//QByteArray ba = mess.toLatin1(); //
-	//ch = ba.data();
-	//m_Process.write(ch);
-	
-	//mess = "cd /d D:\\y\\yolov5-master\\";
-	//mess.append("\r\n");
-	//ba = mess.toLatin1(); //
-	//ch = ba.data();
-	//m_Process.write(ch);
-
-	//auto dataYamlPath = AiLearnTools::SaveYoloDataYaml(aiLearnConfig->learnInfoSign);
-	////mess = QString("python train.py --data \"%1\"").arg(QString::fromStdString(dataYamlPath));
-	//mess = QString("python train.py");
-	//mess.append("\r\n");
-	//ba = mess.toLatin1(); //
-	//ch = ba.data();
-	//m_Process.write(ch);
-
+	auto str = "activate yolov5 && cd /d " + PathGlobalStruct::AiLearnYoloPath + " && python train.py";
+	m_Process.start("cmd.exe", { "/c",str.c_str() });
 }
 
 void DlgAiLearn::pbtn_test_clicked()
@@ -310,74 +309,67 @@ void DlgAiLearn::pbtn_test_clicked()
 	// 读取图片到 cv::Mat
 	cv::Mat image = cv::imread(image_path, cv::IMREAD_COLOR);  // 默认以彩色模式读取
 
-	if (ui->rbtn_station1->isChecked())
-		onFrameCapturedBad(image, 1);
 	if (ui->rbtn_station2->isChecked())
 		onFrameCapturedBad(image, 2);
-	if (ui->rbtn_station3->isChecked())
+	else if (ui->rbtn_station3->isChecked())
 		onFrameCapturedBad(image, 3);
-	if (ui->rbtn_station4->isChecked())
+	else if (ui->rbtn_station4->isChecked())
 		onFrameCapturedBad(image, 4);
+	else
+		onFrameCapturedBad(image, 1);
+}
 
+void DlgAiLearn::pbtn_tranCompelete_clicked()
+{
+	ui->widget_progress->move(moveLen, 0);
+	ui->txt_log->move(moveLen, 0);
+	ui->pbtn_tranCompelete->move(moveLen, 0);
+	setAttribute(Qt::WA_TransparentForMouseEvents, false);
 }
 
 void DlgAiLearn::ProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
 	if (exitStatus == QProcess::NormalExit)
 	{
+		ui->pbtn_tranCompelete->move(pbtn_tranCompelete_rawX, pbtn_tranCompelete_rawY);
+		ui->label_state->setText("训练完成");
 		qDebug() << "进来";
-		//QProcess* processRobot_1 = new QProcess();
-		//processRobot_1->start("cmd.exe");
-		//processRobot_1->write("activate yolov5");
-		//processRobot_1->write("&&");
-		////qDebug()<<mess;
-		// //processRobot_1->write((char*)(mess.toStdString().c_str()));
-		//processRobot_1->write("cd /d D:\\y\\yolov5-6.0\\ && start python export.py\n ");
+		QProcess* processRobot_1 = new QProcess();
+		processRobot_1->start("cmd.exe");
+		processRobot_1->write("activate yolov5");
+		processRobot_1->write("&&");
 
+		processRobot_1->write("cd /d D:\\y\\yolov5-master\\ && start python export.py\n ");
 	}
 	else
 	{
 		//程序异常结束
 		qDebug() << "进来2";
-
 	}
 }
 
-void DlgAiLearn::ProcessReadStandardOutput()
+void DlgAiLearn::ProcessReadOut()
 {
-	qDebug() << "Output" << m_Process.readAllStandardOutput().toStdString();
-	//QString lastend = "Optimizer stripped from runs\\train\\exp\\weights\\last.pt";
-	//int bpos = msg.indexOf(lastend);
-	//if (bpos != -1)
-	//{
+	auto out = m_Process.readAllStandardError();
 
-	//	emit isfinishTrain();
+	QRegularExpression re(R"((?<!\d)(100|[1-9]?\d)%(?!\d))");  // 带捕获组的正则
+	QVector<int> results;
 
-	//}
-	//lastend = "--weights runs\\train\\exp\\weights\\best.onnx";
-	//bpos = msg.indexOf(lastend);
-	//if (bpos != -1)
-	//{
+	QRegularExpressionMatchIterator it = re.globalMatch(out);
+	while (it.hasNext()) {
+		QRegularExpressionMatch match = it.next();
+		results.append(
+			match.captured(1).toInt()
+		);
+	}
 
-	//	emit isfinishExport();
+	if (results.size() > 0) {
+		std::sort(results.begin(), results.end());
+		ui->progress_learn->setValue(results[results.length() - 1]);
+	}
 
-	//}
-
-	//dvalue = dvalue + 0.5;
-
-
-
-	//value = dvalue;
-	//if (value < 90)
-	//{
-
-	//	ui->progressBar->setValue(value);  // 当前进度
-
-	//}
-}
-
-void DlgAiLearn::ProcessReadStandardError()
-{
-	qDebug()<<"Error" << m_Process.readAllStandardError().toStdString();
+	auto log = QString::fromLocal8Bit(out.toStdString());
+	qDebug() << log;
+	ui->txt_log->appendPlainText(log);
 }
 
