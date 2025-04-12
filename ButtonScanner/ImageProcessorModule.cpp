@@ -440,7 +440,17 @@ void ImageProcessor::run()
                     break;
                 }
             }
-            frame = _queue.dequeue();
+            if (!_queue.isEmpty()) {
+                frame = _queue.dequeue();
+            }
+            else {
+                continue; // 如果队列仍为空，跳过本次循环
+            }
+        }
+
+        // 检查 frame 是否有效
+        if (frame.image.empty()) {
+            continue; // 跳过空帧
         }
 
         QVector<QString> errorInfo;
@@ -521,6 +531,10 @@ ImageProcessingModule::~ImageProcessingModule()
 
 void ImageProcessingModule::onFrameCaptured(cv::Mat frame, float location, size_t index)
 {
+    if (frame.empty()) {
+        return; // 跳过空帧
+    }
+
     QMutexLocker locker(&_mutex);
     MatInfo mat;
     mat.image = frame;
