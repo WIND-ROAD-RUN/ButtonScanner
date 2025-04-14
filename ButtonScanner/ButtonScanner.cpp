@@ -210,12 +210,13 @@ void ButtonScanner::destoryComponects()
     QCoreApplication::processEvents();
     globalStructData.destroyImageSaveEngine();
 
-    globalStructData.isDebugMode = false;
 
     // 保存配置
     loadingDialog.updateMessage("正在保存配置...");
     QCoreApplication::processEvents();
+    //关机自动关闭debug模式和采图
     globalStructData.mainWindowConfig.isDebugMode = false;
+    globalStructData.mainWindowConfig.isTakePictures = false;
     globalStructData.saveConfig();
 
     // 删除 UI
