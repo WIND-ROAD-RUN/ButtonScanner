@@ -548,7 +548,15 @@ void ButtonScanner::build_camera()
     globalStruct.cameraIp3 = "13";
     globalStruct.cameraIp4 = "14";
 
-    globalStruct.buildCamera();
+    auto build1Result=globalStruct.buildCamera1();
+	updateCameraLabelState(1, build1Result);
+    auto build2Result = globalStruct.buildCamera2();
+	updateCameraLabelState(2, build2Result);
+	auto build3Result = globalStruct.buildCamera3();
+	updateCameraLabelState(3, build3Result);
+	auto build4Result = globalStruct.buildCamera4();
+	updateCameraLabelState(4, build4Result);
+
     dlgExposureTimeSet->ResetCamera(); //启动设置相机为默认状态
 }
 

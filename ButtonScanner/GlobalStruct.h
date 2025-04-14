@@ -108,10 +108,10 @@ public:
     bool isTargetCamera(const QString& cameraIndex, const QString& targetName);
     rw::rqw::CameraMetaData cameraMetaDataCheck(const QString& cameraIndex, const QVector<rw::rqw::CameraMetaData>& cameraInfo);
     void buildCamera();
-    void buildCamera1();
-    void buildCamera2();
-    void buildCamera3();
-    void buildCamera4();
+    bool buildCamera1();
+    bool buildCamera2();
+    bool buildCamera3();
+    bool buildCamera4();
 
     void startMonitor();
     void destroyCamera();

@@ -209,7 +209,7 @@ void GlobalStructData::buildCamera()
     buildCamera4();
 }
 
-void GlobalStructData::buildCamera1()
+bool GlobalStructData::buildCamera1()
 {
     auto cameraList = rw::rqw::CheckCameraList();
 
@@ -226,15 +226,18 @@ void GlobalStructData::buildCamera1()
             setCameraExposureTime(1, dlgExposureTimeSetConfig.expousureTime);
             QObject::connect(camera1.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
                 imageProcessingModule1.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
+            return true;
         }
         catch (const std::exception&)
         {
+            return false;
             LOG()  "Camera 1 initialization failed.";
         }
     }
+    return false;
 }
 
-void GlobalStructData::buildCamera2()
+bool GlobalStructData::buildCamera2()
 {
     auto cameraList = rw::rqw::CheckCameraList();
     auto cameraMetaData2 = cameraMetaDataCheck(cameraIp2, cameraList);
@@ -249,15 +252,18 @@ void GlobalStructData::buildCamera2()
             setCameraExposureTime(2, dlgExposureTimeSetConfig.expousureTime);
             QObject::connect(camera2.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
                 imageProcessingModule2.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
+            return true;
         }
         catch (const std::exception&)
         {
+            return false;
             LOG()  "Camera 2 initialization failed.";
         }
     }
+    return false;
 }
 
-void GlobalStructData::buildCamera3()
+bool GlobalStructData::buildCamera3()
 {
     auto cameraList = rw::rqw::CheckCameraList();
     auto cameraMetaData3 = cameraMetaDataCheck(cameraIp3, cameraList);
@@ -272,15 +278,18 @@ void GlobalStructData::buildCamera3()
             setCameraExposureTime(3, dlgExposureTimeSetConfig.expousureTime);
             QObject::connect(camera3.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
                 imageProcessingModule3.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
+            return true;
         }
         catch (const std::exception&)
         {
+            return false;
             LOG()  "Camera 3 initialization failed.";
         }
     }
+    return false;
 }
 
-void GlobalStructData::buildCamera4()
+bool GlobalStructData::buildCamera4()
 {
     auto cameraList = rw::rqw::CheckCameraList();
     auto cameraMetaData4 = cameraMetaDataCheck(cameraIp4, cameraList);
@@ -295,12 +304,15 @@ void GlobalStructData::buildCamera4()
             setCameraExposureTime(4, dlgExposureTimeSetConfig.expousureTime);
             QObject::connect(camera4.get(), &rw::rqw::CameraPassiveThread::frameCaptured,
                 imageProcessingModule4.get(), &ImageProcessingModule::onFrameCaptured, Qt::DirectConnection);
+            return true;
         }
         catch (const std::exception&)
         {
+            return false;
             LOG()  "Camera 4 initialization failed.";
         }
     }
+    return false;
 }
 
 void GlobalStructData::startMonitor()

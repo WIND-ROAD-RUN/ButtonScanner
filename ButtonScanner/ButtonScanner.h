@@ -47,7 +47,7 @@ protected:
 public:
     ButtonScanner(QWidget* parent = nullptr);
 
-    ~ButtonScanner();
+    ~ButtonScanner() override;
 
 private:
     void set_radioButton();
