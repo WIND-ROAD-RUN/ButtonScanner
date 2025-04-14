@@ -49,6 +49,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 
     auto& systemConfig = globalStruct.dlgProduceLineSetConfig;
     auto& checkConfig = globalStruct.dlgProductSetConfig;
+
     double& pixEquivalent = systemConfig.pixelEquivalent1;
     switch (frame.index)
     {
@@ -70,7 +71,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
     cv::Mat resultMat;
     cv::Mat maskmat;
 
-    //std::vector<int> waiJingIndexs = std::vector<int>();
+    std::vector<int> waiJingIndexs = std::vector<int>();
     size_t holesCount = 0;
     //std::vector<int> daPoBianIndexs = std::vector<int>();
     //std::vector<int> qiKonIndexs = std::vector<int>();
@@ -85,7 +86,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
     {
         switch (processRectanglesResult[i].classId)
         {
-            //case 0: waiJingIndexs.push_back(i); continue;
+        case 0: waiJingIndexs.push_back(i); continue;
         case 1: holesCount++; continue;
             //case 2: daPoBianIndexs.push_back(i); continue;
             //case 3: qiKonIndexs.push_back(i); continue;
@@ -113,7 +114,8 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
         }
     }
 
-    /* if (checkConfig.outsideDiameterEnable)
+     //检查外径
+     if (checkConfig.outsideDiameterEnable)
      {
          ImagePainter::drawCirclesOnImage(resultImage, body);
          if (waiJingIndexs.size() == 0)
@@ -123,13 +125,13 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
          }
          else
          {
-             auto shangXiaPianCha = processRectanglesResult[waiJingIndexs[0]].right_bottom.second - processRectanglesResult[waiJingIndexs[0]].left_top.second - checkConfig->outsideDiameterValue / pixEquivalent;
-             auto zuoYouPianCha = processRectanglesResult[waiJingIndexs[0]].right_bottom.first - processRectanglesResult[waiJingIndexs[0]].left_top.first - checkConfig->outsideDiameterValue / pixEquivalent;
+             auto shangXiaPianCha = processRectanglesResult[waiJingIndexs[0]].right_bottom.second - processRectanglesResult[waiJingIndexs[0]].left_top.second - checkConfig.outsideDiameterValue / pixEquivalent;
+             auto zuoYouPianCha = processRectanglesResult[waiJingIndexs[0]].right_bottom.first - processRectanglesResult[waiJingIndexs[0]].left_top.first - checkConfig.outsideDiameterValue / pixEquivalent;
 
              auto shangXiaPianChaAbs = abs(shangXiaPianCha);
              auto zuoYouPianChaAbs = abs(zuoYouPianCha);
 
-             if (shangXiaPianChaAbs > checkConfig->outsideDiameterDeviation / pixEquivalent || zuoYouPianChaAbs > checkConfig->outsideDiameterDeviation / pixEquivalent)
+             if (shangXiaPianChaAbs > checkConfig.outsideDiameterDeviation / pixEquivalent || zuoYouPianChaAbs > checkConfig.outsideDiameterDeviation / pixEquivalent)
              {
                  isBad = true;
 
@@ -139,7 +141,9 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
                      errorInfo.emplace_back("外径 " + QString::number(zuoYouPianCha * pixEquivalent));
              }
          }
-     }*/
+     }
+
+    //检查孔数
     if (checkConfig.holesCountEnable)
     {
         ImagePainter::drawCirclesOnImage(resultImage, hole);
@@ -162,6 +166,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
             errorInfo.emplace_back("只找到" + QString::number(holesCount) + "个孔");
         }
     }
+
     /*if (checkConfig.apertureEnable)
     {
         for (int i = 0; i < konJingIndexs.size(); i++)
