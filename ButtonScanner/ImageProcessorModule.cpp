@@ -73,10 +73,10 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 
     std::vector<int> waiJingIndexs = std::vector<int>();
     size_t holesCount = 0;
-    //std::vector<int> daPoBianIndexs = std::vector<int>();
-    //std::vector<int> qiKonIndexs = std::vector<int>();
-    //std::vector<int> duYanIndexs = std::vector<int>();
-    //std::vector<int> moShiIndexs = std::vector<int>();
+    std::vector<int> daPoBianIndexs = std::vector<int>();
+    std::vector<int> qiKonIndexs = std::vector<int>();
+    std::vector<int> duYanIndexs = std::vector<int>();
+    std::vector<int> moShiIndexs = std::vector<int>();
     //std::vector<int> liaoTouIndexs = std::vector<int>();
     //std::vector<int> youQiIndexs = std::vector<int>();
     //std::vector<int> lieHenIndexs = std::vector<int>();
@@ -88,10 +88,10 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
         {
         case 0: waiJingIndexs.push_back(i); continue;
         case 1: holesCount++; continue;
-            //case 2: daPoBianIndexs.push_back(i); continue;
-            //case 3: qiKonIndexs.push_back(i); continue;
-            //case 4: duYanIndexs.push_back(i); continue;
-            //case 5: moShiIndexs.push_back(i); continue;
+        case 2: daPoBianIndexs.push_back(i); continue;
+        case 3: qiKonIndexs.push_back(i); continue;
+        case 4: duYanIndexs.push_back(i); continue;
+        case 5: moShiIndexs.push_back(i); continue;
             //case 6: liaoTouIndexs.push_back(i); continue;
             //case 7: youQiIndexs.push_back(i); continue;
             //case 8: lieHenIndexs.push_back(i); continue;
@@ -167,6 +167,63 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
         }
     }
 
+    //检查大破边
+	if (checkConfig.edgeDamageEnable)
+    {
+        for (int i = 0; i < daPoBianIndexs.size(); i++)
+        {
+            auto score = processRectanglesResult[daPoBianIndexs[i]].score;
+
+            if (score > checkConfig.edgeDamageSimilarity)
+            {
+                isBad = true;
+                errorInfo.emplace_back("破边 " + QString::number(score));
+            }
+        }
+    }
+
+	//检查气孔
+	if (checkConfig.poreEnable)
+    {
+        for (int i = 0; i < qiKonIndexs.size(); i++)
+        {
+            auto score = processRectanglesResult[qiKonIndexs[i]].score;
+            if (score > 30)
+            {
+                isBad = true;
+                errorInfo.emplace_back("气孔 " + QString::number(score));
+            }
+        }
+    }
+
+	//检查堵眼
+	if (checkConfig.blockEyeEnable)
+    {
+        for (int i = 0; i < duYanIndexs.size(); i++)
+        {
+            auto score = processRectanglesResult[duYanIndexs[i]].score;
+            if (score > 10)
+            {
+                isBad = true;
+                errorInfo.emplace_back("堵眼 " + QString::number(score));
+            }
+        }
+    }
+
+	//检查磨石
+	if (checkConfig.grindStoneEnable)
+    {
+        for (int i = 0; i < moShiIndexs.size(); i++)
+        {
+            auto score = processRectanglesResult[moShiIndexs[i]].score;
+            if (score > 0)
+            {
+                isBad = true;
+                errorInfo.emplace_back("磨石 " + QString::number(score));
+            }
+        }
+    }
+
     /*if (checkConfig.apertureEnable)
     {
         for (int i = 0; i < konJingIndexs.size(); i++)
@@ -189,37 +246,26 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
             }
         }
     }*/
-    /*if (checkConfig.holeCenterDistanceEnable)
-    {
-        for (int i = 0; i < konJingIndexs.size(); i++)
-        {
-            auto konCenterY = processRectanglesResult[konJingIndexs[i]].left_top.second + (processRectanglesResult[konJingIndexs[i]].right_bottom.second - processRectanglesResult[konJingIndexs[i]].left_top.second) / 2;
-            auto konCenterX = processRectanglesResult[konJingIndexs[i]].left_top.first + (processRectanglesResult[konJingIndexs[i]].right_bottom.first - processRectanglesResult[konJingIndexs[i]].left_top.first) / 2;
 
-            auto konXinJu = std::sqrt((konCenterX * frame.image.cols / 2) + (konCenterY * frame.image.rows / 2));
-            auto pianCha = konXinJu - checkConfig->holeCenterDistanceValue / pixEquivalent;
 
-            if (abs(pianCha) > checkConfig->holeCenterDistanceSimilarity / pixEquivalent)
-            {
-                isBad = true;
+    ///*if (checkConfig.holeCenterDistanceEnable)
+    //{
+    //    for (int i = 0; i < konJingIndexs.size(); i++)
+    //    {
+    //        auto konCenterY = processRectanglesResult[konJingIndexs[i]].left_top.second + (processRectanglesResult[konJingIndexs[i]].right_bottom.second - processRectanglesResult[konJingIndexs[i]].left_top.second) / 2;
+    //        auto konCenterX = processRectanglesResult[konJingIndexs[i]].left_top.first + (processRectanglesResult[konJingIndexs[i]].right_bottom.first - processRectanglesResult[konJingIndexs[i]].left_top.first) / 2;
 
-                errorInfo.emplace_back("孔心距 " + QString::number(pianCha * pixEquivalent));
-            }
-        }
-    }*/
-    /*if (checkConfig.edgeDamageEnable)
-    {
-        for (int i = 0; i < daPoBianIndexs.size(); i++)
-        {
-            auto score = processRectanglesResult[daPoBianIndexs[i]].score;
+    //        auto konXinJu = std::sqrt((konCenterX * frame.image.cols / 2) + (konCenterY * frame.image.rows / 2));
+    //        auto pianCha = konXinJu - checkConfig->holeCenterDistanceValue / pixEquivalent;
 
-            if (score > checkConfig->edgeDamageSimilarity)
-            {
-                isBad = true;
-                errorInfo.emplace_back("破边 " + QString::number(score));
-            }
-        }
-    }*/
+    //        if (abs(pianCha) > checkConfig->holeCenterDistanceSimilarity / pixEquivalent)
+    //        {
+    //            isBad = true;
+
+    //            errorInfo.emplace_back("孔心距 " + QString::number(pianCha * pixEquivalent));
+    //        }
+    //    }
+    //}*/
 
     /*if (checkConfig.brokenEyeEnable)
     {
@@ -252,19 +298,6 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
         }
     }*/
 
-    /*if (checkConfig.poreEnable)
-    {
-        for (int i = 0; i < qiKonIndexs.size(); i++)
-        {
-            auto score = processRectanglesResult[qiKonIndexs[i]].score;
-            if (score > 30)
-            {
-                isBad = true;
-                errorInfo.emplace_back("气孔 " + QString::number(score));
-            }
-        }
-    }*/
-
     /*if (checkConfig.paintEnable)
     {
         for (int i = 0; i < youQiIndexs.size(); i++)
@@ -274,32 +307,6 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
             {
                 isBad = true;
                 errorInfo.emplace_back("油漆 " + QString::number(score));
-            }
-        }
-    }*/
-
-    /*if (checkConfig.grindStoneEnable)
-    {
-        for (int i = 0; i < moShiIndexs.size(); i++)
-        {
-            auto score = processRectanglesResult[moShiIndexs[i]].score;
-            if (score > 0)
-            {
-                isBad = true;
-                errorInfo.emplace_back("磨石 " + QString::number(score));
-            }
-        }
-    }*/
-
-    /*if (checkConfig.blockEyeEnable)
-    {
-        for (int i = 0; i < duYanIndexs.size(); i++)
-        {
-            auto score = processRectanglesResult[duYanIndexs[i]].score;
-            if (score > 10)
-            {
-                isBad = true;
-                errorInfo.emplace_back("堵眼 " + QString::number(score));
             }
         }
     }*/
