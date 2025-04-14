@@ -45,8 +45,6 @@ class ImageProcessor : public QThread {
     Q_OBJECT
 
 public:
-    size_t frameCount = 1;
-public:
     ImageProcessor(QQueue<MatInfo>& queue,
         QMutex& mutex,
         QWaitCondition& condition,

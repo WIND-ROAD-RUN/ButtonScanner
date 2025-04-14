@@ -156,9 +156,6 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
             << std::setfill('0') << std::setw(2) << seconds << "_"
             << std::setfill('0') << std::setw(3) << millis;
 
-        // 打印孔径数量和当前时间
-        LOG()  "孔径数量: " << holesCount << " & " << checkConfig.holesCountValue
-            << " 当前时间: " << timeStream.str() << "相机id:" << imageProcessingModuleIndex << "frameCount:" << frameCount;
         if (holesCount != checkConfig.holesCountValue)
         {
             isBad = true;
@@ -475,16 +472,19 @@ void ImageProcessor::run()
             continue; // 跳过空帧
         }
 
-        QVector<QString> errorInfo;
-        errorInfo.reserve(20);
+        QVector<QString> processInfo;
+        processInfo.reserve(20);
 
         std::vector<rw::ime::ProcessRectanglesResult> vecRecogResult;
 
         // 开始计时
         auto startTime = std::chrono::high_resolution_clock::now();
 
+        //预留处理时间的位子
+        processInfo.emplace_back();
+
         // 调用 processAI 函数
-        cv::Mat result = processAI(frame, errorInfo, vecRecogResult);
+        cv::Mat result = processAI(frame, processInfo, vecRecogResult);
 
         // 结束计时
         auto endTime = std::chrono::high_resolution_clock::now();
@@ -492,13 +492,12 @@ void ImageProcessor::run()
         // 计算耗时
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
 
-        // 打印处理时间
-        LOG() "processAI 处理时间: " << duration << " ms" << "frameIndex" << frameCount;
-        frameCount++;
+		processInfo[0] = QString("处理时间: %1 ms").arg(duration);
 
         auto  image = cvMatToQImage(result);
+
         // 绘制错误信息
-        ImagePainter::drawTextOnImage(image, errorInfo, { ImagePainter::Color::Red,ImagePainter::Color::Green },0.8);
+        ImagePainter::drawTextOnImage(image, processInfo, { ImagePainter::Color::Green,ImagePainter::Color::Red },0.8);
 
         // 绘制错误定位
         drawErrorLocate(image, vecRecogResult);
