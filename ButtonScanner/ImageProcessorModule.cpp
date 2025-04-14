@@ -323,23 +323,32 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
         if (imageProcessingModuleIndex == 2 || imageProcessingModuleIndex == 4) {
             globalStruct.statisticalInfo.produceCount++;
         }
-        switch (imageProcessingModuleIndex)
-        {
-        case 1:
-            globalStruct.productPriorityQueue1.push(frame.location);
-            break;
-        case 2:
-            globalStruct.productPriorityQueue2.push(frame.location);
-            break;
-        case 3:
-            globalStruct.productPriorityQueue3.push(frame.location);
-            break;
-        case 4:
-            globalStruct.productPriorityQueue4.push(frame.location);
-            break;
-        default:
-            break;
+
+        if (isBad) {
+            float absLocation = frame.location;
+            if (absLocation<0) {
+                absLocation = -absLocation; // 将负值转换为正值
+            }
+           
+            switch (imageProcessingModuleIndex)
+            {
+            case 1:
+                globalStruct.productPriorityQueue1.push(absLocation);
+                break;
+            case 2:
+                globalStruct.productPriorityQueue2.push(absLocation);
+                break;
+            case 3:
+                globalStruct.productPriorityQueue3.push(absLocation);
+                break;
+            case 4:
+                globalStruct.productPriorityQueue4.push(absLocation);
+                break;
+            default:
+                break;
+            }
         }
+        
     }
 
     if (globalStruct.isTakePictures) {

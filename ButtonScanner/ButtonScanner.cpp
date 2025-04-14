@@ -634,8 +634,18 @@ void ButtonScanner::build_locationThread()
             //2，4相机
             float lacation2 = 0;
             //获取两个位置
-            zwy::scc::GlobalMotion::getInstance().motionPtr.get()->GetAxisLocation(0, lacation1);
-            zwy::scc::GlobalMotion::getInstance().motionPtr.get()->GetAxisLocation(0, lacation2);
+            zwy::scc::GlobalMotion::getInstance().motionPtr.get()->GetAxisLocation(2, lacation1);
+            zwy::scc::GlobalMotion::getInstance().motionPtr.get()->GetAxisLocation(1, lacation2);
+
+            if (lacation1<0)
+            {
+                lacation1 = -lacation1;
+            }
+
+            if (lacation2<0)
+            {
+                lacation2 = -lacation2;
+            }
 
             {
                 auto& work1 = GlobalStructData::getInstance().productPriorityQueue1;
@@ -649,7 +659,7 @@ void ButtonScanner::build_locationThread()
                 if (isGet != false && (abs(lacation1 - olderlacation1) >tifeijuli1))
                 {
                     work1.tryPopMin(olderlacation1);
-                    LOG()"输出";
+                    
                     //吹气
                     zwy::scc::GlobalMotion::getInstance().motionPtr.get()->SetIOOut(5, 5, true, tifeishijian1);
                 }

@@ -173,23 +173,23 @@ void MonitorCameraAndCardStateThread::check_cameraState4()
 
 void MonitorCameraAndCardStateThread::check_cardState()
 {
-    /*auto& globalStruct = GlobalStructData::getInstance();
+    //auto& globalStruct = GlobalStructData::getInstance();
 
-    auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
+    //auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
 
-    bool  boardState = motionPtr.get()->getBoardState();
-    if (boardState == false)
-    {
-        auto openRusult = motionPtr.get()->OpenBoard((char*)"192.168.0.11");
-        if (openRusult) {
-            emit updateCardLabelState(true);
-        }
-        else {
-            emit updateCardLabelState(false);
-        }
-    }
-    else
-    {
-        emit updateCardLabelState(true);
-    }*/
+    //bool  boardState = motionPtr.get()->getBoardState();
+    //if (boardState == false)
+    //{
+    //    auto openRusult = motionPtr.get()->OpenBoard((char*)"192.168.0.11");
+    //    if (openRusult) {
+    //        emit updateCardLabelState(true);
+    //    }
+    //    else {
+    //        emit updateCardLabelState(false);
+    //    }
+    //}
+    //else
+    //{
+    //    emit updateCardLabelState(true);
+    //}
 }
