@@ -32,6 +32,13 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 
     _modelEnginePtr->ProcessMask(frame.image, resultImage, maskImage, vecRecogResult);
 
+	LOG()  "vecRecogResult.size():" << vecRecogResult.size();
+
+    for (const auto & item: vecRecogResult)
+    {
+        LOG()  "class ID:"<<item.classId;
+    }
+
     onnxFuture.waitForFinished();
 
 
@@ -175,14 +182,15 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
         {
             auto score = processRectanglesResult[daPoBianIndexs[i]].score;
 
-            if (score > checkConfig.edgeDamageSimilarity)
+            LOG() score;
+
+            if (score >= checkConfig.edgeDamageSimilarity)
             {
                 isBad = true;
                 errorInfo.emplace_back("破边 " + QString::number(score));
             }
         }
     }
-    LOG() "----------";
 	//检查气孔
 	if (checkConfig.poreEnable)
     {
@@ -262,7 +270,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
             auto height = abs(processRectanglesResult[lieHenIndexs[i]].right_bottom.second - processRectanglesResult[lieHenIndexs[i]].left_top.second);
 
             auto score = processRectanglesResult[lieHenIndexs[i]].score;
-            if (score > checkConfig.crackSimilarity)
+            if (score >= checkConfig.crackSimilarity)
             {
                 isBad = true;
                 errorInfo.emplace_back("裂痕 " + QString::number(score));
