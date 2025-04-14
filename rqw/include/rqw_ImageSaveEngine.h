@@ -45,7 +45,7 @@ namespace rw {
             QWaitCondition condition;
             std::atomic<bool> stopFlag;
 
-            const int maxQueueSize = 500; // 队列最大容量
+            const int maxQueueSize = 80; // 队列最大容量
             const int batchSize = 20;     // 每次批量保存的图片数量
             int threadCount;              // 消费者线程数量
             std::vector<QThread*> workerThreads;
