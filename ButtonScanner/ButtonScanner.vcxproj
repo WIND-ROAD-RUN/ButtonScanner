@@ -197,6 +197,8 @@ xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6OnnxRuntime\dll\*.dll" "$(Out
     <Library Include="..\ThirdLibrary\MVS\Libraries\windows64\MvCameraControl.lib" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="image\close.png" />
+    <Image Include="image\exit.png" />
     <Image Include="image\product.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -52,6 +52,7 @@ private slots:
     void pbtn_accelerationAndDeceleration_clicked();
     void pbtn_codeWheel_clicked();
     void pbtn_pulseFactor_clicked();
+    void pbtn_close_clicked();
 
     void cbox_powerOn_checked(bool ischeck);
     void cbox_blowingEnable1_checked(bool ischeck);

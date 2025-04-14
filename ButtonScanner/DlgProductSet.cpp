@@ -493,6 +493,6 @@ void DlgProductSet::rbtn_materialHeadEnable_checked(bool checked)
 
 void DlgProductSet::pbtn_close_clicked() {
     auto& GlobalStructData = GlobalStructData::getInstance();
-    GlobalStructData.saveConfig();
+    GlobalStructData.saveDlgProductSetConfig();
     this->close();
 }

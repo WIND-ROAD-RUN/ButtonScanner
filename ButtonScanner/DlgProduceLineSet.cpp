@@ -72,6 +72,8 @@ void DlgProduceLineSet::build_connect()
         this, &DlgProduceLineSet::pbtn_blowDistance3_clicked);
     QObject::connect(ui->pbtn_blowDistance4, &QPushButton::clicked,
         this, &DlgProduceLineSet::pbtn_blowDistance4_clicked);
+	QObject::connect(ui->pbtn_close, &QPushButton::clicked,
+		this, &DlgProduceLineSet::pbtn_close_clicked);
 
     QObject::connect(ui->pbtn_blowTime1, &QPushButton::clicked,
         this, &DlgProduceLineSet::pbtn_blowTime1_clicked);
@@ -406,6 +408,13 @@ void DlgProduceLineSet::pbtn_pulseFactor_clicked() {
     GlobalStructData.dlgProduceLineSetConfig.pulseFactor = ui->pbtn_pulseFactor->text().toDouble();
 
     delete numKeyBoard;
+}
+
+void DlgProduceLineSet::pbtn_close_clicked()
+{
+	auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.saveDlgProduceLineSetConfig();
+	this->close();
 }
 
 void DlgProduceLineSet::cbox_powerOn_checked(bool ischeck)

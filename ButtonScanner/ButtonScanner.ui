@@ -132,10 +132,27 @@
      <layout class="QVBoxLayout" name="vLayout_SideBar" stretch="4,8,3,2,1">
       <item>
        <widget class="QGroupBox" name="groupBox_head">
+        <property name="styleSheet">
+         <string notr="true">QGroupBox {
+    font-size: 20px;
+    font-weight: bold;
+    background-color: rgb(81, 81, 81);
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+	border-radius: 15px
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 5px;
+    color: #2c3e50;
+}</string>
+        </property>
         <property name="title">
          <string/>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <layout class="QVBoxLayout" name="verticalLayout_3" stretch="2,0,3">
          <item>
           <layout class="QHBoxLayout" name="hLayout_title" stretch="3,2">
            <item>
@@ -145,6 +162,15 @@
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+       font-size: 30px;        
+       font-weight: bold;        
+       color: rgb(255, 255, 255);         
+       padding: 5px 5px;     
+       border-bottom: 2px solid #cccccc; 
+    }</string>
              </property>
              <property name="text">
               <string>纽扣检测</string>
@@ -159,8 +185,30 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px 8px 36px; 
+    font-size: 14px;
+    qproperty-icon: url(:/ButtonScanner/image/close.png);  
+    qproperty-iconSize: 30px 30px;
+}
+
+QPushButton:hover {
+    background-color: #ff6666;
+}
+
+QPushButton:pressed {
+    background-color: #cc0000;
+}</string>
+             </property>
              <property name="text">
-              <string>退出</string>
+              <string/>
+             </property>
+             <property name="shortcut">
+              <string notr="true"/>
              </property>
             </widget>
            </item>
@@ -168,6 +216,11 @@
          </item>
          <item>
           <widget class="Line" name="line_2">
+           <property name="styleSheet">
+            <string notr="true">QLine {
+       color: rgb(194, 194, 194);       
+    }</string>
+           </property>
            <property name="orientation">
             <enum>Qt::Orientation::Horizontal</enum>
            </property>
@@ -179,6 +232,15 @@
             <layout class="QVBoxLayout" name="vLayout_cameraStates" stretch="3,2">
              <item>
               <widget class="QLabel" name="label_cameraStateTitle">
+               <property name="styleSheet">
+                <string notr="true">QLabel {
+       font-size: 15px;        
+       font-weight: bold;        
+       color: rgb(232, 232, 232);         
+       padding: 5px 5px;     
+       border-bottom: 2px solid #cccccc; 
+    }</string>
+               </property>
                <property name="text">
                 <string>相机状态</string>
                </property>
@@ -222,6 +284,15 @@
             <layout class="QVBoxLayout" name="vLayout_cardState" stretch="3,2">
              <item>
               <widget class="QLabel" name="label_cardStateTitle">
+               <property name="styleSheet">
+                <string notr="true">QLabel {
+       font-size: 15px;        
+       font-weight: bold;        
+       color: rgb(232, 232, 232);         
+       padding: 5px 5px;     
+       border-bottom: 2px solid #cccccc; 
+    }</string>
+               </property>
                <property name="text">
                 <string>板卡状态</string>
                </property>
@@ -243,6 +314,23 @@
       </item>
       <item>
        <widget class="QGroupBox" name="gBox_infor">
+        <property name="styleSheet">
+         <string notr="true">QGroupBox {
+    font-size: 20px;
+    font-weight: bold;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+	border-radius: 15px
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 5px;
+    color: #2c3e50;
+}</string>
+        </property>
         <property name="title">
          <string/>
         </property>
@@ -251,6 +339,15 @@
           <layout class="QHBoxLayout" name="hLayout_info" stretch="1,1">
            <item>
             <widget class="QLabel" name="label_info">
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+       font-size: 20px;        
+       font-weight: bold;        
+       color:  rgb(141, 141, 141);       
+       padding: 5px 5px;     
+       border-bottom: 2px solid #cccccc; 
+    }</string>
+             </property>
              <property name="text">
               <string>统计信息</string>
              </property>
@@ -267,6 +364,25 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
+             </property>
              <property name="text">
               <string>产量清零</string>
              </property>
@@ -278,6 +394,15 @@
           <layout class="QHBoxLayout" name="hLayout_produceTotal">
            <item>
             <widget class="QLabel" name="label_produceTotal">
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+       font-size: 17px;        
+       font-weight: bold;        
+       color:  rgb(141, 141, 141);       
+       padding: 5px 5px;     
+       border-bottom: 2px solid #cccccc; 
+    }</string>
+             </property>
              <property name="text">
               <string>生产总量</string>
              </property>
@@ -288,6 +413,15 @@
            </item>
            <item>
             <widget class="QLabel" name="label_produceTotalValue">
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+       font-size: 20px;        
+       font-weight: bold;        
+       color:  rgb(89, 89, 89);       
+       padding: 5px 5px;     
+       border-bottom: 2px solid #cccccc; 
+    }</string>
+             </property>
              <property name="text">
               <string>0</string>
              </property>
@@ -299,6 +433,15 @@
           <layout class="QHBoxLayout" name="hLayout_wasteProducts">
            <item>
             <widget class="QLabel" name="label_wasteProducts">
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+       font-size: 17px;        
+       font-weight: bold;        
+       color:  rgb(141, 141, 141);       
+       padding: 5px 5px;     
+       border-bottom: 2px solid #cccccc; 
+    }</string>
+             </property>
              <property name="text">
               <string>废品总量</string>
              </property>
@@ -309,6 +452,15 @@
            </item>
            <item>
             <widget class="QLabel" name="label_wasteProductsValue">
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+       font-size: 20px;        
+       font-weight: bold;        
+       color:   rgb(255, 0, 0);      
+       padding: 5px 5px;     
+       border-bottom: 2px solid #cccccc; 
+    }</string>
+             </property>
              <property name="text">
               <string>0</string>
              </property>
@@ -320,6 +472,15 @@
           <layout class="QHBoxLayout" name="hLayout_productionYield">
            <item>
             <widget class="QLabel" name="label_productionYield">
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+       font-size: 17px;        
+       font-weight: bold;        
+       color:  rgb(141, 141, 141);       
+       padding: 5px 5px;     
+       border-bottom: 2px solid #cccccc; 
+    }</string>
+             </property>
              <property name="text">
               <string>生产良率</string>
              </property>
@@ -330,6 +491,15 @@
            </item>
            <item>
             <widget class="QLabel" name="label_productionYieldValue">
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+       font-size: 20px;        
+       font-weight: bold;        
+       color:  rgb(89, 89, 89);       
+       padding: 5px 5px;     
+       border-bottom: 2px solid #cccccc; 
+    }</string>
+             </property>
              <property name="text">
               <string>0.00%</string>
              </property>
@@ -341,6 +511,64 @@
           <layout class="QHBoxLayout" name="hLayout_runMode">
            <item>
             <widget class="QRadioButton" name="rbtn_debug">
+             <property name="styleSheet">
+              <string notr="true">QRadioButton {
+    spacing: 8px;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;        
+    color:  rgb(0, 0, 0);       
+
+}
+
+/* 未选中状态 */
+QRadioButton::indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: 2px solid #999;
+    background: #ffffff;
+}
+
+/* 悬停效果 */
+QRadioButton::indicator:hover {
+    border: 2px solid #666;
+}
+
+/* 选中状态 */
+QRadioButton::indicator:checked {
+    border: 2px solid #2196F3;
+}
+
+/* 选中时的内圆 */
+QRadioButton::indicator:checked {
+    background-color: qradialgradient(
+        cx:0.5, cy:0.5,
+        radius:0.4,
+        fx:0.5, fy:0.5,
+        stop:0 #2196F3,
+        stop:1 transparent
+    );
+}
+
+/* 禁用状态 */
+QRadioButton::indicator:disabled {
+    border: 2px solid #ccc;
+    background: #eee;
+}
+
+/* 点击动画效果 */
+QRadioButton::indicator:pressed {
+    border: 2px solid #1565C0;
+    background-color: qradialgradient(
+        cx:0.5, cy:0.5,
+        radius:0.5,
+        fx:0.5, fy:0.5,
+        stop:0 #BBDEFB,
+        stop:1 transparent
+    );
+}</string>
+             </property>
              <property name="text">
               <string>调试模式</string>
              </property>
@@ -348,6 +576,64 @@
            </item>
            <item>
             <widget class="QRadioButton" name="rbtn_takePicture">
+             <property name="styleSheet">
+              <string notr="true">QRadioButton {
+    spacing: 8px;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;        
+    color:  rgb(0, 0, 0);       
+
+}
+
+/* 未选中状态 */
+QRadioButton::indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: 2px solid #999;
+    background: #ffffff;
+}
+
+/* 悬停效果 */
+QRadioButton::indicator:hover {
+    border: 2px solid #666;
+}
+
+/* 选中状态 */
+QRadioButton::indicator:checked {
+    border: 2px solid #2196F3;
+}
+
+/* 选中时的内圆 */
+QRadioButton::indicator:checked {
+    background-color: qradialgradient(
+        cx:0.5, cy:0.5,
+        radius:0.4,
+        fx:0.5, fy:0.5,
+        stop:0 #2196F3,
+        stop:1 transparent
+    );
+}
+
+/* 禁用状态 */
+QRadioButton::indicator:disabled {
+    border: 2px solid #ccc;
+    background: #eee;
+}
+
+/* 点击动画效果 */
+QRadioButton::indicator:pressed {
+    border: 2px solid #1565C0;
+    background-color: qradialgradient(
+        cx:0.5, cy:0.5,
+        radius:0.5,
+        fx:0.5, fy:0.5,
+        stop:0 #BBDEFB,
+        stop:1 transparent
+    );
+}</string>
+             </property>
              <property name="text">
               <string>采图</string>
              </property>
@@ -362,6 +648,25 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
            </property>
            <property name="text">
             <string>打开存储位置</string>
@@ -379,6 +684,70 @@
           <layout class="QHBoxLayout" name="hLayout_remove">
            <item>
             <widget class="QRadioButton" name="rbtn_removeFunc">
+             <property name="styleSheet">
+              <string notr="true">QRadioButton {
+    spacing: 8px;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;        
+    color:  rgb(0, 0, 0);       
+
+}
+
+/* 未选中状态 */
+QRadioButton::indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: 2px solid #999;
+    background: #ffffff;
+}
+
+/* 悬停效果 */
+QRadioButton::indicator:hover {
+    border: 2px solid #666;
+}
+
+/* 选中状态 */
+QRadioButton::indicator:checked {
+    border: 2px solid #2196F3;
+}
+
+/* 选中时的内圆 */
+QRadioButton::indicator:checked {
+    background-color: qradialgradient(
+        cx:0.5, cy:0.5,
+        radius:0.4,
+        fx:0.5, fy:0.5,
+        stop:0 #2196F3,
+        stop:1 transparent
+    );
+}
+
+/* 禁用状态 */
+QRadioButton::indicator:disabled {
+    border: 2px solid #ccc;
+    background: #eee;
+}
+
+/* 选中时的文字颜色 */
+QRadioButton:checked {
+    color: #2196F3;
+    font-weight: 500;
+}
+
+/* 点击动画效果 */
+QRadioButton::indicator:pressed {
+    border: 2px solid #1565C0;
+    background-color: qradialgradient(
+        cx:0.5, cy:0.5,
+        radius:0.5,
+        fx:0.5, fy:0.5,
+        stop:0 #BBDEFB,
+        stop:1 transparent
+    );
+}</string>
+             </property>
              <property name="text">
               <string>剔废功能</string>
              </property>
@@ -386,6 +755,15 @@
            </item>
            <item>
             <widget class="QLabel" name="label_removeRate">
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+       font-size: 20px;        
+       font-weight: bold;        
+       color:  rgb(89, 89, 89);       
+       padding: 5px 5px;     
+       border-bottom: 2px solid #cccccc; 
+    }</string>
+             </property>
              <property name="text">
               <string>0个/min</string>
              </property>
@@ -398,6 +776,23 @@
       </item>
       <item>
        <widget class="QGroupBox" name="groupBox_3">
+        <property name="styleSheet">
+         <string notr="true">QGroupBox {
+    font-size: 20px;
+    font-weight: bold;
+    background-color: rgb(181, 181, 181);
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+	border-radius: 15px
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 5px;
+    color: #2c3e50;
+}</string>
+        </property>
         <property name="title">
          <string/>
         </property>
@@ -409,6 +804,63 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QRadioButton {
+    spacing: 8px;
+    font-size: 14px;
+    color: #333; /* 文字颜色始终保持这个值 */
+}
+
+/* 未选中状态 */
+QRadioButton::indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: 2px solid #999;
+    background: #ffffff;
+}
+
+/* 悬停效果 */
+QRadioButton::indicator:hover {
+    border: 2px solid #666;
+}
+
+/* 选中状态 */
+QRadioButton::indicator:checked {
+    border: 2px solid #FFD700; /* 黄色边框 */
+}
+
+/* 选中时的内圆 */
+QRadioButton::indicator:checked {
+    background-color: qradialgradient(
+        cx:0.5, cy:0.5,
+        radius:0.4,
+        fx:0.5, fy:0.5,
+        stop:0 #FFD700,
+        stop:1 transparent
+    );
+}
+
+/* 禁用状态 */
+QRadioButton::indicator:disabled {
+    border: 2px solid #ccc;
+    background: #eee;
+}
+
+/* 移除文字颜色修改的代码 */
+
+/* 点击动画效果 */
+QRadioButton::indicator:pressed {
+    border: 2px solid #CC9900;
+    background-color: qradialgradient(
+        cx:0.5, cy:0.5,
+        radius:0.5,
+        fx:0.5, fy:0.5,
+        stop:0 #FFF59D,
+        stop:1 transparent
+    );
+}</string>
            </property>
            <property name="text">
             <string>上光源</string>
@@ -423,6 +875,63 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="styleSheet">
+            <string notr="true">QRadioButton {
+    spacing: 8px;
+    font-size: 14px;
+    color: #333; /* 文字颜色始终保持这个值 */
+}
+
+/* 未选中状态 */
+QRadioButton::indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: 2px solid #999;
+    background: #ffffff;
+}
+
+/* 悬停效果 */
+QRadioButton::indicator:hover {
+    border: 2px solid #666;
+}
+
+/* 选中状态 */
+QRadioButton::indicator:checked {
+    border: 2px solid #FFD700; /* 黄色边框 */
+}
+
+/* 选中时的内圆 */
+QRadioButton::indicator:checked {
+    background-color: qradialgradient(
+        cx:0.5, cy:0.5,
+        radius:0.4,
+        fx:0.5, fy:0.5,
+        stop:0 #FFD700,
+        stop:1 transparent
+    );
+}
+
+/* 禁用状态 */
+QRadioButton::indicator:disabled {
+    border: 2px solid #ccc;
+    background: #eee;
+}
+
+/* 移除文字颜色修改的代码 */
+
+/* 点击动画效果 */
+QRadioButton::indicator:pressed {
+    border: 2px solid #CC9900;
+    background-color: qradialgradient(
+        cx:0.5, cy:0.5,
+        radius:0.5,
+        fx:0.5, fy:0.5,
+        stop:0 #FFF59D,
+        stop:1 transparent
+    );
+}</string>
+           </property>
            <property name="text">
             <string>侧光源</string>
            </property>
@@ -436,6 +945,63 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="styleSheet">
+            <string notr="true">QRadioButton {
+    spacing: 8px;
+    font-size: 14px;
+    color: #333; /* 文字颜色始终保持这个值 */
+}
+
+/* 未选中状态 */
+QRadioButton::indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: 2px solid #999;
+    background: #ffffff;
+}
+
+/* 悬停效果 */
+QRadioButton::indicator:hover {
+    border: 2px solid #666;
+}
+
+/* 选中状态 */
+QRadioButton::indicator:checked {
+    border: 2px solid #FFD700; /* 黄色边框 */
+}
+
+/* 选中时的内圆 */
+QRadioButton::indicator:checked {
+    background-color: qradialgradient(
+        cx:0.5, cy:0.5,
+        radius:0.4,
+        fx:0.5, fy:0.5,
+        stop:0 #FFD700,
+        stop:1 transparent
+    );
+}
+
+/* 禁用状态 */
+QRadioButton::indicator:disabled {
+    border: 2px solid #ccc;
+    background: #eee;
+}
+
+/* 移除文字颜色修改的代码 */
+
+/* 点击动画效果 */
+QRadioButton::indicator:pressed {
+    border: 2px solid #CC9900;
+    background-color: qradialgradient(
+        cx:0.5, cy:0.5,
+        radius:0.5,
+        fx:0.5, fy:0.5,
+        stop:0 #FFF59D,
+        stop:1 transparent
+    );
+}</string>
+           </property>
            <property name="text">
             <string>下光源</string>
            </property>
@@ -448,6 +1014,25 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
            </property>
            <property name="text">
             <string>数值</string>
@@ -471,6 +1056,25 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
+           </property>
            <property name="text">
             <string>分数</string>
            </property>
@@ -484,6 +1088,25 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
+           </property>
            <property name="text">
             <string>新物料</string>
            </property>
@@ -496,6 +1119,25 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
            </property>
            <property name="text">
             <string>设置</string>
@@ -519,6 +1161,61 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="styleSheet">
+            <string notr="true">QRadioButton {
+    spacing: 8px;
+    font-size: 14px;
+    color: #333;  /* 保持原始文字颜色 */
+}
+
+/* 未选中状态 */
+QRadioButton::indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: 2px solid #999;
+    background: #ffffff;
+}
+
+/* 悬停效果 */
+QRadioButton::indicator:hover {
+    border: 2px solid #666;
+}
+
+/* 选中状态 */
+QRadioButton::indicator:checked {
+    border: 2px solid #FF6B00;  /* 橙色边框 */
+}
+
+/* 选中时的内圆 */
+QRadioButton::indicator:checked {
+    background-color: qradialgradient(
+        cx:0.5, cy:0.5,
+        radius:0.4,
+        fx:0.5, fy:0.5,
+        stop:0 #FF6B00,  /* 主橙色 */
+        stop:1 transparent
+    );
+}
+
+/* 禁用状态 */
+QRadioButton:::disabled {
+    border: 2px solid #ccc;
+    background: #eee;
+}
+
+/* 点击动画效果 */
+QRadioButton::indicator:pressed {
+    border: 2px solid #CC5500;  /* 深橙色边框 */
+    background-color: qradialgradient(
+        cx:0.5, cy:0.5,
+        radius:0.5,
+        fx:0.5, fy:0.5,
+        stop:0 #FFD8B3,  /* 浅橙色渐变 */
+        stop:1 transparent
+    );
+}</string>
+           </property>
            <property name="text">
             <string>缺陷</string>
            </property>
@@ -531,6 +1228,61 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QRadioButton {
+    spacing: 8px;
+    font-size: 14px;
+    color: #333;  /* 保持原始文字颜色 */
+}
+
+/* 未选中状态 */
+QRadioButton::indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: 2px solid #999;
+    background: #ffffff;
+}
+
+/* 悬停效果 */
+QRadioButton::indicator:hover {
+    border: 2px solid #666;
+}
+
+/* 选中状态 */
+QRadioButton::indicator:checked {
+    border: 2px solid #FF6B00;  /* 橙色边框 */
+}
+
+/* 选中时的内圆 */
+QRadioButton::indicator:checked {
+    background-color: qradialgradient(
+        cx:0.5, cy:0.5,
+        radius:0.4,
+        fx:0.5, fy:0.5,
+        stop:0 #FF6B00,  /* 主橙色 */
+        stop:1 transparent
+    );
+}
+
+/* 禁用状态 */
+QRadioButton:::disabled {
+    border: 2px solid #ccc;
+    background: #eee;
+}
+
+/* 点击动画效果 */
+QRadioButton::indicator:pressed {
+    border: 2px solid #CC5500;  /* 深橙色边框 */
+    background-color: qradialgradient(
+        cx:0.5, cy:0.5,
+        radius:0.5,
+        fx:0.5, fy:0.5,
+        stop:0 #FFD8B3,  /* 浅橙色渐变 */
+        stop:1 transparent
+    );
+}</string>
            </property>
            <property name="text">
             <string>正反</string>

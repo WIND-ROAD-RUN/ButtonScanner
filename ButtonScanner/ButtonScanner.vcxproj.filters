@@ -144,6 +144,12 @@
     <Image Include="image\product.png">
       <Filter>image</Filter>
     </Image>
+    <Image Include="image\close.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\exit.png">
+      <Filter>image</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ThreadSafePriorityQueue.h">
