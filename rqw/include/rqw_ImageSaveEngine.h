@@ -24,6 +24,8 @@ namespace rw {
             // 设置根路径
             void setRootPath(const QString& rootPath);
 
+            QString getRootPath();
+
             // 修改后的 pushImage 方法
             void pushImage(const QImage& image, const QString& classify, const QString& namePrefix);
 

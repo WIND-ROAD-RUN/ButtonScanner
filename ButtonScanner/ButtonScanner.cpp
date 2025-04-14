@@ -324,6 +324,9 @@ void ButtonScanner::build_connect()
 
     QObject::connect(ui->pbtn_resetProduct, &QPushButton::clicked,
         this, &ButtonScanner::pbtn_resetProduct_clicked);
+
+	QObject::connect(ui->pbtn_openSaveLocation, &QPushButton::clicked,
+		this, &ButtonScanner::pbtn_openSaveLocation_clicked);
 }
 
 void ButtonScanner::read_config()
@@ -1012,6 +1015,13 @@ void ButtonScanner::pbtn_resetProduct_clicked()
     globalStruct.statisticalInfo.productionYield = 0;
     globalStruct.statisticalInfo.removeRate = 0;
     globalStruct.saveConfig();
+}
+
+void ButtonScanner::pbtn_openSaveLocation_clicked()
+{
+	auto& globalStruct = GlobalStructData::getInstance();
+	QString imageSavePath = globalStruct.imageSaveEngine->getRootPath();
+	QDesktopServices::openUrl(QUrl::fromLocalFile(imageSavePath));
 }
 
 void ButtonScanner::rbtn_debug_ckecked(bool checked)

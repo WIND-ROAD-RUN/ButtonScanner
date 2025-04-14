@@ -21,6 +21,16 @@ namespace rw {
             }
         }
 
+        QString ImageSaveEngine::getRootPath()
+        {
+            QMutexLocker locker(&mutex);
+			if (rootPath.isEmpty()) {
+				std::cerr << "Root path is not set." << std::endl;
+				return QString();
+			}
+			return rootPath;
+        }
+
         void ImageSaveEngine::pushImage(const QImage& image, const QString& classify, const QString& namePrefix)
         {
             QMutexLocker locker(&mutex);

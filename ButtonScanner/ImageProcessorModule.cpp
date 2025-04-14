@@ -182,7 +182,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
             }
         }
     }
-
+    LOG() "----------";
 	//检查气孔
 	if (checkConfig.poreEnable)
     {
@@ -525,6 +525,7 @@ void ImageProcessor::run()
         if (GlobalStructData::getInstance().isTakePictures) {
             GlobalStructData::getInstance().imageSaveEngine->pushImage(image, "Mark", "Button");
         }
+
 
         QPixmap pixmap = QPixmap::fromImage(image);
         // 显示到界面

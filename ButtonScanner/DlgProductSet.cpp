@@ -42,7 +42,6 @@ void DlgProductSet::readConfig()
     ui->pbtn_photography->setText(QString::number(GlobalStructData.dlgProductSetConfig.photography));
     ui->pbtn_blowTime->setText(QString::number(GlobalStructData.dlgProductSetConfig.blowTime));
     ui->rbtn_edgeDamageEnable->setChecked(GlobalStructData.dlgProductSetConfig.edgeDamageEnable);
-    ui->rbtn_edgeDamageSimilarity->setText(QString::number(GlobalStructData.dlgProductSetConfig.edgeDamageSimilarity));
     ui->rbtn_shieldingRangeEnable->setCheckable(GlobalStructData.dlgProductSetConfig.shieldingRangeEnable);
     ui->pbtn_outerRadius->setText(QString::number(GlobalStructData.dlgProductSetConfig.outerRadius));
     ui->pbtn_innerRadius->setText(QString::number(GlobalStructData.dlgProductSetConfig.innerRadius));
@@ -149,6 +148,8 @@ void DlgProductSet::build_connect()
         this, &DlgProductSet::pbtn_specifyColorDifferenceDeviation_clicked);
     QObject::connect(ui->pbtn_largeColorDifferenceDeviation, &QPushButton::clicked,
         this, &DlgProductSet::pbtn_largeColorDifferenceDeviation_clicked);
+	QObject::connect(ui->pbtn_edgeDamageSimilarity, &QPushButton::clicked,
+		this, &DlgProductSet::pbtn_edgeDamageSimilarity_clicked);
 
     QObject::connect(ui->rbtn_outsideDiameterEnable, &QPushButton::clicked,
         this, &DlgProductSet::rbtn_outsideDiameterEnable_checked);
@@ -231,17 +232,6 @@ void DlgProductSet::pbtn_blowTime_clicked()
 
     auto& GlobalStructData = GlobalStructData::getInstance();
     GlobalStructData.dlgProductSetConfig.blowTime = ui->pbtn_blowTime->text().toDouble();
-
-    delete numKeyBoard;
-}
-
-void DlgProductSet::rbtn_edgeDamageSimilarity_clicked()
-{
-    auto numKeyBoard = new NumKeyBord(this, ui->rbtn_edgeDamageSimilarity, 2);
-    numKeyBoard->exec();
-
-    auto& GlobalStructData = GlobalStructData::getInstance();
-    GlobalStructData.dlgProductSetConfig.edgeDamageSimilarity = ui->rbtn_edgeDamageSimilarity->text().toDouble();
 
     delete numKeyBoard;
 }
@@ -396,6 +386,17 @@ void DlgProductSet::pbtn_largeColorDifferenceDeviation_clicked()
 
     auto& GlobalStructData = GlobalStructData::getInstance();
     GlobalStructData.dlgProductSetConfig.largeColorDifferenceDeviation = ui->pbtn_largeColorDifferenceDeviation->text().toDouble();
+
+    delete numKeyBoard;
+}
+
+void DlgProductSet::pbtn_edgeDamageSimilarity_clicked()
+{
+    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_edgeDamageSimilarity, 2);
+    numKeyBoard->exec();
+
+    auto& GlobalStructData = GlobalStructData::getInstance();
+    GlobalStructData.dlgProductSetConfig.edgeDamageSimilarity = ui->pbtn_edgeDamageSimilarity->text().toDouble();
 
     delete numKeyBoard;
 }

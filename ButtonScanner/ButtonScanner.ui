@@ -353,6 +353,13 @@
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QPushButton" name="pbtn_openSaveLocation">
+             <property name="text">
+              <string>打开存储路径</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
          <item>

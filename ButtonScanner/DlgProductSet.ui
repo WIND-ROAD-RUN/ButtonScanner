@@ -166,7 +166,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="rbtn_edgeDamageSimilarity">
+         <widget class="QPushButton" name="pbtn_edgeDamageSimilarity">
           <property name="text">
            <string>value</string>
           </property>
