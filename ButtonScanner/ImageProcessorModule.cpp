@@ -197,7 +197,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
         for (int i = 0; i < qiKonIndexs.size(); i++)
         {
             auto score = processRectanglesResult[qiKonIndexs[i]].score;
-            if (score > 30)
+            if (score >= 30)
             {
                 isBad = true;
                 errorInfo.emplace_back("气孔 " + QString::number(score));
@@ -211,7 +211,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
         for (int i = 0; i < duYanIndexs.size(); i++)
         {
             auto score = processRectanglesResult[duYanIndexs[i]].score;
-            if (score > 10)
+            if (score >= 10)
             {
                 isBad = true;
                 errorInfo.emplace_back("堵眼 " + QString::number(score));
@@ -225,7 +225,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
         for (int i = 0; i < moShiIndexs.size(); i++)
         {
             auto score = processRectanglesResult[moShiIndexs[i]].score;
-            if (score > 0)
+            if (score >= 0)
             {
                 isBad = true;
                 errorInfo.emplace_back("磨石 " + QString::number(score));
@@ -239,7 +239,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
         for (int i = 0; i < liaoTouIndexs.size(); i++)
         {
             auto score = processRectanglesResult[liaoTouIndexs[i]].score;
-            if (score > 10)
+            if (score >= 10)
             {
                 isBad = true;
                 errorInfo.emplace_back("料头 " + QString::number(score));
@@ -253,7 +253,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		for (int i = 0; i < youQiIndexs.size(); i++)
 		{
 		 auto score = processRectanglesResult[youQiIndexs[i]].score;
-			if (score > 50)
+			if (score >= 50)
 			{
             isBad = true;
             errorInfo.emplace_back("油漆 " + QString::number(score));
@@ -287,7 +287,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
         auto score = processRectanglesResult[poYanIndexs[i]].score;
         auto width = abs(processRectanglesResult[poYanIndexs[i]].right_bottom.first - processRectanglesResult[poYanIndexs[i]].left_top.first);
         auto height = abs(processRectanglesResult[poYanIndexs[i]].right_bottom.second - processRectanglesResult[poYanIndexs[i]].left_top.second);
-        if (score > checkConfig.brokenEyeSimilarity)
+        if (score >= checkConfig.brokenEyeSimilarity)
         {
             isBad = true;
             errorInfo.emplace_back("破眼 " + QString::number(score));
