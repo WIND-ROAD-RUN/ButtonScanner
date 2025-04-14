@@ -543,6 +543,7 @@ void ButtonScanner::build_camera()
     globalStruct.cameraIp4 = "14";
 
     globalStruct.buildCamera();
+    dlgExposureTimeSet->ResetCamera(); //启动设置相机为默认状态
 }
 
 void ButtonScanner::build_imageProcessorModule()
