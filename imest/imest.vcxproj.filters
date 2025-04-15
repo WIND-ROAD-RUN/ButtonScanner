@@ -15,18 +15,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\imest_ModelEngine.h">
+    <ClInclude Include="include\imest_ModelEngineST.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="include\imest_ModelEngineCore.h">
+    <ClInclude Include="include\imest_ModelEngineSTCore.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\imest_ModelEngine.cpp">
+    <ClCompile Include="src\imest_ModelEngineST.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\imest_ModelEngineCore.cpp">
+    <ClCompile Include="src\imest_ModelEngineCoreST.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

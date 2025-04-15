@@ -143,12 +143,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="include\imest_ModelEngine.h" />
-    <ClInclude Include="include\imest_ModelEngineCore.h" />
+    <ClInclude Include="include\imest_ModelEngineST.h" />
+    <ClInclude Include="include\imest_ModelEngineSTCore.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\imest_ModelEngine.cpp" />
-    <ClCompile Include="src\imest_ModelEngineCore.cpp" />
+    <ClCompile Include="src\imest_ModelEngineST.cpp" />
+    <ClCompile Include="src\imest_ModelEngineCoreST.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
