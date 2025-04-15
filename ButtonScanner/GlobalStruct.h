@@ -21,6 +21,7 @@
 #include<QString>
 
 #include<atomic>
+#include <ButtonScanner.h>
 
 namespace zwy {
 	namespace scc {
@@ -66,6 +67,8 @@ public:
 		std::atomic<double> removeRate{ 0 };
 	} statisticalInfo;
 public:
+	ButtonScanner* mainWindow;
+public:
 	std::atomic_bool isTakePictures{ false };
 	std::atomic_bool isOpenRemoveFunc{ false };
 	std::atomic_bool isDebugMode{ false };
@@ -103,7 +106,7 @@ public:
 	QString namePath{ R"(C:\Users\34615\Desktop\index.names)" };
 	QString onnxEnginePath1{ R"(C:\Users\34615\Desktop\modelOnnx.onnx)" };
 public:
-		QString aiLearnOldConfigPath;
+	QString aiLearnOldConfigPath;
 
 public:
 
@@ -156,12 +159,12 @@ public:
 	ThreadSafeMinHeap productPriorityQueue3;
 	ThreadSafeMinHeap productPriorityQueue4;
 private:
-    GlobalStructData();
-    ~GlobalStructData() = default;
+	GlobalStructData();
+	~GlobalStructData() = default;
 signals:
-    void updateLightState(size_t index,bool state);
+	void updateLightState(size_t index, bool state);
 public:
-    void setUpLight(bool state);
+	void setUpLight(bool state);
 	void setDownLight(bool state);
 	void setSideLight(bool state);
 public slots:

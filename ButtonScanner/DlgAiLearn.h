@@ -19,9 +19,9 @@ public:
 	~DlgAiLearn();
 private:
 	rw::cdm::ButtonScannerDlgAiLearn* read_lastConfig();
-	rw::cdm::ButtonScannerDlgAiLearn* read_config(const QString & path);
+	rw::cdm::ButtonScannerDlgAiLearn* read_config(const QString& path);
 	rw::cdm::ButtonScannerDlgAiLearn* get_newConfig();
-	void save_config(const rw::cdm::ButtonScannerDlgAiLearn*  config);
+	void save_config(const rw::cdm::ButtonScannerDlgAiLearn* config);
 
 private:
 	void build_connect();
@@ -30,12 +30,14 @@ public:
 	void ToStep1();
 	void ToStep2();
 	void clearStep();
+public:
+	int step{ 0 };
 private:
 	Ui::DlgAiLearnClass* ui{ nullptr };
 	rw::ime::ModelEngine* _modelEnginePtr{ nullptr };
 	rw::cdm::ButtonScannerDlgAiLearn* aiLearnConfig;
 	QProcess  m_Process;
-	int step{ 0 };
+
 	int moveLen{ 3000 };
 
 	int widget_create_rawX{ 160 };
@@ -68,7 +70,7 @@ private slots:
 	void rbtn_station3_checked(bool checked);
 	void rbtn_station4_checked(bool checked);
 
-	void onFrameCapturedBad(cv::Mat frame, size_t index);
+
 	void pbtn_train_clicked();
 	void pbtn_test_clicked();
 	void pbtn_tranCompelete_clicked();
@@ -76,4 +78,7 @@ private slots:
 	void ProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
 
 	void ProcessReadOut();
+
+public:
+	void onFrameCaptured(cv::Mat frame, size_t index);
 };

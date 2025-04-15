@@ -70,6 +70,8 @@ ButtonScanner::ButtonScanner(QWidget* parent)
 	: QMainWindow(parent)
 	, ui(new Ui::ButtonScannerClass())
 {
+	GlobalStructData::getInstance().mainWindow = this; // 设置主窗口指针
+
 	ui->setupUi(this);
 
 	initializeComponents();
@@ -1030,7 +1032,8 @@ void ButtonScanner::pbtn_set_clicked()
 
 void ButtonScanner::pbtn_newProduction_clicked()
 {
-	//this->dlgAiLearn->ToStep1();
+	delete this->dlgAiLearn;
+	this->dlgAiLearn = new DlgAiLearn(this);
 	this->dlgAiLearn->exec();
 }
 

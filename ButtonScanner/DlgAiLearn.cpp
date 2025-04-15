@@ -311,8 +311,17 @@ void DlgAiLearn::rbtn_station4_checked(bool checked)
 {
 }
 
-void DlgAiLearn::onFrameCapturedBad(cv::Mat frame, size_t index)
+void DlgAiLearn::onFrameCaptured(cv::Mat frame, size_t index)
 {
+	if (index == 1 && !ui->rbtn_station1->isChecked())
+		return;
+	if (index == 2 && !ui->rbtn_station2->isChecked())
+		return;
+	if (index == 3 && !ui->rbtn_station3->isChecked())
+		return;
+	if (index == 4 && !ui->rbtn_station4->isChecked())
+		return;
+
 	std::vector<rw::ime::ProcessRectanglesResult> vecRecogResult;
 	cv::Mat resultImage;
 	cv::Mat maskImage = cv::Mat::zeros(frame.size(), CV_8UC1);
@@ -352,22 +361,6 @@ void DlgAiLearn::onFrameCapturedBad(cv::Mat frame, size_t index)
 		if (index == 4)
 			QMetaObject::invokeMethod(ui->label_pic4, "setPixmap", Qt::QueuedConnection, Q_ARG(QPixmap, qPixmap));
 	}
-
-	auto dateTimeStr = QDateTime::currentDateTime().toString("yyyyMMddHHmmsszzz").toStdString();
-	AiLearnTools::SaveImage(frame, aiLearnConfig->learnInfoSign, dateTimeStr, true, index);
-	AiLearnTools::SaveYoloText(aiLearnConfig->learnInfoSign, dateTimeStr, true, aiLearnConfig->checkType,
-		500, 500, 200, 210, frame.cols, frame.rows);
-
-	auto qImage = AiLearnTools::cvMat2QImage(frame);
-	QPixmap qPixmap = QPixmap::fromImage(qImage);
-	if (index == 1)
-		QMetaObject::invokeMethod(ui->label_pic1, "setPixmap", Qt::QueuedConnection, Q_ARG(QPixmap, qPixmap));
-	if (index == 2)
-		QMetaObject::invokeMethod(ui->label_pic2, "setPixmap", Qt::QueuedConnection, Q_ARG(QPixmap, qPixmap));
-	if (index == 3)
-		QMetaObject::invokeMethod(ui->label_pic3, "setPixmap", Qt::QueuedConnection, Q_ARG(QPixmap, qPixmap));
-	if (index == 4)
-		QMetaObject::invokeMethod(ui->label_pic4, "setPixmap", Qt::QueuedConnection, Q_ARG(QPixmap, qPixmap));
 }
 
 void DlgAiLearn::pbtn_train_clicked()
@@ -404,13 +397,13 @@ void DlgAiLearn::pbtn_test_clicked()
 	cv::Mat image = cv::imread(image_path, cv::IMREAD_COLOR);  // 默认以彩色模式读取
 
 	if (ui->rbtn_station2->isChecked())
-		onFrameCapturedBad(image, 2);
+		onFrameCaptured(image, 2);
 	else if (ui->rbtn_station3->isChecked())
-		onFrameCapturedBad(image, 3);
+		onFrameCaptured(image, 3);
 	else if (ui->rbtn_station4->isChecked())
-		onFrameCapturedBad(image, 4);
+		onFrameCaptured(image, 4);
 	else
-		onFrameCapturedBad(image, 1);
+		onFrameCaptured(image, 1);
 }
 
 void DlgAiLearn::pbtn_tranCompelete_clicked()
