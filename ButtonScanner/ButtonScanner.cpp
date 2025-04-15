@@ -113,6 +113,7 @@ void ButtonScanner::initializeComponents()
     loadingDialog.updateMessage("正在构建界面...");
     QCoreApplication::processEvents();
     build_ui();
+    this->setWindowFlags(Qt::FramelessWindowHint);
 
     // 连接信号与槽
     loadingDialog.updateMessage("正在建立信号与槽连接...");
