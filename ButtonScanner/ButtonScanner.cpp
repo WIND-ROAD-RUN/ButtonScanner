@@ -318,28 +318,28 @@ void ButtonScanner::build_connect()
 	QObject::connect(ui->pbtn_score, &QPushButton::clicked,
 		this, &ButtonScanner::pbtn_score_clicked);
 
-	QObject::connect(ui->rbtn_debug, &QPushButton::clicked,
+	QObject::connect(ui->rbtn_debug, &QRadioButton::clicked,
 		this, &ButtonScanner::rbtn_debug_ckecked);
 
-	QObject::connect(ui->rbtn_takePicture, &QPushButton::clicked,
+	QObject::connect(ui->rbtn_takePicture, &QRadioButton::clicked,
 		this, &ButtonScanner::rbtn_takePicture_ckecked);
 
-	QObject::connect(ui->rbtn_removeFunc, &QPushButton::clicked,
+	QObject::connect(ui->rbtn_removeFunc, &QRadioButton::clicked,
 		this, &ButtonScanner::rbtn_removeFunc_ckecked);
 
-	QObject::connect(ui->rbtn_upLight, &QPushButton::clicked,
+	QObject::connect(ui->rbtn_upLight, &QRadioButton::clicked,
 		this, &ButtonScanner::rbtn_upLight_ckecked);
 
-	QObject::connect(ui->rbtn_sideLight, &QPushButton::clicked,
+	QObject::connect(ui->rbtn_sideLight, &QRadioButton::clicked,
 		this, &ButtonScanner::rbtn_sideLight_ckecked);
 
-	QObject::connect(ui->rbtn_downLight, &QPushButton::clicked,
+	QObject::connect(ui->rbtn_downLight, &QRadioButton::clicked,
 		this, &ButtonScanner::rbtn_downLight_ckecked);
 
-	QObject::connect(ui->rbtn_defect, &QPushButton::clicked,
+	QObject::connect(ui->rbtn_defect, &QRadioButton::clicked,
 		this, &ButtonScanner::rbtn_defect_ckecked);
 
-	QObject::connect(ui->rbtn_ForAndAgainst, &QPushButton::clicked,
+	QObject::connect(ui->rbtn_ForAndAgainst, &QRadioButton::clicked,
 		this, &ButtonScanner::rbtn_ForAndAgainst_ckecked);
 
 	QObject::connect(ui->pbtn_resetProduct, &QPushButton::clicked,

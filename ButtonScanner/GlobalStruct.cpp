@@ -167,8 +167,7 @@ void GlobalStructData::saveDlgProduceLineSetConfig()
 }
 
 void GlobalStructData::saveDlgProductSetConfig(){
-storeContext->save(dlgProductSetConfig, dlgProductSetFilePath.toStdString());
-
+	storeContext->save(dlgProductSetConfig, dlgProductSetFilePath.toStdString());
 }
 
 void GlobalStructData::saveDlgExposureTimeSetConfig()
