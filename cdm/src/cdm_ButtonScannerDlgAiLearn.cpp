@@ -23,6 +23,24 @@ namespace rw
 				throw std::runtime_error("$variable$learnInfoSign is not found");
 			}
 			learnInfoSign = learnInfoSignItem->getValueAsString();
+
+			auto upLightItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$upLight$"));
+			if (!upLightItem) {
+				throw std::runtime_error("$variable$upLight is not found");
+			}
+			upLight = upLightItem->getValueAsBool();
+
+			auto downLightItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$downLight$"));
+			if (!downLightItem) {
+				throw std::runtime_error("$variable$downLight is not found");
+			}
+			downLight = downLightItem->getValueAsBool();
+
+			auto sideLightItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$sideLight$"));
+			if (!sideLightItem) {
+				throw std::runtime_error("$variable$sideLight is not found");
+			}
+			sideLight = sideLightItem->getValueAsBool();
 		}
 
 		ButtonScannerDlgAiLearn::ButtonScannerDlgAiLearn(
@@ -30,6 +48,9 @@ namespace rw
 		{
 			checkType = buttonScannerMainWindow.checkType;
 			learnInfoSign = buttonScannerMainWindow.learnInfoSign;
+			upLight = buttonScannerMainWindow.upLight;
+			downLight = buttonScannerMainWindow.downLight;
+			sideLight = buttonScannerMainWindow.sideLight;
 		}
 
 		ButtonScannerDlgAiLearn& ButtonScannerDlgAiLearn::operator=(const ButtonScannerDlgAiLearn& buttonScannerMainWindow)
@@ -37,6 +58,9 @@ namespace rw
 			if (this != &buttonScannerMainWindow) {
 				checkType = buttonScannerMainWindow.checkType;
 				learnInfoSign = buttonScannerMainWindow.learnInfoSign;
+				upLight = buttonScannerMainWindow.upLight;
+				downLight = buttonScannerMainWindow.downLight;
+				sideLight = buttonScannerMainWindow.sideLight;
 			}
 			return *this;
 		}
@@ -55,6 +79,21 @@ namespace rw
 			learnInfoSignItem->setName("$variable$learnInfoSign$");
 			learnInfoSignItem->setValueFromString(learnInfoSign);
 			assembly.addItem(learnInfoSignItem);
+
+			auto upLightItem = std::make_shared<oso::ObjectStoreItem>();
+			upLightItem->setName("$variable$upLight$");
+			upLightItem->setValueFromBool(upLight);
+			assembly.addItem(upLightItem);
+
+			auto downLightItem = std::make_shared<oso::ObjectStoreItem>();
+			downLightItem->setName("$variable$downLight$");
+			downLightItem->setValueFromBool(downLight);
+			assembly.addItem(downLightItem);
+
+			auto sideLightItem = std::make_shared<oso::ObjectStoreItem>();
+			sideLightItem->setName("$variable$sideLight$");
+			sideLightItem->setValueFromBool(sideLight);
+			assembly.addItem(sideLightItem);
 
 			return assembly;
 		}
