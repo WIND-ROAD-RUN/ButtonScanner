@@ -6,6 +6,7 @@
 #include"DlgProduceLineSet.h"
 #include"DlgProductSet.h"
 #include"DlgExposureTimeSet.h"
+#include"rqw_LabelClickable.h"
 
 #include"opencv2/opencv.hpp"
 #include"DlgAiLearn.h"
@@ -31,6 +32,8 @@ private:
     DlgProductSet* dlgProductSet = nullptr;
     DlgExposureTimeSet* dlgExposureTimeSet = nullptr;
 	DlgAiLearn* dlgAiLearn = nullptr;
+public:
+    rw::rqw::ClickableLabel* labelClickable_title;
 private:
     //变量监控线程关机的时候停止
     bool mark_Thread = false;
@@ -132,4 +135,6 @@ private slots:
     void rbtn_downLight_ckecked(bool checked);
     void rbtn_defect_ckecked(bool checked);
     void rbtn_ForAndAgainst_ckecked(bool checked);
+private:
+    void labelClickable_title_clicked();
 };

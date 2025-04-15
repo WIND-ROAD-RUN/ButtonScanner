@@ -238,6 +238,11 @@ void ButtonScanner::build_ui()
     build_dlgProduceLineSet();
     build_dlgProductSet();
     build_dlgExposureTimeSet();
+    this->labelClickable_title = new rw::rqw::ClickableLabel(this);
+    labelClickable_title->setText(ui->label_title->text());
+    labelClickable_title->setStyleSheet(ui->label_title->styleSheet());
+    ui->hLayout_title->replaceWidget(ui->label_title, labelClickable_title);
+    delete ui->label_title;
 }
 
 void ButtonScanner::build_mainWindowData()
@@ -338,6 +343,9 @@ void ButtonScanner::build_connect()
 
 	QObject::connect(ui->pbtn_openSaveLocation, &QPushButton::clicked,
 		this, &ButtonScanner::pbtn_openSaveLocation_clicked);
+
+	QObject::connect(this->labelClickable_title, &rw::rqw::ClickableLabel::clicked,
+		this, &ButtonScanner::labelClickable_title_clicked);
 }
 
 void ButtonScanner::read_config()
@@ -1117,6 +1125,11 @@ void ButtonScanner::rbtn_ForAndAgainst_ckecked(bool checked)
     auto& GlobalStructData = GlobalStructData::getInstance();
     GlobalStructData.mainWindowConfig.isPositive = checked;
     GlobalStructData.saveConfig();
+}
+
+void ButtonScanner::labelClickable_title_clicked()
+{
+    this->close();
 }
 
 void ButtonScanner::pbtn_exit_clicked()
