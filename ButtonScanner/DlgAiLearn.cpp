@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+#include "stdafx.h"
 #include "DlgAiLearn.h"
 #include <GlobalStruct.h>
 #include <PathGlobalStruct.h>
@@ -85,7 +85,7 @@ void DlgAiLearn::clearStep()
 
 void DlgAiLearn::Init()
 {
-	auto& globalStruct = GlobalStruct::getInstance();
+	auto& globalStruct = GlobalStructData::getInstance();
 
 	_modelEnginePtr = new rw::ime::ModelEngine(globalStruct.enginePath.toStdString(), globalStruct.namePath.toStdString());
 
@@ -304,7 +304,7 @@ void DlgAiLearn::pbtn_train_clicked()
 
 void DlgAiLearn::pbtn_test_clicked()
 {
-	std::string image_path = R"(C:\Users\admin\Desktop\111705305392.jpg)";  // Windows 示例
+	std::string image_path = R"(D:\y\yolov5-master\datasets\mydataset\train\images\061812597442.jpg)";  // Windows 示例
 
 	// 读取图片到 cv::Mat
 	cv::Mat image = cv::imread(image_path, cv::IMREAD_COLOR);  // 默认以彩色模式读取

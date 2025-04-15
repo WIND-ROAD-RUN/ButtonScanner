@@ -162,12 +162,12 @@ void GlobalStructData::saveMainWindowConfig()
 
 void GlobalStructData::saveDlgProduceLineSetConfig()
 {
-	_StoreContext->save(dlgProduceLineSetConfig, dlgProduceLineSetFilePath.toStdString());
+    storeContext->save(dlgProduceLineSetConfig, dlgProduceLineSetFilePath.toStdString());
 
 }
 
-void GlobalStructData::saveDlgProductSetConfig()
-    storeContext->save(dlgProductSetConfig, dlgProductSetFilePath.toStdString());
+void GlobalStructData::saveDlgProductSetConfig(){
+storeContext->save(dlgProductSetConfig, dlgProductSetFilePath.toStdString());
 
 }
 

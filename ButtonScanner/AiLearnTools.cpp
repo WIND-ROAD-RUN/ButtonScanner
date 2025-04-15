@@ -38,9 +38,9 @@ void AiLearnTools::SaveImage(cv::Mat frame, std::string learnInfoSign, std::stri
 
 void AiLearnTools::MoveImageToDataSet(std::string learnInfoSign,bool isSeg)
 {
-	//¶¨ÒåÎÄ¼ş¼Ğ
-	QDir tranImageDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "datasets\\mydataset\\tran\\images");
-	QDir tranLableDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "datasets\\mydataset\\tran\\labels");
+	//å®šä¹‰æ–‡ä»¶å¤¹
+	QDir tranImageDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "datasets\\mydataset\\train\\images");
+	QDir tranLableDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "datasets\\mydataset\\train\\labels");
 
 	QDir valImageDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "datasets\\mydataset\\val\\images");
 	QDir valLableDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "datasets\\mydataset\\val\\labels");
@@ -48,8 +48,8 @@ void AiLearnTools::MoveImageToDataSet(std::string learnInfoSign,bool isSeg)
 	QDir tesImageDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "datasets\\mydataset\\tes");
 
 	if (isSeg) {
-		QDir tranImageDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\tran\\images");
-		QDir tranLableDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\tran\\labels");
+		QDir tranImageDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\train\\images");
+		QDir tranLableDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\train\\labels");
 
 		QDir valImageDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\val\\images");
 		QDir valLableDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\val\\labels");
@@ -57,7 +57,7 @@ void AiLearnTools::MoveImageToDataSet(std::string learnInfoSign,bool isSeg)
 		QDir tesImageDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\tes");
 	}
 
-	//É¾³ıÎÄ¼ş¼Ğ
+	//åˆ é™¤æ–‡ä»¶å¤¹
 	tranImageDir.rmdir(tranImageDir.absolutePath());
 	tranLableDir.rmdir(tranLableDir.absolutePath());
 
@@ -66,7 +66,7 @@ void AiLearnTools::MoveImageToDataSet(std::string learnInfoSign,bool isSeg)
 
 	tesImageDir.rmdir(tesImageDir.absolutePath());
 
-	//´´½¨ÎÄ¼ş¼Ğ
+	//åˆ›å»ºæ–‡ä»¶å¤¹
 	tranImageDir.mkdir(".");
 	tranLableDir.mkdir(".");
 
@@ -75,7 +75,7 @@ void AiLearnTools::MoveImageToDataSet(std::string learnInfoSign,bool isSeg)
 
 	tesImageDir.mkdir(".");
 
-	//¸´ÖÆÎÄ¼ş
+	//å¤åˆ¶æ–‡ä»¶
 	CopyDirectory(SaveDataImageTranPath(learnInfoSign), tranImageDir.absolutePath());
 	CopyDirectory(SaveDataLabelTranPath(learnInfoSign), tranLableDir.absolutePath());
 
@@ -87,7 +87,7 @@ void AiLearnTools::MoveImageToDataSet(std::string learnInfoSign,bool isSeg)
 void AiLearnTools::SaveYoloText(std::string learnInfoSign, std::string dateTimeStr, bool  isBad, int checkType, int centerX, int centerY, int width, int height, int imageWidth, int imageHeight)
 {
 	std::string classId = isBad ? "0" : "1";
-	//normalization¹éÒ»»¯
+	//normalizationå½’ä¸€åŒ–
 	auto norCenterX = (double)centerX / (double)imageWidth;
 	auto norCenterY = (double)centerY / (double)imageHeight;
 	auto norWidth = (double)width / (double)imageWidth;
@@ -98,7 +98,7 @@ void AiLearnTools::SaveYoloText(std::string learnInfoSign, std::string dateTimeS
 		std::to_string(norCenterX) + " " + std::to_string(norCenterY) + " "
 		+ std::to_string(norWidth) + " " + std::to_string(norHeight);
 
-	//ÊÇSegment¸½¼Ómask
+	//æ˜¯Segmenté™„åŠ mask
 	if (checkType == 1)
 	{
 		using Point = std::pair<double, double>;
@@ -107,7 +107,7 @@ void AiLearnTools::SaveYoloText(std::string learnInfoSign, std::string dateTimeS
 
 		double angleStep = 2 * M_PI / 30;
 
-		//Ëã³ö°ë¾¶
+		//ç®—å‡ºåŠå¾„
 		auto r = (norHeight + (norWidth - norHeight) / 2) / 2;
 
 		for (int i = 0; i < 30; i++) {
@@ -203,7 +203,7 @@ void AiLearnTools::CopyDirectory(const QString& srcPath, const QString& dstPath)
 
 	QDir dstDir(dstPath);
 
-	// ±éÀúËùÓĞÎÄ¼şºÍ×ÓÄ¿Â¼£¨ÅÅ³ı . ºÍ ..£©
+	// éå†æ‰€æœ‰æ–‡ä»¶å’Œå­ç›®å½•ï¼ˆæ’é™¤ . å’Œ ..ï¼‰
 	const QFileInfoList entries = srcDir.entryInfoList(
 		QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot
 	);
@@ -213,18 +213,18 @@ void AiLearnTools::CopyDirectory(const QString& srcPath, const QString& dstPath)
 		const QString dstItemPath = dstDir.absoluteFilePath(entry.fileName());
 
 		if (entry.isDir()) {
-			// µİ¹é¸´ÖÆ×ÓÄ¿Â¼
+			// é€’å½’å¤åˆ¶å­ç›®å½•
 			CopyDirectory(srcItemPath, dstItemPath);
 		}
 		else if (entry.isFile()) {
-			// ´¦ÀíÎÄ¼ş¸²¸Ç
+			// å¤„ç†æ–‡ä»¶è¦†ç›–
 			if (QFile::exists(dstItemPath)) {
 				QFile::remove(dstItemPath);
 			}
-			// ¸´ÖÆÎÄ¼ş
+			// å¤åˆ¶æ–‡ä»¶
 			if (!QFile::copy(srcItemPath, dstItemPath)) {
 				qWarning() << "Failed to copy file:" << srcItemPath << "to" << dstItemPath;
-				throw "AiLearnTools¸´ÖÆÎÄ¼ş³ö´í!";
+				throw "AiLearnToolså¤åˆ¶æ–‡ä»¶å‡ºé”™!";
 			}
 		}
 	}
@@ -242,37 +242,37 @@ void AiLearnTools::MakeDir(QString path)
 }
 
 QImage AiLearnTools::cvMat2QImage(const cv::Mat& mat) {
-	// 1. ¼ì²éÊäÈëÓĞĞ§ĞÔ
+	// 1. æ£€æŸ¥è¾“å…¥æœ‰æ•ˆæ€§
 	if (mat.empty()) {
 		qWarning("cvMat2QImage: Input cv::Mat is empty!");
 		return QImage();
 	}
 
-	// 2. Éî¿½±´·ÇÁ¬ĞøÄÚ´æ£¨±ÜÃâÊı¾İÊ§Ğ§£©
+	// 2. æ·±æ‹·è´éè¿ç»­å†…å­˜ï¼ˆé¿å…æ•°æ®å¤±æ•ˆï¼‰
 	cv::Mat localMat;
 	if (!mat.isContinuous()) {
-		localMat = mat.clone();  // Ç¿ÖÆÁ¬Ğø´æ´¢
+		localMat = mat.clone();  // å¼ºåˆ¶è¿ç»­å­˜å‚¨
 	}
 	else {
-		localMat = mat;          // Ö±½ÓÒıÓÃ£¨µ«ĞèÈ·±£Íâ²¿Êı¾İÉúÃüÖÜÆÚ£©
+		localMat = mat;          // ç›´æ¥å¼•ç”¨ï¼ˆä½†éœ€ç¡®ä¿å¤–éƒ¨æ•°æ®ç”Ÿå‘½å‘¨æœŸï¼‰
 	}
 
-	// 3. ¸ù¾İÍ¨µÀÊı×ª»»
+	// 3. æ ¹æ®é€šé“æ•°è½¬æ¢
 	switch (localMat.type()) {
 		// 8-bit 1 channel (grayscale)
 		// 
-	// ´¦Àí»Ò¶ÈÍ¼
+	// å¤„ç†ç°åº¦å›¾
 	case CV_8UC1: {
 		QImage image(mat.data, mat.cols, mat.rows, static_cast<int>(mat.step), QImage::Format_Grayscale8);
 		return image;
 	}
-				// ´¦Àí²ÊÉ«Í¼
+				// å¤„ç†å½©è‰²å›¾
 	case CV_8UC3: {
-		// ×¢Òâ£ºOpenCV µÄ BGR ×ª Qt µÄ RGB
+		// æ³¨æ„ï¼šOpenCV çš„ BGR è½¬ Qt çš„ RGB
 		QImage image(mat.data, mat.cols, mat.rows, static_cast<int>(mat.step), QImage::Format_BGR888);
 		return image.rgbSwapped();
 	}
-				// ´¦Àí´øÓĞ Alpha Í¨µÀµÄÍ¼
+				// å¤„ç†å¸¦æœ‰ Alpha é€šé“çš„å›¾
 	case  CV_8UC4: {
 		QImage image(mat.data, mat.cols, mat.rows, static_cast<int>(mat.step), QImage::Format_ARGB32);
 		return image;

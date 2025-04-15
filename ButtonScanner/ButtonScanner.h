@@ -30,7 +30,7 @@ private:
     DlgProduceLineSet* dlgProduceLineSet = nullptr;
     DlgProductSet* dlgProductSet = nullptr;
     DlgExposureTimeSet* dlgExposureTimeSet = nullptr;
-
+	DlgAiLearn* dlgAiLearn = nullptr;
 private:
     //变量监控线程关机的时候停止
     bool mark_Thread = false;
@@ -61,6 +61,7 @@ private:
     void build_dlgProduceLineSet();
     void build_dlgProductSet();
     void build_dlgExposureTimeSet();
+	void build_dlgAiLearn();
 
     void stop_all_axis();
 

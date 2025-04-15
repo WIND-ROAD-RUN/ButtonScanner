@@ -95,7 +95,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AiLearnTools.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -173,8 +173,11 @@
     <ClInclude Include="cdm_ButtonScannerDlgAiLearn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AiLearnTools.h">
+    <ClInclude Include="Product.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AiLearnTools.h">
+      <Filter>Header Files\ui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

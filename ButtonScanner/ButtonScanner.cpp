@@ -134,6 +134,8 @@ void ButtonScanner::initializeComponents()
     QCoreApplication::processEvents();
     build_imageProcessorModule();
 
+    build_dlgAiLearn();;
+
     // 构建相机
     loadingDialog.updateMessage("正在构建相机...");
     QCoreApplication::processEvents();
@@ -997,6 +999,7 @@ void ButtonScanner::pbtn_set_clicked()
 
 void ButtonScanner::pbtn_newProduction_clicked()
 {
+	this->dlgAiLearn->exec();
 }
 
 void ButtonScanner::pbtn_beltSpeed_clicked()
@@ -1041,11 +1044,6 @@ void ButtonScanner::pbtn_openSaveLocation_clicked()
 	auto& globalStruct = GlobalStructData::getInstance();
 	QString imageSavePath = globalStruct.imageSaveEngine->getRootPath();
 	QDesktopServices::openUrl(QUrl::fromLocalFile(imageSavePath));
-}
-
-void ButtonScanner::pbtn_score_clicked()
-{
-	dlgProductSet->exec();
 }
 
 void ButtonScanner::rbtn_debug_ckecked(bool checked)
