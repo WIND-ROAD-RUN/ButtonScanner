@@ -525,7 +525,7 @@ void ImageProcessor::run()
         auto  image = cvMatToQImage(result);
 
         // 绘制错误信息
-        ImagePainter::drawTextOnImage(image, processInfo, { ImagePainter::Color::Green,ImagePainter::Color::Red },0.8);
+        ImagePainter::drawTextOnImage(image, processInfo, { ImagePainter::Color::Green,ImagePainter::Color::Red },0.4);
 
         // 绘制错误定位
         drawErrorLocate(image, vecRecogResult);
@@ -614,58 +614,37 @@ QColor ImagePainter::ColorToQColor(Color c)
 
 void ImagePainter::drawTextOnImage(QImage& image, const QVector<QString>& texts, const QVector<Color>& colorList, double proportion)
 {
-    // 确保图像非空
-    if (image.isNull() || texts.empty() || proportion <= 0.0 || proportion > 1.0) {
-        return;
+    if (texts.isEmpty() || proportion <= 0.0 || proportion > 1.0) {
+        return; // 无效输入直接返回
     }
 
-    // 创建 QPainter
     QPainter painter(&image);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setRenderHint(QPainter::TextAntialiasing);
 
-    // 计算字体大小和初始位置
+    // 计算字体大小
     int imageHeight = image.height();
-    int textAreaHeight = static_cast<int>(imageHeight * proportion); // 根据比例计算文字区域高度
-    int yOffset = 10; // 初始Y偏移量
+    int totalTextHeight = static_cast<int>(imageHeight * proportion);
+    int fontSize = totalTextHeight / texts.size();
 
-    // 动态调整字体大小
-    QFont font("Arial");
-    int fontSize = 20; // 初始字体大小
+    QFont font = painter.font();
     font.setPixelSize(fontSize);
     painter.setFont(font);
 
-    // 计算动态字体大小
-    for (const auto& text : texts) {
-        QRect textRect(0, 0, image.width(), textAreaHeight);
-        QFontMetrics metrics(font);
-        if (metrics.height() * texts.size() > textAreaHeight) {
-            fontSize = static_cast<int>(fontSize * 0.9); // 缩小字体
-            font.setPixelSize(fontSize);
-            painter.setFont(font);
-        }
-    }
+    // 起始位置
+    int x = 0;
+    int y = 0;
 
-    // 绘制文字
-    for (size_t i = 0; i < texts.size(); ++i) {
-        // 确定颜色
-        Color textColor = Color::White; // 默认白色
-        if (!colorList.empty()) {
-            if (i < colorList.size()) {
-                textColor = colorList[i];
-            }
-            else {
-                textColor = colorList.back(); // 使用最后一个颜色
-            }
-        }
-
-        // 设置颜色
-        painter.setPen(ColorToQColor(textColor));
+    // 绘制每一行文字
+    for (int i = 0; i < texts.size(); ++i) {
+        // 获取颜色
+        QColor color = (i < colorList.size()) ? ColorToQColor(colorList[i]) : ColorToQColor(colorList.last());
+        painter.setPen(color);
 
         // 绘制文字
-        QString qText = texts[i];
-        painter.drawText(10, yOffset + fontSize, qText); // 左上角偏移量为 (10, yOffset)
-        yOffset += fontSize + 5; // 行间距
+        painter.drawText(x, y + fontSize, texts[i]);
+
+        // 更新 y 坐标
+        y += fontSize;
     }
 
     painter.end();
