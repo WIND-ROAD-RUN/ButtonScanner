@@ -12,6 +12,7 @@
 #include"DlgAiLearn.h"
 #include<QImage>
 #include<memory>
+
 namespace rw
 {
 	namespace rqw
