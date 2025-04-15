@@ -47,7 +47,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 		eliminationLogic(frame, resultImage, errorInfo, vecRecogResult);
 	}
 	//如果新物料学习窗口在步骤1（学习坏的）、2（学习好的），就调用dlgAiLearn->onFrameCaptured
-	else  if (globalStruct.mainWindow->dlgAiLearn->step > 0 && globalStruct.mainWindow->dlgAiLearn->step < 3) {
+	if (globalStruct.mainWindow->dlgAiLearn->step > 0 && globalStruct.mainWindow->dlgAiLearn->step < 3) {
 		globalStruct.mainWindow->dlgAiLearn->onFrameCaptured(frame.image, frame.index);
 	}
 
