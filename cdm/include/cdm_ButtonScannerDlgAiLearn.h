@@ -26,7 +26,7 @@ namespace rw
 
 		public:
 			int checkType{ 1 };
-			std::string  learnInfoSign;
+			std::string  learnInfoSign{"undefined"};
 
 		};
 	}

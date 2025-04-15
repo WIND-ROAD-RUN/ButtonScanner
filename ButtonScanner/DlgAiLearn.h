@@ -18,7 +18,10 @@ public:
 	DlgAiLearn(QWidget* parent = nullptr);
 	~DlgAiLearn();
 private:
-	void read_lastConfig();
+	rw::cdm::ButtonScannerDlgAiLearn read_lastConfig();
+	rw::cdm::ButtonScannerDlgAiLearn read_config(const QString & path);
+	void save_config(const rw::cdm::ButtonScannerDlgAiLearn & config);
+
 private:
 	void build_ui();
 	void ToStep1();

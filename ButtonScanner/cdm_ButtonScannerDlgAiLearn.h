@@ -32,7 +32,7 @@ namespace rw
 		public:
 			//1是颜色2是刀形
 			int checkType{ 1 };
-			std::string  learnInfoSign;
+			std::string  learnInfoSign{"undefined"};
 			
 		
 		public:

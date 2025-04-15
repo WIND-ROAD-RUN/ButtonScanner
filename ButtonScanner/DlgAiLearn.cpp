@@ -32,10 +32,68 @@ DlgAiLearn::~DlgAiLearn()
 	delete ui;
 }
 
-void DlgAiLearn::read_lastConfig()
+rw::cdm::ButtonScannerDlgAiLearn DlgAiLearn::read_lastConfig()
 {
-	
+	QString targetDir = QString::fromStdString(PathGlobalStruct::AiLearnConfig);
+	QDir dir(targetDir);
+	if (!dir.exists()) {
+		return rw::cdm::ButtonScannerDlgAiLearn();
+	}
+	QStringList filters; 
+	QFileInfoList fileInfoList = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
+
+	if (fileInfoList.isEmpty()) {
+		return rw::cdm::ButtonScannerDlgAiLearn();
+	}
+
+	QFileInfo maxFile = fileInfoList.last();
+
+	return read_config(maxFile.absoluteFilePath());
 }
+
+rw::cdm::ButtonScannerDlgAiLearn DlgAiLearn::read_config(const QString& path)
+{
+	auto _StoreContext = std::make_unique<rw::oso::StorageContext>(rw::oso::StorageType::Xml);
+	QDir dir;
+
+	QFileInfo dlgAiLearnFile(path);
+	if (!dlgAiLearnFile.exists()) {
+
+
+		auto config =  rw::cdm::ButtonScannerDlgAiLearn();
+		save_config(config);
+		return config;
+	}
+	else {
+		auto assembly = _StoreContext->load(path.toStdString());
+		if (assembly) {
+			auto loadDlgAiLearnConfig = rw::cdm::ButtonScannerDlgAiLearn(*assembly);
+			return loadDlgAiLearnConfig;
+		}
+
+	}
+}
+
+void DlgAiLearn::save_config(const rw::cdm::ButtonScannerDlgAiLearn& config)
+{
+	QString pathQt = QString::fromStdString(PathGlobalStruct::AiLearnConfig + "\\" + config.learnInfoSign);
+
+	QFileInfo dlgAiLearnFile(pathQt);
+	if (!dlgAiLearnFile.exists()) {
+		QDir configDir = QFileInfo(pathQt).absoluteDir();
+		if (!configDir.exists()) {
+			configDir.mkpath(".");
+		}
+		QFile file(pathQt);
+		if (file.open(QIODevice::WriteOnly)) {
+			file.close();
+		}
+	}
+
+	auto& globalStrut = GlobalStructData::getInstance();
+	globalStrut.storeContext->save(config, pathQt.toStdString());
+}
+
 
 void DlgAiLearn::build_connect()
 {
@@ -94,10 +152,13 @@ void DlgAiLearn::build_ui()
 
 	_modelEnginePtr = new rw::ime::ModelEngine(globalStruct.enginePath.toStdString(), globalStruct.namePath.toStdString());
 
-	auto tempConfig = rw::cdm::ButtonScannerDlgAiLearn::ReadLastConfig();
-	if (tempConfig == nullptr)
+	auto tempConfig = read_lastConfig();
+
+	if (tempConfig.learnInfoSign=="undefined")
+	{
 		ui->pbtn_no->setVisible(false);
-	delete tempConfig;
+	}
+
 
 	ui->rbtn_filterColorDiff->setEnabled(false);
 
