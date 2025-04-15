@@ -10,6 +10,7 @@
 #include"DlgProduceLineSet.h"
 #include"GlobalStruct.h"
 #include"NumKeyBord.h"
+#include"cdm_ButtonScannerDlgAiLearn.h"
 
 #include<qdebug>
 #include<QtConcurrent>
@@ -284,6 +285,11 @@ void ButtonScanner::stop_all_axis()
     motionPtr->SetIOOut(7, false);
 }
 
+void ButtonScanner::build_dlgAiLearn()
+{
+	this->dlgAiLearn = new DlgAiLearn(this);
+}
+
 void ButtonScanner::build_connect()
 {
     QObject::connect(ui->pbtn_exit, &QPushButton::clicked,
@@ -539,6 +545,8 @@ void ButtonScanner::clear_olderSavedImage()
         }
     }
 }
+
+
 
 void ButtonScanner::build_camera()
 {
@@ -1033,6 +1041,11 @@ void ButtonScanner::pbtn_openSaveLocation_clicked()
 	auto& globalStruct = GlobalStructData::getInstance();
 	QString imageSavePath = globalStruct.imageSaveEngine->getRootPath();
 	QDesktopServices::openUrl(QUrl::fromLocalFile(imageSavePath));
+}
+
+void ButtonScanner::pbtn_score_clicked()
+{
+	dlgProductSet->exec();
 }
 
 void ButtonScanner::rbtn_debug_ckecked(bool checked)

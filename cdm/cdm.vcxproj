@@ -23,12 +23,14 @@
     <ClInclude Include="include\cdm_ButtonScannerProduceLineSet.h" />
     <ClInclude Include="include\cdm_ButtonScannerDlgProductSet.h" />
     <ClInclude Include="include\cdm_ButtonScannerMainWindow.h" />
+    <ClInclude Include="include\PathGlobalStruct.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\cdm_ButtonScannerDlgExposureTimeSet.cpp" />
     <ClCompile Include="src\cdm_ButtonScannerDlgProductSet.cpp" />
     <ClCompile Include="src\cdm_ButtonScannerProduceLineSet.cpp" />
     <ClCompile Include="src\cdm_ButtonScannerMainWindow.cpp" />
+    <ClCompile Include="src\PathGlobalStruct.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\oso\oso.vcxproj">

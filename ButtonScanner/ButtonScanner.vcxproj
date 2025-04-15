@@ -144,8 +144,11 @@ xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6OnnxRuntime\dll\*.dll" "$(Out
     <QtRcc Include="ButtonScanner.qrc" />
     <QtUic Include="ButtonScanner.ui" />
     <QtMoc Include="ButtonScanner.h" />
+    <ClCompile Include="AiLearnTools.cpp" />
     <ClCompile Include="ButtonScanner.cpp" />
     <ClCompile Include="DlgExposureTimeSet.cpp" />
+    <ClCompile Include="cdm_ButtonScannerDlgAiLearn.cpp" />
+    <ClCompile Include="DlgAiLearn.cpp" />
     <ClCompile Include="DlgProduceLineSet.cpp" />
     <ClCompile Include="DlgProductSet.cpp" />
     <ClCompile Include="GlobalStruct.cpp" />
@@ -157,6 +160,10 @@ xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6OnnxRuntime\dll\*.dll" "$(Out
     <QtMoc Include="GlobalStruct.h" />
     <QtMoc Include="ImageProcessorModule.h" />
     <QtMoc Include="NumKeyBord.h" />
+    <QtMoc Include="DlgAiLearn.h" />
+    <ClInclude Include="AiLearnTools.h" />
+    <ClInclude Include="cdm_ButtonScannerDlgAiLearn.h" />
+    <ClInclude Include="Product.h" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="MonitorCameraAndCardStateThread.cpp" />
     <ClCompile Include="NumKeyBord.cpp" />
@@ -166,6 +173,7 @@ xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6OnnxRuntime\dll\*.dll" "$(Out
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <QtUic Include="DlgExposureTimeSet.ui" />
+    <QtUic Include="DlgAiLearn.ui" />
     <QtUic Include="DlgProduceLineSet.ui" />
     <QtUic Include="DlgProductSet.ui" />
     <QtUic Include="LoadingDialog.ui" />

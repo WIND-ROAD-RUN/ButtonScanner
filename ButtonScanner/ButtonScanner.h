@@ -8,15 +8,15 @@
 #include"DlgExposureTimeSet.h"
 
 #include"opencv2/opencv.hpp"
-
+#include"DlgAiLearn.h"
 #include<QImage>
 #include<memory>
 namespace rw
 {
-    namespace rqw
-    {
-        class CameraPassiveThread;
-    }
+	namespace rqw
+	{
+		class CameraPassiveThread;
+	}
 }
 
 QT_BEGIN_NAMESPACE
@@ -25,7 +25,7 @@ QT_END_NAMESPACE
 
 class ButtonScanner : public QMainWindow
 {
-    Q_OBJECT
+	Q_OBJECT
 private:
     DlgProduceLineSet* dlgProduceLineSet = nullptr;
     DlgProductSet* dlgProductSet = nullptr;
@@ -50,7 +50,7 @@ public:
     ~ButtonScanner() override;
 
 private:
-    void set_radioButton();
+	void set_radioButton();
 
 private:
     void initializeComponents();
@@ -82,7 +82,7 @@ public:
 
     void build_imageProcessorModule();
 
-    void start_monitor();
+	void start_monitor();
 
     void build_motion();
 
@@ -94,10 +94,10 @@ public:
     void build_detachThread();
 
 private:
-    Ui::ButtonScannerClass* ui;
+	Ui::ButtonScannerClass* ui;
 
 private:
-    QImage cvMatToQImage(const cv::Mat& mat);
+	QImage cvMatToQImage(const cv::Mat& mat);
 
 private slots:
     void onCamera1Display(QPixmap image);
