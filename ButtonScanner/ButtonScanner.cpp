@@ -999,6 +999,7 @@ void ButtonScanner::pbtn_set_clicked()
 
 void ButtonScanner::pbtn_newProduction_clicked()
 {
+    //this->dlgAiLearn->ToStep1();
 	this->dlgAiLearn->exec();
 }
 

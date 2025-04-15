@@ -24,10 +24,11 @@ private:
 	void save_config(const rw::cdm::ButtonScannerDlgAiLearn & config);
 
 private:
+	void build_connect();
+public:
 	void build_ui();
 	void ToStep1();
 	void ToStep2();
-	void build_connect();
 	void clearStep();
 private:
 	Ui::DlgAiLearnClass* ui{ nullptr };
