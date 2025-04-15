@@ -6,9 +6,9 @@ namespace rw
 {
 	namespace imest
 	{
-        ProcessRectanglesResult ConvertPyRecMaskResultToProcessRectanglesResult(PyRecMaskResult& pyRecMaskResult)
+        ProcessRectanglesResultST ConvertPyRecMaskResultToProcessRectanglesResult(PyRecMaskResult& pyRecMaskResult)
         {
-            ProcessRectanglesResult processRectanglesResult;
+            ProcessRectanglesResultST processRectanglesResult;
             processRectanglesResult.left_top = std::make_pair(pyRecMaskResult.left, pyRecMaskResult.top);
             processRectanglesResult.right_bottom = std::make_pair(pyRecMaskResult.right, pyRecMaskResult.bottom);
             processRectanglesResult.classId = pyRecMaskResult.classID;
@@ -22,7 +22,7 @@ namespace rw
             return processRectanglesResult;
         }
 
-		ModelEngine::ModelEngine(std::string modelPath, std::string nameFilePath)
+		ModelEngineST::ModelEngineST(std::string modelPath, std::string nameFilePath)
 		{
 		}
 	}

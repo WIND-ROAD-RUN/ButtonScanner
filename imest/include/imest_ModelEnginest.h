@@ -8,7 +8,7 @@ namespace rw
 {
 	namespace imest
 	{
-        class ModelEngine
+        class ModelEngineST
         {
         private:
             int _index{ -1 };
@@ -16,10 +16,10 @@ namespace rw
             std::string _nameFilePath;
             bool _isCreated{ false };
         public:
-            ModelEngine(std::string modelPath, std::string nameFilePath);
-            ~ModelEngine();
+            ModelEngineST(std::string modelPath, std::string nameFilePath);
+            ~ModelEngineST();
         public:
-            bool ProcessMask(cv::Mat& img, cv::Mat& resultMat, cv::Mat& maskMat, std::vector<ProcessRectanglesResult>& vecRecogResult);
+            bool ProcessMask(cv::Mat& img, cv::Mat& resultMat, cv::Mat& maskMat, std::vector<ProcessRectanglesResultST>& vecRecogResult);
         };
 	}
 }
