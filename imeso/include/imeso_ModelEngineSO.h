@@ -1,13 +1,14 @@
 #pragma once
 
+
 #include<string>
 #include"opencv2/opencv.hpp"
 
-#include"imeot_ModelEngineOTCore.h"
+#include"imeso_ModelEngineSOCode.h"
 
 namespace rw
 {
-	namespace imeot
+	namespace imeso
 	{
         class ModelEngineOT
         {
@@ -20,7 +21,8 @@ namespace rw
             ModelEngineOT(std::string modelPath, std::string nameFilePath);
             ~ModelEngineOT();
         public:
-            bool ProcessMask(cv::Mat& img, cv::Mat& resultMat, std::vector<ProcessRectanglesResultOT>& result);
+            bool ProcessMask(cv::Mat& img, cv::Mat& resultMat, cv::Mat maskMat,std::vector<ProcessRectanglesResultSO>& result);
         };
+
 	}
 }
