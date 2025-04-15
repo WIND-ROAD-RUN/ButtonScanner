@@ -3,6 +3,12 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+
+#for yolov5
+
+
+
+
 # User-specific files
 *.rsuser
 *.suo
@@ -371,3 +377,20 @@ FodyWeavers.xsd
 /ThirdLibrary/ZMotion/dll/zauxdll.dll
 /ThirdLibrary/ZMotion/dll/zmotion.dll
 /ThirdLibrary/YOLOV5V6OnnxRuntime/dll
+
+/ThirdSource/yolov5/datasets/mydataset/train/images/
+/ThirdSource/yolov5/datasets/mydataset/tes/
+/ThirdSource/yolov5/datasets/mydataset/val/images/
+/ThirdSource/yolov5/datasets/mydataset/val/labels/
+/ThirdSource/yolov5/datasets/mydataset/train/labels/
+/ThirdSource/yolov5/datasets/mydataset/train/labels.cache
+/ThirdSource/yolov5/datasets/mydataset/train/labels.cache.npy
+/ThirdSource/yolov5/runs/train/
+/ThirdSource/yolov5/runs/train-seg/
+/ThirdSource/yolov5/segdatasets/mydataset/tes
+/ThirdSource/yolov5/segdatasets/mydataset/train/images
+/ThirdSource/yolov5/segdatasets/mydataset/train/labels
+/ThirdSource/yolov5/segdatasets/mydataset/train/labels.cache
+/ThirdSource/yolov5/segdatasets/mydataset/val/images
+/ThirdSource/yolov5/segdatasets/mydataset/val/labels
+/ThirdSource/yolov5/segdatasets/mydataset/val/labels

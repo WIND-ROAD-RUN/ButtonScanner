@@ -1,5 +1,4 @@
 #pragma once
-
 #include <QObject>
 #include <QQueue>
 #include <QMutex>

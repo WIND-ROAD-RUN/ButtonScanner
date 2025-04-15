@@ -163,11 +163,11 @@ void GlobalStructData::saveMainWindowConfig()
 void GlobalStructData::saveDlgProduceLineSetConfig()
 {
     storeContext->save(dlgProduceLineSetConfig, dlgProduceLineSetFilePath.toStdString());
+
 }
 
-void GlobalStructData::saveDlgProductSetConfig()
-{
-    storeContext->save(dlgProductSetConfig, dlgProductSetFilePath.toStdString());
+void GlobalStructData::saveDlgProductSetConfig(){
+	storeContext->save(dlgProductSetConfig, dlgProductSetFilePath.toStdString());
 }
 
 void GlobalStructData::saveDlgExposureTimeSetConfig()
@@ -420,6 +420,24 @@ void GlobalStructData::destroyImageSaveEngine()
 
 GlobalStructData::GlobalStructData()
 {
+}
+
+void GlobalStructData::setUpLight(bool state)
+{
+    mainWindowConfig.upLight = state;
+	emit updateLightState(0, state);
+}
+
+void GlobalStructData::setDownLight(bool state)
+{
+	mainWindowConfig.downLight = state;
+	emit updateLightState(1, state);
+}
+
+void GlobalStructData::setSideLight(bool state)
+{
+	mainWindowConfig.sideLight = state;
+	emit updateLightState(2, state);
 }
 
 void GlobalStructData::onBuildCamera1()

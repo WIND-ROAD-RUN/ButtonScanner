@@ -151,35 +151,35 @@ void DlgProductSet::build_connect()
 	QObject::connect(ui->pbtn_edgeDamageSimilarity, &QPushButton::clicked,
 		this, &DlgProductSet::pbtn_edgeDamageSimilarity_clicked);
 
-    QObject::connect(ui->rbtn_outsideDiameterEnable, &QPushButton::clicked,
+    QObject::connect(ui->rbtn_outsideDiameterEnable, &QRadioButton::clicked,
         this, &DlgProductSet::rbtn_outsideDiameterEnable_checked);
-    QObject::connect(ui->rbtn_edgeDamageEnable, &QPushButton::clicked,
+    QObject::connect(ui->rbtn_edgeDamageEnable, &QRadioButton::clicked,
         this, &DlgProductSet::rbtn_edgeDamageEnable_checked);
-    QObject::connect(ui->rbtn_shieldingRangeEnable, &QPushButton::clicked,
+    QObject::connect(ui->rbtn_shieldingRangeEnable, &QRadioButton::clicked,
         this, &DlgProductSet::rbtn_shieldingRangeEnable_checked);
-    QObject::connect(ui->rbtn_poreEnable, &QPushButton::clicked,
+    QObject::connect(ui->rbtn_poreEnable, &QRadioButton::clicked,
         this, &DlgProductSet::rbtn_poreEnable_checked);
-    QObject::connect(ui->rbtn_paintEnable, &QPushButton::clicked,
+    QObject::connect(ui->rbtn_paintEnable, &QRadioButton::clicked,
         this, &DlgProductSet::rbtn_paintEnable_checked);
-    QObject::connect(ui->rbtn_holesCountEnable, &QPushButton::clicked,
+    QObject::connect(ui->rbtn_holesCountEnable, &QRadioButton::clicked,
         this, &DlgProductSet::rbtn_holesCountEnable_checked);
-    QObject::connect(ui->rbtn_brokenEyeEnable, &QPushButton::clicked,
+    QObject::connect(ui->rbtn_brokenEyeEnable, &QRadioButton::clicked,
         this, &DlgProductSet::rbtn_brokenEyeEnable_checked);
-    QObject::connect(ui->rbtn_crackEnable, &QPushButton::clicked,
+    QObject::connect(ui->rbtn_crackEnable, &QRadioButton::clicked,
         this, &DlgProductSet::rbtn_crackEnable_checked);
-    QObject::connect(ui->rbtn_apertureEnable, &QPushButton::clicked,
+    QObject::connect(ui->rbtn_apertureEnable, &QRadioButton::clicked,
         this, &DlgProductSet::rbtn_apertureEnable_checked);
-    QObject::connect(ui->rbtn_holeCenterDistanceEnable, &QPushButton::clicked,
+    QObject::connect(ui->rbtn_holeCenterDistanceEnable, &QRadioButton::clicked,
         this, &DlgProductSet::rbtn_holeCenterDistanceEnable_checked);
-    QObject::connect(ui->rbtn_specifyColorDifferenceEnable, &QPushButton::clicked,
+    QObject::connect(ui->rbtn_specifyColorDifferenceEnable, &QRadioButton::clicked,
         this, &DlgProductSet::rbtn_specifyColorDifferenceEnable_checked);
-    QObject::connect(ui->rbtn_largeColorDifferenceEnable, &QPushButton::clicked,
+    QObject::connect(ui->rbtn_largeColorDifferenceEnable, &QRadioButton::clicked,
         this, &DlgProductSet::rbtn_largeColorDifferenceEnable_checked);
-    QObject::connect(ui->rbtn_grindStoneEnable, &QPushButton::clicked,
+    QObject::connect(ui->rbtn_grindStoneEnable, &QRadioButton::clicked,
         this, &DlgProductSet::rbtn_grindStoneEnable_checked);
-    QObject::connect(ui->rbtn_blockEyeEnable, &QPushButton::clicked,
+    QObject::connect(ui->rbtn_blockEyeEnable, &QRadioButton::clicked,
         this, &DlgProductSet::rbtn_blockEyeEnable_checked);
-    QObject::connect(ui->rbtn_materialHeadEnable, &QPushButton::clicked,
+    QObject::connect(ui->rbtn_materialHeadEnable, &QRadioButton::clicked,
         this, &DlgProductSet::rbtn_materialHeadEnable_checked);
 }
 

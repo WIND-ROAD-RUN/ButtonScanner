@@ -34,7 +34,7 @@ void StatisticalInfoComputingThread::run()
         auto olderWasteCount = statisticalInfo.wasteCount.load();
         // 每1秒计算一次
         QThread::sleep(1);
-        // 计算去除率
+        // 计算去除速度
         auto newWasteCount = statisticalInfo.wasteCount.load();
         auto rate = static_cast<double>(newWasteCount - olderWasteCount) * 60;
         statisticalInfo.removeRate = rate;
@@ -42,6 +42,10 @@ void StatisticalInfoComputingThread::run()
         // 计算生产良率
         auto totalCount = statisticalInfo.produceCount.load();
         auto wasteCount = statisticalInfo.wasteCount.load();
+        if (totalCount==0)
+        {
+            return;
+        }
         statisticalInfo.productionYield = (static_cast<double>(totalCount - wasteCount) / totalCount) * 100;
 
         // 发送信号更新UI

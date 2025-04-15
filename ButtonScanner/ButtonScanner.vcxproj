@@ -76,7 +76,9 @@
       <Command>xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6\dll\*.dll" "$(OutDir)"
 xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\ZMotion\dll\*.dll" "$(OutDir)"
 xcopy /Y /R /D "$(ProjectDir)image\*.png" "$(OutDir)\image\"
-xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6OnnxRuntime\dll\*.dll" "$(OutDir)"</Command>
+xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6OnnxRuntime\dll\*.dll" "$(OutDir)"
+xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
+   </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -94,7 +96,9 @@ xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\ZMotion\dll\*.dll" "$(OutDir)"
 xcopy /Y /R /D "$(ProjectDir)image\*.png" "$(OutDir)\image\"
 "$(QT_ROOT)\6.7.3\msvc2019_64\bin\windeployqt.exe" "$(TargetPath)"
 xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6OnnxRuntime\dll\*.dll" "$(OutDir)"
-xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6OnnxRuntime\dll\*.dll" "$(OutDir)"</Command>
+xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6OnnxRuntime\dll\*.dll" "$(OutDir)"
+xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
+   </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -140,12 +144,15 @@ xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6OnnxRuntime\dll\*.dll" "$(Out
     <QtMoc Include="StatisticalInfoComputingThread.h" />
     <QtMoc Include="MonitorCameraAndCardStateThread.h" />
     <QtMoc Include="LoadingDialog.h" />
+    <ClInclude Include="PathGlobalStruct.h" />
     <ClInclude Include="ThreadSafePriorityQueue.h" />
     <QtRcc Include="ButtonScanner.qrc" />
     <QtUic Include="ButtonScanner.ui" />
     <QtMoc Include="ButtonScanner.h" />
+    <ClCompile Include="AiLearnTools.cpp" />
     <ClCompile Include="ButtonScanner.cpp" />
     <ClCompile Include="DlgExposureTimeSet.cpp" />
+    <ClCompile Include="DlgAiLearn.cpp" />
     <ClCompile Include="DlgProduceLineSet.cpp" />
     <ClCompile Include="DlgProductSet.cpp" />
     <ClCompile Include="GlobalStruct.cpp" />
@@ -157,15 +164,19 @@ xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6OnnxRuntime\dll\*.dll" "$(Out
     <QtMoc Include="GlobalStruct.h" />
     <QtMoc Include="ImageProcessorModule.h" />
     <QtMoc Include="NumKeyBord.h" />
+    <QtMoc Include="DlgAiLearn.h" />
+    <ClInclude Include="AiLearnTools.h" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="MonitorCameraAndCardStateThread.cpp" />
     <ClCompile Include="NumKeyBord.cpp" />
+    <ClCompile Include="PathGlobalStruct.cpp" />
     <ClCompile Include="StatisticalInfoComputingThread.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <QtUic Include="DlgExposureTimeSet.ui" />
+    <QtUic Include="DlgAiLearn.ui" />
     <QtUic Include="DlgProduceLineSet.ui" />
     <QtUic Include="DlgProductSet.ui" />
     <QtUic Include="LoadingDialog.ui" />

@@ -6,17 +6,18 @@
 #include"DlgProduceLineSet.h"
 #include"DlgProductSet.h"
 #include"DlgExposureTimeSet.h"
+#include"rqw_LabelClickable.h"
 
 #include"opencv2/opencv.hpp"
-
+#include"DlgAiLearn.h"
 #include<QImage>
 #include<memory>
 namespace rw
 {
-    namespace rqw
-    {
-        class CameraPassiveThread;
-    }
+	namespace rqw
+	{
+		class CameraPassiveThread;
+	}
 }
 
 QT_BEGIN_NAMESPACE
@@ -25,12 +26,15 @@ QT_END_NAMESPACE
 
 class ButtonScanner : public QMainWindow
 {
-    Q_OBJECT
+	Q_OBJECT
 private:
     DlgProduceLineSet* dlgProduceLineSet = nullptr;
     DlgProductSet* dlgProductSet = nullptr;
     DlgExposureTimeSet* dlgExposureTimeSet = nullptr;
-
+public:
+	DlgAiLearn* dlgAiLearn = nullptr;
+public:
+    rw::rqw::ClickableLabel* labelClickable_title;
 private:
     //变量监控线程关机的时候停止
     bool mark_Thread = false;
@@ -50,7 +54,7 @@ public:
     ~ButtonScanner() override;
 
 private:
-    void set_radioButton();
+	void set_radioButton();
 
 private:
     void initializeComponents();
@@ -61,6 +65,7 @@ private:
     void build_dlgProduceLineSet();
     void build_dlgProductSet();
     void build_dlgExposureTimeSet();
+	void build_dlgAiLearn();
 
     void stop_all_axis();
 
@@ -82,7 +87,7 @@ public:
 
     void build_imageProcessorModule();
 
-    void start_monitor();
+	void start_monitor();
 
     void build_motion();
 
@@ -94,10 +99,12 @@ public:
     void build_detachThread();
 
 private:
-    Ui::ButtonScannerClass* ui;
+	Ui::ButtonScannerClass* ui;
 
 private:
-    QImage cvMatToQImage(const cv::Mat& mat);
+	QImage cvMatToQImage(const cv::Mat& mat);
+private:
+    void onUpdateLightStateUi(size_t index,bool state);
 
 private slots:
     void onCamera1Display(QPixmap image);
@@ -131,4 +138,6 @@ private slots:
     void rbtn_downLight_ckecked(bool checked);
     void rbtn_defect_ckecked(bool checked);
     void rbtn_ForAndAgainst_ckecked(bool checked);
+private:
+    void labelClickable_title_clicked();
 };

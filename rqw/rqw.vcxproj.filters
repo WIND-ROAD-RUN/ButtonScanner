@@ -49,6 +49,9 @@
     <QtMoc Include="include\rqw_ImageSaveEngine.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="include\rqw_LabelClickable.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\rqw_CameraObject.cpp">
@@ -61,6 +64,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\rqw_ImageSaveEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rqw_LabelClickable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
