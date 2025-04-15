@@ -39,6 +39,18 @@
     <Filter Include="Source Files\DetachThread">
       <UniqueIdentifier>{d08aaaa7-ddc0-459b-832b-e381f4ea514e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\func">
+      <UniqueIdentifier>{a5b39155-9634-42e3-9deb-f4544939c2e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\func">
+      <UniqueIdentifier>{c6f9cdf0-db70-47aa-af27-a7badf953df5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\data">
+      <UniqueIdentifier>{a68778f5-a483-4e04-ab3a-21e57c51f97b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\data">
+      <UniqueIdentifier>{007570f2-1d74-473f-9a8f-f5ddd8389dc0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="ButtonScanner.qrc">
@@ -56,12 +68,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GlobalStruct.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageProcessorModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ButtonScanner.cpp">
@@ -85,26 +91,29 @@
     <ClCompile Include="MonitorCameraAndCardStateThread.cpp">
       <Filter>Source Files\DetachThread</Filter>
     </ClCompile>
-    <ClCompile Include="LoadingDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DlgAiLearn.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="cdm_ButtonScannerDlgAiLearn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AiLearnTools.cpp">
+    <ClCompile Include="DlgAiLearn.cpp">
       <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingDialog.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalStruct.cpp">
+      <Filter>Source Files\data</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageProcessorModule.cpp">
+      <Filter>Source Files\func</Filter>
+    </ClCompile>
+    <ClCompile Include="AiLearnTools.cpp">
+      <Filter>Source Files\func</Filter>
+    </ClCompile>
+    <ClCompile Include="PathGlobalStruct.cpp">
+      <Filter>Source Files\data</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="GlobalStruct.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="ImageProcessorModule.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="ButtonScanner.h">
       <Filter>Header Files\ui</Filter>
     </QtMoc>
@@ -126,11 +135,17 @@
     <QtMoc Include="MonitorCameraAndCardStateThread.h">
       <Filter>Header Files\DetachThread</Filter>
     </QtMoc>
-    <QtMoc Include="LoadingDialog.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="DlgAiLearn.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="LoadingDialog.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="GlobalStruct.h">
+      <Filter>Header Files\data</Filter>
+    </QtMoc>
+    <QtMoc Include="ImageProcessorModule.h">
+      <Filter>Header Files\func</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -173,11 +188,11 @@
     <ClInclude Include="cdm_ButtonScannerDlgAiLearn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Product.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AiLearnTools.h">
-      <Filter>Header Files\ui</Filter>
+      <Filter>Header Files\func</Filter>
+    </ClInclude>
+    <ClInclude Include="PathGlobalStruct.h">
+      <Filter>Header Files\data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

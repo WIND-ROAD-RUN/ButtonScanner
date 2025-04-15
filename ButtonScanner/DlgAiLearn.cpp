@@ -6,7 +6,7 @@
 #include <codecvt>
 #include <AiLearnTools.h>
 #include"ime_ModelEngine.h"
-#include <algorithm> // Add this include for std::sort
+#include <algorithm> 
 
 DlgAiLearn::DlgAiLearn(QWidget* parent)
 	: QDialog(parent)
@@ -19,8 +19,8 @@ DlgAiLearn::DlgAiLearn(QWidget* parent)
 	ui->label_pic3->setScaledContents(true);
 	ui->label_pic4->setScaledContents(true);
 
-	Init();
-	connects();
+	build_ui();
+	build_connect();
 }
 
 DlgAiLearn::~DlgAiLearn()
@@ -32,7 +32,12 @@ DlgAiLearn::~DlgAiLearn()
 	delete ui;
 }
 
-void DlgAiLearn::connects()
+void DlgAiLearn::read_lastConfig()
+{
+	
+}
+
+void DlgAiLearn::build_connect()
 {
 	QObject::connect(ui->pbtn_yes, &QPushButton::clicked,
 		this, &DlgAiLearn::pbtn_yes_clicked);
@@ -83,7 +88,7 @@ void DlgAiLearn::clearStep()
 	ui->label_pic4->clear();
 }
 
-void DlgAiLearn::Init()
+void DlgAiLearn::build_ui()
 {
 	auto& globalStruct = GlobalStructData::getInstance();
 

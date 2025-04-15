@@ -18,10 +18,12 @@ public:
 	DlgAiLearn(QWidget* parent = nullptr);
 	~DlgAiLearn();
 private:
-	void Init();
+	void read_lastConfig();
+private:
+	void build_ui();
 	void ToStep1();
 	void ToStep2();
-	void connects();
+	void build_connect();
 	void clearStep();
 private:
 	Ui::DlgAiLearnClass* ui{ nullptr };
