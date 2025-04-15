@@ -10,19 +10,19 @@ namespace rw {
 namespace rw
 {
 	namespace cdm {
-		class ButtonScannerDlgAiLearnRefactor
+		class ButtonScannerDlgAiLearn
 		{
 		public:
-			ButtonScannerDlgAiLearnRefactor() = default;
-			~ButtonScannerDlgAiLearnRefactor() = default;
+			ButtonScannerDlgAiLearn() = default;
+			~ButtonScannerDlgAiLearn() = default;
 
-			ButtonScannerDlgAiLearnRefactor(const rw::oso::ObjectStoreAssembly& assembly);
-			ButtonScannerDlgAiLearnRefactor(const ButtonScannerDlgAiLearnRefactor& buttonScannerMainWindow);
+			ButtonScannerDlgAiLearn(const rw::oso::ObjectStoreAssembly& assembly);
+			ButtonScannerDlgAiLearn(const ButtonScannerDlgAiLearn& buttonScannerMainWindow);
 
-			ButtonScannerDlgAiLearnRefactor& operator=(const ButtonScannerDlgAiLearnRefactor& buttonScannerMainWindow);
+			ButtonScannerDlgAiLearn& operator=(const ButtonScannerDlgAiLearn& buttonScannerMainWindow);
 			operator rw::oso::ObjectStoreAssembly() const;
-			bool operator==(const ButtonScannerDlgAiLearnRefactor& account) const;
-			bool operator!=(const ButtonScannerDlgAiLearnRefactor& account) const;
+			bool operator==(const ButtonScannerDlgAiLearn& account) const;
+			bool operator!=(const ButtonScannerDlgAiLearn& account) const;
 
 		public:
 			int checkType{ 1 };

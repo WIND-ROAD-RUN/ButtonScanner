@@ -20,6 +20,7 @@ public:
 private:
 	rw::cdm::ButtonScannerDlgAiLearn read_lastConfig();
 	rw::cdm::ButtonScannerDlgAiLearn read_config(const QString & path);
+	rw::cdm::ButtonScannerDlgAiLearn get_newConfig(int checkType);
 	void save_config(const rw::cdm::ButtonScannerDlgAiLearn & config);
 
 private:
@@ -31,7 +32,7 @@ private:
 private:
 	Ui::DlgAiLearnClass* ui{ nullptr };
 	rw::ime::ModelEngine* _modelEnginePtr{ nullptr };
-	rw::cdm::ButtonScannerDlgAiLearn* aiLearnConfig{ nullptr };
+	rw::cdm::ButtonScannerDlgAiLearn aiLearnConfig;
 	QProcess  m_Process;
 	int step{ 0 };
 	int moveLen{ 3000 };

@@ -4,7 +4,7 @@ namespace rw
 {
 	namespace cdm
 	{
-		ButtonScannerDlgAiLearnRefactor::ButtonScannerDlgAiLearnRefactor(const rw::oso::ObjectStoreAssembly& assembly)
+		ButtonScannerDlgAiLearn::ButtonScannerDlgAiLearn(const rw::oso::ObjectStoreAssembly& assembly)
 		{
 			auto isAccountAssembly = assembly.getName();
 			if (isAccountAssembly != "$class$ButtonScannerDlgAiLearn$")
@@ -25,14 +25,14 @@ namespace rw
 			learnInfoSign = learnInfoSignItem->getValueAsString();
 		}
 
-		ButtonScannerDlgAiLearnRefactor::ButtonScannerDlgAiLearnRefactor(
-			const ButtonScannerDlgAiLearnRefactor& buttonScannerMainWindow)
+		ButtonScannerDlgAiLearn::ButtonScannerDlgAiLearn(
+			const ButtonScannerDlgAiLearn& buttonScannerMainWindow)
 		{
 			checkType = buttonScannerMainWindow.checkType;
 			learnInfoSign = buttonScannerMainWindow.learnInfoSign;
 		}
 
-		ButtonScannerDlgAiLearnRefactor& ButtonScannerDlgAiLearnRefactor::operator=(const ButtonScannerDlgAiLearnRefactor& buttonScannerMainWindow)
+		ButtonScannerDlgAiLearn& ButtonScannerDlgAiLearn::operator=(const ButtonScannerDlgAiLearn& buttonScannerMainWindow)
 		{
 			if (this != &buttonScannerMainWindow) {
 				checkType = buttonScannerMainWindow.checkType;
@@ -41,7 +41,7 @@ namespace rw
 			return *this;
 		}
 
-		ButtonScannerDlgAiLearnRefactor::operator rw::oso::ObjectStoreAssembly() const
+		ButtonScannerDlgAiLearn::operator rw::oso::ObjectStoreAssembly() const
 		{
 			rw::oso::ObjectStoreAssembly assembly;
 			assembly.setName("$class$ButtonScannerDlgAiLearn$");
@@ -59,12 +59,12 @@ namespace rw
 			return assembly;
 		}
 
-		bool ButtonScannerDlgAiLearnRefactor::operator==(const ButtonScannerDlgAiLearnRefactor& account) const
+		bool ButtonScannerDlgAiLearn::operator==(const ButtonScannerDlgAiLearn& account) const
 		{
 			return (checkType == account.checkType) &&
 				(learnInfoSign == account.learnInfoSign);
 		}
-		bool ButtonScannerDlgAiLearnRefactor::operator!=(const ButtonScannerDlgAiLearnRefactor& account) const
+		bool ButtonScannerDlgAiLearn::operator!=(const ButtonScannerDlgAiLearn& account) const
 		{
 			return !(*this == account);
 		}

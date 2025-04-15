@@ -91,9 +91,6 @@
     <ClCompile Include="MonitorCameraAndCardStateThread.cpp">
       <Filter>Source Files\DetachThread</Filter>
     </ClCompile>
-    <ClCompile Include="cdm_ButtonScannerDlgAiLearn.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DlgAiLearn.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
@@ -183,9 +180,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ThreadSafePriorityQueue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cdm_ButtonScannerDlgAiLearn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AiLearnTools.h">
