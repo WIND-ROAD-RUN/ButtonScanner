@@ -66,14 +66,15 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\imeso\include;$(SolutionDir)\imeot\include;$(SolutionDir)\ThirdLibrary\ZMotion\include;$(SolutionDir)\dsl\include\;$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\cdm\include;$(SolutionDir)\oso\include;$(SolutionDir)\hoec\include;$(SolutionDir)\scc\include;$(SolutionDir)\imest\include;$(SolutionDir)\imeoo\include;$(SolutionDir)\ime\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\imeso\include;$(SolutionDir)\imeot\include;$(SolutionDir)\ThirdLibrary\ZMotion\include;$(SolutionDir)\dsl\include\;$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\cdm\include;$(SolutionDir)\oso\include;$(SolutionDir)\hoec\include;$(SolutionDir)\scc\include;$(SolutionDir)\imest\include;$(SolutionDir)\imeoo\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6_obbTensor\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_obbOnnxRuntime\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_segTensor\lib;$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>tensorrt_yolo_onnx_multask.lib;yolov5_det_ort_hasptr.lib;yolov5v6_seg_trt.lib;MvCameraControl.lib;zauxdll.lib;zmotion.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6_obbTensor\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_obbOnnxRuntime\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_segTensor\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_segOnnxRuntime\lib;$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>yolov5v6_seg_ort.lib;tensorrt_yolo_onnx_multask.lib;yolov5_det_ort_hasptr.lib;yolov5v6_seg_trt.lib;MvCameraControl.lib;zauxdll.lib;zmotion.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6_obbTensor\dll\*.dll" "$(OutDir)"
+      <Command>xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6_segOnnxRuntime\dll\*.dll" "$(OutDir)"
+xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6_obbTensor\dll\*.dll" "$(OutDir)"
 xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6_segTensor\dll\*.dll" "$(OutDir)"
 xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\ZMotion\dll\*.dll" "$(OutDir)"
 xcopy /Y /R /D "$(ProjectDir)image\*.png" "$(OutDir)\image\"
@@ -85,14 +86,15 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\imeso\include;$(SolutionDir)\imeot\include;$(SolutionDir)\ThirdLibrary\ZMotion\include;$(SolutionDir)\dsl\include\;$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\cdm\include;$(SolutionDir)\oso\include;$(SolutionDir)\hoec\include;$(SolutionDir)\scc\include;$(SolutionDir)\imest\include;$(SolutionDir)\imeoo\include;$(SolutionDir)\ime\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\imeso\include;$(SolutionDir)\imeot\include;$(SolutionDir)\ThirdLibrary\ZMotion\include;$(SolutionDir)\dsl\include\;$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\cdm\include;$(SolutionDir)\oso\include;$(SolutionDir)\hoec\include;$(SolutionDir)\scc\include;$(SolutionDir)\imest\include;$(SolutionDir)\imeoo\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6_obbTensor\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_obbOnnxRuntime\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_segTensor\lib;$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>tensorrt_yolo_onnx_multask.lib;yolov5_det_ort_hasptr.lib;yolov5v6_seg_trt.lib;MvCameraControl.lib;zauxdll.lib;zmotion.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6_obbTensor\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_obbOnnxRuntime\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_segTensor\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_segOnnxRuntime\lib;$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>yolov5v6_seg_ort.lib;tensorrt_yolo_onnx_multask.lib;yolov5_det_ort_hasptr.lib;yolov5v6_seg_trt.lib;MvCameraControl.lib;zauxdll.lib;zmotion.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6_obbTensor\dll\*.dll" "$(OutDir)"
+xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6_segOnnxRuntime\dll\*.dll" "$(OutDir)"
 xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\YOLOV5V6_segTensor\dll\*.dll" "$(OutDir)"
 xcopy /Y /R /D "$(SolutionDir)ThirdLibrary\ZMotion\dll\*.dll" "$(OutDir)"
 xcopy /Y /R /D "$(ProjectDir)image\*.png" "$(OutDir)\image\"
@@ -194,6 +196,12 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     </ProjectReference>
     <ProjectReference Include="..\imeoo\imeoo.vcxproj">
       <Project>{cc155c73-0fc9-4894-8c3f-4f7614e4216b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\imeot\imeot.vcxproj">
+      <Project>{1e8e9add-e4e5-4b06-8d2a-807b87310bb3}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\imeso\imeso.vcxproj">
+      <Project>{bd6b8180-ffaa-410d-98b3-5421e220712d}</Project>
     </ProjectReference>
     <ProjectReference Include="..\imest\imest.vcxproj">
       <Project>{a801b04f-196f-4d3b-a789-37a5b60d00ce}</Project>
