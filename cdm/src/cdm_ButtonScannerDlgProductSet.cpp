@@ -349,7 +349,7 @@ rw::cdm::ButtonScannerDlgProductSet::operator rw::oso::ObjectStoreAssembly() con
 
     auto edgeDamageEnableItem = std::make_shared<oso::ObjectStoreItem>();
     edgeDamageEnableItem->setName("$variable$edgeDamageEnable$");
-    edgeDamageEnableItem->setValueFromBool(blowTime);
+    edgeDamageEnableItem->setValueFromBool(edgeDamageEnable);
     assembly.addItem(edgeDamageEnableItem);
 
     auto edgeDamageSimilarityItem = std::make_shared<oso::ObjectStoreItem>();
