@@ -396,3 +396,4 @@ FodyWeavers.xsd
 /ThirdSource/yolov5/segdatasets/mydataset/val/labels
 /ThirdLibrary/YOLOV5V6_segOnnxRuntime/dll
 /ThirdLibrary/YOLOV5V6_segTensor/dll
+/ThirdLibrary/YOLOV5V6_obbOnnxRuntime/dll
