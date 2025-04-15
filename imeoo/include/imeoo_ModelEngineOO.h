@@ -20,7 +20,7 @@ namespace rw
             ModelEngineOO(std::string modelPath, std::string nameFilePath);
             ~ModelEngineOO();
         public:
-            bool ProcessMask(cv::Mat& img, cv::Mat& resultMat, std::vector<ProcessRectanglesResultOnnx>& result);
+            bool ProcessMask(cv::Mat& img, cv::Mat& resultMat, std::vector<ProcessRectanglesResultOO>& result);
         };
 	}
 

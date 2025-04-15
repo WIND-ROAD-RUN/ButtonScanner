@@ -34,7 +34,7 @@ public:
 	int step{ 0 };
 private:
 	Ui::DlgAiLearnClass* ui{ nullptr };
-	rw::ime::ModelEngine* _modelEnginePtr{ nullptr };
+	rw::ime::ModelEngineST* _modelEnginePtr{ nullptr };
 	rw::cdm::ButtonScannerDlgAiLearn* aiLearnConfig;
 	QProcess  m_Process;
 

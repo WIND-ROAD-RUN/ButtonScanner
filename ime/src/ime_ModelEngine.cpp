@@ -6,9 +6,9 @@ namespace rw
 {
     namespace ime
     {
-        ProcessRectanglesResult ConvertPyRecMaskResultToProcessRectanglesResult(PyRecMaskResult& pyRecMaskResult)
+        ProcessRectanglesResultST ConvertPyRecMaskResultToProcessRectanglesResult(PyRecMaskResult& pyRecMaskResult)
         {
-            ProcessRectanglesResult processRectanglesResult;
+            ProcessRectanglesResultST processRectanglesResult;
             processRectanglesResult.left_top = std::make_pair(pyRecMaskResult.left, pyRecMaskResult.top);
             processRectanglesResult.right_bottom = std::make_pair(pyRecMaskResult.right, pyRecMaskResult.bottom);
             processRectanglesResult.classId = pyRecMaskResult.classID;
@@ -22,7 +22,7 @@ namespace rw
             return processRectanglesResult;
         }
 
-        ModelEngine::ModelEngine(std::string modelPath, std::string nameFilePath)
+        ModelEngineST::ModelEngineST(std::string modelPath, std::string nameFilePath)
         {
             _modelPath = modelPath;
             _nameFilePath = nameFilePath;
@@ -34,15 +34,15 @@ namespace rw
             _isCreated = true;
         }
 
-        ModelEngine::~ModelEngine()
+        ModelEngineST::~ModelEngineST()
         {
             if (_isCreated) {
                 yolov5v6_seg_trt_destroy(_index);
             }
         }
 
-        bool ModelEngine::ProcessMask(cv::Mat& img, cv::Mat& resultMat, cv::Mat& maskMat,
-            std::vector<ProcessRectanglesResult>& vecRecogResult)
+        bool ModelEngineST::ProcessMask(cv::Mat& img, cv::Mat& resultMat, cv::Mat& maskMat,
+            std::vector<ProcessRectanglesResultST>& vecRecogResult)
         {
             try
             {

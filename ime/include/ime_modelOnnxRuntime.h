@@ -9,7 +9,7 @@ namespace rw
     namespace ime //image model engine
     {
 
-        class ModelEngineOnnxRuntime 
+        class ModelEngineOO 
         {
         private:
             int _index{ -1 };
@@ -17,10 +17,10 @@ namespace rw
             std::string _nameFilePath;
             bool _isCreated{ false };
         public:
-            ModelEngineOnnxRuntime(std::string modelPath, std::string nameFilePath);
-            ~ModelEngineOnnxRuntime();
+            ModelEngineOO(std::string modelPath, std::string nameFilePath);
+            ~ModelEngineOO();
         public:
-            bool ProcessMask(cv::Mat& img, cv::Mat& resultMat, std::vector<ProcessRectanglesResultOnnx>& vecRecogResult);
+            bool ProcessMask(cv::Mat& img, cv::Mat& resultMat, std::vector<ProcessRectanglesResultOO>& vecRecogResult);
         };
     }
 }

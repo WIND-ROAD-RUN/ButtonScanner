@@ -31,7 +31,7 @@ struct ImagePainter
 
     static void drawTextOnImage(QImage& image, const QVector<QString>& texts, const QVector<Color>& colorList = { Color::Red,Color::Green }, double proportion = 0.8);
 
-    static void drawCirclesOnImage(cv::Mat& image, const std::vector<rw::ime::ProcessRectanglesResult>& rectangles);
+    static void drawCirclesOnImage(cv::Mat& image, const std::vector<rw::ime::ProcessRectanglesResultST>& rectangles);
 };
 
 struct MatInfo {
@@ -56,9 +56,9 @@ signals:
     void imageReady(QPixmap image);
 
 private:
-    std::unique_ptr<rw::ime::ModelEngine> _modelEnginePtr;
+    std::unique_ptr<rw::ime::ModelEngineST> _modelEnginePtr;
 
-    std::unique_ptr<rw::ime::ModelEngineOnnxRuntime> _modelEnginePtrOnnx;
+    std::unique_ptr<rw::ime::ModelEngineOO> _modelEnginePtrOnnx;
 
 public:
     void buildModelEngine(const QString& enginePath, const QString& namePath);
@@ -66,12 +66,12 @@ public:
     void buildModelEngineOnnx(const QString& enginePath, const QString& namePath);
 
 private:
-    cv::Mat processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::ime::ProcessRectanglesResult>& vecRecogResult);
-    void eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::ime::ProcessRectanglesResult>& processRectanglesResult);
+    cv::Mat processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::ime::ProcessRectanglesResultST>& vecRecogResult);
+    void eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::ime::ProcessRectanglesResultST>& processRectanglesResult);
 
     QImage cvMatToQImage(const cv::Mat& mat);
 
-    void drawErrorLocate(QImage& image, std::vector<rw::ime::ProcessRectanglesResult>& vecRecogResult);
+    void drawErrorLocate(QImage& image, std::vector<rw::ime::ProcessRectanglesResultST>& vecRecogResult);
 
     QQueue<MatInfo>& _queue;
     QMutex& _mutex;

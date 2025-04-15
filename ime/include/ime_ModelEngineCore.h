@@ -9,7 +9,7 @@ namespace rw
     {
         using Point = std::pair<int, int>;
 
-        struct ProcessRectanglesResult
+        struct ProcessRectanglesResultST
         {
             Point left_top;							//左上角坐标
             Point right_bottom;						//右下角坐标
@@ -24,7 +24,7 @@ namespace rw
         };
 
 
-        struct ProcessRectanglesResultOnnx
+        struct ProcessRectanglesResultOO
         {
             Point left_top;							
             Point right_bottom;						

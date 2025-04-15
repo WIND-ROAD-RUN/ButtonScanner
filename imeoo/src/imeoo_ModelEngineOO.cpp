@@ -6,8 +6,8 @@ namespace rw
 {
 	namespace imeoo
 	{
-        static ProcessRectanglesResultOnnx ConvertRecTrackResultToProcessRectanglesResult(const RecTrackResult& source) {
-            ProcessRectanglesResultOnnx result;
+        static ProcessRectanglesResultOO ConvertRecTrackResultToProcessRectanglesResult(const RecTrackResult& source) {
+            ProcessRectanglesResultOO result;
             result.left_top.first = source.left;
             result.left_top.second = source.top;
             result.right_bottom.first = source.right;
@@ -38,7 +38,7 @@ namespace rw
                 yolov5_det_onnxtr_hasptr_destroy(_index);
             }
         }
-        bool ModelEngineOO::ProcessMask(cv::Mat& img, cv::Mat& resultMat, std::vector<ProcessRectanglesResultOnnx>& result)
+        bool ModelEngineOO::ProcessMask(cv::Mat& img, cv::Mat& resultMat, std::vector<ProcessRectanglesResultOO>& result)
         {
 
             try
