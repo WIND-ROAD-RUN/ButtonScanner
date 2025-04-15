@@ -138,11 +138,11 @@
     <QtMoc Include="LoadingDialog.h">
       <Filter>Header Files\ui</Filter>
     </QtMoc>
-    <QtMoc Include="GlobalStruct.h">
-      <Filter>Header Files\data</Filter>
-    </QtMoc>
     <QtMoc Include="ImageProcessorModule.h">
       <Filter>Header Files\func</Filter>
+    </QtMoc>
+    <QtMoc Include="GlobalStruct.h">
+      <Filter>Header Files\data</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

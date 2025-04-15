@@ -157,8 +157,10 @@ void DlgAiLearn::build_ui()
 	_modelEnginePtr = new rw::ime::ModelEngine(globalStruct.enginePath.toStdString(), globalStruct.namePath.toStdString());
 
 	aiLearnConfig = read_lastConfig();
-	if (!GlobalStructData::getInstance().aiLearnOldConfigPath.isEmpty())
+	if (!GlobalStructData::getInstance().aiLearnOldConfigPath.isEmpty()) {
+		delete aiLearnConfig;
 		aiLearnConfig = read_config(GlobalStructData::getInstance().aiLearnOldConfigPath);
+	}
 
 	if (aiLearnConfig == nullptr)
 	{
@@ -228,15 +230,17 @@ void DlgAiLearn::pbtn_yes_clicked() {
 void DlgAiLearn::pbtn_no_clicked()
 {
 	GlobalStructData& globalStruct = GlobalStructData::getInstance();
-	globalStruct.mainWindowConfig.upLight = aiLearnConfig->upLight;
-	globalStruct.mainWindowConfig.downLight = aiLearnConfig->downLight;
-	globalStruct.mainWindowConfig.sideLight = aiLearnConfig->sideLight;
+	globalStruct.setUpLight(aiLearnConfig->upLight);
+	globalStruct.setDownLight(aiLearnConfig->downLight);
+	globalStruct.setSideLight(aiLearnConfig->sideLight);
 
 	ToStep1();
 }
 
 void DlgAiLearn::pbtn_checkColor_clicked()
 {
+	delete aiLearnConfig;
+
 	GlobalStructData& globalStruct = GlobalStructData::getInstance();
 
 	aiLearnConfig = get_newConfig();
@@ -251,6 +255,8 @@ void DlgAiLearn::pbtn_checkColor_clicked()
 
 void DlgAiLearn::pbtn_checkKnifeShape_clicked()
 {
+	delete aiLearnConfig;
+
 	GlobalStructData& globalStruct = GlobalStructData::getInstance();
 
 	aiLearnConfig = get_newConfig();

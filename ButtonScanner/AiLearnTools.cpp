@@ -36,7 +36,7 @@ void AiLearnTools::SaveImage(cv::Mat frame, std::string learnInfoSign, std::stri
 
 
 
-void AiLearnTools::MoveImageToDataSet(std::string learnInfoSign,bool isSeg)
+void AiLearnTools::MoveImageToDataSet(std::string learnInfoSign, bool isSeg)
 {
 	//定义文件夹
 	QDir tranImageDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "datasets\\mydataset\\train\\images");
@@ -48,13 +48,13 @@ void AiLearnTools::MoveImageToDataSet(std::string learnInfoSign,bool isSeg)
 	QDir tesImageDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "datasets\\mydataset\\tes");
 
 	if (isSeg) {
-		QDir tranImageDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\train\\images");
-		QDir tranLableDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\train\\labels");
+		tranImageDir = QDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\train\\images");
+		tranLableDir = QDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\train\\labels");
 
-		QDir valImageDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\val\\images");
-		QDir valLableDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\val\\labels");
+		valImageDir = QDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\val\\images");
+		valLableDir = QDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\val\\labels");
 
-		QDir tesImageDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\tes");
+		tesImageDir = QDir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "segdatasets\\mydataset\\tes");
 	}
 
 	//删除文件夹
