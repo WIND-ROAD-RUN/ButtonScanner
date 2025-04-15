@@ -156,6 +156,12 @@ public:
 private:
     GlobalStructData();
     ~GlobalStructData() = default;
+signals:
+    void updateLightState(size_t index,bool state);
+public:
+    void setUpLight(bool state);
+	void setDownLight(bool state);
+	void setSideLight(bool state);
 public slots:
     void onBuildCamera1();
     void onBuildCamera2();

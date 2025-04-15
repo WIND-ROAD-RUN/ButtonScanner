@@ -102,6 +102,8 @@ private:
 
 private:
 	QImage cvMatToQImage(const cv::Mat& mat);
+private:
+    void onUpdateLightStateUi(size_t index,bool state);
 
 private slots:
     void onCamera1Display(QPixmap image);

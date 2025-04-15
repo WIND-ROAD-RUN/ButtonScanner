@@ -347,6 +347,9 @@ void ButtonScanner::build_connect()
 
 	QObject::connect(this->labelClickable_title, &rw::rqw::ClickableLabel::clicked,
 		this, &ButtonScanner::labelClickable_title_clicked);
+
+    QObject::connect(&GlobalStructData::getInstance(), &GlobalStructData::updateLightState,
+        this, &ButtonScanner::onUpdateLightStateUi);
 }
 
 void ButtonScanner::read_config()
@@ -887,6 +890,24 @@ QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
     else {
         return QImage();
     }
+}
+
+void ButtonScanner::onUpdateLightStateUi(size_t index, bool state)
+{
+	switch (index)
+	{
+	case 0:
+		ui->rbtn_upLight->setChecked(state);
+		break;
+	case 1:
+		ui->rbtn_downLight->setChecked(state);
+		break;
+	case 2:
+		ui->rbtn_sideLight->setChecked(state);
+		break;
+	default:
+		break;
+	}
 }
 
 void ButtonScanner::onCamera1Display(QPixmap image)
