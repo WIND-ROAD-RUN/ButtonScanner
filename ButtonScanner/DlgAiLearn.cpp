@@ -70,10 +70,9 @@ rw::cdm::ButtonScannerDlgAiLearn* DlgAiLearn::read_config(const QString& path)
 	}
 }
 
-rw::cdm::ButtonScannerDlgAiLearn* DlgAiLearn::get_newConfig(int checkType)
+rw::cdm::ButtonScannerDlgAiLearn* DlgAiLearn::get_newConfig()
 {
 	auto temp = new rw::cdm::ButtonScannerDlgAiLearn();
-	temp->checkType = checkType;
 	temp->learnInfoSign = QDateTime::currentDateTime().toString("yyyyMMddHHmmss").toStdString();
 	save_config(temp);
 	return temp;
@@ -228,20 +227,39 @@ void DlgAiLearn::pbtn_yes_clicked() {
 
 void DlgAiLearn::pbtn_no_clicked()
 {
+	GlobalStructData& globalStruct = GlobalStructData::getInstance();
+	globalStruct.mainWindowConfig.upLight = aiLearnConfig->upLight;
+	globalStruct.mainWindowConfig.downLight = aiLearnConfig->downLight;
+	globalStruct.mainWindowConfig.sideLight = aiLearnConfig->sideLight;
+
 	ToStep1();
 }
 
 void DlgAiLearn::pbtn_checkColor_clicked()
 {
-	aiLearnConfig = get_newConfig(1);
+	GlobalStructData& globalStruct = GlobalStructData::getInstance();
+
+	aiLearnConfig = get_newConfig();
+	aiLearnConfig->checkType = 1;
+	aiLearnConfig->upLight = globalStruct.mainWindowConfig.upLight;
+	aiLearnConfig->downLight = globalStruct.mainWindowConfig.downLight;
+	aiLearnConfig->sideLight = globalStruct.mainWindowConfig.sideLight;
 	save_config(aiLearnConfig);
+
 	ToStep1();
 }
 
 void DlgAiLearn::pbtn_checkKnifeShape_clicked()
 {
-	aiLearnConfig = get_newConfig(2);
+	GlobalStructData& globalStruct = GlobalStructData::getInstance();
+
+	aiLearnConfig = get_newConfig();
+	aiLearnConfig->checkType = 2;
+	aiLearnConfig->upLight = globalStruct.mainWindowConfig.upLight;
+	aiLearnConfig->downLight = globalStruct.mainWindowConfig.downLight;
+	aiLearnConfig->sideLight = globalStruct.mainWindowConfig.sideLight;
 	save_config(aiLearnConfig);
+
 	ToStep1();
 }
 

@@ -20,7 +20,7 @@ public:
 private:
 	rw::cdm::ButtonScannerDlgAiLearn* read_lastConfig();
 	rw::cdm::ButtonScannerDlgAiLearn* read_config(const QString & path);
-	rw::cdm::ButtonScannerDlgAiLearn* get_newConfig(int checkType);
+	rw::cdm::ButtonScannerDlgAiLearn* get_newConfig();
 	void save_config(const rw::cdm::ButtonScannerDlgAiLearn*  config);
 
 private:
