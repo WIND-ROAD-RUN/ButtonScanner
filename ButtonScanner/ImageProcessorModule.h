@@ -13,6 +13,7 @@
 
 #include"imeoo_ModelEngineOO.h"
 #include"imest_ModelEngineST.h"
+#include"imeot_ModelEngineOT.h"
 
 struct ImagePainter
 {
@@ -31,7 +32,7 @@ struct ImagePainter
 
     static void drawTextOnImage(QImage& image, const QVector<QString>& texts, const QVector<Color>& colorList = { Color::Red,Color::Green }, double proportion = 0.8);
 
-    static void drawCirclesOnImage(cv::Mat& image, const std::vector<rw::imest::ProcessRectanglesResultST>& rectangles);
+    static void drawCirclesOnImage(cv::Mat& image, const std::vector<rw::imeot::ProcessRectanglesResultOT>& rectangles);
 };
 
 struct MatInfo {
@@ -56,7 +57,7 @@ signals:
     void imageReady(QPixmap image);
 
 private:
-    std::unique_ptr<rw::imest::ModelEngineST> _modelEnginePtr;
+    std::unique_ptr<rw::imeot::ModelEngineOT> _modelEnginePtr;
 
     std::unique_ptr<rw::imeoo::ModelEngineOO> _modelEnginePtrOnnx;
 
@@ -66,12 +67,12 @@ public:
     void buildModelEngineOnnx(const QString& enginePath, const QString& namePath);
 
 private:
-    cv::Mat processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::imest::ProcessRectanglesResultST>& vecRecogResult);
-    void eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imest::ProcessRectanglesResultST>& processRectanglesResult);
+    cv::Mat processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult);
+    void eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult);
 
     QImage cvMatToQImage(const cv::Mat& mat);
 
-    void drawErrorLocate(QImage& image, std::vector<rw::imest::ProcessRectanglesResultST>& vecRecogResult);
+    void drawErrorLocate(QImage& image, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult);
 
     QQueue<MatInfo>& _queue;
     QMutex& _mutex;

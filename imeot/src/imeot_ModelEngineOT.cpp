@@ -2,6 +2,8 @@
 
 #include"tensorrt_yolo_onnx_multask.h"
 
+#define _DEBUG
+
 namespace rw
 {
 	namespace imeot
@@ -27,29 +29,56 @@ namespace rw
 
 		ModelEngineOT::ModelEngineOT(std::string modelPath, std::string nameFilePath)
 		{
-			_modelPath = modelPath;
-			_nameFilePath = nameFilePath;
-			_index = tensorrt_yolo_onnx_multask_create(modelPath.c_str(), nameFilePath.c_str());
-			if (_index < 0) {
-				_isCreated = false;
-				throw std::runtime_error("Failed to create task with error code: " + std::to_string(_index));
+
+#ifdef _DEBUG // 仅在 Debug 模式下禁用以下代码
+			try
+			{
+				_modelPath = modelPath;
+				_nameFilePath = nameFilePath;
+				_index = tensorrt_yolo_onnx_multask_create(modelPath.c_str(), nameFilePath.c_str());
+				if (_index < 0) {
+					_isCreated = false;
+					throw std::runtime_error("Failed to create task with error code: " + std::to_string(_index));
+				}
+				_isCreated = true;
 			}
-			_isCreated = true;
+			catch (const std::exception& ex)
+			{
+				// 捕获标准库异常并记录异常信息
+				std::cerr << "Standard exception caught: " << ex.what() << std::endl;
+			}
+			catch (...)
+			{
+				// 捕获未知异常
+				std::cerr << "Unknown exception caught." << std::endl;
+			}
+#else
+			
+#endif
+			
+			
 		}
 
 		ModelEngineOT::~ModelEngineOT()
 		{
+
+#ifdef _DEBUG // 仅在 Debug 模式下禁用以下代码
 			if (_isCreated) {
 				tensorrt_yolo_onnx_multask_destroy(_index);
 			}
+#else
+
+#endif
+
 		}
 
 		bool ModelEngineOT::ProcessMask(cv::Mat& img, cv::Mat& resultMat, std::vector<ProcessRectanglesResultOT>& result)
 		{
+#ifdef _DEBUG // 仅在 Debug 模式下禁用以下代码
 			try
 			{
 				std::vector<Yolov5ObbXResult> vecrecogresult;
-			
+
 				tensorrt_yolo_onnx_multask_process(_index, img, resultMat, vecrecogresult);
 				for (auto& yolov5ObbXResult : vecrecogresult)
 				{
@@ -61,6 +90,10 @@ namespace rw
 			{
 				return false;
 			}
+#else
+			return true;
+#endif
+
 		}
 	}
 }

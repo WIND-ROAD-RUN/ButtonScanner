@@ -7,7 +7,7 @@
 
 void ImageProcessor::buildModelEngine(const QString& enginePath, const QString& namePath)
 {
-	_modelEnginePtr = std::make_unique<rw::imest::ModelEngineST>(enginePath.toStdString(), namePath.toStdString());
+	_modelEnginePtr = std::make_unique<rw::imeot::ModelEngineOT>(enginePath.toStdString(), namePath.toStdString());
 }
 
 void ImageProcessor::buildModelEngineOnnx(const QString& enginePath, const QString& namePath)
@@ -15,7 +15,7 @@ void ImageProcessor::buildModelEngineOnnx(const QString& enginePath, const QStri
 	_modelEnginePtrOnnx = std::make_unique<rw::imeoo::ModelEngineOO>(enginePath.toStdString(), namePath.toStdString());
 }
 
-cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::imest::ProcessRectanglesResultST>& vecRecogResult)
+cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult)
 {
 	auto& globalStruct = GlobalStructData::getInstance();
 
@@ -30,13 +30,13 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 	cv::Mat resultImage;
 	cv::Mat maskImage = cv::Mat::zeros(frame.image.size(), CV_8UC1);
 
-	_modelEnginePtr->ProcessMask(frame.image, resultImage, maskImage, vecRecogResult);
+	_modelEnginePtr->ProcessMask(frame.image, resultImage, vecRecogResult);
 
 	LOG()  "vecRecogResult.size():" << vecRecogResult.size();
 
 	for (const auto& item : vecRecogResult)
 	{
-		LOG()  "class ID:" << item.classId;
+		LOG()  "class ID:" << item.classID;
 	}
 
 	onnxFuture.waitForFinished();
@@ -54,7 +54,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 	return resultImage.clone();
 }
 
-void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imest::ProcessRectanglesResultST>& processRectanglesResult)
+void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult)
 {
 	auto saveIamge = resultImage.clone();
 	auto& globalStruct = GlobalStructData::getInstance();
@@ -97,7 +97,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 
 	for (int i = 0; i < processRectanglesResult.size(); i++)
 	{
-		switch (processRectanglesResult[i].classId)
+		switch (processRectanglesResult[i].classID)
 		{
 		case 0: waiJingIndexs.push_back(i); continue;
 		case 1: holesCount++; konJingIndexs.push_back(i); continue;
@@ -114,15 +114,15 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		}
 	}
 
-	std::vector<rw::imest::ProcessRectanglesResultST> body;
-	std::vector<rw::imest::ProcessRectanglesResultST> hole;
+	std::vector<rw::imeot::ProcessRectanglesResultOT> body;
+	std::vector<rw::imeot::ProcessRectanglesResultOT> hole;
 
 	//拆分body和hole
 	for (const auto& item : processRectanglesResult) {
-		if (item.classId == 0) {
+		if (item.classID == 0) {
 			body.emplace_back(item);
 		}
-		else if (item.classId == 1) {
+		else if (item.classID == 1) {
 			hole.emplace_back(item);
 		}
 	}
@@ -410,7 +410,7 @@ QImage ImageProcessor::cvMatToQImage(const cv::Mat& mat)
 	return result;
 }
 
-void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::imest::ProcessRectanglesResultST>& vecRecogResult)
+void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult)
 {
 	if (image.isNull()) {
 		return;
@@ -429,7 +429,7 @@ void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::imest::Proce
 		// 绘制文字
 		QString text;
 
-		switch (item.classId)
+		switch (item.classID)
 		{
 		case 2:
 			text = "破边";
@@ -468,7 +468,7 @@ void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::imest::Proce
 			text = "白边";
 			break;
 		default:
-			text = QString::number(item.classId);
+			text = QString::number(item.classID);
 			break;
 		}
 		painter.drawText(leftTop.first, leftTop.second - 5, text);
@@ -508,7 +508,7 @@ void ImageProcessor::run()
 		QVector<QString> processInfo;
 		processInfo.reserve(20);
 
-		std::vector<rw::imest::ProcessRectanglesResultST> vecRecogResult;
+		std::vector<rw::imeot::ProcessRectanglesResultOT> vecRecogResult;
 
 		// 开始计时
 		auto startTime = std::chrono::high_resolution_clock::now();
@@ -655,10 +655,10 @@ void ImagePainter::drawTextOnImage(QImage& image, const QVector<QString>& texts,
 	painter.end();
 }
 
-void ImagePainter::drawCirclesOnImage(cv::Mat& image, const std::vector<rw::imest::ProcessRectanglesResultST>& rectangles)
+void ImagePainter::drawCirclesOnImage(cv::Mat& image, const std::vector<rw::imeot::ProcessRectanglesResultOT>& rectangles)
 {
 	for (const auto& rect : rectangles) {
-		if (rect.classId != 1) {
+		if (rect.classID != 1) {
 			return;
 		}
 		// 计算矩形中心点

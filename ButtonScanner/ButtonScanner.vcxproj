@@ -67,6 +67,7 @@
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)\imeso\include;$(SolutionDir)\imeot\include;$(SolutionDir)\ThirdLibrary\ZMotion\include;$(SolutionDir)\dsl\include\;$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\cdm\include;$(SolutionDir)\oso\include;$(SolutionDir)\hoec\include;$(SolutionDir)\scc\include;$(SolutionDir)\imest\include;$(SolutionDir)\imeoo\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6_obbTensor\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_obbOnnxRuntime\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_segTensor\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_segOnnxRuntime\lib;$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -87,6 +88,7 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)\imeso\include;$(SolutionDir)\imeot\include;$(SolutionDir)\ThirdLibrary\ZMotion\include;$(SolutionDir)\dsl\include\;$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\cdm\include;$(SolutionDir)\oso\include;$(SolutionDir)\hoec\include;$(SolutionDir)\scc\include;$(SolutionDir)\imest\include;$(SolutionDir)\imeoo\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6_obbTensor\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_obbOnnxRuntime\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_segTensor\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_segOnnxRuntime\lib;$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
