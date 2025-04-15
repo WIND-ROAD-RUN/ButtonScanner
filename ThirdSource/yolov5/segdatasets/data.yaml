@@ -1,0 +1,24 @@
+train: D:\y\yolov5-master\segdatasets\mydataset\train\images
+val: D:\y\yolov5-master\segdatasets\mydataset\train\images
+test: D:\y\yolov5-master\segdatasets\mydataset\train\images
+
+nc: 14
+names:
+  0: person
+  1: bicycle
+  2: car
+  3: motorcycle
+  4: airplane
+  5: bus
+  6: train
+  7: truck
+  8: boat
+  9: traffic light
+  10: fire hydrant
+  11: stop sign
+  12: parking meter
+  13: bench
+  
+
+
+
