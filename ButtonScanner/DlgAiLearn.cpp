@@ -5,7 +5,7 @@
 #include <windows.h>
 #include <codecvt>
 #include <AiLearnTools.h>
-#include"ime_ModelEngine.h"
+#include"imest_ModelEngineST.h"
 #include <algorithm> 
 
 DlgAiLearn::DlgAiLearn(QWidget* parent)
@@ -154,7 +154,7 @@ void DlgAiLearn::build_ui()
 {
 	auto& globalStruct = GlobalStructData::getInstance();
 
-	_modelEnginePtr = new rw::ime::ModelEngineST(globalStruct.enginePath.toStdString(), globalStruct.namePath.toStdString());
+	_modelEnginePtr = new rw::imest::ModelEngineST(globalStruct.enginePath.toStdString(), globalStruct.namePath.toStdString());
 
 	aiLearnConfig = read_lastConfig();
 	if (!GlobalStructData::getInstance().aiLearnOldConfigPath.isEmpty()) {
@@ -322,7 +322,7 @@ void DlgAiLearn::onFrameCaptured(cv::Mat frame, size_t index)
 	if (index == 4 && !ui->rbtn_station4->isChecked())
 		return;
 
-	std::vector<rw::ime::ProcessRectanglesResultST> vecRecogResult;
+	std::vector<rw::imest::ProcessRectanglesResultST> vecRecogResult;
 	cv::Mat resultImage;
 	cv::Mat maskImage = cv::Mat::zeros(frame.size(), CV_8UC1);
 	_modelEnginePtr->ProcessMask(frame, resultImage, maskImage, vecRecogResult);

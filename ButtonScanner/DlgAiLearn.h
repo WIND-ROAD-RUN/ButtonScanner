@@ -4,7 +4,7 @@
 #include "ui_DlgAiLearn.h"
 #include "cdm_ButtonScannerDlgAiLearn.h"
 #include"ImageProcessorModule.h"
-#include"ime_ModelEngine.h"
+#include"imest_ModelEngineST.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class DlgAiLearnClass; };
@@ -34,7 +34,7 @@ public:
 	int step{ 0 };
 private:
 	Ui::DlgAiLearnClass* ui{ nullptr };
-	rw::ime::ModelEngineST* _modelEnginePtr{ nullptr };
+	rw::imest::ModelEngineST* _modelEnginePtr{ nullptr };
 	rw::cdm::ButtonScannerDlgAiLearn* aiLearnConfig;
 	QProcess  m_Process;
 

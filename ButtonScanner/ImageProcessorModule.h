@@ -11,8 +11,8 @@
 #include <vector>
 #include <string>
 
-#include"ime_ModelEngine.h"
-#include"ime_modelOnnxRuntime.h"
+#include"imeoo_ModelEngineOO.h"
+#include"imest_ModelEngineST.h"
 
 struct ImagePainter
 {
@@ -31,7 +31,7 @@ struct ImagePainter
 
     static void drawTextOnImage(QImage& image, const QVector<QString>& texts, const QVector<Color>& colorList = { Color::Red,Color::Green }, double proportion = 0.8);
 
-    static void drawCirclesOnImage(cv::Mat& image, const std::vector<rw::ime::ProcessRectanglesResultST>& rectangles);
+    static void drawCirclesOnImage(cv::Mat& image, const std::vector<rw::imest::ProcessRectanglesResultST>& rectangles);
 };
 
 struct MatInfo {
@@ -56,9 +56,9 @@ signals:
     void imageReady(QPixmap image);
 
 private:
-    std::unique_ptr<rw::ime::ModelEngineST> _modelEnginePtr;
+    std::unique_ptr<rw::imest::ModelEngineST> _modelEnginePtr;
 
-    std::unique_ptr<rw::ime::ModelEngineOO> _modelEnginePtrOnnx;
+    std::unique_ptr<rw::imeoo::ModelEngineOO> _modelEnginePtrOnnx;
 
 public:
     void buildModelEngine(const QString& enginePath, const QString& namePath);
@@ -66,12 +66,12 @@ public:
     void buildModelEngineOnnx(const QString& enginePath, const QString& namePath);
 
 private:
-    cv::Mat processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::ime::ProcessRectanglesResultST>& vecRecogResult);
-    void eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::ime::ProcessRectanglesResultST>& processRectanglesResult);
+    cv::Mat processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::imest::ProcessRectanglesResultST>& vecRecogResult);
+    void eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imest::ProcessRectanglesResultST>& processRectanglesResult);
 
     QImage cvMatToQImage(const cv::Mat& mat);
 
-    void drawErrorLocate(QImage& image, std::vector<rw::ime::ProcessRectanglesResultST>& vecRecogResult);
+    void drawErrorLocate(QImage& image, std::vector<rw::imest::ProcessRectanglesResultST>& vecRecogResult);
 
     QQueue<MatInfo>& _queue;
     QMutex& _mutex;
