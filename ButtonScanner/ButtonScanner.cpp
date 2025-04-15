@@ -1019,6 +1019,7 @@ void ButtonScanner::pbtn_set_clicked()
 	passwordDlg->exec();
 	auto password = passwordValue->text();
 	if (password == "1234") {
+		dlgProduceLineSet->setFixedSize(this->width(),this->height());
 		dlgProduceLineSet->exec();
 		ui->pbtn_beltSpeed->setText(QString::number(GlobalStructData::getInstance().dlgProduceLineSetConfig.motorSpeed));
 	}
@@ -1034,7 +1035,9 @@ void ButtonScanner::pbtn_newProduction_clicked()
 {
 	delete this->dlgAiLearn;
 	this->dlgAiLearn = new DlgAiLearn(this);
-	this->dlgAiLearn->exec();
+	//this->dlgAiLearn->ToStep1();
+	dlgAiLearn->setFixedSize(this->width(), this->height());
+	dlgAiLearn->exec();
 }
 
 void ButtonScanner::pbtn_beltSpeed_clicked()
@@ -1053,6 +1056,7 @@ void ButtonScanner::pbtn_beltSpeed_clicked()
 void ButtonScanner::pbtn_score_clicked()
 {
 	dlgProductSet->readConfig();
+	dlgProductSet->setFixedSize(this->width(), this->height());
 	dlgProductSet->exec();
 }
 
