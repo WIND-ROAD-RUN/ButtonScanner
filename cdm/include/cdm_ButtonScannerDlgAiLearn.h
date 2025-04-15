@@ -28,13 +28,6 @@ namespace rw
 			int checkType{ 1 };
 			std::string  learnInfoSign;
 
-
-		public:
-			void Save();
-			static ButtonScannerDlgAiLearnRefactor* GetNew(int checkType);
-			static ButtonScannerDlgAiLearnRefactor* ReadConfig(std::string path);
-			static ButtonScannerDlgAiLearnRefactor* ReadLastConfig();
-
 		};
 	}
 }
