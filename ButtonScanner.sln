@@ -25,6 +25,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imest", "imest\imest.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imeoo", "imeoo\imeoo.vcxproj", "{CC155C73-0FC9-4894-8C3F-4F7614E4216B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imeso", "imeso\imeso.vcxproj", "{BD6B8180-FFAA-410D-98B3-5421E220712D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imeot", "imeot\imeot.vcxproj", "{1E8E9ADD-E4E5-4B06-8D2A-807B87310BB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -75,6 +79,14 @@ Global
 		{CC155C73-0FC9-4894-8C3F-4F7614E4216B}.Debug|x64.Build.0 = Debug|x64
 		{CC155C73-0FC9-4894-8C3F-4F7614E4216B}.Release|x64.ActiveCfg = Release|x64
 		{CC155C73-0FC9-4894-8C3F-4F7614E4216B}.Release|x64.Build.0 = Release|x64
+		{BD6B8180-FFAA-410D-98B3-5421E220712D}.Debug|x64.ActiveCfg = Debug|x64
+		{BD6B8180-FFAA-410D-98B3-5421E220712D}.Debug|x64.Build.0 = Debug|x64
+		{BD6B8180-FFAA-410D-98B3-5421E220712D}.Release|x64.ActiveCfg = Release|x64
+		{BD6B8180-FFAA-410D-98B3-5421E220712D}.Release|x64.Build.0 = Release|x64
+		{1E8E9ADD-E4E5-4B06-8D2A-807B87310BB3}.Debug|x64.ActiveCfg = Debug|x64
+		{1E8E9ADD-E4E5-4B06-8D2A-807B87310BB3}.Debug|x64.Build.0 = Debug|x64
+		{1E8E9ADD-E4E5-4B06-8D2A-807B87310BB3}.Release|x64.ActiveCfg = Release|x64
+		{1E8E9ADD-E4E5-4B06-8D2A-807B87310BB3}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
