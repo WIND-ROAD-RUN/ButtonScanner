@@ -397,3 +397,4 @@ FodyWeavers.xsd
 /ThirdLibrary/YOLOV5V6_segOnnxRuntime/dll
 /ThirdLibrary/YOLOV5V6_segTensor/dll
 /ThirdLibrary/YOLOV5V6_obbOnnxRuntime/dll
+/ThirdLibrary/YOLOV5V6_obbTensor/dll
