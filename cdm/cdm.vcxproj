@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\cdm_ButtonScannerDlgAiLearn.h" />
     <ClInclude Include="include\cdm_ButtonScannerDlgExposureTimeSet.h" />
     <ClInclude Include="include\cdm_ButtonScannerProduceLineSet.h" />
     <ClInclude Include="include\cdm_ButtonScannerDlgProductSet.h" />
@@ -26,6 +27,7 @@
     <ClInclude Include="include\PathGlobalStruct.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\cdm_ButtonScannerDlgAiLearn.cpp" />
     <ClCompile Include="src\cdm_ButtonScannerDlgExposureTimeSet.cpp" />
     <ClCompile Include="src\cdm_ButtonScannerDlgProductSet.cpp" />
     <ClCompile Include="src\cdm_ButtonScannerProduceLineSet.cpp" />

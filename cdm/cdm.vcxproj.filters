@@ -30,6 +30,9 @@
     <ClInclude Include="include\PathGlobalStruct.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="include\cdm_ButtonScannerDlgAiLearn.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\cdm_ButtonScannerMainWindow.cpp">
@@ -45,6 +48,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\PathGlobalStruct.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cdm_ButtonScannerDlgAiLearn.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

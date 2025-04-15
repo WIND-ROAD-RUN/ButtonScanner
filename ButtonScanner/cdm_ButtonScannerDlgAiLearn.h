@@ -30,9 +30,7 @@ namespace rw
 			bool operator!=(const ButtonScannerDlgAiLearn& account) const;
 
 		public:
-			/// <summary>
-			/// 1:¼ì²âÑÕÉ«£¬2:¼ì²âµ¶ÐÍ
-			/// </summary>
+			//1æ˜¯é¢œè‰²2æ˜¯åˆ€å½¢
 			int checkType{ 1 };
 			std::string  learnInfoSign;
 			
