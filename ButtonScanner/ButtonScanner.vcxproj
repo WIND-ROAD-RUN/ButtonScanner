@@ -66,7 +66,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\ZMotion\include;$(SolutionDir)\dsl\include\;$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\cdm\include;$(SolutionDir)\oso\include;$(SolutionDir)\hoec\include;$(SolutionDir)\scc\include;$(SolutionDir)\imest\include;$(SolutionDir)\imeoo\include;$(SolutionDir)\ime\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\imeso\include;$(SolutionDir)\imeot\include;$(SolutionDir)\ThirdLibrary\ZMotion\include;$(SolutionDir)\dsl\include\;$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\cdm\include;$(SolutionDir)\oso\include;$(SolutionDir)\hoec\include;$(SolutionDir)\scc\include;$(SolutionDir)\imest\include;$(SolutionDir)\imeoo\include;$(SolutionDir)\ime\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6_obbTensor\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_obbOnnxRuntime\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_segTensor\lib;$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -85,7 +85,7 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\ThirdLibrary\ZMotion\include;$(SolutionDir)\dsl\include\;$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\cdm\include;$(SolutionDir)\oso\include;$(SolutionDir)\hoec\include;$(SolutionDir)\scc\include;$(SolutionDir)\imest\include;$(SolutionDir)\imeoo\include;$(SolutionDir)\ime\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\imeso\include;$(SolutionDir)\imeot\include;$(SolutionDir)\ThirdLibrary\ZMotion\include;$(SolutionDir)\dsl\include\;$(SolutionDir)\ime\include\;$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\cdm\include;$(SolutionDir)\oso\include;$(SolutionDir)\hoec\include;$(SolutionDir)\scc\include;$(SolutionDir)\imest\include;$(SolutionDir)\imeoo\include;$(SolutionDir)\ime\include;$(SolutionDir)\rqw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6_obbTensor\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_obbOnnxRuntime\lib;$(SolutionDir)\ThirdLibrary\YOLOV5V6_segTensor\lib;$(SolutionDir)\ThirdLibrary\MVS\Libraries\windows64;$(SolutionDir)\ThirdLibrary\ZMotion\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
