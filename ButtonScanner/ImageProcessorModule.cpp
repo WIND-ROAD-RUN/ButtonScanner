@@ -525,7 +525,7 @@ void ImageProcessor::run()
         auto  image = cvMatToQImage(result);
 
         // 绘制错误信息
-        ImagePainter::drawTextOnImage(image, processInfo, { ImagePainter::Color::Green,ImagePainter::Color::Red },0.4);
+        ImagePainter::drawTextOnImage(image, processInfo, { ImagePainter::Color::Green,ImagePainter::Color::Red },0.1);
 
         // 绘制错误定位
         drawErrorLocate(image, vecRecogResult);
