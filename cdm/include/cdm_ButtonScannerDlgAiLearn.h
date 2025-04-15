@@ -27,7 +27,9 @@ namespace rw
 		public:
 			int checkType{ 1 };
 			std::string  learnInfoSign{"undefined"};
-
+			bool upLight{ false };
+			bool downLight{ false };
+			bool sideLight{ false };
 		};
 	}
 }

@@ -26,22 +26,22 @@ DlgAiLearn::DlgAiLearn(QWidget* parent)
 DlgAiLearn::~DlgAiLearn()
 {
 	delete _modelEnginePtr;
-
+	delete  aiLearnConfig;
 	delete ui;
 }
 
-rw::cdm::ButtonScannerDlgAiLearn DlgAiLearn::read_lastConfig()
+rw::cdm::ButtonScannerDlgAiLearn* DlgAiLearn::read_lastConfig()
 {
 	QString targetDir = QString::fromStdString(PathGlobalStruct::AiLearnConfig);
 	QDir dir(targetDir);
 	if (!dir.exists()) {
-		return rw::cdm::ButtonScannerDlgAiLearn();
+		return nullptr;
 	}
-	QStringList filters; 
+	QStringList filters;
 	QFileInfoList fileInfoList = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
 
 	if (fileInfoList.isEmpty()) {
-		return rw::cdm::ButtonScannerDlgAiLearn();
+		return nullptr;
 	}
 
 	QFileInfo maxFile = fileInfoList.last();
@@ -49,41 +49,38 @@ rw::cdm::ButtonScannerDlgAiLearn DlgAiLearn::read_lastConfig()
 	return read_config(maxFile.absoluteFilePath());
 }
 
-rw::cdm::ButtonScannerDlgAiLearn DlgAiLearn::read_config(const QString& path)
+rw::cdm::ButtonScannerDlgAiLearn* DlgAiLearn::read_config(const QString& path)
 {
 	auto _StoreContext = std::make_unique<rw::oso::StorageContext>(rw::oso::StorageType::Xml);
 	QDir dir;
 
 	QFileInfo dlgAiLearnFile(path);
 	if (!dlgAiLearnFile.exists()) {
-
-
-		auto config =  rw::cdm::ButtonScannerDlgAiLearn();
+		/*auto config = rw::cdm::ButtonScannerDlgAiLearn();
 		save_config(config);
-		return config;
+		return config;*/
+		return  nullptr;
 	}
 	else {
 		auto assembly = _StoreContext->load(path.toStdString());
 		if (assembly) {
-			auto loadDlgAiLearnConfig = rw::cdm::ButtonScannerDlgAiLearn(*assembly);
+			auto loadDlgAiLearnConfig = new rw::cdm::ButtonScannerDlgAiLearn(*assembly);
 			return loadDlgAiLearnConfig;
 		}
-
 	}
 }
 
-rw::cdm::ButtonScannerDlgAiLearn DlgAiLearn::get_newConfig(int checkType)
+rw::cdm::ButtonScannerDlgAiLearn* DlgAiLearn::get_newConfig()
 {
-	auto temp =  rw::cdm::ButtonScannerDlgAiLearn();
-	temp.checkType = checkType;
-	temp.learnInfoSign = QDateTime::currentDateTime().toString("yyyyMMddHHmmss").toStdString();
+	auto temp = new rw::cdm::ButtonScannerDlgAiLearn();
+	temp->learnInfoSign = QDateTime::currentDateTime().toString("yyyyMMddHHmmss").toStdString();
 	save_config(temp);
 	return temp;
 }
 
-void DlgAiLearn::save_config(const rw::cdm::ButtonScannerDlgAiLearn& config)
+void DlgAiLearn::save_config(const rw::cdm::ButtonScannerDlgAiLearn* config)
 {
-	QString pathQt = QString::fromStdString(PathGlobalStruct::AiLearnConfig + "\\" + config.learnInfoSign);
+	QString pathQt = QString::fromStdString(PathGlobalStruct::AiLearnConfig + "\\" + config->learnInfoSign);
 
 	QFileInfo dlgAiLearnFile(pathQt);
 	if (!dlgAiLearnFile.exists()) {
@@ -98,7 +95,7 @@ void DlgAiLearn::save_config(const rw::cdm::ButtonScannerDlgAiLearn& config)
 	}
 
 	auto& globalStrut = GlobalStructData::getInstance();
-	globalStrut.storeContext->save(config, pathQt.toStdString());
+	globalStrut.storeContext->save(*config, pathQt.toStdString());
 }
 
 
@@ -159,9 +156,11 @@ void DlgAiLearn::build_ui()
 
 	_modelEnginePtr = new rw::ime::ModelEngine(globalStruct.enginePath.toStdString(), globalStruct.namePath.toStdString());
 
-	auto tempConfig = read_lastConfig();
+	aiLearnConfig = read_lastConfig();
+	if (!GlobalStructData::getInstance().aiLearnOldConfigPath.isEmpty())
+		aiLearnConfig = read_config(GlobalStructData::getInstance().aiLearnOldConfigPath);
 
-	if (tempConfig.learnInfoSign=="undefined")
+	if (aiLearnConfig == nullptr)
 	{
 		ui->pbtn_no->setVisible(false);
 	}
@@ -193,7 +192,7 @@ void DlgAiLearn::ToStep1()
 
 	ui->pbtn_pre->setVisible(false);
 
-	if (aiLearnConfig.checkType == 1)
+	if (aiLearnConfig->checkType == 1)
 		ui->rbtn_filterColorDiff->setChecked(true);
 	else
 		ui->rbtn_filterColorDiff->setChecked(false);
@@ -213,7 +212,7 @@ void DlgAiLearn::ToStep2()
 
 	ui->pbtn_pre->setVisible(true);
 
-	if (aiLearnConfig.checkType == 1)
+	if (aiLearnConfig->checkType == 1)
 		ui->rbtn_filterColorDiff->setChecked(true);
 	else
 		ui->rbtn_filterColorDiff->setChecked(false);
@@ -228,21 +227,39 @@ void DlgAiLearn::pbtn_yes_clicked() {
 
 void DlgAiLearn::pbtn_no_clicked()
 {
-	aiLearnConfig = read_lastConfig();
+	GlobalStructData& globalStruct = GlobalStructData::getInstance();
+	globalStruct.mainWindowConfig.upLight = aiLearnConfig->upLight;
+	globalStruct.mainWindowConfig.downLight = aiLearnConfig->downLight;
+	globalStruct.mainWindowConfig.sideLight = aiLearnConfig->sideLight;
+
 	ToStep1();
 }
 
 void DlgAiLearn::pbtn_checkColor_clicked()
 {
-	aiLearnConfig = get_newConfig(1);
+	GlobalStructData& globalStruct = GlobalStructData::getInstance();
+
+	aiLearnConfig = get_newConfig();
+	aiLearnConfig->checkType = 1;
+	aiLearnConfig->upLight = globalStruct.mainWindowConfig.upLight;
+	aiLearnConfig->downLight = globalStruct.mainWindowConfig.downLight;
+	aiLearnConfig->sideLight = globalStruct.mainWindowConfig.sideLight;
 	save_config(aiLearnConfig);
+
 	ToStep1();
 }
 
 void DlgAiLearn::pbtn_checkKnifeShape_clicked()
 {
-	aiLearnConfig = get_newConfig(2);
+	GlobalStructData& globalStruct = GlobalStructData::getInstance();
+
+	aiLearnConfig = get_newConfig();
+	aiLearnConfig->checkType = 2;
+	aiLearnConfig->upLight = globalStruct.mainWindowConfig.upLight;
+	aiLearnConfig->downLight = globalStruct.mainWindowConfig.downLight;
+	aiLearnConfig->sideLight = globalStruct.mainWindowConfig.sideLight;
 	save_config(aiLearnConfig);
+
 	ToStep1();
 }
 
@@ -263,7 +280,7 @@ void DlgAiLearn::pbtn_next_clicked()
 
 void DlgAiLearn::pbtn_lookAllImage_clicked()
 {
-	auto path = QString::fromStdString(PathGlobalStruct::AiLearnData + "\\" + aiLearnConfig.learnInfoSign);
+	auto path = QString::fromStdString(PathGlobalStruct::AiLearnData + "\\" + aiLearnConfig->learnInfoSign);
 
 	AiLearnTools::MakeDir(path);
 
@@ -314,8 +331,8 @@ void DlgAiLearn::onFrameCapturedBad(cv::Mat frame, size_t index)
 		auto dateTimeStr = QDateTime::currentDateTime().toString("yyyyMMddHHmmsszzz").toStdString();
 		bool isBad = step == 1;
 
-		AiLearnTools::SaveImage(frame, aiLearnConfig.learnInfoSign, dateTimeStr, isBad, index);
-		AiLearnTools::SaveYoloText(aiLearnConfig.learnInfoSign, dateTimeStr, isBad, aiLearnConfig.checkType,
+		AiLearnTools::SaveImage(frame, aiLearnConfig->learnInfoSign, dateTimeStr, isBad, index);
+		AiLearnTools::SaveYoloText(aiLearnConfig->learnInfoSign, dateTimeStr, isBad, aiLearnConfig->checkType,
 			centerX, centerY, width, height, frame.cols, frame.rows);
 
 		auto qImage = AiLearnTools::cvMat2QImage(frame);
@@ -331,8 +348,8 @@ void DlgAiLearn::onFrameCapturedBad(cv::Mat frame, size_t index)
 	}
 
 	auto dateTimeStr = QDateTime::currentDateTime().toString("yyyyMMddHHmmsszzz").toStdString();
-	AiLearnTools::SaveImage(frame, aiLearnConfig.learnInfoSign, dateTimeStr, true, index);
-	AiLearnTools::SaveYoloText(aiLearnConfig.learnInfoSign, dateTimeStr, true, aiLearnConfig.checkType,
+	AiLearnTools::SaveImage(frame, aiLearnConfig->learnInfoSign, dateTimeStr, true, index);
+	AiLearnTools::SaveYoloText(aiLearnConfig->learnInfoSign, dateTimeStr, true, aiLearnConfig->checkType,
 		500, 500, 200, 210, frame.cols, frame.rows);
 
 	auto qImage = AiLearnTools::cvMat2QImage(frame);
@@ -360,7 +377,7 @@ void DlgAiLearn::pbtn_train_clicked()
 
 	//训练之前删除之前的train
 	QDir dir(QString::fromStdString(PathGlobalStruct::AiLearnYoloPath) + "runs\\train");
-	AiLearnTools::MoveImageToDataSet(aiLearnConfig.learnInfoSign, aiLearnConfig.checkType == 1);
+	AiLearnTools::MoveImageToDataSet(aiLearnConfig->learnInfoSign, aiLearnConfig->checkType == 1);
 
 	disconnect(&m_Process, &QProcess::readyRead, this, &DlgAiLearn::ProcessReadOut);//读就绪
 	disconnect(&m_Process, &QProcess::readyReadStandardError, this, &DlgAiLearn::ProcessReadOut);//读就绪

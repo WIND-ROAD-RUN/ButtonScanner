@@ -23,136 +23,138 @@
 #include<atomic>
 
 namespace zwy {
-    namespace scc {
-        class Motion;
-    }
+	namespace scc {
+		class Motion;
+	}
 }
 
 class GlobalStructThread
-    :public QObject
+	:public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    std::unique_ptr<StatisticalInfoComputingThread> statisticalInfoComputingThread{ nullptr };
-    std::unique_ptr<MonitorCameraAndCardStateThread> monitorCameraAndCardStateThread{ nullptr };
+	std::unique_ptr<StatisticalInfoComputingThread> statisticalInfoComputingThread{ nullptr };
+	std::unique_ptr<MonitorCameraAndCardStateThread> monitorCameraAndCardStateThread{ nullptr };
 public:
-    void buildDetachThread();
-    void destroyDetachThread();
+	void buildDetachThread();
+	void destroyDetachThread();
 public:
-    static GlobalStructThread& getInstance()
-    {
-        static GlobalStructThread instance;
-        return instance;
-    }
+	static GlobalStructThread& getInstance()
+	{
+		static GlobalStructThread instance;
+		return instance;
+	}
 
-    GlobalStructThread(const GlobalStructThread&) = delete;
-    GlobalStructThread& operator=(const GlobalStructThread&) = delete;
+	GlobalStructThread(const GlobalStructThread&) = delete;
+	GlobalStructThread& operator=(const GlobalStructThread&) = delete;
 
 private:
-    GlobalStructThread();
-    ~GlobalStructThread() = default;
+	GlobalStructThread();
+	~GlobalStructThread() = default;
 };
 
 class GlobalStructData
-    :public QObject
+	:public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    struct StatisticalInfo
-    {
-        std::atomic_uint64_t produceCount{ 0 };
-        std::atomic_uint64_t wasteCount{ 0 };
-        std::atomic<double> productionYield{ 0 };
-        std::atomic<double> removeRate{ 0 };
-    } statisticalInfo;
+	struct StatisticalInfo
+	{
+		std::atomic_uint64_t produceCount{ 0 };
+		std::atomic_uint64_t wasteCount{ 0 };
+		std::atomic<double> productionYield{ 0 };
+		std::atomic<double> removeRate{ 0 };
+	} statisticalInfo;
 public:
-    std::atomic_bool isTakePictures{ false };
-    std::atomic_bool isOpenRemoveFunc{ false };
-    std::atomic_bool isDebugMode{ false };
+	std::atomic_bool isTakePictures{ false };
+	std::atomic_bool isOpenRemoveFunc{ false };
+	std::atomic_bool isDebugMode{ false };
 public:
-    void buildConfigManager(rw::oso::StorageType type);
+	void buildConfigManager(rw::oso::StorageType type);
 public:
-    void ReadConfig();
-    void ReadMainWindowConfig();
-    void ReadDlgProduceLineSetConfig();
-    void ReadDlgProductSetConfig();
-    void ReadDlgExposureTimeSetConfig();
+	void ReadConfig();
+	void ReadMainWindowConfig();
+	void ReadDlgProduceLineSetConfig();
+	void ReadDlgProductSetConfig();
+	void ReadDlgExposureTimeSetConfig();
 public:
-    void saveConfig();
-    void saveMainWindowConfig();
-    void saveDlgProduceLineSetConfig();
-    void saveDlgProductSetConfig();
-    void saveDlgExposureTimeSetConfig();
-    std::unique_ptr<rw::oso::StorageContext> storeContext{ nullptr };
+	void saveConfig();
+	void saveMainWindowConfig();
+	void saveDlgProduceLineSetConfig();
+	void saveDlgProductSetConfig();
+	void saveDlgExposureTimeSetConfig();
+	std::unique_ptr<rw::oso::StorageContext> storeContext{ nullptr };
 public:
-    QString mainWindowFilePath;
-    QString dlgProduceLineSetFilePath;
-    QString dlgProductSetFilePath;
-    QString dlgExposureTimeSetFilePath;
-    rw::cdm::ButtonScannerMainWindow mainWindowConfig{};
-    rw::cdm::ButtonScannerProduceLineSet dlgProduceLineSetConfig{};
-    rw::cdm::ButtonScannerDlgProductSet dlgProductSetConfig{};
-    rw::cdm::ButtonScannerDlgExposureTimeSet dlgExposureTimeSetConfig{};
+	QString mainWindowFilePath;
+	QString dlgProduceLineSetFilePath;
+	QString dlgProductSetFilePath;
+	QString dlgExposureTimeSetFilePath;
+	rw::cdm::ButtonScannerMainWindow mainWindowConfig{};
+	rw::cdm::ButtonScannerProduceLineSet dlgProduceLineSetConfig{};
+	rw::cdm::ButtonScannerDlgProductSet dlgProductSetConfig{};
+	rw::cdm::ButtonScannerDlgExposureTimeSet dlgExposureTimeSetConfig{};
 public:
-    QString cameraIp1{ "11" };
-    QString cameraIp2{ "12" };
-    QString cameraIp3{ "13" };
-    QString cameraIp4{ "14" };
+	QString cameraIp1{ "11" };
+	QString cameraIp2{ "12" };
+	QString cameraIp3{ "13" };
+	QString cameraIp4{ "14" };
 public:
-    QString enginePath{ R"(C:\Users\34615\Desktop\best.engine)" };
-    QString namePath{ R"(C:\Users\34615\Desktop\index.names)" };
-    QString onnxEnginePath1{ R"(C:\Users\34615\Desktop\modelOnnx.onnx)" };
+	QString enginePath{ R"(C:\Users\34615\Desktop\best.engine)" };
+	QString namePath{ R"(C:\Users\34615\Desktop\index.names)" };
+	QString onnxEnginePath1{ R"(C:\Users\34615\Desktop\modelOnnx.onnx)" };
+public:
+		QString aiLearnOldConfigPath;
 
 public:
 
-    bool isTargetCamera(const QString& cameraIndex, const QString& targetName);
-    rw::rqw::CameraMetaData cameraMetaDataCheck(const QString& cameraIndex, const QVector<rw::rqw::CameraMetaData>& cameraInfo);
-    void buildCamera();
-    bool buildCamera1();
-    bool buildCamera2();
-    bool buildCamera3();
-    bool buildCamera4();
+	bool isTargetCamera(const QString& cameraIndex, const QString& targetName);
+	rw::rqw::CameraMetaData cameraMetaDataCheck(const QString& cameraIndex, const QVector<rw::rqw::CameraMetaData>& cameraInfo);
+	void buildCamera();
+	bool buildCamera1();
+	bool buildCamera2();
+	bool buildCamera3();
+	bool buildCamera4();
 
-    void startMonitor();
-    void destroyCamera();
-    void destroyCamera1();
-    void destroyCamera2();
-    void destroyCamera3();
-    void destroyCamera4();
-    std::unique_ptr<rw::rqw::CameraPassiveThread> camera1{ nullptr };
-    std::unique_ptr<rw::rqw::CameraPassiveThread> camera2{ nullptr };
-    std::unique_ptr<rw::rqw::CameraPassiveThread> camera3{ nullptr };
-    std::unique_ptr<rw::rqw::CameraPassiveThread> camera4{ nullptr };
+	void startMonitor();
+	void destroyCamera();
+	void destroyCamera1();
+	void destroyCamera2();
+	void destroyCamera3();
+	void destroyCamera4();
+	std::unique_ptr<rw::rqw::CameraPassiveThread> camera1{ nullptr };
+	std::unique_ptr<rw::rqw::CameraPassiveThread> camera2{ nullptr };
+	std::unique_ptr<rw::rqw::CameraPassiveThread> camera3{ nullptr };
+	std::unique_ptr<rw::rqw::CameraPassiveThread> camera4{ nullptr };
 
-    void setCameraExposureTime(int cameraIndex, size_t exposureTime);
+	void setCameraExposureTime(int cameraIndex, size_t exposureTime);
 
 public:
-    //调用前确保模型文件存在且以设置
-    void buildImageProcessingModule(size_t num);
-    void destroyImageProcessingModule();
+	//调用前确保模型文件存在且以设置
+	void buildImageProcessingModule(size_t num);
+	void destroyImageProcessingModule();
 
-    std::unique_ptr<ImageProcessingModule> imageProcessingModule1{ nullptr };
-    std::unique_ptr<ImageProcessingModule> imageProcessingModule2{ nullptr };
-    std::unique_ptr<ImageProcessingModule> imageProcessingModule3{ nullptr };
-    std::unique_ptr<ImageProcessingModule> imageProcessingModule4{ nullptr };
+	std::unique_ptr<ImageProcessingModule> imageProcessingModule1{ nullptr };
+	std::unique_ptr<ImageProcessingModule> imageProcessingModule2{ nullptr };
+	std::unique_ptr<ImageProcessingModule> imageProcessingModule3{ nullptr };
+	std::unique_ptr<ImageProcessingModule> imageProcessingModule4{ nullptr };
 public:
-    void buildImageSaveEngine();
-    void destroyImageSaveEngine();
-    std::unique_ptr<rw::rqw::ImageSaveEngine> imageSaveEngine{ nullptr };
+	void buildImageSaveEngine();
+	void destroyImageSaveEngine();
+	std::unique_ptr<rw::rqw::ImageSaveEngine> imageSaveEngine{ nullptr };
 public:
-    static GlobalStructData& getInstance()
-    {
-        static GlobalStructData instance;
-        return instance;
-    }
+	static GlobalStructData& getInstance()
+	{
+		static GlobalStructData instance;
+		return instance;
+	}
 
-    GlobalStructData(const GlobalStructData&) = delete;
-    GlobalStructData& operator=(const GlobalStructData&) = delete;
+	GlobalStructData(const GlobalStructData&) = delete;
+	GlobalStructData& operator=(const GlobalStructData&) = delete;
 public:
-    ThreadSafeMinHeap productPriorityQueue1;
-    ThreadSafeMinHeap productPriorityQueue2;
-    ThreadSafeMinHeap productPriorityQueue3;
-    ThreadSafeMinHeap productPriorityQueue4;
+	ThreadSafeMinHeap productPriorityQueue1;
+	ThreadSafeMinHeap productPriorityQueue2;
+	ThreadSafeMinHeap productPriorityQueue3;
+	ThreadSafeMinHeap productPriorityQueue4;
 private:
     GlobalStructData();
     ~GlobalStructData() = default;
@@ -163,18 +165,18 @@ public:
 	void setDownLight(bool state);
 	void setSideLight(bool state);
 public slots:
-    void onBuildCamera1();
-    void onBuildCamera2();
-    void onBuildCamera3();
-    void onBuildCamera4();
+	void onBuildCamera1();
+	void onBuildCamera2();
+	void onBuildCamera3();
+	void onBuildCamera4();
 
-    void onDestroyCamera1();
-    void onDestroyCamera2();
-    void onDestroyCamera3();
-    void onDestroyCamera4();
+	void onDestroyCamera1();
+	void onDestroyCamera2();
+	void onDestroyCamera3();
+	void onDestroyCamera4();
 
-    void onStartMonitor1();
-    void onStartMonitor2();
-    void onStartMonitor3();
-    void onStartMonitor4();
+	void onStartMonitor1();
+	void onStartMonitor2();
+	void onStartMonitor3();
+	void onStartMonitor4();
 };
