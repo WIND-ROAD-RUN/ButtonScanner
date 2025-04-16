@@ -345,7 +345,6 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		}
 	}
 
-	//检查小气孔
 	if (globalStruct.isOpenRemoveFunc) {
 		if (isBad) {
 			globalStruct.statisticalInfo.wasteCount++;

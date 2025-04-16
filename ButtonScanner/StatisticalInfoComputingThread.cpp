@@ -44,7 +44,7 @@ void StatisticalInfoComputingThread::run()
         auto wasteCount = statisticalInfo.wasteCount.load();
         if (totalCount==0)
         {
-            return;
+            continue;
         }
         statisticalInfo.productionYield = (static_cast<double>(totalCount - wasteCount) / totalCount) * 100;
 
