@@ -652,12 +652,6 @@ void ButtonScanner::build_motion()
 		motionPtr->SetAxisType(2, 3);
 		motionPtr->SetAxisPulse(1, globalStruct.dlgProduceLineSetConfig.codeWheel);
 		motionPtr->SetAxisPulse(2, globalStruct.dlgProduceLineSetConfig.codeWheel);
-
-		globalStruct.isOpenRemoveFunc = true;
-		QMetaObject::invokeMethod(qApp, [this, state]
-			{
-				ui->rbtn_removeFunc->setChecked(true);
-			});
 	}
 }
 

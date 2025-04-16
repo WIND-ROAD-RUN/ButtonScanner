@@ -2,8 +2,6 @@
 
 #include"tensorrt_yolo_onnx_multask.h"
 
-#define _DEBUG
-
 namespace rw
 {
 	namespace imeot
@@ -30,7 +28,7 @@ namespace rw
 		ModelEngineOT::ModelEngineOT(std::string modelPath, std::string nameFilePath)
 		{
 
-#ifdef _DEBUG // 仅在 Debug 模式下禁用以下代码
+#ifdef DEBUG_ // 仅在 Debug 模式下禁用以下代码
 			try
 			{
 				_modelPath = modelPath;
@@ -62,7 +60,7 @@ namespace rw
 		ModelEngineOT::~ModelEngineOT()
 		{
 
-#ifdef _DEBUG // 仅在 Debug 模式下禁用以下代码
+#ifdef DEBUG_ // 仅在 Debug 模式下禁用以下代码
 			if (_isCreated) {
 				tensorrt_yolo_onnx_multask_destroy(_index);
 			}
@@ -74,7 +72,7 @@ namespace rw
 
 		bool ModelEngineOT::ProcessMask(cv::Mat& img, cv::Mat& resultMat, std::vector<ProcessRectanglesResultOT>& result)
 		{
-#ifdef _DEBUG // 仅在 Debug 模式下禁用以下代码
+#ifdef DEBUG_ // 仅在 Debug 模式下禁用以下代码
 			try
 			{
 				std::vector<Yolov5ObbXResult> vecrecogresult;

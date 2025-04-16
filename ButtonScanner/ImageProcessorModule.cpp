@@ -51,7 +51,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 		globalStruct.mainWindow->dlgAiLearn->onFrameCaptured(frame.image, frame.index);
 	}
 
-	return resultImage.clone();
+	return frame.image.clone();
 }
 
 void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult)
@@ -530,7 +530,7 @@ void ImageProcessor::run()
 		auto  image = cvMatToQImage(result);
 
 		// 绘制错误信息
-		ImagePainter::drawTextOnImage(image, processInfo, { ImagePainter::Color::Green,ImagePainter::Color::Red }, 0.8);
+		ImagePainter::drawTextOnImage(image, processInfo, { ImagePainter::Color::Green,ImagePainter::Color::Red }, 0.12);
 
 		// 绘制错误定位
 		drawErrorLocate(image, vecRecogResult);
