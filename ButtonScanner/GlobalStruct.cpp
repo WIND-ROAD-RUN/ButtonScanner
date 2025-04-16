@@ -109,6 +109,7 @@ void GlobalStructData::ReadMainWindowConfig()
         statisticalInfo.wasteCount = mainWindowConfig.totalWaste;
         statisticalInfo.productionYield = mainWindowConfig.passRate;
         statisticalInfo.removeRate = mainWindowConfig.scrappingRate;
+		isOpenDefect = mainWindowConfig.isDefect;
     }
     else {
         LOG()  "Load main window config failed.";

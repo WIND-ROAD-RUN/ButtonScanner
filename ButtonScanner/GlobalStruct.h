@@ -74,6 +74,7 @@ public:
 	std::atomic_bool isTakePictures{ false };
 	std::atomic_bool isOpenRemoveFunc{ false };
 	std::atomic_bool isDebugMode{ false };
+	std::atomic_bool isOpenDefect{ false };
 public:
 	void buildConfigManager(rw::oso::StorageType type);
 public:

@@ -68,7 +68,10 @@ public:
 
 private:
     cv::Mat processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult);
-    void eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult);
+
+    bool isInside(const rw::imeot::ProcessRectanglesResultOT & ret );
+    void eliminationLogic_splitMutiButton(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult);
+	void eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult);
 
     QImage cvMatToQImage(const cv::Mat& mat);
 

@@ -1142,6 +1142,7 @@ void ButtonScanner::rbtn_defect_ckecked(bool checked)
 	auto& GlobalStructData = GlobalStructData::getInstance();
 	GlobalStructData.mainWindowConfig.isDefect = checked;
 	GlobalStructData.saveConfig();
+	GlobalStructData.isOpenDefect = checked;
 }
 
 void ButtonScanner::rbtn_ForAndAgainst_ckecked(bool checked)

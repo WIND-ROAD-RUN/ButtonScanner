@@ -32,20 +32,13 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 
 	_modelEnginePtr->ProcessMask(frame.image, resultImage, vecRecogResult);
 
-	LOG()  "vecRecogResult.size():" << vecRecogResult.size();
-
-	for (const auto& item : vecRecogResult)
-	{
-		LOG()  "class ID:" << item.classID;
-		LOG()  "score:" << item.score;
-	}
 
 	onnxFuture.waitForFinished();
 
 
 
 	if (globalStruct.isOpenRemoveFunc || (globalStruct.isDebugMode)) {
-		eliminationLogic(frame, frame.image, errorInfo, vecRecogResult);
+		eliminationLogic_splitMutiButton(frame, frame.image, errorInfo, vecRecogResult);
 	}
 	//如果新物料学习窗口在步骤1（学习坏的）、2（学习好的），就调用dlgAiLearn->onFrameCaptured
 	if (globalStruct.mainWindow->dlgAiLearn->step > 0 && globalStruct.mainWindow->dlgAiLearn->step < 3) {
@@ -53,6 +46,66 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 	}
 
 	return frame.image.clone();
+}
+
+bool ImageProcessor::isInside(const rw::imeot::ProcessRectanglesResultOT& ret)
+{
+	auto& globalStruct = GlobalStructData::getInstance();
+	if (imageProcessingModuleIndex==1)
+	{
+		auto& x = ret.center_x;
+		auto& lineLeft = globalStruct.dlgProduceLineSetConfig.limit1;
+		auto lineRight = lineLeft + (globalStruct.dlgProductSetConfig.outsideDiameterValue / globalStruct.dlgProduceLineSetConfig.pixelEquivalent1);
+		return (x > lineLeft && x < lineRight);
+	}
+	else if (imageProcessingModuleIndex == 2)
+	{
+		auto& x = ret.center_x;
+		auto& lineRight = globalStruct.dlgProduceLineSetConfig.limit2;
+		auto lineLeft = lineRight - (globalStruct.dlgProductSetConfig.outsideDiameterValue / globalStruct.dlgProduceLineSetConfig.pixelEquivalent2);
+		LOG() "lineLeft:" << lineLeft << "lineRight:" << lineRight;
+		LOG() "x:" << x;
+		LOG()"LeftTop" << ret.left_top.first << ret.left_top.second;
+		return (x > lineLeft && x < lineRight);
+	}
+	else if (imageProcessingModuleIndex == 3)
+	{
+		auto& x = ret.center_x;
+		auto& lineLeft = globalStruct.dlgProduceLineSetConfig.limit3;
+		auto lineRight = lineLeft + (globalStruct.dlgProductSetConfig.outsideDiameterValue / globalStruct.dlgProduceLineSetConfig.pixelEquivalent3);
+		return (x > lineLeft && x < lineRight);
+	}
+	else if (imageProcessingModuleIndex == 4)
+	{
+		auto& x = ret.center_x;
+		auto& lineRight = globalStruct.dlgProduceLineSetConfig.limit4;
+		auto lineLeft = lineRight - (globalStruct.dlgProductSetConfig.outsideDiameterValue / globalStruct.dlgProduceLineSetConfig.pixelEquivalent4);
+		return (x > lineLeft && x < lineRight);
+
+	}
+	return true;
+}
+
+void ImageProcessor::eliminationLogic_splitMutiButton(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult)
+{
+	auto & isOpenDefect = GlobalStructData::getInstance().isOpenDefect;
+	if (!isOpenDefect)
+	{
+		return;
+	}
+
+	static int i = 0;
+
+	std::vector<rw::imeot::ProcessRectanglesResultOT> targetObject;
+	for (int i = 0; i < processRectanglesResult.size(); i++)
+	{
+		if (isInside(processRectanglesResult[i]))
+		{
+			targetObject.emplace_back(processRectanglesResult[i]);
+		}
+	}
+
+	eliminationLogic(frame, resultImage, errorInfo, targetObject);
 }
 
 void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult)
@@ -222,8 +275,6 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		for (int i = 0; i < daPoBianIndexs.size(); i++)
 		{
 			auto score = processRectanglesResult[daPoBianIndexs[i]].score;
-
-			LOG() score;
 
 			if (score >= (checkConfig.edgeDamageSimilarity)/100)
 			{
@@ -629,8 +680,6 @@ void ImageProcessor::run()
 		// 调用 processAI 函数
 		cv::Mat result = processAI(frame, processInfo, vecRecogResult);
 
-		LOG()vecRecogResult.size();
-
 		// 结束计时
 		auto endTime = std::chrono::high_resolution_clock::now();
 
@@ -772,9 +821,6 @@ void ImagePainter::drawTextOnImage(QImage& image, const QVector<QString>& texts,
 void ImagePainter::drawCirclesOnImage(cv::Mat& image, const std::vector<rw::imeot::ProcessRectanglesResultOT>& rectangles)
 {
 	for (const auto& rect : rectangles) {
-		if (rect.classID != 1) {
-			return;
-		}
 		// 计算矩形中心点
 		int centerX = (rect.left_top.first + rect.right_bottom.first) / 2;
 		int centerY = (rect.left_top.second + rect.right_bottom.second) / 2;

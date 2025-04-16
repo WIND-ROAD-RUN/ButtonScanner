@@ -13,8 +13,8 @@ namespace rw
 			result.left_top.second = yolov5ObbXResult.top;
 			result.right_bottom.first = yolov5ObbXResult.right;
 			result.right_bottom.second = yolov5ObbXResult.bottom;
-			result.center_x = yolov5ObbXResult.center_x;
-			result.center_y = yolov5ObbXResult.center_y;
+			result.center_x = result.left_top.first+(result.right_bottom.first - result.left_top.first) / 2;
+			result.center_y = result.left_top.second+(result.right_bottom.second - result.left_top.second) / 2;
 			result.classID = yolov5ObbXResult.classID;
 			result.label_len = yolov5ObbXResult.label_len;
 			result.score = yolov5ObbXResult.score;
