@@ -67,10 +67,14 @@ public:
     void buildModelEngineOnnx(const QString& enginePath, const QString& namePath);
 
 private:
+    bool isInAred(int x);
+    std::vector<rw::imeot::ProcessRectanglesResultOT> getDefectInBody(rw::imeot::ProcessRectanglesResultOT body,const std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult);
+
+private:
     cv::Mat processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult);
 
-    bool isInside(const rw::imeot::ProcessRectanglesResultOT & ret );
-    void eliminationLogic_splitMutiButton(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult);
+    rw::imeot::ProcessRectanglesResultOT getBody(std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult,bool &hasBody);
+
 	void eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult);
 
     QImage cvMatToQImage(const cv::Mat& mat);

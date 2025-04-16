@@ -15,10 +15,80 @@ void ImageProcessor::buildModelEngineOnnx(const QString& enginePath, const QStri
 	_modelEnginePtrOnnx = std::make_unique<rw::imeoo::ModelEngineOO>(enginePath.toStdString(), namePath.toStdString());
 }
 
+bool ImageProcessor::isInAred(int x)
+{
+	auto& globalStruct = GlobalStructData::getInstance();
+	if (imageProcessingModuleIndex == 1)
+	{
+		auto& lineLeft = globalStruct.dlgProduceLineSetConfig.limit1;
+		auto lineRight = lineLeft + (globalStruct.dlgProductSetConfig.outsideDiameterValue / globalStruct.dlgProduceLineSetConfig.pixelEquivalent1);
+		if (lineLeft < x && x < lineRight)
+		{
+			return true;
+		}
+	}
+	else if (imageProcessingModuleIndex == 2)
+	{
+		auto& lineRight = globalStruct.dlgProduceLineSetConfig.limit2;
+		auto lineLeft = lineRight - (globalStruct.dlgProductSetConfig.outsideDiameterValue / globalStruct.dlgProduceLineSetConfig.pixelEquivalent2);
+		if (lineLeft < x && x < lineRight)
+		{
+			return true;
+		}
+	}
+	else if (imageProcessingModuleIndex == 3)
+	{
+		auto& lineLeft = globalStruct.dlgProduceLineSetConfig.limit3;
+		auto lineRight = lineLeft + (globalStruct.dlgProductSetConfig.outsideDiameterValue / globalStruct.dlgProduceLineSetConfig.pixelEquivalent3);
+		if (lineLeft < x && x < lineRight)
+		{
+			return true;
+		}
+	}
+	else if (imageProcessingModuleIndex == 4)
+	{
+		auto& lineRight = globalStruct.dlgProduceLineSetConfig.limit4;
+		auto lineLeft = lineRight - (globalStruct.dlgProductSetConfig.outsideDiameterValue / globalStruct.dlgProduceLineSetConfig.pixelEquivalent4);
+		if (lineLeft < x && x < lineRight)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+std::vector<rw::imeot::ProcessRectanglesResultOT> ImageProcessor::getDefectInBody(rw::imeot::ProcessRectanglesResultOT body, const std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult)
+{
+	static int i = 0;
+	std::vector<rw::imeot::ProcessRectanglesResultOT> result;
+	auto& globalStruct = GlobalStructData::getInstance();
+
+	auto leleltMin = body.left_top.first;
+	auto leleltMax = body.right_bottom.first;
+	auto verticalMin = body.left_top.second;
+	auto verticalMax = body.right_bottom.second;
+
+	LOG() "leleltMin:" << leleltMin << "leleltMax:" << leleltMax << "verticalMin:" << verticalMin << "verticalMax:" << verticalMax;
+
+	
+	for (const auto & item: vecRecogResult)
+	{
+		LOG()"centraL x" << item.center_x;
+		LOG()"centraL Y" << item.center_y;
+		if (leleltMin<item.center_x&& item.center_x<leleltMax)
+		{
+			if (verticalMin<item.center_y&&item.center_y<verticalMax)
+			{
+				result.emplace_back(item);
+			}
+		}
+	}
+	return result;
+}
+
 cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult)
 {
 	auto& globalStruct = GlobalStructData::getInstance();
-
 
 	cv::Mat resultImage1;
 	std::vector<rw::imeoo::ProcessRectanglesResultOO > vecRecogResultOnnx;
@@ -32,13 +102,58 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 
 	_modelEnginePtr->ProcessMask(frame.image, resultImage, vecRecogResult);
 
-
 	onnxFuture.waitForFinished();
 
-
-
 	if (globalStruct.isOpenRemoveFunc || (globalStruct.isDebugMode)) {
-		eliminationLogic_splitMutiButton(frame, frame.image, errorInfo, vecRecogResult);
+		bool hasBody;
+		auto body = getBody(vecRecogResult, hasBody);
+		if (!hasBody)
+		{
+			if (globalStruct.isOpenRemoveFunc) {
+
+				globalStruct.statisticalInfo.wasteCount++;
+
+
+				if (imageProcessingModuleIndex == 2 || imageProcessingModuleIndex == 4) {
+					globalStruct.statisticalInfo.produceCount++;
+				}
+
+
+				float absLocation = frame.location;
+				if (absLocation < 0) {
+					absLocation = -absLocation; // 将负值转换为正值
+				}
+
+				switch (imageProcessingModuleIndex)
+				{
+				case 1:
+					globalStruct.productPriorityQueue1.push(absLocation);
+					break;
+				case 2:
+					globalStruct.productPriorityQueue2.push(absLocation);
+					break;
+				case 3:
+					globalStruct.productPriorityQueue3.push(absLocation);
+					break;
+				case 4:
+					globalStruct.productPriorityQueue4.push(absLocation);
+					break;
+				default:
+					break;
+				}
+
+			}
+			if (globalStruct.isTakePictures) {
+				globalStruct.imageSaveEngine->pushImage(cvMatToQImage(frame.image), "NG", "Button");
+				globalStruct.imageSaveEngine->pushImage(cvMatToQImage(frame.image), "OK", "Button");
+			}
+
+		}
+		else
+		{
+			auto defect = getDefectInBody(body, vecRecogResult);
+			eliminationLogic(frame, frame.image,errorInfo,defect);
+		}
 	}
 	//如果新物料学习窗口在步骤1（学习坏的）、2（学习好的），就调用dlgAiLearn->onFrameCaptured
 	if (globalStruct.mainWindow->dlgAiLearn->step > 0 && globalStruct.mainWindow->dlgAiLearn->step < 3) {
@@ -48,65 +163,23 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 	return frame.image.clone();
 }
 
-bool ImageProcessor::isInside(const rw::imeot::ProcessRectanglesResultOT& ret)
+rw::imeot::ProcessRectanglesResultOT ImageProcessor::getBody(std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult, bool& hasBody)
 {
-	auto& globalStruct = GlobalStructData::getInstance();
-	if (imageProcessingModuleIndex==1)
+	hasBody = false;
+	rw::imeot::ProcessRectanglesResultOT result;
+	for (auto& i : processRectanglesResult)
 	{
-		auto& x = ret.center_x;
-		auto& lineLeft = globalStruct.dlgProduceLineSetConfig.limit1;
-		auto lineRight = lineLeft + (globalStruct.dlgProductSetConfig.outsideDiameterValue / globalStruct.dlgProduceLineSetConfig.pixelEquivalent1);
-		return (x > lineLeft && x < lineRight);
-	}
-	else if (imageProcessingModuleIndex == 2)
-	{
-		auto& x = ret.center_x;
-		auto& lineRight = globalStruct.dlgProduceLineSetConfig.limit2;
-		auto lineLeft = lineRight - (globalStruct.dlgProductSetConfig.outsideDiameterValue / globalStruct.dlgProduceLineSetConfig.pixelEquivalent2);
-		LOG() "lineLeft:" << lineLeft << "lineRight:" << lineRight;
-		LOG() "x:" << x;
-		LOG()"LeftTop" << ret.left_top.first << ret.left_top.second;
-		return (x > lineLeft && x < lineRight);
-	}
-	else if (imageProcessingModuleIndex == 3)
-	{
-		auto& x = ret.center_x;
-		auto& lineLeft = globalStruct.dlgProduceLineSetConfig.limit3;
-		auto lineRight = lineLeft + (globalStruct.dlgProductSetConfig.outsideDiameterValue / globalStruct.dlgProduceLineSetConfig.pixelEquivalent3);
-		return (x > lineLeft && x < lineRight);
-	}
-	else if (imageProcessingModuleIndex == 4)
-	{
-		auto& x = ret.center_x;
-		auto& lineRight = globalStruct.dlgProduceLineSetConfig.limit4;
-		auto lineLeft = lineRight - (globalStruct.dlgProductSetConfig.outsideDiameterValue / globalStruct.dlgProduceLineSetConfig.pixelEquivalent4);
-		return (x > lineLeft && x < lineRight);
-
-	}
-	return true;
-}
-
-void ImageProcessor::eliminationLogic_splitMutiButton(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult)
-{
-	auto & isOpenDefect = GlobalStructData::getInstance().isOpenDefect;
-	if (!isOpenDefect)
-	{
-		return;
-	}
-
-	static int i = 0;
-
-	std::vector<rw::imeot::ProcessRectanglesResultOT> targetObject;
-	for (int i = 0; i < processRectanglesResult.size(); i++)
-	{
-		if (isInside(processRectanglesResult[i]))
+		if (i.classID == 0)
 		{
-			targetObject.emplace_back(processRectanglesResult[i]);
+			auto isInArea=isInAred(i.center_x);
+			result = i;
+			hasBody = true;
+			break;
 		}
 	}
-
-	eliminationLogic(frame, resultImage, errorInfo, targetObject);
+	return result;
 }
+
 
 void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult)
 {
@@ -207,11 +280,11 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 	std::vector<rw::imeot::ProcessRectanglesResultOT> hole;
 
 	//拾取外径和孔径
-	for (int i = 0;i< waiJingIndexs.size();i++)
+	for (int i = 0;i < waiJingIndexs.size();i++)
 	{
 		body.emplace_back(processRectanglesResult[waiJingIndexs[i]]);
 	}
-	for (int i = 0;i< konJingIndexs.size();i++)
+	for (int i = 0;i < konJingIndexs.size();i++)
 	{
 		hole.emplace_back(processRectanglesResult[konJingIndexs[i]]);
 	}
@@ -276,7 +349,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		{
 			auto score = processRectanglesResult[daPoBianIndexs[i]].score;
 
-			if (score >= (checkConfig.edgeDamageSimilarity)/100)
+			if (score >= (checkConfig.edgeDamageSimilarity) / 100)
 			{
 				isBad = true;
 				errorInfo.emplace_back("破边 " + QString::number(score));
@@ -506,7 +579,7 @@ void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::imeot::Proce
 		if (item.classID == 0 || item.classID == 1) {
 			continue;
 		}
-		if (!checkConfig.edgeDamageEnable&& item.classID==2)
+		if (!checkConfig.edgeDamageEnable && item.classID == 2)
 		{
 			continue;
 		}
@@ -596,18 +669,18 @@ void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::imeot::Proce
 
 void ImageProcessor::drawLine(QImage& image)
 {
-	auto &index = imageProcessingModuleIndex;
+	auto& index = imageProcessingModuleIndex;
 	auto& dlgProduceLineSetConfig = GlobalStructData::getInstance().dlgProduceLineSetConfig;
 	auto& checkConfig = GlobalStructData::getInstance().dlgProductSetConfig;
-	if (index==1)
+	if (index == 1)
 	{
 		drawLine_locate(image, dlgProduceLineSetConfig.limit1);
 		drawLine_locate(image, dlgProduceLineSetConfig.limit1 + (checkConfig.outsideDiameterValue / dlgProduceLineSetConfig.pixelEquivalent1));
 	}
-	else if (index==2)
+	else if (index == 2)
 	{
 		drawLine_locate(image, dlgProduceLineSetConfig.limit2);
-		drawLine_locate(image, dlgProduceLineSetConfig.limit2 - (checkConfig.outsideDiameterValue/ dlgProduceLineSetConfig.pixelEquivalent2));
+		drawLine_locate(image, dlgProduceLineSetConfig.limit2 - (checkConfig.outsideDiameterValue / dlgProduceLineSetConfig.pixelEquivalent2));
 	}
 	else if (index == 3)
 	{
@@ -782,38 +855,38 @@ QColor ImagePainter::ColorToQColor(Color c)
 
 void ImagePainter::drawTextOnImage(QImage& image, const QVector<QString>& texts, const QVector<Color>& colorList, double proportion)
 {
-    if (texts.isEmpty() || proportion <= 0.0 || proportion > 1.0) {
-        return; // 无效输入直接返回
-    }
+	if (texts.isEmpty() || proportion <= 0.0 || proportion > 1.0) {
+		return; // 无效输入直接返回
+	}
 
-    QPainter painter(&image);
-    painter.setRenderHint(QPainter::Antialiasing);
+	QPainter painter(&image);
+	painter.setRenderHint(QPainter::Antialiasing);
 
-    // 计算字体大小
-    int imageHeight = image.height();
-    int totalTextHeight = static_cast<int>(imageHeight * proportion);
-    int fontSize = totalTextHeight / texts.size();
+	// 计算字体大小
+	int imageHeight = image.height();
+	int totalTextHeight = static_cast<int>(imageHeight * proportion);
+	int fontSize = totalTextHeight / texts.size();
 
-    QFont font = painter.font();
-    font.setPixelSize(fontSize);
-    painter.setFont(font);
+	QFont font = painter.font();
+	font.setPixelSize(fontSize);
+	painter.setFont(font);
 
-    // 起始位置
-    int x = 0;
-    int y = 0;
+	// 起始位置
+	int x = 0;
+	int y = 0;
 
-    // 绘制每一行文字
-    for (int i = 0; i < texts.size(); ++i) {
-        // 获取颜色
-        QColor color = (i < colorList.size()) ? ColorToQColor(colorList[i]) : ColorToQColor(colorList.last());
-        painter.setPen(color);
+	// 绘制每一行文字
+	for (int i = 0; i < texts.size(); ++i) {
+		// 获取颜色
+		QColor color = (i < colorList.size()) ? ColorToQColor(colorList[i]) : ColorToQColor(colorList.last());
+		painter.setPen(color);
 
-        // 绘制文字
-        painter.drawText(x, y + fontSize, texts[i]);
+		// 绘制文字
+		painter.drawText(x, y + fontSize, texts[i]);
 
-        // 更新 y 坐标
-        y += fontSize;
-    }
+		// 更新 y 坐标
+		y += fontSize;
+	}
 
 	painter.end();
 }
