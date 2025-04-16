@@ -159,7 +159,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 	}
 	for (int i = 0;i< konJingIndexs.size();i++)
 	{
-		body.emplace_back(processRectanglesResult[konJingIndexs[i]]);
+		hole.emplace_back(processRectanglesResult[konJingIndexs[i]]);
 	}
 
 	//检查外径
