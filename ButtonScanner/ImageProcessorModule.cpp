@@ -764,7 +764,7 @@ void ImageProcessor::run()
 		auto  image = cvMatToQImage(result);
 
 		// 绘制错误信息
-		ImagePainter::drawTextOnImage(image, processInfo, { ImagePainter::Color::Green,ImagePainter::Color::Red }, 0.12);
+		ImagePainter::drawTextOnImage(image, processInfo, { ImagePainter::Color::Green,ImagePainter::Color::Red }, 0.07);
 
 		// 绘制错误定位
 		drawErrorLocate(image, vecRecogResult);
@@ -864,8 +864,7 @@ void ImagePainter::drawTextOnImage(QImage& image, const QVector<QString>& texts,
 
 	// 计算字体大小
 	int imageHeight = image.height();
-	int totalTextHeight = static_cast<int>(imageHeight * proportion);
-	int fontSize = totalTextHeight / texts.size();
+	int fontSize = static_cast<int>(imageHeight * proportion); // 字号由 proportion 决定
 
 	QFont font = painter.font();
 	font.setPixelSize(fontSize);
@@ -885,7 +884,7 @@ void ImagePainter::drawTextOnImage(QImage& image, const QVector<QString>& texts,
 		painter.drawText(x, y + fontSize, texts[i]);
 
 		// 更新 y 坐标
-		y += fontSize;
+		y += fontSize; // 每行文字的间距等于字体大小
 	}
 
 	painter.end();
