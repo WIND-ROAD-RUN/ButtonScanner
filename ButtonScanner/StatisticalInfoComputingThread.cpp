@@ -30,14 +30,20 @@ void StatisticalInfoComputingThread::run()
 {
     auto& globalStruct = GlobalStructData::getInstance();
     auto& statisticalInfo = globalStruct.statisticalInfo;
+    unsigned long olderWasteCount = statisticalInfo.wasteCount.load();
     while (running) {
-        auto olderWasteCount = statisticalInfo.wasteCount.load();
-        // 每1秒计算一次
+        static size_t s;
         QThread::sleep(1);
-        // 计算去除速度
-        auto newWasteCount = statisticalInfo.wasteCount.load();
-        auto rate = static_cast<double>(newWasteCount - olderWasteCount) * 60;
-        statisticalInfo.removeRate = rate;
+        //每60s计算剔除功能
+        if (s==60)
+        {
+            auto newWasteCount = statisticalInfo.wasteCount.load();
+            auto rate = static_cast<double>(newWasteCount - olderWasteCount);
+            statisticalInfo.removeRate = rate;
+            olderWasteCount = statisticalInfo.wasteCount.load();
+            s = 0;
+        }
+       
 
         // 计算生产良率
         auto totalCount = statisticalInfo.produceCount.load();
@@ -50,5 +56,6 @@ void StatisticalInfoComputingThread::run()
 
         // 发送信号更新UI
         emit updateStatisticalInfo();
+        s++;
     }
 }
