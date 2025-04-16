@@ -28,12 +28,12 @@ namespace rw
 		ModelEngineOT::ModelEngineOT(std::string modelPath, std::string nameFilePath)
 		{
 
-#ifdef DEBUG_ // 仅在 Debug 模式下禁用以下代码
+#ifdef NDEBUG // 仅在 Debug 模式下禁用以下代码
 			try
 			{
 				_modelPath = modelPath;
 				_nameFilePath = nameFilePath;
-				_index = tensorrt_yolo_onnx_multask_create(modelPath.c_str(), nameFilePath.c_str());
+				_index = tensorrt_yolo_onnx_multask_create(modelPath.c_str(), nameFilePath.c_str(),0.1);
 				if (_index < 0) {
 					_isCreated = false;
 					throw std::runtime_error("Failed to create task with error code: " + std::to_string(_index));
@@ -60,7 +60,7 @@ namespace rw
 		ModelEngineOT::~ModelEngineOT()
 		{
 
-#ifdef DEBUG_ // 仅在 Debug 模式下禁用以下代码
+#ifdef NDEBUG // 仅在 Debug 模式下禁用以下代码
 			if (_isCreated) {
 				tensorrt_yolo_onnx_multask_destroy(_index);
 			}
@@ -72,7 +72,7 @@ namespace rw
 
 		bool ModelEngineOT::ProcessMask(cv::Mat& img, cv::Mat& resultMat, std::vector<ProcessRectanglesResultOT>& result)
 		{
-#ifdef DEBUG_ // 仅在 Debug 模式下禁用以下代码
+#ifdef NDEBUG // 仅在 Debug 模式下禁用以下代码
 			try
 			{
 				std::vector<Yolov5ObbXResult> vecrecogresult;

@@ -37,6 +37,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 	for (const auto& item : vecRecogResult)
 	{
 		LOG()  "class ID:" << item.classID;
+		LOG()  "score:" << item.score;
 	}
 
 	onnxFuture.waitForFinished();
@@ -44,7 +45,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 
 
 	if (globalStruct.isOpenRemoveFunc || (globalStruct.isDebugMode)) {
-		eliminationLogic(frame, resultImage, errorInfo, vecRecogResult);
+		eliminationLogic(frame, frame.image, errorInfo, vecRecogResult);
 	}
 	//如果新物料学习窗口在步骤1（学习坏的）、2（学习好的），就调用dlgAiLearn->onFrameCaptured
 	if (globalStruct.mainWindow->dlgAiLearn->step > 0 && globalStruct.mainWindow->dlgAiLearn->step < 3) {
@@ -189,7 +190,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 
 			LOG() score;
 
-			if (score >= checkConfig.edgeDamageSimilarity)
+			if (score >= (checkConfig.edgeDamageSimilarity)/100)
 			{
 				isBad = true;
 				errorInfo.emplace_back("破边 " + QString::number(score));
@@ -518,6 +519,8 @@ void ImageProcessor::run()
 
 		// 调用 processAI 函数
 		cv::Mat result = processAI(frame, processInfo, vecRecogResult);
+
+		LOG()vecRecogResult.size();
 
 		// 结束计时
 		auto endTime = std::chrono::high_resolution_clock::now();

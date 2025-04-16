@@ -45,6 +45,7 @@ void DlgProductSet::readConfig()
     ui->rbtn_shieldingRangeEnable->setCheckable(GlobalStructData.dlgProductSetConfig.shieldingRangeEnable);
     ui->pbtn_outerRadius->setText(QString::number(GlobalStructData.dlgProductSetConfig.outerRadius));
     ui->pbtn_innerRadius->setText(QString::number(GlobalStructData.dlgProductSetConfig.innerRadius));
+    ui->pbtn_edgeDamageSimilarity->setText(QString::number(GlobalStructData.dlgProductSetConfig.edgeDamageSimilarity));
     ui->rbtn_poreEnable->setChecked(GlobalStructData.dlgProductSetConfig.poreEnable);
     ui->rbtn_paintEnable->setChecked(GlobalStructData.dlgProductSetConfig.paintEnable);
     ui->rbtn_holesCountEnable->setChecked(GlobalStructData.dlgProductSetConfig.holesCountEnable);
