@@ -115,17 +115,51 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		}
 	}
 
+	// 检查外径是否被识别成小孔
+	if (!konJingIndexs.empty()) {
+		// 计算小孔的平均高度和宽度
+		double totalHeight = 0.0, totalWidth = 0.0;
+		for (int index : konJingIndexs) {
+			const auto& rect = processRectanglesResult[index];
+			int height = rect.right_bottom.second - rect.left_top.second;
+			int width = rect.right_bottom.first - rect.left_top.first;
+			totalHeight += height;
+			totalWidth += width;
+		}
+		double avgHeight = totalHeight / konJingIndexs.size();
+		double avgWidth = totalWidth / konJingIndexs.size();
+
+		// 允许的偏差比例（可以根据实际情况调整）
+		const double deviationRatio = 0.8;
+
+		// 剔除偏离平均值过大的矩形
+		for (int i = 0; i < konJingIndexs.size(); ++i) {
+			int index = konJingIndexs[i];
+			const auto& rect = processRectanglesResult[index];
+			int height = rect.right_bottom.second - rect.left_top.second;
+			int width = rect.right_bottom.first - rect.left_top.first;
+
+			// 判断是否偏离平均值
+			if (std::abs(height - avgHeight) > avgHeight * deviationRatio ||
+				std::abs(width - avgWidth) > avgWidth * deviationRatio) {
+				// 偏离过大，剔除
+				konJingIndexs.erase(konJingIndexs.begin() + i);
+				holesCount--;
+				--i; // 调整索引以避免跳过下一个元素
+			}
+		}
+	}
+
 	std::vector<rw::imeot::ProcessRectanglesResultOT> body;
 	std::vector<rw::imeot::ProcessRectanglesResultOT> hole;
 
-	//拆分body和hole
-	for (const auto& item : processRectanglesResult) {
-		if (item.classID == 0) {
-			body.emplace_back(item);
-		}
-		else if (item.classID == 1) {
-			hole.emplace_back(item);
-		}
+	for (int i = 0;i< waiJingIndexs.size();i++)
+	{
+		body.emplace_back(processRectanglesResult[waiJingIndexs[i]]);
+	}
+	for (int i = 0;i< konJingIndexs.size();i++)
+	{
+		body.emplace_back(processRectanglesResult[konJingIndexs[i]]);
 	}
 
 	//检查外径
