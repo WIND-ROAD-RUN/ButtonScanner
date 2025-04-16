@@ -661,6 +661,8 @@ void ButtonScanner::build_locationThread()
 	QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
 		while (mark_Thread)
 		{
+			auto& globalStruct = GlobalStructData::getInstance();
+			auto& blowTime = globalStruct.dlgProductSetConfig.blowTime;
 			//获得位置数据
 
 			//1,3相机
@@ -684,7 +686,7 @@ void ButtonScanner::build_locationThread()
 			{
 				auto& work1 = GlobalStructData::getInstance().productPriorityQueue1;
 
-				double tifeishijian1 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowTime1;
+				double tifeishijian1 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowTime1+ blowTime;
 				double tifeijuli1 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowDistance1;
 
 				float olderlacation1 = 0;
@@ -701,7 +703,7 @@ void ButtonScanner::build_locationThread()
 			{
 				auto& work2 = GlobalStructData::getInstance().productPriorityQueue2;
 
-				double tifeishijian2 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowTime2;
+				double tifeishijian2 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowTime2 + blowTime;
 				double tifeijuli2 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowDistance2;
 
 				float olderlacation2 = 0;
@@ -718,7 +720,7 @@ void ButtonScanner::build_locationThread()
 			{
 				auto& work3 = GlobalStructData::getInstance().productPriorityQueue3;
 
-				double tifeishijian3 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowTime3;
+				double tifeishijian3 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowTime3 + blowTime;
 				double tifeijuli3 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowDistance3;
 
 				float olderlacation3 = 0;
@@ -735,7 +737,7 @@ void ButtonScanner::build_locationThread()
 			{
 				auto& work4 = GlobalStructData::getInstance().productPriorityQueue4;
 
-				double tifeishijian4 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowTime4;
+				double tifeishijian4 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowTime4 + blowTime;
 				double tifeijuli4 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowDistance4;
 
 				float olderlacation4 = 0;

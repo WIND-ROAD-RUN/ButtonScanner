@@ -200,6 +200,7 @@ void DlgProductSet::pbtn_outsideDiameterValue_clicked() {
     GlobalStructData.dlgProductSetConfig.outsideDiameterValue = ui->pbtn_outsideDiameterValue->text().toDouble();
 
     ui->pbtn_blowTime->setText(QString::number(get_blowTime()));
+	GlobalStructData.dlgProductSetConfig.blowTime = ui->pbtn_blowTime->text().toDouble();
 
     delete numKeyBoard;
 }

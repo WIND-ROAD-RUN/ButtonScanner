@@ -149,6 +149,7 @@ float DlgProduceLineSet::get_blowTime()
     auto outsideDiameterValue = GlobalStructData.dlgProductSetConfig.outsideDiameterValue;
     auto beltSpeed = GlobalStructData.dlgProduceLineSetConfig.motorSpeed;
     auto blowTime = outsideDiameterValue / beltSpeed * 1000 / 2;
+	GlobalStructData.dlgProductSetConfig.blowTime = blowTime;
     return blowTime;
 }
 
