@@ -416,10 +416,9 @@ void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::imeot::Proce
 	if (image.isNull()) {
 		return;
 	}
-	int i = 0;
 	for (const auto& item : vecRecogResult) {
-		if (i == 0 || i == 1) {
-			return;
+		if (item.classID == 0 || item.classID == 1) {
+			continue;
 		}
 		auto leftTop = item.left_top;
 		auto rightBottom = item.right_bottom;
@@ -473,7 +472,6 @@ void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::imeot::Proce
 			break;
 		}
 		painter.drawText(leftTop.first, leftTop.second - 5, text);
-		++i;
 	}
 }
 
