@@ -19,8 +19,8 @@ namespace rw
 			result.label_len = yolov5ObbXResult.label_len;
 			result.score = yolov5ObbXResult.score;
 			result.label_text = yolov5ObbXResult.label_text;
-			result.width = yolov5ObbXResult.width;
-			result.height = yolov5ObbXResult.height;
+			result.width = result.left_top.first - result.right_bottom.first;
+			result.height = result.left_top.second - result.right_bottom.second;
 			result.angle = yolov5ObbXResult.angle;
 			return result;
 		}

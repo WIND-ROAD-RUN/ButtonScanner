@@ -82,7 +82,7 @@ std::vector<rw::imeot::ProcessRectanglesResultOT> ImageProcessor::getDefectInBod
 	return result;
 }
 
-cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult)
+cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult, std::vector<rw::imeot::ProcessRectanglesResultOT> & vecRecogResultTarget)
 {
 	auto& globalStruct = GlobalStructData::getInstance();
 
@@ -148,7 +148,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 		else
 		{
 			auto defect = getDefectInBody(body, vecRecogResult);
-			eliminationLogic(frame, frame.image,errorInfo,defect);
+			eliminationLogic(frame, frame.image,errorInfo,defect, vecRecogResultTarget);
 		}
 	}
 	//如果新物料学习窗口在步骤1（学习坏的）、2（学习好的），就调用dlgAiLearn->onFrameCaptured
@@ -182,7 +182,7 @@ rw::imeot::ProcessRectanglesResultOT ImageProcessor::getBody(std::vector<rw::ime
 }
 
 
-void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult)
+void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult, std::vector<rw::imeot::ProcessRectanglesResultOT> & vecRecogResultTarget)
 {
 	auto saveIamge = resultImage.clone();
 	auto& globalStruct = GlobalStructData::getInstance();
@@ -312,9 +312,14 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 				isBad = true;
 
 				if (shangXiaPianChaAbs >= zuoYouPianChaAbs)
+				{
 					errorInfo.emplace_back("外径 " + QString::number(shangXiaPianCha * pixEquivalent));
+				}
 				else
+				{
 					errorInfo.emplace_back("外径 " + QString::number(zuoYouPianCha * pixEquivalent));
+				}
+				
 			}
 		}
 	}
@@ -340,6 +345,8 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		{
 			isBad = true;
 			errorInfo.emplace_back("只找到" + QString::number(holesCount) + "个孔");
+			
+
 		}
 	}
 
@@ -354,6 +361,10 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			{
 				isBad = true;
 				errorInfo.emplace_back("破边 " + QString::number(score));
+				for (int i = 0;i < daPoBianIndexs.size();i++)
+				{
+					vecRecogResultTarget.emplace_back(processRectanglesResult[daPoBianIndexs[i]]);
+				}
 			}
 		}
 	}
@@ -363,10 +374,14 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		for (int i = 0; i < qiKonIndexs.size(); i++)
 		{
 			auto score = processRectanglesResult[qiKonIndexs[i]].score;
-			if (score >= 30)
+			if (score >= 0.3)
 			{
 				isBad = true;
 				errorInfo.emplace_back("气孔 " + QString::number(score));
+				for (int i = 0;i < qiKonIndexs.size();i++)
+				{
+					vecRecogResultTarget.emplace_back(processRectanglesResult[qiKonIndexs[i]]);
+				}
 			}
 		}
 	}
@@ -377,10 +392,14 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		for (int i = 0; i < duYanIndexs.size(); i++)
 		{
 			auto score = processRectanglesResult[duYanIndexs[i]].score;
-			if (score >= 10)
+			if (score >= 0.1)
 			{
 				isBad = true;
 				errorInfo.emplace_back("堵眼 " + QString::number(score));
+				for (int i = 0;i < duYanIndexs.size();i++)
+				{
+					vecRecogResultTarget.emplace_back(processRectanglesResult[duYanIndexs[i]]);
+				}
 			}
 		}
 	}
@@ -391,10 +410,14 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		for (int i = 0; i < moShiIndexs.size(); i++)
 		{
 			auto score = processRectanglesResult[moShiIndexs[i]].score;
-			if (score >= 0)
+			if (score >= 0.1)
 			{
 				isBad = true;
 				errorInfo.emplace_back("磨石 " + QString::number(score));
+				for (int i = 0;i < moShiIndexs.size();i++)
+				{
+					vecRecogResultTarget.emplace_back(processRectanglesResult[moShiIndexs[i]]);
+				}
 			}
 		}
 	}
@@ -405,10 +428,14 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		for (int i = 0; i < liaoTouIndexs.size(); i++)
 		{
 			auto score = processRectanglesResult[liaoTouIndexs[i]].score;
-			if (score >= 10)
+			if (score >= 0.1)
 			{
 				isBad = true;
 				errorInfo.emplace_back("料头 " + QString::number(score));
+				for (int i = 0;i < liaoTouIndexs.size();i++)
+				{
+					vecRecogResultTarget.emplace_back(processRectanglesResult[liaoTouIndexs[i]]);
+				}
 			}
 		}
 	}
@@ -419,10 +446,14 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		for (int i = 0; i < youQiIndexs.size(); i++)
 		{
 			auto score = processRectanglesResult[youQiIndexs[i]].score;
-			if (score >= 50)
+			if (score >= 0.5)
 			{
 				isBad = true;
 				errorInfo.emplace_back("油漆 " + QString::number(score));
+				for (int i = 0;i < youQiIndexs.size();i++)
+				{
+					vecRecogResultTarget.emplace_back(processRectanglesResult[youQiIndexs[i]]);
+				}
 			}
 		}
 	}
@@ -436,54 +467,74 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			auto height = abs(processRectanglesResult[lieHenIndexs[i]].right_bottom.second - processRectanglesResult[lieHenIndexs[i]].left_top.second);
 
 			auto score = processRectanglesResult[lieHenIndexs[i]].score;
-			if (score >= checkConfig.crackSimilarity)
+			if (score >= checkConfig.crackSimilarity / 100)
 			{
 				isBad = true;
 				errorInfo.emplace_back("裂痕 " + QString::number(score));
+				for (int i = 0;i < lieHenIndexs.size();i++)
+				{
+					vecRecogResultTarget.emplace_back(processRectanglesResult[lieHenIndexs[i]]);
+				}
 			}
 		}
 	}
 
-	//检查小气孔
+	////检查小气孔
 
-	if (checkConfig.brokenEyeEnable)
-	{
-		for (int i = 0; i < poYanIndexs.size(); i++)
-		{
-			auto score = processRectanglesResult[poYanIndexs[i]].score;
-			auto width = abs(processRectanglesResult[poYanIndexs[i]].right_bottom.first - processRectanglesResult[poYanIndexs[i]].left_top.first);
-			auto height = abs(processRectanglesResult[poYanIndexs[i]].right_bottom.second - processRectanglesResult[poYanIndexs[i]].left_top.second);
-			if (score >= checkConfig.brokenEyeSimilarity)
-			{
-				isBad = true;
-				errorInfo.emplace_back("破眼 " + QString::number(score));
-			}
-		}
-	}
+	//if (checkConfig.brokenEyeEnable)
+	//{
+	//	for (int i = 0; i < poYanIndexs.size(); i++)
+	//	{
+	//		auto score = processRectanglesResult[poYanIndexs[i]].score;
+	//		auto width = abs(processRectanglesResult[poYanIndexs[i]].right_bottom.first - processRectanglesResult[poYanIndexs[i]].left_top.first);
+	//		auto height = abs(processRectanglesResult[poYanIndexs[i]].right_bottom.second - processRectanglesResult[poYanIndexs[i]].left_top.second);
+	//		if (score >= checkConfig.brokenEyeSimilarity)
+	//		{
+	//			isBad = true;
+	//			errorInfo.emplace_back("破眼 " + QString::number(score));
+	//			for (int i = 0;i < poYanIndexs.size();i++)
+	//			{
+	//				vecRecogResultTarget.emplace_back(processRectanglesResult[poYanIndexs[i]]);
+	//			}
+	//		}
+	//	}
+	//}
 
-	//检查小破边
-	if (checkConfig.apertureEnable)
-	{
-		for (int i = 0; i < konJingIndexs.size(); i++)
-		{
-			auto shangXiaPianCha = processRectanglesResult[konJingIndexs[i]].right_bottom.second - processRectanglesResult[konJingIndexs[i]].left_top.second - checkConfig.apertureValue / pixEquivalent;
-			auto zuoYouPianCha = processRectanglesResult[konJingIndexs[i]].right_bottom.first - processRectanglesResult[konJingIndexs[i]].left_top.first - checkConfig.apertureValue / pixEquivalent;
+	////检查小破边
+	//if (checkConfig.apertureEnable)
+	//{
+	//	for (int i = 0; i < konJingIndexs.size(); i++)
+	//	{
+	//		auto shangXiaPianCha = processRectanglesResult[konJingIndexs[i]].right_bottom.second - processRectanglesResult[konJingIndexs[i]].left_top.second - checkConfig.apertureValue / pixEquivalent;
+	//		auto zuoYouPianCha = processRectanglesResult[konJingIndexs[i]].right_bottom.first - processRectanglesResult[konJingIndexs[i]].left_top.first - checkConfig.apertureValue / pixEquivalent;
 
-			auto shangXiaPianChaAbs = abs(shangXiaPianCha);
-			auto zuoYouPianChaAbs = abs(zuoYouPianCha);
+	//		auto shangXiaPianChaAbs = abs(shangXiaPianCha);
+	//		auto zuoYouPianChaAbs = abs(zuoYouPianCha);
 
-			if (shangXiaPianChaAbs > checkConfig.apertureSimilarity / pixEquivalent || zuoYouPianChaAbs > checkConfig.apertureSimilarity / pixEquivalent)
-			{
-				isBad = true;
+	//		if (shangXiaPianChaAbs > checkConfig.apertureSimilarity / pixEquivalent || zuoYouPianChaAbs > checkConfig.apertureSimilarity / pixEquivalent)
+	//		{
+	//			isBad = true;
 
-				if (shangXiaPianChaAbs >= zuoYouPianChaAbs)
-					errorInfo.emplace_back("孔径 " + QString::number(shangXiaPianCha * pixEquivalent));
+	//			if (shangXiaPianChaAbs >= zuoYouPianChaAbs)
+	//			{
+	//				errorInfo.emplace_back("孔径 " + QString::number(shangXiaPianCha * pixEquivalent));
+	//				for (int i = 0;i < poYanIndexs.size();i++)
+	//				{
+	//					vecRecogResultTarget.emplace_back(processRectanglesResult[poYanIndexs[i]]);
+	//				}
+	//			}
+	//			else
+	//			{
+	//				errorInfo.emplace_back("孔径 " + QString::number(zuoYouPianCha * pixEquivalent));
+	//				for (int i = 0;i < poYanIndexs.size();i++)
+	//				{
+	//					vecRecogResultTarget.emplace_back(processRectanglesResult[poYanIndexs[i]]);
+	//				}
+	//			}
 
-				else
-					errorInfo.emplace_back("孔径 " + QString::number(zuoYouPianCha * pixEquivalent));
-			}
-		}
-	}
+	//		}
+	//	}
+	//}
 
 	//检查孔心距
 	if (checkConfig.holeCenterDistanceEnable)
@@ -570,8 +621,26 @@ QImage ImageProcessor::cvMatToQImage(const cv::Mat& mat)
 	return result;
 }
 
-void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult)
+void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult, const QColor& drawColor)
 {
+	auto& globalStructLineSetConfig = GlobalStructData::getInstance().dlgProduceLineSetConfig;
+	double pixEquivalent;
+	switch (imageProcessingModuleIndex)
+	{
+	case 1:
+		pixEquivalent = globalStructLineSetConfig.pixelEquivalent1;
+		break;
+	case 2:
+		pixEquivalent = globalStructLineSetConfig.pixelEquivalent2;
+		break;
+	case 3:
+		pixEquivalent = globalStructLineSetConfig.pixelEquivalent3;
+		break;
+	case 4:
+		pixEquivalent = globalStructLineSetConfig.pixelEquivalent4;
+		break;
+	}
+
 	auto& checkConfig = GlobalStructData::getInstance().dlgProductSetConfig;
 	if (image.isNull()) {
 		return;
@@ -615,10 +684,17 @@ void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::imeot::Proce
 
 		auto leftTop = item.left_top;
 		auto rightBottom = item.right_bottom;
+
 		// 绘制矩形框
 		QPainter painter(&image);
-		painter.setPen(QPen(Qt::red, 2));
+		painter.setPen(QPen(drawColor, 5)); // 使用传入的颜色
 		painter.drawRect(QRect(leftTop.first, leftTop.second, rightBottom.first - leftTop.first, rightBottom.second - leftTop.second));
+
+		// 设置字体大小
+		QFont font = painter.font();
+		font.setPixelSize(50); // 将字体大小设置为 50 像素（可以根据需要调整）
+		painter.setFont(font);
+
 		// 绘制文字
 		QString text;
 
@@ -664,6 +740,12 @@ void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::imeot::Proce
 			text = QString::number(item.classID);
 			break;
 		}
+		int score = item.score * 100;
+		auto area = std::round(item.height * item.width * pixEquivalent * 10) / 10.0; // 保留一位小数
+		text = text + QString::number(score) + " " + QString::number(area);
+
+		// 设置文字颜色
+		painter.setPen(drawColor); // 使用传入的颜色
 		painter.drawText(leftTop.first, leftTop.second - 5, text);
 	}
 }
@@ -743,7 +825,8 @@ void ImageProcessor::run()
 		QVector<QString> processInfo;
 		processInfo.reserve(20);
 
-		std::vector<rw::imeot::ProcessRectanglesResultOT> vecRecogResult;
+		std::vector<rw::imeot::ProcessRectanglesResultOT> vecRecogResultBad;
+		std::vector<rw::imeot::ProcessRectanglesResultOT> vecRecogResultTarget;
 
 		// 开始计时
 		auto startTime = std::chrono::high_resolution_clock::now();
@@ -752,7 +835,7 @@ void ImageProcessor::run()
 		processInfo.emplace_back();
 
 		// 调用 processAI 函数
-		cv::Mat result = processAI(frame, processInfo, vecRecogResult);
+		cv::Mat result = processAI(frame, processInfo, vecRecogResultBad, vecRecogResultTarget);
 
 		// 结束计时
 		auto endTime = std::chrono::high_resolution_clock::now();
@@ -767,15 +850,19 @@ void ImageProcessor::run()
 		// 绘制错误信息
 		ImagePainter::drawTextOnImage(image, processInfo, { ImagePainter::Color::Green,ImagePainter::Color::Red }, 0.07);
 
-		// 绘制错误定位
-		drawErrorLocate(image, vecRecogResult);
+		// 绘制错误定位全局错误定位
+		drawErrorLocate(image, vecRecogResultBad, Qt::green);
+
+		
+		// 绘制错误定位目标定位
+		drawErrorLocate(image, vecRecogResultTarget, Qt::red); 
+
 
 		drawLine(image);
 
 		if (GlobalStructData::getInstance().isTakePictures) {
 			GlobalStructData::getInstance().imageSaveEngine->pushImage(image, "Mark", "Button");
 		}
-
 
 		QPixmap pixmap = QPixmap::fromImage(image);
 		// 显示到界面

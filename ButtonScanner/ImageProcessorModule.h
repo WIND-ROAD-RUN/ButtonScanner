@@ -71,15 +71,15 @@ private:
     std::vector<rw::imeot::ProcessRectanglesResultOT> getDefectInBody(rw::imeot::ProcessRectanglesResultOT body,const std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult);
 
 private:
-    cv::Mat processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult);
+    cv::Mat processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult, std::vector<rw::imeot::ProcessRectanglesResultOT> & vecRecogResultTarget);
 
     rw::imeot::ProcessRectanglesResultOT getBody(std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult,bool &hasBody);
 
-	void eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult);
+	void eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult, std::vector<rw::imeot::ProcessRectanglesResultOT> & vecRecogResultTarget);
 
     QImage cvMatToQImage(const cv::Mat& mat);
 
-    void drawErrorLocate(QImage& image, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult);
+    void drawErrorLocate(QImage& image, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult,const QColor& drawColor);
 
     void drawLine(QImage& image);
     void drawLine_locate(QImage& image,size_t locate);
