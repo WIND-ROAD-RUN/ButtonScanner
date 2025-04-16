@@ -68,13 +68,9 @@ std::vector<rw::imeot::ProcessRectanglesResultOT> ImageProcessor::getDefectInBod
 	auto verticalMin = body.left_top.second;
 	auto verticalMax = body.right_bottom.second;
 
-	LOG() "leleltMin:" << leleltMin << "leleltMax:" << leleltMax << "verticalMin:" << verticalMin << "verticalMax:" << verticalMax;
-
 	
 	for (const auto & item: vecRecogResult)
 	{
-		LOG()"centraL x" << item.center_x;
-		LOG()"centraL Y" << item.center_y;
 		if (leleltMin<item.center_x&& item.center_x<leleltMax)
 		{
 			if (verticalMin<item.center_y&&item.center_y<verticalMax)
@@ -172,11 +168,16 @@ rw::imeot::ProcessRectanglesResultOT ImageProcessor::getBody(std::vector<rw::ime
 		if (i.classID == 0)
 		{
 			auto isInArea=isInAred(i.center_x);
-			result = i;
-			hasBody = true;
-			break;
+			if (isInArea)
+			{
+				result = i;
+				hasBody = true;
+				break;
+			}
 		}
 	}
+	LOG() "result.x" << result.center_x << "result.y" << result.center_y;
+	LOG() "result.classID" << result.classID;
 	return result;
 }
 
