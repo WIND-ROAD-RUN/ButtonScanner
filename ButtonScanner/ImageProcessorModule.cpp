@@ -153,6 +153,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 	std::vector<rw::imeot::ProcessRectanglesResultOT> body;
 	std::vector<rw::imeot::ProcessRectanglesResultOT> hole;
 
+	//拾取外径和孔径
 	for (int i = 0;i< waiJingIndexs.size();i++)
 	{
 		body.emplace_back(processRectanglesResult[waiJingIndexs[i]]);
@@ -542,6 +543,49 @@ void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::imeot::Proce
 	}
 }
 
+void ImageProcessor::drawLine(QImage& image)
+{
+	auto &index = imageProcessingModuleIndex;
+	auto& dlgProduceLineSetConfig = GlobalStructData::getInstance().dlgProduceLineSetConfig;
+	auto& checkConfig = GlobalStructData::getInstance().dlgProductSetConfig;
+	if (index==1)
+	{
+		drawLine_locate(image, dlgProduceLineSetConfig.limit1);
+		drawLine_locate(image, dlgProduceLineSetConfig.limit1 + (checkConfig.outsideDiameterValue / dlgProduceLineSetConfig.pixelEquivalent1));
+	}
+	else if (index==2)
+	{
+		drawLine_locate(image, dlgProduceLineSetConfig.limit2);
+		drawLine_locate(image, dlgProduceLineSetConfig.limit2 - (checkConfig.outsideDiameterValue/ dlgProduceLineSetConfig.pixelEquivalent2));
+	}
+	else if (index == 3)
+	{
+		drawLine_locate(image, dlgProduceLineSetConfig.limit3);
+		drawLine_locate(image, dlgProduceLineSetConfig.limit3 + (checkConfig.outsideDiameterValue / dlgProduceLineSetConfig.pixelEquivalent3));
+	}
+	else if (index == 4)
+	{
+		drawLine_locate(image, dlgProduceLineSetConfig.limit4);
+		drawLine_locate(image, dlgProduceLineSetConfig.limit4 - (checkConfig.outsideDiameterValue / dlgProduceLineSetConfig.pixelEquivalent4));
+	}
+}
+
+void ImageProcessor::drawLine_locate(QImage& image, size_t locate)
+{
+	if (image.isNull() || locate >= static_cast<size_t>(image.width())) {
+		return; // 如果图像无效或 locate 超出图像宽度，直接返回
+	}
+
+	QPainter painter(&image);
+	painter.setRenderHint(QPainter::Antialiasing); // 开启抗锯齿
+	painter.setPen(QPen(Qt::red, 2)); // 设置画笔颜色为红色，线宽为2像素
+
+	// 绘制竖线，从图像顶部到底部
+	painter.drawLine(QPoint(locate, 0), QPoint(locate, image.height()));
+
+	painter.end(); // 结束绘制
+}
+
 ImageProcessor::ImageProcessor(QQueue<MatInfo>& queue, QMutex& mutex, QWaitCondition& condition, int workIndex, QObject* parent)
 	: QThread(parent), _queue(queue), _mutex(mutex), _condition(condition), _workIndex(workIndex) {
 }
@@ -602,6 +646,8 @@ void ImageProcessor::run()
 
 		// 绘制错误定位
 		drawErrorLocate(image, vecRecogResult);
+
+		drawLine(image);
 
 		if (GlobalStructData::getInstance().isTakePictures) {
 			GlobalStructData::getInstance().imageSaveEngine->pushImage(image, "Mark", "Button");

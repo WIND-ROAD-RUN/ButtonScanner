@@ -74,6 +74,9 @@ private:
 
     void drawErrorLocate(QImage& image, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult);
 
+    void drawLine(QImage& image);
+    void drawLine_locate(QImage& image,size_t locate);
+
     QQueue<MatInfo>& _queue;
     QMutex& _mutex;
     QWaitCondition& _condition;
