@@ -771,9 +771,11 @@ void ButtonScanner::build_ioThread()
 			if (state == true)
 			{
 				globalStruct.isOpenRemoveFunc = false;
+				globalStruct.isDebugMode = false;
 				QMetaObject::invokeMethod(qApp, [this, state]
 					{
 						ui->rbtn_removeFunc->setChecked(false);
+						ui->rbtn_debug->setChecked(false);
 					});
 					// pidaimove->stop();
 					motionPtr->StopAllAxis();
@@ -790,9 +792,12 @@ void ButtonScanner::build_ioThread()
 				if (state == true)
 				{
 					globalStruct.isOpenRemoveFunc = true;
+					globalStruct.isDebugMode = false;
 					QMetaObject::invokeMethod(qApp, [this, state]
 						{
+							dlgExposureTimeSet->ResetCamera();
 							ui->rbtn_removeFunc->setChecked(true);
+							ui->rbtn_debug->setChecked(false);
 						});
 						//所有电机上电
 						QtConcurrent::run([this, &motionPtr]() {
@@ -817,9 +822,11 @@ void ButtonScanner::build_ioThread()
 				if (state)
 				{
 					globalStruct.isOpenRemoveFunc = false;
+					globalStruct.isDebugMode = false;
 					QMetaObject::invokeMethod(qApp, [this, state]
 						{
 							ui->rbtn_removeFunc->setChecked(false);
+							ui->rbtn_debug->setChecked(false);
 						});
 						motionPtr->StopAllAxis();
 						motionPtr->SetIOOut(1, false);

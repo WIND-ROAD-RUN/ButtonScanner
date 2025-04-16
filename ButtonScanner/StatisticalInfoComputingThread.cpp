@@ -30,17 +30,18 @@ void StatisticalInfoComputingThread::run()
 {
     auto& globalStruct = GlobalStructData::getInstance();
     auto& statisticalInfo = globalStruct.statisticalInfo;
-    unsigned long olderWasteCount = statisticalInfo.wasteCount.load();
+    unsigned long olderWasteCount = statisticalInfo.produceCount.load();
     while (running) {
         static size_t s;
         QThread::sleep(1);
         //每60s计算剔除功能
         if (s==60)
         {
-            auto newWasteCount = statisticalInfo.wasteCount.load();
+            auto newWasteCount = statisticalInfo.produceCount.load();
             auto rate = static_cast<double>(newWasteCount - olderWasteCount);
+            //removeRate后使用为生产速度计算
             statisticalInfo.removeRate = rate;
-            olderWasteCount = statisticalInfo.wasteCount.load();
+            olderWasteCount = statisticalInfo.produceCount.load();
             s = 0;
         }
        
