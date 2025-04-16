@@ -413,6 +413,7 @@ QImage ImageProcessor::cvMatToQImage(const cv::Mat& mat)
 
 void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult)
 {
+	auto& checkConfig = GlobalStructData::getInstance().dlgProductSetConfig;
 	if (image.isNull()) {
 		return;
 	}
@@ -420,6 +421,39 @@ void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::imeot::Proce
 		if (item.classID == 0 || item.classID == 1) {
 			continue;
 		}
+		if (!checkConfig.edgeDamageEnable&& item.classID==2)
+		{
+			continue;
+		}
+		if (!checkConfig.poreEnable && item.classID == 3)
+		{
+			continue;
+		}
+		if (!checkConfig.blockEyeEnable && item.classID == 4)
+		{
+			continue;
+		}
+		if (!checkConfig.grindStoneEnable && item.classID == 5)
+		{
+			continue;
+		}
+		if (!checkConfig.materialHeadEnable && item.classID == 6)
+		{
+			continue;
+		}
+		if (!checkConfig.paintEnable && item.classID == 7)
+		{
+			continue;
+		}
+		if (!checkConfig.crackEnable && item.classID == 8)
+		{
+			continue;
+		}
+		if (!checkConfig.brokenEyeEnable && item.classID == 9)
+		{
+			continue;
+		}
+
 		auto leftTop = item.left_top;
 		auto rightBottom = item.right_bottom;
 		// 绘制矩形框
