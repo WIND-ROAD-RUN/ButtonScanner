@@ -103,6 +103,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 	if (globalStruct.isOpenRemoveFunc || (globalStruct.isDebugMode)) {
 		bool hasBody;
 		auto body = getBody(vecRecogResult, hasBody);
+		LOG() "Body" << "left_top:" << body.left_top.first << "," << body.left_top.second << "right_bottom:" << body.right_bottom.first << "," << body.right_bottom.second;
 		if (!hasBody)
 		{
 			if (globalStruct.isOpenRemoveFunc) {
@@ -163,6 +164,8 @@ rw::imeot::ProcessRectanglesResultOT ImageProcessor::getBody(std::vector<rw::ime
 {
 	hasBody = false;
 	rw::imeot::ProcessRectanglesResultOT result;
+	result.width = 0;
+	result.height = 0;
 	for (auto& i : processRectanglesResult)
 	{
 		if (i.classID == 0)
@@ -170,14 +173,14 @@ rw::imeot::ProcessRectanglesResultOT ImageProcessor::getBody(std::vector<rw::ime
 			auto isInArea=isInAred(i.center_x);
 			if (isInArea)
 			{
-				result = i;
-				hasBody = true;
-				break;
+				if ((i.width*i.height)>(result.width*result.height))
+				{
+					result = i;
+					hasBody = true;
+				}
 			}
 		}
 	}
-	LOG() "result.x" << result.center_x << "result.y" << result.center_y;
-	LOG() "result.classID" << result.classID;
 	return result;
 }
 
