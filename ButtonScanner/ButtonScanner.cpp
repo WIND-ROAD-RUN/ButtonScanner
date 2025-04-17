@@ -626,12 +626,22 @@ void ButtonScanner::build_imageProcessorModule()
 	////连接界面显示和图像处理模块
 	QObject::connect(globalStruct.imageProcessingModule1.get(), &ImageProcessingModule::imageReady,
 		this, &ButtonScanner::onCamera1Display, Qt::DirectConnection);
+	QObject::connect(globalStruct.imageProcessingModule1.get(), &ImageProcessingModule::imgForDlgNewProduction,
+		this->dlgNewProduction, &DlgNewProduction::img_display_work, Qt::DirectConnection);
+
 	QObject::connect(globalStruct.imageProcessingModule2.get(), &ImageProcessingModule::imageReady,
 		this, &ButtonScanner::onCamera2Display, Qt::DirectConnection);
+	QObject::connect(globalStruct.imageProcessingModule2.get(), &ImageProcessingModule::imgForDlgNewProduction,
+		this->dlgNewProduction, &DlgNewProduction::img_display_work, Qt::DirectConnection);
+
 	QObject::connect(globalStruct.imageProcessingModule3.get(), &ImageProcessingModule::imageReady,
 		this, &ButtonScanner::onCamera3Display, Qt::DirectConnection);
+	QObject::connect(globalStruct.imageProcessingModule3.get(), &ImageProcessingModule::imgForDlgNewProduction,
+		this->dlgNewProduction, &DlgNewProduction::img_display_work, Qt::DirectConnection);
 	QObject::connect(globalStruct.imageProcessingModule4.get(), &ImageProcessingModule::imageReady,
 		this, &ButtonScanner::onCamera4Display, Qt::DirectConnection);
+	QObject::connect(globalStruct.imageProcessingModule4.get(), &ImageProcessingModule::imgForDlgNewProduction,
+		this->dlgNewProduction, &DlgNewProduction::img_display_work, Qt::DirectConnection);
 }
 
 void ButtonScanner::start_monitor()
@@ -1049,7 +1059,7 @@ void ButtonScanner::pbtn_newProduction_clicked()
 		return;
 	}
 	if (dlgNewProduction != nullptr) {
-		dlgNewProduction->exec();
+		dlgNewProduction->show();
 	}
 }
 

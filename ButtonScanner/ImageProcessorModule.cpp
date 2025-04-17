@@ -912,6 +912,8 @@ ImageProcessingModule::~ImageProcessingModule()
 
 void ImageProcessingModule::onFrameCaptured(cv::Mat frame, float location, size_t index)
 {
+	emit imgForDlgNewProduction(frame, index);
+
 	if (frame.empty()) {
 		return; // 跳过空帧
 	}

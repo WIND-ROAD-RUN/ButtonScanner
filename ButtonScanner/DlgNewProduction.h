@@ -45,7 +45,7 @@ private:
 private:
 	DlgNewProductionInfo _info;
 
-private slots:
+public slots:
 	void img_display_work(cv::Mat frame, size_t index);
 private:
 	void img_display_work1(const QPixmap& pixmap);
@@ -76,4 +76,7 @@ private slots:
 	void pbtn_tab5_exit_clicked();
 	void pbtn_tab5_pre_step_clicked();
 	void pbtn_tab5_finish_clicked();
+
+protected:
+	void showEvent(QShowEvent*) override;
 };

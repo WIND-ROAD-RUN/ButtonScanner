@@ -80,6 +80,7 @@ void DlgNewProduction::destroy()
 	_info.state = DlgNewProductionInfo::None;
 	ui->tabWidget->setCurrentIndex(0);
 	this->_info.currentTabIndex = 0;
+	this->_info.isActivate = false;
 	this->hide();
 }
 
@@ -261,13 +262,19 @@ void DlgNewProduction::pbtn_tab5_finish_clicked()
 	destroy();
 }
 
+void DlgNewProduction::showEvent(QShowEvent* show_event)
+{
+	this->_info.isActivate = true;
+	QDialog::showEvent(show_event);
+}
+
 void DlgNewProduction::img_display_work(cv::Mat frame, size_t index)
 {
 	if (_info.isActivate==false)
 	{
 		return;
 	}
-	if ((_info.currentTabIndex!=2 )|| ( _info.currentTabIndex != 3))
+	if ((_info.currentTabIndex!=2 )&& ( _info.currentTabIndex != 3))
 	{
 		return;
 	}

@@ -111,6 +111,8 @@ public slots:
 
 signals:
     void imageReady(QPixmap image);
+
+    void imgForDlgNewProduction(cv::Mat mat, size_t index);
 public:
     std::vector<ImageProcessor*> getProcessors() const {
         return _processors;
