@@ -1012,7 +1012,7 @@ void ButtonScanner::updateStatisticalInfoUI()
 	ui->label_produceTotalValue->setText(QString::number(produceCount));
 	ui->label_wasteProductsValue->setText(QString::number(wasteCount));
 	ui->label_productionYieldValue->setText(QString::number(productionYield, 'f', 2) + QString(" %"));
-	ui->label_removeRate->setText(QString::number(removeRate) + QString(" /min"));
+	ui->label_removeRate->setText(QString::number(static_cast<int>(removeRate)) + QString(" /min"));
 }
 
 void ButtonScanner::pbtn_set_clicked()
