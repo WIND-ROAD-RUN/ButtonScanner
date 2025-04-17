@@ -50,20 +50,20 @@ void DlgNewProduction::build_connect()
 		this, &DlgNewProduction::pbtn_tab3_nex_step_clicked);
 	//tab4
 	QObject::connect(ui->pbtn_tab4_openImgLocate, &QPushButton::clicked,
-		this, &DlgNewProduction::pbtn_tab4_openImgLocate_clicked);
+		this, &DlgNewProduction::pbtn_tab4_open_img_locate_clicked);
 	QObject::connect(ui->pbtn_tab4_exit, &QPushButton::clicked,
 		this, &DlgNewProduction::pbtn_tab4_exit_clicked);
 	QObject::connect(ui->pbtn_tab4_preStep, &QPushButton::clicked,
-		this, &DlgNewProduction::pbtn_tab4_preStep_clicked);
+		this, &DlgNewProduction::pbtn_tab4_pre_step_clicked);
 	QObject::connect(ui->pbtn_tab4_nexStep, &QPushButton::clicked,
-		this, &DlgNewProduction::pbtn_tab4_nexStep_clicked);
+		this, &DlgNewProduction::pbtn_tab4_nex_step_clicked);
 	//tab5
 	QObject::connect(ui->pbtn_tab5_startTrain, &QPushButton::clicked,
-		this, &DlgNewProduction::pbtn_tab5_startTrain_clicked);
+		this, &DlgNewProduction::pbtn_tab5_start_train_clicked);
 	QObject::connect(ui->pbtn_tab5_exit, &QPushButton::clicked,
 		this, &DlgNewProduction::pbtn_tab5_exit_clicked);
 	QObject::connect(ui->pbtn_tab5_preStep, &QPushButton::clicked,
-		this, &DlgNewProduction::pbtn_tab5_preStep_clicked);
+		this, &DlgNewProduction::pbtn_tab5_pre_step_clicked);
 	QObject::connect(ui->pbtn_tab5_finish, &QPushButton::clicked,
 		this, &DlgNewProduction::pbtn_tab5_finish_clicked);
 }
@@ -83,6 +83,14 @@ void DlgNewProduction::destroy()
 
 void DlgNewProduction::img_display_work1(const cv::Mat& frame)
 {
+	if (frame.empty())
+	{
+		return;
+	}
+	if (this->_info.currentTabIndex==2)
+	{
+
+	}
 }
 
 void DlgNewProduction::img_display_work2(const cv::Mat& frame)
@@ -170,7 +178,7 @@ void DlgNewProduction::pbtn_tab3_nex_step_clicked()
 	this->_info.currentTabIndex = 3;
 }
 
-void DlgNewProduction::pbtn_tab4_openImgLocate_clicked()
+void DlgNewProduction::pbtn_tab4_open_img_locate_clicked()
 {
 }
 
@@ -179,19 +187,19 @@ void DlgNewProduction::pbtn_tab4_exit_clicked()
 	destroy();
 }
 
-void DlgNewProduction::pbtn_tab4_preStep_clicked()
+void DlgNewProduction::pbtn_tab4_pre_step_clicked()
 {
 	ui->tabWidget->setCurrentIndex(2);
 	this->_info.currentTabIndex = 2;
 }
 
-void DlgNewProduction::pbtn_tab4_nexStep_clicked()
+void DlgNewProduction::pbtn_tab4_nex_step_clicked()
 {
 	ui->tabWidget->setCurrentIndex(4);
 	this->_info.currentTabIndex = 4;
 }
 
-void DlgNewProduction::pbtn_tab5_startTrain_clicked()
+void DlgNewProduction::pbtn_tab5_start_train_clicked()
 {
 }
 
@@ -200,7 +208,7 @@ void DlgNewProduction::pbtn_tab5_exit_clicked()
 	destroy();
 }	
 
-void DlgNewProduction::pbtn_tab5_preStep_clicked()
+void DlgNewProduction::pbtn_tab5_pre_step_clicked()
 {
 	ui->tabWidget->setCurrentIndex(3);
 	this->_info.currentTabIndex = 3;
@@ -211,15 +219,33 @@ void DlgNewProduction::pbtn_tab5_finish_clicked()
 	destroy();
 }
 
-void DlgNewProduction::imgDisplay_work(cv::Mat frame, size_t index)
+void DlgNewProduction::img_display_work(cv::Mat frame, size_t index)
 {
 	if (_info.isActivate==false)
 	{
 		return;
 	}
-	if ((_info.currentTabIndex!=3 )|| ( _info.currentTabIndex != 4))
+	if ((_info.currentTabIndex!=2 )|| ( _info.currentTabIndex != 3))
 	{
 		return;
+	}
+
+	switch (index)
+	{
+	case 1:
+		img_display_work1(frame);
+		break;
+	case 2:
+		img_display_work2(frame);
+		break;
+	case 3:
+		img_display_work3(frame);
+		break;
+	case 4:
+		img_display_work4(frame);
+		break;
+	default:
+		break;
 	}
 }
 

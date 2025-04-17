@@ -112,6 +112,9 @@
     <ClCompile Include="DlgNewProduction.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
+    <ClCompile Include="ButtonUtilty.cpp">
+      <Filter>Source Files\func</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ButtonScanner.h">
@@ -196,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="PathGlobalStruct.h">
       <Filter>Header Files\data</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonUtilty.h">
+      <Filter>Header Files\func</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

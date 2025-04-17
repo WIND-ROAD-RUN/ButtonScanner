@@ -145,6 +145,8 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     </QtMoc>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ButtonUtilty.cpp" />
+    <ClInclude Include="ButtonUtilty.h" />
     <QtMoc Include="DlgExposureTimeSet.h" />
     <QtMoc Include="StatisticalInfoComputingThread.h" />
     <QtMoc Include="MonitorCameraAndCardStateThread.h" />

@@ -80,8 +80,6 @@ private:
 
 	void eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult, std::vector<rw::imeot::ProcessRectanglesResultOT> & vecRecogResultTarget);
 
-    QImage cvMatToQImage(const cv::Mat& mat);
-
     void drawErrorLocate(QImage& image, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult,const QColor& drawColor);
 
     void drawLine(QImage& image);

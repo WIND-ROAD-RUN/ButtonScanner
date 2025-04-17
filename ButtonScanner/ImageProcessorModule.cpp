@@ -3,6 +3,8 @@
 #include"ImageProcessorModule.h"
 #include"StatisticalInfoComputingThread.h"
 #include"imeoo_ModelEngineOO.h"
+#include"ButtonUtilty.h"
+
 #include <QtConcurrent> 
 
 void ImageProcessor::buildModelEngine(const QString& enginePath, const QString& namePath)
@@ -616,25 +618,6 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			globalStruct.imageSaveEngine->pushImage(cvMatToQImage(saveIamge), "OK", "Button");
 		}
 	}
-}
-
-QImage ImageProcessor::cvMatToQImage(const cv::Mat& mat)
-{
-	QImage result;
-	if (mat.type() == CV_8UC1) {
-		result = QImage(mat.data, mat.cols, mat.rows, mat.step[0], QImage::Format_Grayscale8);
-	}
-	else if (mat.type() == CV_8UC3) {
-		result = QImage(mat.data, mat.cols, mat.rows, mat.step[0], QImage::Format_RGB888).rgbSwapped();
-	}
-	else if (mat.type() == CV_8UC4) {
-		result = QImage(mat.data, mat.cols, mat.rows, mat.step[0], QImage::Format_RGBA8888);
-	}
-	else {
-		result = QImage();
-	}
-
-	return result;
 }
 
 void ImageProcessor::drawErrorLocate(QImage& image, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult, const QColor& drawColor)

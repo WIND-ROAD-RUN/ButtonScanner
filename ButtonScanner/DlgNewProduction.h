@@ -50,7 +50,7 @@ private:
 	void img_display_work3(const cv::Mat& frame);
 	void img_display_work4(const cv::Mat& frame);
 private slots:
-	void imgDisplay_work(cv::Mat frame, size_t index);
+	void img_display_work(cv::Mat frame, size_t index);
 
 private slots:
 	void pbtn_tab1_ok_clicked();
@@ -67,13 +67,13 @@ private slots:
 	void pbtn_tab3_pre_step_clicked();
 	void pbtn_tab3_nex_step_clicked();
 private slots:
-	void pbtn_tab4_openImgLocate_clicked();
+	void pbtn_tab4_open_img_locate_clicked();
 	void pbtn_tab4_exit_clicked();
-	void pbtn_tab4_preStep_clicked();
-	void pbtn_tab4_nexStep_clicked();
+	void pbtn_tab4_pre_step_clicked();
+	void pbtn_tab4_nex_step_clicked();
 private slots:
-	void pbtn_tab5_startTrain_clicked();
+	void pbtn_tab5_start_train_clicked();
 	void pbtn_tab5_exit_clicked();
-	void pbtn_tab5_preStep_clicked();
+	void pbtn_tab5_pre_step_clicked();
 	void pbtn_tab5_finish_clicked();
 };
