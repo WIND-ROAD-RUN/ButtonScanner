@@ -32,22 +32,22 @@ void DlgNewProduction::build_connect()
 		this, &DlgNewProduction::pbtn_tab1_ok_clicked);
 	//tab2
 	QObject::connect(ui->pbtn_tab2_checkColor, &QPushButton::clicked,
-		this, &DlgNewProduction::pbtn_tab2_checkColor_clicked);
+		this, &DlgNewProduction::pbtn_tab2_check_color_clicked);
 	QObject::connect(ui->pbtn_tab2_checkBladeShape, &QPushButton::clicked,
-		this, &DlgNewProduction::pbtn_tab2_checkBladeShape_clicked);
+		this, &DlgNewProduction::pbtn_tab2_check_blade_shape_clicked);
 	QObject::connect(ui->pbtn_tab2_preStep, &QPushButton::clicked,
-		this, &DlgNewProduction::pbtn_tab2_preStep_clicked);
+		this, &DlgNewProduction::pbtn_tab2_pre_step_clicked);
 	QObject::connect(ui->pbtn_tab2_exit, &QPushButton::clicked,
 		this, &DlgNewProduction::pbtn_tab2_exit_clicked);
 	//tab3
 	QObject::connect(ui->pbtn_tab3_openImgLocate, &QPushButton::clicked,
-		this, &DlgNewProduction::pbtn_tab3_openImgLocate_clicked);
+		this, &DlgNewProduction::pbtn_tab3_open_img_locate_clicked);
 	QObject::connect(ui->pbtn_tab3_exit, &QPushButton::clicked,
 		this, &DlgNewProduction::pbtn_tab3_exit_clicked);
 	QObject::connect(ui->pbtn_tab3_preStep, &QPushButton::clicked,
-		this, &DlgNewProduction::pbtn_tab3_preStep_clicked);
+		this, &DlgNewProduction::pbtn_tab3_pre_step_clicked);
 	QObject::connect(ui->pbtn_tab3_nexStep, &QPushButton::clicked,
-		this, &DlgNewProduction::pbtn_tab3_nexStep_clicked);
+		this, &DlgNewProduction::pbtn_tab3_nex_step_clicked);
 	//tab4
 	QObject::connect(ui->pbtn_tab4_openImgLocate, &QPushButton::clicked,
 		this, &DlgNewProduction::pbtn_tab4_openImgLocate_clicked);
@@ -77,7 +77,24 @@ void DlgNewProduction::destroy()
 {
 	_info.state = DlgNewProductionInfo::None;
 	ui->tabWidget->setCurrentIndex(0);
+	this->_info.currentTabIndex = 0;
 	this->hide();
+}
+
+void DlgNewProduction::img_display_work1(const cv::Mat& frame)
+{
+}
+
+void DlgNewProduction::img_display_work2(const cv::Mat& frame)
+{
+}
+
+void DlgNewProduction::img_display_work3(const cv::Mat& frame)
+{
+}
+
+void DlgNewProduction::img_display_work4(const cv::Mat& frame)
+{
 }
 
 void DlgNewProduction::pbtn_tab1_no_clicked()
@@ -90,27 +107,33 @@ void DlgNewProduction::pbtn_tab1_exit_clicked()
 	destroy();
 }
 
-void DlgNewProduction::pbtn_tab2_checkColor_clicked()
+void DlgNewProduction::pbtn_tab2_check_color_clicked()
 {
 	ui->rbtn_tab3_filterColor->setChecked(true);
 	ui->rbtn_tab4_filterColor->setChecked(true);
 	ui->rbtn_tab5_filterColor->setChecked(true);
 	this->_info.state = _info.state = DlgNewProductionInfo::CheckColor;
 	ui->tabWidget->setCurrentIndex(2);
+	this->_info.currentTabIndex = 2;
 }
 
-void DlgNewProduction::pbtn_tab2_checkBladeShape_clicked()
+void DlgNewProduction::pbtn_tab2_check_blade_shape_clicked()
 {
 	ui->rbtn_tab3_filterColor->setChecked(false);
 	ui->rbtn_tab4_filterColor->setChecked(false);
 	ui->rbtn_tab5_filterColor->setChecked(false);
+	ui->rbtn_tab3_checkBladeShape->setChecked(true);
+	ui->rbtn_tab4_checkBladeShape->setChecked(true);
+	ui->rbtn_tab5_checkBladeShape->setChecked(true);
 	this->_info.state = _info.state = DlgNewProductionInfo::CheckBladeShape;
 	ui->tabWidget->setCurrentIndex(2);
+	this->_info.currentTabIndex = 2;
 }
 
-void DlgNewProduction::pbtn_tab2_preStep_clicked()
+void DlgNewProduction::pbtn_tab2_pre_step_clicked()
 {
 	ui->tabWidget->setCurrentIndex(0);
+	this->_info.currentTabIndex = 0;
 }
 
 void DlgNewProduction::pbtn_tab2_exit_clicked()
@@ -119,7 +142,7 @@ void DlgNewProduction::pbtn_tab2_exit_clicked()
 
 }
 
-void DlgNewProduction::pbtn_tab3_openImgLocate_clicked()
+void DlgNewProduction::pbtn_tab3_open_img_locate_clicked()
 {
 }
 
@@ -128,18 +151,23 @@ void DlgNewProduction::pbtn_tab3_exit_clicked()
 	destroy();
 }
 
-void DlgNewProduction::pbtn_tab3_preStep_clicked()
+void DlgNewProduction::pbtn_tab3_pre_step_clicked()
 {
 	ui->tabWidget->setCurrentIndex(1);
+	this->_info.currentTabIndex = 1;
 	this->_info.state = _info.state = DlgNewProductionInfo::None;
 	ui->rbtn_tab3_filterColor->setChecked(false);
 	ui->rbtn_tab4_filterColor->setChecked(false);
 	ui->rbtn_tab5_filterColor->setChecked(false);
+	ui->rbtn_tab3_checkBladeShape->setChecked(true);
+	ui->rbtn_tab4_checkBladeShape->setChecked(true);
+	ui->rbtn_tab5_checkBladeShape->setChecked(true);
 }
 
-void DlgNewProduction::pbtn_tab3_nexStep_clicked()
+void DlgNewProduction::pbtn_tab3_nex_step_clicked()
 {
 	ui->tabWidget->setCurrentIndex(3);
+	this->_info.currentTabIndex = 3;
 }
 
 void DlgNewProduction::pbtn_tab4_openImgLocate_clicked()
@@ -154,11 +182,13 @@ void DlgNewProduction::pbtn_tab4_exit_clicked()
 void DlgNewProduction::pbtn_tab4_preStep_clicked()
 {
 	ui->tabWidget->setCurrentIndex(2);
+	this->_info.currentTabIndex = 2;
 }
 
 void DlgNewProduction::pbtn_tab4_nexStep_clicked()
 {
 	ui->tabWidget->setCurrentIndex(4);
+	this->_info.currentTabIndex = 4;
 }
 
 void DlgNewProduction::pbtn_tab5_startTrain_clicked()
@@ -173,6 +203,7 @@ void DlgNewProduction::pbtn_tab5_exit_clicked()
 void DlgNewProduction::pbtn_tab5_preStep_clicked()
 {
 	ui->tabWidget->setCurrentIndex(3);
+	this->_info.currentTabIndex = 3;
 }
 
 void DlgNewProduction::pbtn_tab5_finish_clicked()
@@ -180,7 +211,20 @@ void DlgNewProduction::pbtn_tab5_finish_clicked()
 	destroy();
 }
 
+void DlgNewProduction::imgDisplay_work(cv::Mat frame, size_t index)
+{
+	if (_info.isActivate==false)
+	{
+		return;
+	}
+	if ((_info.currentTabIndex!=3 )|| ( _info.currentTabIndex != 4))
+	{
+		return;
+	}
+}
+
 void DlgNewProduction::pbtn_tab1_ok_clicked()
 {
 	ui->tabWidget->setCurrentIndex(1);
+	this->_info.currentTabIndex = 1;
 }
