@@ -79,6 +79,7 @@ private slots:
 
 	void ProcessReadOut();
 
-public:
+public slots:
 	void onFrameCaptured(cv::Mat frame, size_t index);
+
 };
