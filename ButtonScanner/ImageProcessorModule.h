@@ -44,6 +44,9 @@ struct MatInfo {
 class ImageProcessor : public QThread {
     Q_OBJECT
 
+private:
+    bool _isbad{false};
+
 public:
     ImageProcessor(QQueue<MatInfo>& queue,
         QMutex& mutex,

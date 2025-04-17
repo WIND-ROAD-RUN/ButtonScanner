@@ -84,6 +84,7 @@ std::vector<rw::imeot::ProcessRectanglesResultOT> ImageProcessor::getDefectInBod
 
 cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult, std::vector<rw::imeot::ProcessRectanglesResultOT> & vecRecogResultTarget)
 {
+	_isbad = false;
 	auto& globalStruct = GlobalStructData::getInstance();
 
 	cv::Mat resultImage1;
@@ -103,7 +104,6 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 	if (globalStruct.isOpenRemoveFunc || (globalStruct.isDebugMode)) {
 		bool hasBody;
 		auto body = getBody(vecRecogResult, hasBody);
-		LOG() "Body" << "left_top:" << body.left_top.first << "," << body.left_top.second << "right_bottom:" << body.right_bottom.first << "," << body.right_bottom.second;
 		if (!hasBody)
 		{
 			if (globalStruct.isOpenRemoveFunc) {
@@ -140,6 +140,8 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 				}
 
 			}
+			_isbad = true;
+			_isbad = true;
 			if (globalStruct.isTakePictures) {
 				globalStruct.imageSaveEngine->pushImage(cvMatToQImage(frame.image), "NG", "Button");
 				globalStruct.imageSaveEngine->pushImage(cvMatToQImage(frame.image), "OK", "Button");
@@ -300,6 +302,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		if (waiJingIndexs.size() == 0)
 		{
 			isBad = true;
+			_isbad = true;
 			errorInfo.emplace_back("没找到外径");
 		}
 		else
@@ -313,6 +316,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			if (shangXiaPianChaAbs > checkConfig.outsideDiameterDeviation / pixEquivalent || zuoYouPianChaAbs > checkConfig.outsideDiameterDeviation / pixEquivalent)
 			{
 				isBad = true;
+				_isbad = true;
 
 				if (shangXiaPianChaAbs >= zuoYouPianChaAbs)
 				{
@@ -347,6 +351,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		if (holesCount != checkConfig.holesCountValue)
 		{
 			isBad = true;
+			_isbad = true;
 			errorInfo.emplace_back("只找到" + QString::number(holesCount) + "个孔");
 			
 
@@ -363,6 +368,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			if (score >= (checkConfig.edgeDamageSimilarity) / 100)
 			{
 				isBad = true;
+				_isbad = true;
 				errorInfo.emplace_back("破边 " + QString::number(score));
 				for (int i = 0;i < daPoBianIndexs.size();i++)
 				{
@@ -380,6 +386,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			if (score >= 0.3)
 			{
 				isBad = true;
+				_isbad = true;
 				errorInfo.emplace_back("气孔 " + QString::number(score));
 				for (int i = 0;i < qiKonIndexs.size();i++)
 				{
@@ -398,6 +405,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			if (score >= 0.1)
 			{
 				isBad = true;
+				_isbad = true;
 				errorInfo.emplace_back("堵眼 " + QString::number(score));
 				for (int i = 0;i < duYanIndexs.size();i++)
 				{
@@ -416,6 +424,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			if (score >= 0.1)
 			{
 				isBad = true;
+				_isbad = true;
 				errorInfo.emplace_back("磨石 " + QString::number(score));
 				for (int i = 0;i < moShiIndexs.size();i++)
 				{
@@ -434,6 +443,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			if (score >= 0.1)
 			{
 				isBad = true;
+				_isbad = true;
 				errorInfo.emplace_back("料头 " + QString::number(score));
 				for (int i = 0;i < liaoTouIndexs.size();i++)
 				{
@@ -452,6 +462,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			if (score >= 0.5)
 			{
 				isBad = true;
+				_isbad = true;
 				errorInfo.emplace_back("油漆 " + QString::number(score));
 				for (int i = 0;i < youQiIndexs.size();i++)
 				{
@@ -473,6 +484,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			if (score >= checkConfig.crackSimilarity / 100)
 			{
 				isBad = true;
+				_isbad = true;
 				errorInfo.emplace_back("裂痕 " + QString::number(score));
 				for (int i = 0;i < lieHenIndexs.size();i++)
 				{
@@ -553,6 +565,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			if (abs(pianCha) > checkConfig.holeCenterDistanceSimilarity / pixEquivalent)
 			{
 				isBad = true;
+				_isbad = true;
 
 				errorInfo.emplace_back("孔心距 " + QString::number(pianCha * pixEquivalent));
 			}
@@ -863,7 +876,7 @@ void ImageProcessor::run()
 
 		drawLine(image);
 
-		if (GlobalStructData::getInstance().isTakePictures) {
+		if (GlobalStructData::getInstance().isTakePictures&&_isbad) {
 			GlobalStructData::getInstance().imageSaveEngine->pushImage(image, "Mark", "Button");
 		}
 
