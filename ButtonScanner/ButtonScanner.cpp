@@ -1045,15 +1045,23 @@ void ButtonScanner::pbtn_newProduction_clicked()
 
 void ButtonScanner::pbtn_beltSpeed_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_beltSpeed, 2);
-	numKeyBoard->exec();
+	auto& globalStruct = GlobalStructData::getInstance();
+	if (globalStruct.isOpenRemoveFunc)
+	{
+		QMessageBox::warning(this, "错误", "请先停止生产线");
+	}
+	else {
 
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.mainWindowConfig.beltSpeed = ui->pbtn_beltSpeed->text().toDouble();
-	GlobalStructData.dlgProduceLineSetConfig.motorSpeed = ui->pbtn_beltSpeed->text().toDouble();
+		auto numKeyBoard = new NumKeyBord(this, ui->pbtn_beltSpeed, 2);
+		numKeyBoard->exec();
 
-	delete numKeyBoard;
-	dlgProduceLineSet->updateBeltSpeed();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		GlobalStructData.mainWindowConfig.beltSpeed = ui->pbtn_beltSpeed->text().toDouble();
+		GlobalStructData.dlgProduceLineSetConfig.motorSpeed = ui->pbtn_beltSpeed->text().toDouble();
+
+		delete numKeyBoard;
+		dlgProduceLineSet->updateBeltSpeed();
+	}
 }
 
 void ButtonScanner::pbtn_score_clicked()

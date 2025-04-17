@@ -358,15 +358,25 @@ void DlgProduceLineSet::pbtn_maxBrightness_clicked()
 
 void DlgProduceLineSet::pbtn_motorSpeed_clicked()
 {
-    auto numKeyBoard = new NumKeyBord(this, ui->pbtn_motorSpeed, 2);
-    numKeyBoard->exec();
+    auto& globalStrut = GlobalStructData::getInstance();
+	if (globalStrut.isOpenRemoveFunc)
+	{
+		QMessageBox::warning(this, "错误", "请先停止生产线");
+		return;
+	}
+    else
+    {
+        auto numKeyBoard = new NumKeyBord(this, ui->pbtn_motorSpeed, 2);
+        numKeyBoard->exec();
 
-    auto& GlobalStructData = GlobalStructData::getInstance();
-    GlobalStructData.dlgProduceLineSetConfig.motorSpeed = ui->pbtn_motorSpeed->text().toDouble();
+        auto& GlobalStructData = GlobalStructData::getInstance();
+        GlobalStructData.dlgProduceLineSetConfig.motorSpeed = ui->pbtn_motorSpeed->text().toDouble();
 
-    delete numKeyBoard;
+        delete numKeyBoard;
 
-    get_blowTime();
+        get_blowTime();
+
+    }
 }
 
 void DlgProduceLineSet::pbtn_beltReductionRatio_clicked()
