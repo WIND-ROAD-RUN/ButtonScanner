@@ -20,3 +20,14 @@ QImage cvMatToQImage(const cv::Mat& mat)
 
 	return result;
 }
+
+QPixmap cvMatToQPixmap(const cv::Mat& mat)
+{
+	QImage image = cvMatToQImage(mat);
+	if (image.isNull()) {
+		return QPixmap();
+	}
+	else {
+		return QPixmap::fromImage(image);
+	}
+}

@@ -44,14 +44,14 @@ private:
 
 private:
 	DlgNewProductionInfo _info;
-private:
-	void img_display_work1(const cv::Mat & frame);
-	void img_display_work2(const cv::Mat& frame);
-	void img_display_work3(const cv::Mat& frame);
-	void img_display_work4(const cv::Mat& frame);
+
 private slots:
 	void img_display_work(cv::Mat frame, size_t index);
-
+private:
+	void img_display_work1(const QPixmap& pixmap);
+	void img_display_work2(const QPixmap& pixmap);
+	void img_display_work3(const QPixmap& pixmap);
+	void img_display_work4(const QPixmap& pixmap);
 private slots:
 	void pbtn_tab1_ok_clicked();
 	void pbtn_tab1_no_clicked();

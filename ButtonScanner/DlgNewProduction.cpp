@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "DlgNewProduction.h"
 
+#include"ButtonUtilty.h"
+
 DlgNewProduction::DlgNewProduction(QWidget *parent)
 	: QDialog(parent)
 	, ui(new Ui::DlgNewProductionClass())
@@ -81,28 +83,68 @@ void DlgNewProduction::destroy()
 	this->hide();
 }
 
-void DlgNewProduction::img_display_work1(const cv::Mat& frame)
+void DlgNewProduction::img_display_work1(const QPixmap& pixmap)
 {
-	if (frame.empty())
+	if (pixmap.isNull())
 	{
 		return;
 	}
 	if (this->_info.currentTabIndex==2)
 	{
-
+		ui->label_tab3_imgDisplay1->setPixmap(pixmap.scaled(ui->label_tab3_imgDisplay1->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+	}
+	else if (this->_info.currentTabIndex == 3)
+	{
+		ui->label_tab4_imgDisplay1->setPixmap(pixmap.scaled(ui->label_tab4_imgDisplay1->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 	}
 }
 
-void DlgNewProduction::img_display_work2(const cv::Mat& frame)
+void DlgNewProduction::img_display_work2(const QPixmap& pixmap)
 {
+	if (pixmap.isNull())
+	{
+		return;
+	}
+	if (this->_info.currentTabIndex == 2)
+	{
+		ui->label_tab3_imgDisplay2->setPixmap(pixmap.scaled(ui->label_tab3_imgDisplay2->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+	}
+	else if (this->_info.currentTabIndex == 3)
+	{
+		ui->label_tab4_imgDisplay2->setPixmap(pixmap.scaled(ui->label_tab4_imgDisplay2->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+	}
 }
 
-void DlgNewProduction::img_display_work3(const cv::Mat& frame)
+void DlgNewProduction::img_display_work3(const QPixmap& pixmap)
 {
+	if (pixmap.isNull())
+	{
+		return;
+	}
+	if (this->_info.currentTabIndex == 2)
+	{
+		ui->label_tab3_imgDisplay3->setPixmap(pixmap.scaled(ui->label_tab3_imgDisplay3->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+	}
+	else if (this->_info.currentTabIndex == 3)
+	{
+		ui->label_tab4_imgDisplay3->setPixmap(pixmap.scaled(ui->label_tab4_imgDisplay3->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+	}
 }
 
-void DlgNewProduction::img_display_work4(const cv::Mat& frame)
+void DlgNewProduction::img_display_work4(const QPixmap& pixmap)
 {
+	if (pixmap.isNull())
+	{
+		return;
+	}
+	if (this->_info.currentTabIndex == 2)
+	{
+		ui->label_tab3_imgDisplay4->setPixmap(pixmap.scaled(ui->label_tab3_imgDisplay4->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+	}
+	else if (this->_info.currentTabIndex == 3)
+	{
+		ui->label_tab4_imgDisplay4->setPixmap(pixmap.scaled(ui->label_tab4_imgDisplay4->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+	}
 }
 
 void DlgNewProduction::pbtn_tab1_no_clicked()
@@ -229,20 +271,20 @@ void DlgNewProduction::img_display_work(cv::Mat frame, size_t index)
 	{
 		return;
 	}
-
+	auto pixmap = cvMatToQPixmap(frame);
 	switch (index)
 	{
 	case 1:
-		img_display_work1(frame);
+		img_display_work1(pixmap);
 		break;
 	case 2:
-		img_display_work2(frame);
+		img_display_work2(pixmap);
 		break;
 	case 3:
-		img_display_work3(frame);
+		img_display_work3(pixmap);
 		break;
 	case 4:
-		img_display_work4(frame);
+		img_display_work4(pixmap);
 		break;
 	default:
 		break;
