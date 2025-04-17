@@ -749,7 +749,7 @@ QRadioButton::indicator:pressed {
 }</string>
              </property>
              <property name="text">
-              <string>生产速度</string>
+              <string>剔除功能</string>
              </property>
             </widget>
            </item>

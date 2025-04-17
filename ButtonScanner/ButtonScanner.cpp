@@ -1036,11 +1036,19 @@ void ButtonScanner::pbtn_set_clicked()
 
 void ButtonScanner::pbtn_newProduction_clicked()
 {
-	delete this->dlgAiLearn;
-	this->dlgAiLearn = new DlgAiLearn(this);
-	//this->dlgAiLearn->ToStep1();
-	dlgAiLearn->setFixedSize(this->width(), this->height());
-	dlgAiLearn->exec();
+	auto& globalStrut = GlobalStructData::getInstance();
+	if (globalStrut.isOpenRemoveFunc)
+	{
+		QMessageBox::warning(this, "错误", "请先停止生产线");
+		return;
+	}
+	if (dlgAiLearn != nullptr) {
+		delete this->dlgAiLearn;
+		this->dlgAiLearn = new DlgAiLearn(this);
+		//this->dlgAiLearn->ToStep1();
+		dlgAiLearn->setFixedSize(this->width(), this->height());
+		dlgAiLearn->exec();
+	}
 }
 
 void ButtonScanner::pbtn_beltSpeed_clicked()
