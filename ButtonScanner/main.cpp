@@ -5,6 +5,7 @@ int main(int argc, char* argv[])
 {
     QApplication a(argc, argv);
     ButtonScanner w;
-    w.show();
+    w.showFullScreen();
+    w.setFixedSize(w.size());
     return a.exec();
 }

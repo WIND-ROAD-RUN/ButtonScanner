@@ -1011,7 +1011,7 @@ void ButtonScanner::updateStatisticalInfoUI()
 	mainWindowConfig.scrappingRate = removeRate;
 	ui->label_produceTotalValue->setText(QString::number(produceCount));
 	ui->label_wasteProductsValue->setText(QString::number(wasteCount));
-	ui->label_productionYieldValue->setText(QString::number(productionYield) + QString(" %"));
+	ui->label_productionYieldValue->setText(QString::number(productionYield, 'f', 2) + QString(" %"));
 	ui->label_removeRate->setText(QString::number(removeRate) + QString(" /min"));
 }
 
