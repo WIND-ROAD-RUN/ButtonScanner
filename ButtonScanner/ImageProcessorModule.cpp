@@ -369,7 +369,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			{
 				isBad = true;
 				_isbad = true;
-				errorInfo.emplace_back("破边 " + QString::number(score));
+				errorInfo.emplace_back("破边 " + QString::number(static_cast<int>(score * 100)));
 				for (int i = 0;i < daPoBianIndexs.size();i++)
 				{
 					vecRecogResultTarget.emplace_back(processRectanglesResult[daPoBianIndexs[i]]);
@@ -387,7 +387,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			{
 				isBad = true;
 				_isbad = true;
-				errorInfo.emplace_back("气孔 " + QString::number(score));
+				errorInfo.emplace_back("气孔 " + QString::number(static_cast<int>(score * 100)));
 				for (int i = 0;i < qiKonIndexs.size();i++)
 				{
 					vecRecogResultTarget.emplace_back(processRectanglesResult[qiKonIndexs[i]]);
@@ -406,7 +406,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			{
 				isBad = true;
 				_isbad = true;
-				errorInfo.emplace_back("堵眼 " + QString::number(score));
+				errorInfo.emplace_back("堵眼 " + QString::number(static_cast<int>(score * 100)));
 				for (int i = 0;i < duYanIndexs.size();i++)
 				{
 					vecRecogResultTarget.emplace_back(processRectanglesResult[duYanIndexs[i]]);
@@ -425,7 +425,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			{
 				isBad = true;
 				_isbad = true;
-				errorInfo.emplace_back("磨石 " + QString::number(score));
+				errorInfo.emplace_back("磨石 " + QString::number(static_cast<int>(score * 100)));
 				for (int i = 0;i < moShiIndexs.size();i++)
 				{
 					vecRecogResultTarget.emplace_back(processRectanglesResult[moShiIndexs[i]]);
@@ -444,7 +444,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			{
 				isBad = true;
 				_isbad = true;
-				errorInfo.emplace_back("料头 " + QString::number(score));
+				errorInfo.emplace_back("料头 " + QString::number(static_cast<int>(score * 100)));
 				for (int i = 0;i < liaoTouIndexs.size();i++)
 				{
 					vecRecogResultTarget.emplace_back(processRectanglesResult[liaoTouIndexs[i]]);
@@ -463,7 +463,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			{
 				isBad = true;
 				_isbad = true;
-				errorInfo.emplace_back("油漆 " + QString::number(score));
+				errorInfo.emplace_back("油漆 " + QString::number(static_cast<int>(score * 100)));
 				for (int i = 0;i < youQiIndexs.size();i++)
 				{
 					vecRecogResultTarget.emplace_back(processRectanglesResult[youQiIndexs[i]]);
@@ -485,7 +485,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			{
 				isBad = true;
 				_isbad = true;
-				errorInfo.emplace_back("裂痕 " + QString::number(score));
+				errorInfo.emplace_back("裂痕 " + QString::number(static_cast<int>(score * 100)));
 				for (int i = 0;i < lieHenIndexs.size();i++)
 				{
 					vecRecogResultTarget.emplace_back(processRectanglesResult[lieHenIndexs[i]]);
