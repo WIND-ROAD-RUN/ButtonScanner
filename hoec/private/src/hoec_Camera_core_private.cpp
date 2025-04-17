@@ -81,6 +81,21 @@ namespace rw {
         {
             int width = frameInfo.nWidth;
             int height = frameInfo.nHeight;
+
+            if (frameInfo.enPixelType== PixelType_Gvsp_BayerGB8)
+            {
+                cv::Mat bayerImage(height, width, CV_8UC1, pData);
+
+                // Step 2: 创建一个用于存储 RGB 图像的 cv::Mat
+                cv::Mat rgbImage;
+
+                // Step 3: 使用 OpenCV 的 cvtColor 函数将 Bayer GB 8 转换为 RGB
+                cv::cvtColor(bayerImage, rgbImage, cv::COLOR_BayerGB2RGB);
+
+                return rgbImage;
+
+            }
+
             int channels = 1; // 默认单通道
 
             // 根据像素格式设置通道数
