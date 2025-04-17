@@ -6,6 +6,7 @@
 #include"DlgProduceLineSet.h"
 #include"DlgProductSet.h"
 #include"DlgExposureTimeSet.h"
+#include"DlgNewProduction.h"
 #include"rqw_LabelClickable.h"
 
 #include"opencv2/opencv.hpp"
@@ -32,6 +33,7 @@ private:
     DlgProduceLineSet* dlgProduceLineSet = nullptr;
     DlgProductSet* dlgProductSet = nullptr;
     DlgExposureTimeSet* dlgExposureTimeSet = nullptr;
+	DlgNewProduction* dlgNewProduction = nullptr;
 public:
 	DlgAiLearn* dlgAiLearn = nullptr;
 public:
@@ -67,6 +69,7 @@ private:
     void build_dlgProductSet();
     void build_dlgExposureTimeSet();
 	void build_dlgAiLearn();
+    void build_dlgNewProduction();
 
     void stop_all_axis();
 

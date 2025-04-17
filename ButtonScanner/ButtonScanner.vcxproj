@@ -149,6 +149,7 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     <QtMoc Include="StatisticalInfoComputingThread.h" />
     <QtMoc Include="MonitorCameraAndCardStateThread.h" />
     <QtMoc Include="LoadingDialog.h" />
+    <QtMoc Include="DlgNewProduction.h" />
     <ClInclude Include="PathGlobalStruct.h" />
     <ClInclude Include="ThreadSafePriorityQueue.h" />
     <QtRcc Include="ButtonScanner.qrc" />
@@ -158,6 +159,7 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     <ClCompile Include="ButtonScanner.cpp" />
     <ClCompile Include="DlgExposureTimeSet.cpp" />
     <ClCompile Include="DlgAiLearn.cpp" />
+    <ClCompile Include="DlgNewProduction.cpp" />
     <ClCompile Include="DlgProduceLineSet.cpp" />
     <ClCompile Include="DlgProductSet.cpp" />
     <ClCompile Include="GlobalStruct.cpp" />
@@ -182,6 +184,7 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     </ClCompile>
     <QtUic Include="DlgExposureTimeSet.ui" />
     <QtUic Include="DlgAiLearn.ui" />
+    <QtUic Include="DlgNewProduction.ui" />
     <QtUic Include="DlgProduceLineSet.ui" />
     <QtUic Include="DlgProductSet.ui" />
     <QtUic Include="LoadingDialog.ui" />

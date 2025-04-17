@@ -242,6 +242,7 @@ void ButtonScanner::build_ui()
 	build_dlgProduceLineSet();
 	build_dlgProductSet();
 	build_dlgExposureTimeSet();
+	build_dlgNewProduction();
 	this->labelClickable_title = new rw::rqw::ClickableLabel(this);
 	labelClickable_title->setText(ui->label_title->text());
 	labelClickable_title->setStyleSheet(ui->label_title->styleSheet());
@@ -299,6 +300,11 @@ void ButtonScanner::stop_all_axis()
 void ButtonScanner::build_dlgAiLearn()
 {
 	this->dlgAiLearn = new DlgAiLearn(this);
+}
+
+void ButtonScanner::build_dlgNewProduction()
+{
+	this->dlgNewProduction = new DlgNewProduction(this);
 }
 
 void ButtonScanner::build_connect()
@@ -1042,12 +1048,8 @@ void ButtonScanner::pbtn_newProduction_clicked()
 		QMessageBox::warning(this, "错误", "请先停止生产线");
 		return;
 	}
-	if (dlgAiLearn != nullptr) {
-		delete this->dlgAiLearn;
-		this->dlgAiLearn = new DlgAiLearn(this);
-		//this->dlgAiLearn->ToStep1();
-		dlgAiLearn->setFixedSize(this->width(), this->height());
-		dlgAiLearn->exec();
+	if (dlgNewProduction != nullptr) {
+		dlgNewProduction->exec();
 	}
 }
 

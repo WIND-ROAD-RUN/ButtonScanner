@@ -109,6 +109,9 @@
     <ClCompile Include="PathGlobalStruct.cpp">
       <Filter>Source Files\data</Filter>
     </ClCompile>
+    <ClCompile Include="DlgNewProduction.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ButtonScanner.h">
@@ -144,6 +147,9 @@
     <QtMoc Include="GlobalStruct.h">
       <Filter>Header Files\data</Filter>
     </QtMoc>
+    <QtMoc Include="DlgNewProduction.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="DlgProductSet.ui">
@@ -159,6 +165,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="DlgAiLearn.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DlgNewProduction.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
