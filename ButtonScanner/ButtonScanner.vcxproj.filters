@@ -116,6 +116,9 @@
       <Filter>Source Files\func</Filter>
     </ClCompile>
     <ClCompile Include="ModelStorageManager.cpp">
+      <Filter>Header Files\func</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelStorageManager.cpp">
       <Filter>Source Files\func</Filter>
     </ClCompile>
   </ItemGroup>
@@ -155,6 +158,9 @@
     </QtMoc>
     <QtMoc Include="DlgNewProduction.h">
       <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="ModelStorageManager.h">
+      <Filter>Header Files\func</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -204,9 +210,6 @@
       <Filter>Header Files\data</Filter>
     </ClInclude>
     <ClInclude Include="ButtonUtilty.h">
-      <Filter>Header Files\func</Filter>
-    </ClInclude>
-    <ClInclude Include="ModelStorageManager.h">
       <Filter>Header Files\func</Filter>
     </ClInclude>
   </ItemGroup>

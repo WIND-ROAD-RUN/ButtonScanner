@@ -152,7 +152,7 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     <QtMoc Include="MonitorCameraAndCardStateThread.h" />
     <QtMoc Include="LoadingDialog.h" />
     <QtMoc Include="DlgNewProduction.h" />
-    <ClInclude Include="ModelStorageManager.h" />
+    <QtMoc Include="ModelStorageManager.h" />
     <ClInclude Include="PathGlobalStruct.h" />
     <ClInclude Include="ThreadSafePriorityQueue.h" />
     <QtRcc Include="ButtonScanner.qrc" />

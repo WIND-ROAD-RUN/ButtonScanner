@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Ui::DlgExposureTimeSetClass" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>x64\Release\qt\uic\ui_DlgExposureTimeSet.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::LoadingDialogClass" Collapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>x64\Release\qt\uic\ui_LoadingDialog.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::DlgNewProductionClass" Collapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>x64\Release\qt\uic\ui_DlgNewProduction.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::ButtonScannerClass" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>x64\Release\qt\uic\ui_ButtonScanner.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::DlgProductSetClass" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>x64\Release\qt\uic\ui_DlgProductSet.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::DlgProduceLineSetClass" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>x64\Release\qt\uic\ui_DlgProduceLineSet.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::DlgAiLearnClass" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>x64\Release\qt\uic\ui_DlgAiLearn.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DlgExposureTimeSet" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gIAAAAAJAAAAEAAAAAAGAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DlgExposureTimeSet.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LoadingDialog" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAIEBAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LoadingDialog.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DlgNewProduction" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RIAAABgBAABAEAAAAAAIAEAIIAAEEAAAEAAgAAAACAA=</HashCode>
+      <FileName>DlgNewProduction.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ButtonScanner" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QKiAQEAZBQRDEOgEAKAhIAFYgEUYcGKASRqAQAAwCgA=</HashCode>
+      <FileName>ButtonScanner.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DlgProductSet" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AYVIABwBITAQEAQBoJQAAACkAgABgCACACEAAAEgwAQ=</HashCode>
+      <FileName>DlgProductSet.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DlgProduceLineSet" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIACRAgBAQABEAAHAAAIQEggAMCLAgADAABAAFCAEAE=</HashCode>
+      <FileName>DlgProduceLineSet.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NumKeyBord" Collapsed="true">
+    <Position X="2.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAEAAEAAAAAAAIAAAAABAAAAEAAAgAAAAAg=</HashCode>
+      <FileName>NumKeyBord.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DlgAiLearn" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BIAAAEABACFAEQYCDwBoIEpAAQgohgEAAgCAACCAgJg=</HashCode>
+      <FileName>DlgAiLearn.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StatisticalInfoComputingThread" Collapsed="true">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAQAAAAAAAAAAAAAAAAgEEAAAAAABAAAAAAA=</HashCode>
+      <FileName>StatisticalInfoComputingThread.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonitorCameraAndCardStateThread" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>DAAAggcIBQAAAAAAAAABAQAAACoREAAAAAAAAAAQAAA=</HashCode>
+      <FileName>MonitorCameraAndCardStateThread.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImageProcessor" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAARAAAAEEQCAAIAAggAQAAMAgAIQAAAAAM=</HashCode>
+      <FileName>ImageProcessorModule.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImageProcessingModule" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAQAAAIAEAAGQAAAAAgAAIAgAAAAAIABAAA=</HashCode>
+      <FileName>ImageProcessorModule.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GlobalStructThread" Collapsed="true">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAARAAAAAAQAAAAAAAAAgAAAQAAAAgCAAAAAA=</HashCode>
+      <FileName>GlobalStruct.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GlobalStructData" Collapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BCAACSCggAMAcAAQQAFJIhyiFKIBAGTPI0RgAMOBWgI=</HashCode>
+      <FileName>GlobalStruct.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="rw::rqw::CameraPassiveThread" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABECgQCAAAACAAQBAAgAACwIAIhAAAAAAAiFAAAgQA=</HashCode>
+      <FileName>D:\Workplace\rep\ButtonScanner\rqw\include\rqw_CameraObjectThread.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="zwy::scc::Motion" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAJACAAIAAAIAMQICAAEAQAAgBgEAAAAIAAGAMQAAA=</HashCode>
+      <FileName>D:\Workplace\rep\ButtonScanner\scc\include\scc_motion.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="DlgNewProductionInfo" Collapsed="true">
+    <Position X="2.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAIAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>DlgNewProduction.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="AiLearnTools" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ECgAAAAIAAAAAACAAAAIIAAAAAACEAQAAAAQAAAAEBA=</HashCode>
+      <FileName>AiLearnTools.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ImagePainter" Collapsed="true">
+    <Position X="4" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAEAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>ImageProcessorModule.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="MatInfo" Collapsed="true">
+    <Position X="5.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACEAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>ImageProcessorModule.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="PathGlobalStruct" Collapsed="true">
+    <Position X="7.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAADAAIACAgABAQAAAAAAABAMAAAAAAAAAAAAA=</HashCode>
+      <FileName>PathGlobalStruct.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>
