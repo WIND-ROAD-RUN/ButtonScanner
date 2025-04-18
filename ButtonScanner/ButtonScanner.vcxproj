@@ -152,6 +152,7 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     <QtMoc Include="MonitorCameraAndCardStateThread.h" />
     <QtMoc Include="LoadingDialog.h" />
     <QtMoc Include="DlgNewProduction.h" />
+    <ClInclude Include="ModelStorageManager.h" />
     <ClInclude Include="PathGlobalStruct.h" />
     <ClInclude Include="ThreadSafePriorityQueue.h" />
     <QtRcc Include="ButtonScanner.qrc" />
@@ -176,6 +177,7 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     <QtMoc Include="DlgAiLearn.h" />
     <ClInclude Include="AiLearnTools.h" />
     <ClInclude Include="stdafx.h" />
+    <ClCompile Include="ModelStorageManager.cpp" />
     <ClCompile Include="MonitorCameraAndCardStateThread.cpp" />
     <ClCompile Include="NumKeyBord.cpp" />
     <ClCompile Include="PathGlobalStruct.cpp" />
