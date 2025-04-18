@@ -48,9 +48,10 @@ namespace rw
 			bool operator!=(const AiModelConfigIndex& account) const;
 		public:
 			std::vector<ConfigIndexItem> modelIndexs;
+		public:
+			void pushConfig(const ConfigIndexItem& item);//仅id不同才会push
+			void deleteConfig(const ConfigIndexItem& item);//仅id不同才会删除配置
 		};
-
-
 
 
 	}
