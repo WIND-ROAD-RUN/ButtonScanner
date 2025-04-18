@@ -101,6 +101,11 @@
   <ItemGroup>
     <QtMoc Include="ImageSaveEngine.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\cdm\cdm.vcxproj">
+      <Project>{6f547121-d09c-4daa-896f-e71aae7deae4}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
     <Import Project="$(QtMsBuild)\qt.targets" />

@@ -46,6 +46,8 @@ namespace rw
 		public:
 			std::string rootPath{};//模型数据相关根路径
 			std::string name{};//模型名称
+		public:
+			long id{-1};//模型ID
 
 		};
 

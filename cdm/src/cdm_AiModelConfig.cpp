@@ -89,6 +89,12 @@ namespace rw
 				throw std::runtime_error("$variable$name is not found");
 			}
 			name = nameItem->getValueAsString();
+
+			auto idItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$id$"));
+			if (!idItem) {
+				throw std::runtime_error("$variable$id is not found");
+			}
+			id = idItem->getValueAsLong();
 		}
 
 		AiModelConfig::AiModelConfig(const AiModelConfig& buttonScannerMainWindow)
@@ -100,6 +106,9 @@ namespace rw
 			sideLight = buttonScannerMainWindow.sideLight;
 			exposureTime = buttonScannerMainWindow.exposureTime;
 			gain = buttonScannerMainWindow.gain;
+			rootPath = buttonScannerMainWindow.rootPath;
+			name = buttonScannerMainWindow.name;
+			id = buttonScannerMainWindow.id;
 		}
 
 		AiModelConfig& AiModelConfig::operator=(const AiModelConfig& buttonScannerMainWindow)
@@ -112,6 +121,9 @@ namespace rw
 				sideLight = buttonScannerMainWindow.sideLight;
 				exposureTime = buttonScannerMainWindow.exposureTime;
 				gain = buttonScannerMainWindow.gain;
+				rootPath = buttonScannerMainWindow.rootPath;
+				name = buttonScannerMainWindow.name;
+				id = buttonScannerMainWindow.id;
 			}
 			return *this;
 		}
@@ -166,10 +178,34 @@ namespace rw
 			nameItem->setValueFromString(name);
 			assembly.addItem(nameItem);
 
+			auto idItem = std::make_shared<oso::ObjectStoreItem>();
+			idItem->setName("$variable$id$");
+			idItem->setValueFromLong(id);
+			assembly.addItem(idItem);
+
 			return assembly;
 
 
 
+		}
+
+		bool AiModelConfig::operator==(const AiModelConfig& account) const
+		{
+			return modelType == account.modelType &&
+				date == account.date &&
+				upLight == account.upLight &&
+				downLight == account.downLight &&
+				sideLight == account.sideLight &&
+				exposureTime == account.exposureTime &&
+				gain == account.gain &&
+				rootPath == account.rootPath &&
+				name == account.name &&
+				id == account.id;
+		}
+
+		bool AiModelConfig::operator!=(const AiModelConfig& account) const
+		{
+			return !(*this == account);
 		}
 	}
 }
