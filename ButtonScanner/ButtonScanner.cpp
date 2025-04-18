@@ -393,9 +393,7 @@ void ButtonScanner::read_config_mainWindowConfig()
 {
 	auto& globalStruct = GlobalStructData::getInstance();
 
-	QString mainWindowFilePath = R"(config/mainWindowConfig.xml)";
-	QDir dir;
-	QString mainWindowFilePathFull = dir.absoluteFilePath(mainWindowFilePath);
+	QString mainWindowFilePathFull = globalPath.configRootPath+"mainWindowConfig.xml";
 	QFileInfo mainWindowFile(mainWindowFilePathFull);
 
 	globalStruct.mainWindowFilePath = mainWindowFilePathFull;
@@ -424,10 +422,8 @@ void ButtonScanner::read_config_mainWindowConfig()
 void ButtonScanner::read_config_produceLineConfig()
 {
 	auto& globalStruct = GlobalStructData::getInstance();
-	QDir dir;
 
-	QString dlgProduceLineSetFilePath = R"(config/dlgProduceLineSetConfig.xml)";
-	QString dlgProduceLineSetFilePathFull = dir.absoluteFilePath(dlgProduceLineSetFilePath);
+	QString dlgProduceLineSetFilePathFull = globalPath.configRootPath + "dlgProduceLineSetConfig.xml";
 	QFileInfo dlgProduceLineSetFile(dlgProduceLineSetFilePathFull);
 
 	globalStruct.dlgProduceLineSetFilePath = dlgProduceLineSetFilePathFull;
@@ -456,10 +452,8 @@ void ButtonScanner::read_config_produceLineConfig()
 void ButtonScanner::read_config_productSetConfig()
 {
 	auto& globalStruct = GlobalStructData::getInstance();
-	QDir dir;
 
-	QString dlgProductSetFilePath = R"(config/dlgProdutSetConfig.xml)";
-	QString dlgProductSetFilePathFull = dir.absoluteFilePath(dlgProductSetFilePath);
+	QString dlgProductSetFilePathFull = globalPath.configRootPath + "dlgProdutSetConfig.xml";
 	QFileInfo dlgProductSetFile(dlgProductSetFilePathFull);
 
 	globalStruct.dlgProductSetFilePath = dlgProductSetFilePathFull;
@@ -488,10 +482,8 @@ void ButtonScanner::read_config_productSetConfig()
 void ButtonScanner::read_config_exposureTimeSetConfig()
 {
 	auto& globalStruct = GlobalStructData::getInstance();
-	QDir dir;
 
-	QString exposureTimeSetConfigFilePath = R"(config/exposureTimeSetConfig.xml)";
-	QString exposureTimeSetConfigFilePathFull = dir.absoluteFilePath(exposureTimeSetConfigFilePath);
+	QString exposureTimeSetConfigFilePathFull = globalPath.configRootPath+"exposureTimeSetConfig.xml";
 	QFileInfo dlgProductSetFile(exposureTimeSetConfigFilePathFull);
 
 	globalStruct.dlgExposureTimeSetFilePath = exposureTimeSetConfigFilePathFull;
@@ -520,7 +512,7 @@ void ButtonScanner::read_config_exposureTimeSetConfig()
 void ButtonScanner::build_imageSaveEngine()
 {
 	QDir dir;
-	QString imageSavePath = R"(SavedImages/)";
+	QString imageSavePath = globalPath.imageSaveRootPath;
 	//清理旧的数据
 
 	//获取当前日期并设置保存路径
@@ -536,7 +528,7 @@ void ButtonScanner::build_imageSaveEngine()
 
 void ButtonScanner::clear_olderSavedImage()
 {
-	QString imageSavePath = R"(SavedImages/)";
+	QString imageSavePath = globalPath.imageSaveRootPath;
 	QVector<QString> sortedFolders;
 
 	// 打开指定路径
@@ -610,15 +602,11 @@ void ButtonScanner::build_imageProcessorModule()
 {
 	auto& globalStruct = GlobalStructData::getInstance();
 
-	//
-	QString enginePath = R"(model/model.engine)";
-	QString namePath = R"(model/index.names)";
-	QString onnxEnginePath = R"(model/modelOnnx.onnx)";
 	QDir dir;
 
-	QString enginePathFull = dir.absoluteFilePath(enginePath);
-	QString namePathFull = dir.absoluteFilePath(namePath);
-	QString onnxEnginePathFull = dir.absoluteFilePath(onnxEnginePath);
+	QString enginePathFull = globalPath.modelRootPath + globalPath.engineFileName;
+	QString namePathFull = globalPath.modelRootPath + globalPath.nameFileName;
+	QString onnxEnginePathFull = globalPath.modelRootPath + globalPath.onnxFileName;
 
 	QFileInfo engineFile(enginePathFull);
 	QFileInfo nameFile(namePathFull);
