@@ -315,7 +315,7 @@ void ButtonScanner::build_modelStorageManager()
 {
 	auto& globalStruct = GlobalStructData::getInstance();
 	globalStruct.modelStorageManager = std::make_unique<ModelStorageManager>(this);
-	globalStruct.modelStorageManager->setRootPath(globalPath.moduleStorageManagerRootPath);
+	globalStruct.modelStorageManager->setRootPath(globalPath.modelStorageManagerRootPath);
 }
 
 void ButtonScanner::destory_modelStorageManager()

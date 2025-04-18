@@ -11,13 +11,16 @@ QPixmap cvMatToQPixmap(const cv::Mat& mat);
 inline struct GlobalPath
 {
 public:
-	QString moduleStorageManagerRootPath = R"(D:\zfkjData\ButtonScanner\ModelStorage\)";
-	QString configRootPath = R"(D:\zfkjData\ButtonScanner\config\)";
+	QString projectHome = R"(D:\zfkjData\ButtonScanner\)";
 public:
-	QString modelRootPath= R"(D:\zfkjData\ButtonScanner\model\)";
+	QString modelStorageManagerRootPath = projectHome+  R"(ModelStorage\)";
+public:
+	QString configRootPath = projectHome + R"(config\)";
+public:
+	QString modelRootPath= projectHome + R"(model\)";
 	QString nameFileName = R"(index.names)";
 	QString engineFileName = R"(model.engine)";
 	QString onnxFileName = R"(modelOnnx.onnx)";
 public:
-	QString imageSaveRootPath= R"(D:\zfkjData\ButtonScanner\SavedImages\)";
+	QString imageSaveRootPath= projectHome + R"(SavedImages\)";
 }globalPath;
