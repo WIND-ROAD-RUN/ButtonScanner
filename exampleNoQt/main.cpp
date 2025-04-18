@@ -34,10 +34,9 @@ int main() {
 
 	storage.save(configIndex, path1);
 
-	
 	AiModelConfig configIndex1(*(storage.load(path).get()));
 
-	std::cout <<(configIndex1 == config)  << std::endl;
+	std::cout << (configIndex1 == config) << std::endl;
 
 	AiModelConfigIndex configIndex2(*(storage.load(path1).get()));
 	std::cout << (configIndex2 == configIndex) << std::endl;

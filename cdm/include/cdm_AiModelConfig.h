@@ -38,18 +38,16 @@ namespace rw
 		public:
 			ModelType modelType{ ModelType::Undefined };//模型类型
 			std::string date{};//训练日期
-			bool upLight{false};
+			bool upLight{ false };
 			bool downLight{ false };
 			bool sideLight{ false };
-			size_t exposureTime{100};
+			size_t exposureTime{ 100 };
 			size_t gain{ 2 };
 		public:
 			std::string rootPath{};//模型数据相关根路径
 			std::string name{};//模型名称
 		public:
-			long id{-1};//模型ID
-
+			long id{ -1 };//模型ID
 		};
-
 	}
 }

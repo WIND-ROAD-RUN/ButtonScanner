@@ -168,7 +168,7 @@ namespace rw
 			gainItem->setValueFromInt(static_cast<int>(gain));
 			assembly.addItem(gainItem);
 
-			auto rootPathItem= std::make_shared<oso::ObjectStoreItem>();
+			auto rootPathItem = std::make_shared<oso::ObjectStoreItem>();
 			rootPathItem->setName("$variable$rootPath$");
 			rootPathItem->setValueFromString(rootPath);
 			assembly.addItem(rootPathItem);
@@ -184,9 +184,6 @@ namespace rw
 			assembly.addItem(idItem);
 
 			return assembly;
-
-
-
 		}
 
 		bool AiModelConfig::operator==(const AiModelConfig& account) const

@@ -6,13 +6,13 @@
 #include"imeot_ModelEngineOT.h"
 #include"imest_ModelEnginest.h"
 
-class ModelStorageManager  : public QObject
+class ModelStorageManager : public QObject
 {
 	Q_OBJECT
 private:
 	rw::cdm::AiModelConfigIndex _config_index{};
 public:
-	ModelStorageManager(QObject *parent);
+	ModelStorageManager(QObject* parent);
 	~ModelStorageManager();
 public:
 	void setRootPath(QString path);
@@ -25,7 +25,7 @@ private:
 public:
 	void clear_temp();
 private:
-	void check_work_temp(const QString & imageRootPath);
+	void check_work_temp(const QString& imageRootPath);
 private:
 	void check_work1Temp(const QString& imageRootPath);
 public:

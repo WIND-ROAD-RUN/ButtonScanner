@@ -178,7 +178,7 @@ void ButtonScanner::initializeComponents()
 	QCoreApplication::processEvents();
 	build_detachThread();
 
-	QObject::connect(GlobalStructThread::getInstance().aiTrainModule.get(), &AiTrainModule::appRunLog, 
+	QObject::connect(GlobalStructThread::getInstance().aiTrainModule.get(), &AiTrainModule::appRunLog,
 		dlgNewProduction, &DlgNewProduction::appendAiTrainLog);
 
 	// 隐藏加载框
@@ -222,7 +222,6 @@ void ButtonScanner::destoryComponects()
 	loadingDialog.updateMessage("正在销毁图像保存引擎...");
 	QCoreApplication::processEvents();
 	globalStructData.destroyImageSaveEngine();
-
 
 	destory_modelStorageManager();
 	// 保存配置
@@ -396,7 +395,7 @@ void ButtonScanner::read_config_mainWindowConfig()
 {
 	auto& globalStruct = GlobalStructData::getInstance();
 
-	QString mainWindowFilePathFull = globalPath.configRootPath+"mainWindowConfig.xml";
+	QString mainWindowFilePathFull = globalPath.configRootPath + "mainWindowConfig.xml";
 	QFileInfo mainWindowFile(mainWindowFilePathFull);
 
 	globalStruct.mainWindowFilePath = mainWindowFilePathFull;
@@ -486,7 +485,7 @@ void ButtonScanner::read_config_exposureTimeSetConfig()
 {
 	auto& globalStruct = GlobalStructData::getInstance();
 
-	QString exposureTimeSetConfigFilePathFull = globalPath.configRootPath+"exposureTimeSetConfig.xml";
+	QString exposureTimeSetConfigFilePathFull = globalPath.configRootPath + "exposureTimeSetConfig.xml";
 	QFileInfo dlgProductSetFile(exposureTimeSetConfigFilePathFull);
 
 	globalStruct.dlgExposureTimeSetFilePath = exposureTimeSetConfigFilePathFull;

@@ -20,7 +20,7 @@ namespace rw
 		public:
 			std::string root_path{};
 			std::string model_name{};
-			ModelType model_type{ModelType::Undefined};
+			ModelType model_type{ ModelType::Undefined };
 			long id;
 		public:
 			ConfigIndexItem() = default;
@@ -52,7 +52,5 @@ namespace rw
 			void pushConfig(const ConfigIndexItem& item);//仅id不同才会push
 			void deleteConfig(const ConfigIndexItem& item);//仅id不同才会删除配置
 		};
-
-
 	}
 }

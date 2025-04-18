@@ -83,14 +83,13 @@ namespace rw
 			auto assembly = rw::oso::ObjectStoreAssembly();
 			assembly.setName("$class$AiModelConfigIndex$");
 
-			for (const auto & item: modelIndexs)
+			for (const auto& item : modelIndexs)
 			{
 				auto childAssembly = item.operator rw::oso::ObjectStoreAssembly();
 				assembly.addItem(childAssembly);
 			}
 
 			return assembly;
-
 		}
 
 		bool AiModelConfigIndex::operator==(const AiModelConfigIndex& account) const

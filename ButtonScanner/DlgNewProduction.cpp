@@ -268,8 +268,8 @@ void DlgNewProduction::pbtn_tab4_nex_step_clicked()
 
 void DlgNewProduction::pbtn_tab5_start_train_clicked()
 {
-	auto & aiTrainModule = GlobalStructThread::getInstance().aiTrainModule;
-	if (this->_info.state== DlgNewProductionInfo::CheckBladeShape)
+	auto& aiTrainModule = GlobalStructThread::getInstance().aiTrainModule;
+	if (this->_info.state == DlgNewProductionInfo::CheckBladeShape)
 	{
 		aiTrainModule->setModelType(ModelType::ObejectDetection);
 	}
