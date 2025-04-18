@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -549,7 +549,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>下一步‘</string>
+               <string>下一步</string>
               </property>
              </widget>
             </item>
@@ -817,7 +817,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>下一步‘</string>
+               <string>下一步</string>
               </property>
              </widget>
             </item>
