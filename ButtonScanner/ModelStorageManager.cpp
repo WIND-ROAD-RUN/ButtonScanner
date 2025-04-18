@@ -76,7 +76,8 @@ void ModelStorageManager::build_tempDirectory()
 
 void ModelStorageManager::clear_temp()
 {
-    QStringList workDirs = { "work1", "work2", "work3", "work4" };
+    QStringList workDirs = { R"(work1\good)", R"(work1\bad)", R"(work2\good)", R"(work2\bad)",
+    R"(work3\good)", R"(work3\bad)", R"(work4\good)", R"(work4\bad)" };
     auto& RootPath = globalPath.modelStorageManagerTempPath;
     QString imageTempDir = RootPath + R"(Image\)";
 

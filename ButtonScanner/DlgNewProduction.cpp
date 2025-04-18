@@ -2,6 +2,7 @@
 #include "DlgNewProduction.h"
 
 #include"ButtonUtilty.h"
+#include"GlobalStruct.h"
 
 DlgNewProduction::DlgNewProduction(QWidget* parent)
 	: QDialog(parent)
@@ -151,6 +152,7 @@ void DlgNewProduction::img_display_work4(const QPixmap& pixmap)
 void DlgNewProduction::pbtn_tab1_no_clicked()
 {
 	ui->tabWidget->setCurrentIndex(1);
+	this->_info.currentTabIndex = 1;
 }
 
 void DlgNewProduction::pbtn_tab1_exit_clicked()
@@ -166,6 +168,12 @@ void DlgNewProduction::pbtn_tab2_check_color_clicked()
 	this->_info.state = _info.state = DlgNewProductionInfo::CheckColor;
 	ui->tabWidget->setCurrentIndex(2);
 	this->_info.currentTabIndex = 2;
+
+	auto& modelStorageManager = GlobalStructData::getInstance().modelStorageManager;
+	ui->label_tab3_tabImgCount1->setText(QString::number(modelStorageManager->work1_bad_count_));
+	ui->label_tab3_tabImgCount2->setText(QString::number(modelStorageManager->work2_bad_count_));
+	ui->label_tab3_tabImgCount3->setText(QString::number(modelStorageManager->work3_bad_count_));
+	ui->label_tab3_tabImgCount4->setText(QString::number(modelStorageManager->work4_bad_count_));
 }
 
 void DlgNewProduction::pbtn_tab2_check_blade_shape_clicked()
@@ -179,6 +187,12 @@ void DlgNewProduction::pbtn_tab2_check_blade_shape_clicked()
 	this->_info.state = _info.state = DlgNewProductionInfo::CheckBladeShape;
 	ui->tabWidget->setCurrentIndex(2);
 	this->_info.currentTabIndex = 2;
+
+	auto& modelStorageManager = GlobalStructData::getInstance().modelStorageManager;
+	ui->label_tab3_tabImgCount1->setText(QString::number(modelStorageManager->work1_bad_count_));
+	ui->label_tab3_tabImgCount2->setText(QString::number(modelStorageManager->work2_bad_count_));
+	ui->label_tab3_tabImgCount3->setText(QString::number(modelStorageManager->work3_bad_count_));
+	ui->label_tab3_tabImgCount4->setText(QString::number(modelStorageManager->work4_bad_count_));
 }
 
 void DlgNewProduction::pbtn_tab2_pre_step_clicked()
@@ -218,6 +232,12 @@ void DlgNewProduction::pbtn_tab3_nex_step_clicked()
 {
 	ui->tabWidget->setCurrentIndex(3);
 	this->_info.currentTabIndex = 3;
+
+	auto& modelStorageManager = GlobalStructData::getInstance().modelStorageManager;
+	ui->label_tab4_tabImgCount1->setText(QString::number(modelStorageManager->work1_good_count_));
+	ui->label_tab4_tabImgCount2->setText(QString::number(modelStorageManager->work2_good_count_));
+	ui->label_tab4_tabImgCount3->setText(QString::number(modelStorageManager->work3_good_count_));
+	ui->label_tab4_tabImgCount4->setText(QString::number(modelStorageManager->work4_good_count_));
 }
 
 void DlgNewProduction::pbtn_tab4_open_img_locate_clicked()
@@ -299,6 +319,16 @@ void DlgNewProduction::img_display_work(cv::Mat frame, size_t index)
 
 void DlgNewProduction::pbtn_tab1_ok_clicked()
 {
-	ui->tabWidget->setCurrentIndex(1);
-	this->_info.currentTabIndex = 1;
+	auto result = QMessageBox::question(this, "确定", "你确定要清除所有文件吗");
+	if (result == QMessageBox::Yes)
+	{
+		auto& globalStruct = GlobalStructData::getInstance();
+		globalStruct.modelStorageManager->clear_temp();
+		ui->tabWidget->setCurrentIndex(1);
+		this->_info.currentTabIndex = 1;
+	}
+	else
+	{
+		return;
+	}
 }
