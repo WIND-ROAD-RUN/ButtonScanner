@@ -6,7 +6,7 @@
 #include <codecvt>
 #include <AiLearnTools.h>
 #include"imest_ModelEngineST.h"
-#include <algorithm> 
+#include <algorithm>
 
 DlgAiLearn::DlgAiLearn(QWidget* parent)
 	: QDialog(parent)
@@ -98,7 +98,6 @@ void DlgAiLearn::save_config(const rw::cdm::ButtonScannerDlgAiLearn* config)
 	globalStrut.storeContext->save(*config, pathQt.toStdString());
 }
 
-
 void DlgAiLearn::build_connect()
 {
 	QObject::connect(ui->pbtn_yes, &QPushButton::clicked,
@@ -135,7 +134,6 @@ void DlgAiLearn::build_connect()
 		this, &DlgAiLearn::pbtn_tranCompelete_clicked);
 	QObject::connect(ui->pbtn_test, &QPushButton::clicked,
 		this, &DlgAiLearn::pbtn_test_clicked);
-
 }
 
 void DlgAiLearn::clearStep()
@@ -167,7 +165,6 @@ void DlgAiLearn::build_ui()
 		ui->pbtn_no->setVisible(false);
 	}
 
-
 	ui->rbtn_filterColorDiff->setEnabled(false);
 
 	ui->widget_progress->move(moveLen, 0);
@@ -180,7 +177,6 @@ void DlgAiLearn::build_ui()
 	ui->txt_log->move(moveLen, 0);
 	ui->txt_log->setReadOnly(true);
 	ui->txt_log->setWordWrapMode(QTextOption::WordWrap);
-
 }
 
 void DlgAiLearn::ToStep1()
@@ -459,4 +455,3 @@ void DlgAiLearn::ProcessReadOut()
 	qDebug() << log;
 	ui->txt_log->appendPlainText(log);
 }
-

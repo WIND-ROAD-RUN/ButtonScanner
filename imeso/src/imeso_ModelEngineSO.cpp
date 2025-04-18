@@ -1,6 +1,5 @@
 #include"imeso_ModelEngineSO.h"
 
-
 #include"yolov5v6_seg_ort.h"
 
 namespace rw

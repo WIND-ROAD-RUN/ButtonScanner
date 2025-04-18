@@ -2,7 +2,7 @@
 
 namespace rw
 {
-    namespace oso
-    {
-    } // namespace oso
+	namespace oso
+	{
+	} // namespace oso
 } // namespace rw

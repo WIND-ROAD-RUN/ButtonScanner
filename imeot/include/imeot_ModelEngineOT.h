@@ -9,18 +9,18 @@ namespace rw
 {
 	namespace imeot
 	{
-        class ModelEngineOT
-        {
-        private:
-            int _index{ -1 };
-            std::string _modelPath;
-            std::string _nameFilePath;
-            bool _isCreated{ false };
-        public:
-            ModelEngineOT(std::string modelPath, std::string nameFilePath);
-            ~ModelEngineOT();
-        public:
-            bool ProcessMask(cv::Mat& img, cv::Mat& resultMat, std::vector<ProcessRectanglesResultOT>& result);
-        };
+		class ModelEngineOT
+		{
+		private:
+			int _index{ -1 };
+			std::string _modelPath;
+			std::string _nameFilePath;
+			bool _isCreated{ false };
+		public:
+			ModelEngineOT(std::string modelPath, std::string nameFilePath);
+			~ModelEngineOT();
+		public:
+			bool ProcessMask(cv::Mat& img, cv::Mat& resultMat, std::vector<ProcessRectanglesResultOT>& result);
+		};
 	}
 }

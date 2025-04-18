@@ -17,113 +17,113 @@
 
 struct ImagePainter
 {
-    enum Color {
-        White,
-        Red,
-        Green,
-        Blue,
-        Yellow,
-        Cyan,
-        Magenta,
-        Black
-    };
+	enum Color {
+		White,
+		Red,
+		Green,
+		Blue,
+		Yellow,
+		Cyan,
+		Magenta,
+		Black
+	};
 
-    static QColor ColorToQColor(Color c);
+	static QColor ColorToQColor(Color c);
 
-    static void drawTextOnImage(QImage& image, const QVector<QString>& texts, const QVector<Color>& colorList = { Color::Red,Color::Green }, double proportion = 0.8);
+	static void drawTextOnImage(QImage& image, const QVector<QString>& texts, const QVector<Color>& colorList = { Color::Red,Color::Green }, double proportion = 0.8);
 
-    static void drawCirclesOnImage(cv::Mat& image, const std::vector<rw::imeot::ProcessRectanglesResultOT>& rectangles);
+	static void drawCirclesOnImage(cv::Mat& image, const std::vector<rw::imeot::ProcessRectanglesResultOT>& rectangles);
 };
 
 struct MatInfo {
-    cv::Mat image;
-    float location;
-    size_t index;
+	cv::Mat image;
+	float location;
+	size_t index;
 };
 
 class ImageProcessor : public QThread {
-    Q_OBJECT
+	Q_OBJECT
 
 private:
-    bool _isbad{false};
+	bool _isbad{ false };
 
 public:
-    ImageProcessor(QQueue<MatInfo>& queue,
-        QMutex& mutex,
-        QWaitCondition& condition,
-        int workIndex,
-        QObject* parent = nullptr);
+	ImageProcessor(QQueue<MatInfo>& queue,
+		QMutex& mutex,
+		QWaitCondition& condition,
+		int workIndex,
+		QObject* parent = nullptr);
 protected:
-    void run() override;
+	void run() override;
 
 signals:
-    void imageReady(QPixmap image);
+	void imageReady(QPixmap image);
 
 private:
-    std::unique_ptr<rw::imeot::ModelEngineOT> _modelEnginePtr;
+	std::unique_ptr<rw::imeot::ModelEngineOT> _modelEnginePtr;
 
-    std::unique_ptr<rw::imeoo::ModelEngineOO> _modelEnginePtrOnnx;
+	std::unique_ptr<rw::imeoo::ModelEngineOO> _modelEnginePtrOnnx;
 
 public:
-    void buildModelEngine(const QString& enginePath, const QString& namePath);
+	void buildModelEngine(const QString& enginePath, const QString& namePath);
 
-    void buildModelEngineOnnx(const QString& enginePath, const QString& namePath);
-
-private:
-    bool isInAred(int x);
-    std::vector<rw::imeot::ProcessRectanglesResultOT> getDefectInBody(rw::imeot::ProcessRectanglesResultOT body,const std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult);
+	void buildModelEngineOnnx(const QString& enginePath, const QString& namePath);
 
 private:
-    cv::Mat processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult, std::vector<rw::imeot::ProcessRectanglesResultOT> & vecRecogResultTarget);
+	bool isInAred(int x);
+	std::vector<rw::imeot::ProcessRectanglesResultOT> getDefectInBody(rw::imeot::ProcessRectanglesResultOT body, const std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult);
 
-    rw::imeot::ProcessRectanglesResultOT getBody(std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult,bool &hasBody);
+private:
+	cv::Mat processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResultTarget);
 
-	void eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult, std::vector<rw::imeot::ProcessRectanglesResultOT> & vecRecogResultTarget);
+	rw::imeot::ProcessRectanglesResultOT getBody(std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult, bool& hasBody);
 
-    void drawErrorLocate(QImage& image, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult,const QColor& drawColor);
+	void eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResultTarget);
 
-    void drawLine(QImage& image);
-    void drawLine_locate(QImage& image,size_t locate);
+	void drawErrorLocate(QImage& image, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult, const QColor& drawColor);
 
-    QQueue<MatInfo>& _queue;
-    QMutex& _mutex;
-    QWaitCondition& _condition;
-    int _workIndex;
+	void drawLine(QImage& image);
+	void drawLine_locate(QImage& image, size_t locate);
+
+	QQueue<MatInfo>& _queue;
+	QMutex& _mutex;
+	QWaitCondition& _condition;
+	int _workIndex;
 public:
-    int imageProcessingModuleIndex;
+	int imageProcessingModuleIndex;
 };
 
 class ImageProcessingModule : public QObject {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    QString modelEnginePath;
-    QString modelNamePath;
-    QString modelEnginePathOnnx;
+	QString modelEnginePath;
+	QString modelNamePath;
+	QString modelEnginePathOnnx;
 public:
-    void BuildModule();
+	void BuildModule();
 public:
-    ImageProcessingModule(int numConsumers, QObject* parent = nullptr);
+	ImageProcessingModule(int numConsumers, QObject* parent = nullptr);
 
-    ~ImageProcessingModule();
+	~ImageProcessingModule();
 
 public slots:
-    void onFrameCaptured(cv::Mat frame, float location, size_t index);
+	void onFrameCaptured(cv::Mat frame, float location, size_t index);
 
 signals:
-    void imageReady(QPixmap image);
+	void imageReady(QPixmap image);
 
-    void imgForDlgNewProduction(cv::Mat mat, size_t index);
+	void imgForDlgNewProduction(cv::Mat mat, size_t index);
 public:
-    std::vector<ImageProcessor*> getProcessors() const {
-        return _processors;
-    }
+	std::vector<ImageProcessor*> getProcessors() const {
+		return _processors;
+	}
 
 private:
-    QQueue<MatInfo> _queue;
-    QMutex _mutex;
-    QWaitCondition _condition;
-    std::vector<ImageProcessor*> _processors;
-    int _numConsumers;
+	QQueue<MatInfo> _queue;
+	QMutex _mutex;
+	QWaitCondition _condition;
+	std::vector<ImageProcessor*> _processors;
+	int _numConsumers;
 public:
-    size_t index;
+	size_t index;
 };

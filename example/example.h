@@ -9,12 +9,12 @@ QT_END_NAMESPACE
 
 class example : public QMainWindow
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    example(QWidget* parent = nullptr);
-    ~example();
+	example(QWidget* parent = nullptr);
+	~example();
 
 private:
-    Ui::exampleClass* ui;
+	Ui::exampleClass* ui;
 };

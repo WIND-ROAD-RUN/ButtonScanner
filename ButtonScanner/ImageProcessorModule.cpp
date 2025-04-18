@@ -5,7 +5,7 @@
 #include"imeoo_ModelEngineOO.h"
 #include"ButtonUtilty.h"
 
-#include <QtConcurrent> 
+#include <QtConcurrent>
 
 void ImageProcessor::buildModelEngine(const QString& enginePath, const QString& namePath)
 {
@@ -70,12 +70,11 @@ std::vector<rw::imeot::ProcessRectanglesResultOT> ImageProcessor::getDefectInBod
 	auto verticalMin = body.left_top.second;
 	auto verticalMax = body.right_bottom.second;
 
-	
-	for (const auto & item: vecRecogResult)
+	for (const auto& item : vecRecogResult)
 	{
-		if (leleltMin<item.center_x&& item.center_x<leleltMax)
+		if (leleltMin < item.center_x && item.center_x < leleltMax)
 		{
-			if (verticalMin<item.center_y&&item.center_y<verticalMax)
+			if (verticalMin < item.center_y && item.center_y < verticalMax)
 			{
 				result.emplace_back(item);
 			}
@@ -84,7 +83,7 @@ std::vector<rw::imeot::ProcessRectanglesResultOT> ImageProcessor::getDefectInBod
 	return result;
 }
 
-cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult, std::vector<rw::imeot::ProcessRectanglesResultOT> & vecRecogResultTarget)
+cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResultTarget)
 {
 	_isbad = false;
 	auto& globalStruct = GlobalStructData::getInstance();
@@ -109,14 +108,11 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 		if (!hasBody)
 		{
 			if (globalStruct.isOpenRemoveFunc) {
-
 				globalStruct.statisticalInfo.wasteCount++;
-
 
 				if (imageProcessingModuleIndex == 2 || imageProcessingModuleIndex == 4) {
 					globalStruct.statisticalInfo.produceCount++;
 				}
-
 
 				float absLocation = frame.location;
 				if (absLocation < 0) {
@@ -140,7 +136,6 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 				default:
 					break;
 				}
-
 			}
 			_isbad = true;
 			_isbad = true;
@@ -148,12 +143,11 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 				globalStruct.imageSaveEngine->pushImage(cvMatToQImage(frame.image), "NG", "Button");
 				globalStruct.imageSaveEngine->pushImage(cvMatToQImage(frame.image), "OK", "Button");
 			}
-
 		}
 		else
 		{
 			auto defect = getDefectInBody(body, vecRecogResult);
-			eliminationLogic(frame, frame.image,errorInfo,defect, vecRecogResultTarget);
+			eliminationLogic(frame, frame.image, errorInfo, defect, vecRecogResultTarget);
 		}
 	}
 	//如果新物料学习窗口在步骤1（学习坏的）、2（学习好的），就调用dlgAiLearn->onFrameCaptured
@@ -174,10 +168,10 @@ rw::imeot::ProcessRectanglesResultOT ImageProcessor::getBody(std::vector<rw::ime
 	{
 		if (i.classID == 0)
 		{
-			auto isInArea=isInAred(i.center_x);
+			auto isInArea = isInAred(i.center_x);
 			if (isInArea)
 			{
-				if ((i.width*i.height)>(result.width*result.height))
+				if ((i.width * i.height) > (result.width * result.height))
 				{
 					result = i;
 					hasBody = true;
@@ -188,8 +182,7 @@ rw::imeot::ProcessRectanglesResultOT ImageProcessor::getBody(std::vector<rw::ime
 	return result;
 }
 
-
-void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult, std::vector<rw::imeot::ProcessRectanglesResultOT> & vecRecogResultTarget)
+void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResultTarget)
 {
 	auto saveIamge = resultImage.clone();
 	auto& globalStruct = GlobalStructData::getInstance();
@@ -328,7 +321,6 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 				{
 					errorInfo.emplace_back("外径 " + QString::number(zuoYouPianCha * pixEquivalent));
 				}
-				
 			}
 		}
 	}
@@ -355,8 +347,6 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 			isBad = true;
 			_isbad = true;
 			errorInfo.emplace_back("只找到" + QString::number(holesCount) + "个孔");
-			
-
 		}
 	}
 
@@ -607,7 +597,6 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 				break;
 			}
 		}
-
 	}
 
 	if (globalStruct.isTakePictures) {
@@ -852,14 +841,12 @@ void ImageProcessor::run()
 		// 绘制错误定位全局错误定位
 		drawErrorLocate(image, vecRecogResultBad, Qt::green);
 
-		
 		// 绘制错误定位目标定位
-		drawErrorLocate(image, vecRecogResultTarget, Qt::red); 
-
+		drawErrorLocate(image, vecRecogResultTarget, Qt::red);
 
 		drawLine(image);
 
-		if (GlobalStructData::getInstance().isTakePictures&&_isbad) {
+		if (GlobalStructData::getInstance().isTakePictures && _isbad) {
 			GlobalStructData::getInstance().imageSaveEngine->pushImage(image, "Mark", "Button");
 		}
 

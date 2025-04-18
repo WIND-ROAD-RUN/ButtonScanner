@@ -3,7 +3,7 @@
 
 #include"ButtonUtilty.h"
 
-DlgNewProduction::DlgNewProduction(QWidget *parent)
+DlgNewProduction::DlgNewProduction(QWidget* parent)
 	: QDialog(parent)
 	, ui(new Ui::DlgNewProductionClass())
 {
@@ -90,7 +90,7 @@ void DlgNewProduction::img_display_work1(const QPixmap& pixmap)
 	{
 		return;
 	}
-	if (this->_info.currentTabIndex==2)
+	if (this->_info.currentTabIndex == 2)
 	{
 		ui->label_tab3_imgDisplay1->setPixmap(pixmap.scaled(ui->label_tab3_imgDisplay1->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 	}
@@ -190,7 +190,6 @@ void DlgNewProduction::pbtn_tab2_pre_step_clicked()
 void DlgNewProduction::pbtn_tab2_exit_clicked()
 {
 	destroy();
-
 }
 
 void DlgNewProduction::pbtn_tab3_open_img_locate_clicked()
@@ -249,7 +248,7 @@ void DlgNewProduction::pbtn_tab5_start_train_clicked()
 void DlgNewProduction::pbtn_tab5_exit_clicked()
 {
 	destroy();
-}	
+}
 
 void DlgNewProduction::pbtn_tab5_pre_step_clicked()
 {
@@ -270,11 +269,11 @@ void DlgNewProduction::showEvent(QShowEvent* show_event)
 
 void DlgNewProduction::img_display_work(cv::Mat frame, size_t index)
 {
-	if (_info.isActivate==false)
+	if (_info.isActivate == false)
 	{
 		return;
 	}
-	if ((_info.currentTabIndex!=2 )&& ( _info.currentTabIndex != 3))
+	if ((_info.currentTabIndex != 2) && (_info.currentTabIndex != 3))
 	{
 		return;
 	}

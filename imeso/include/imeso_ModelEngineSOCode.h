@@ -5,7 +5,6 @@ namespace rw
 {
 	namespace imeso
 	{
-
 		using Point = std::pair<float, float>;
 
 		struct ProcessRectanglesResultSO

@@ -1,13 +1,13 @@
 #include "example.h"
 
 example::example(QWidget* parent)
-    : QMainWindow(parent)
-    , ui(new Ui::exampleClass())
+	: QMainWindow(parent)
+	, ui(new Ui::exampleClass())
 {
-    ui->setupUi(this);
+	ui->setupUi(this);
 }
 
 example::~example()
 {
-    delete ui;
+	delete ui;
 }

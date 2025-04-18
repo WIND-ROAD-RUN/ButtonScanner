@@ -5,11 +5,11 @@
 #include <qfileinfo.h>
 #include <PathGlobalStruct.h>
 #include <qdir.h>
-#include <opencv2/opencv.hpp> 
+#include <opencv2/opencv.hpp>
 #include <fstream>
 #include <iostream>
 #include <Shlwapi.h>
-#include <filesystem> 
+#include <filesystem>
 
 void AiLearnTools::SaveImage(cv::Mat frame, std::string learnInfoSign, std::string dateTimeStr, bool isBad, int cameraNum)
 {
@@ -30,11 +30,7 @@ void AiLearnTools::SaveImage(cv::Mat frame, std::string learnInfoSign, std::stri
 	QString saveDataImageValPath = SaveDataImageValPath(learnInfoSign) + QString::fromStdString("\\" + dateTimeStr + ".jpg");
 	MakeDir(saveDataImageValPath);
 	qImage.save(saveDataImageValPath, "jpg");
-
-
 }
-
-
 
 void AiLearnTools::MoveImageToDataSet(std::string learnInfoSign, bool isSeg)
 {
@@ -92,7 +88,6 @@ void AiLearnTools::SaveYoloText(std::string learnInfoSign, std::string dateTimeS
 	auto norCenterY = (double)centerY / (double)imageHeight;
 	auto norWidth = (double)width / (double)imageWidth;
 	auto norHeight = (double)height / (double)imageHeight;
-
 
 	auto textStr = classId + " " +
 		std::to_string(norCenterX) + " " + std::to_string(norCenterY) + " "
@@ -260,7 +255,7 @@ QImage AiLearnTools::cvMat2QImage(const cv::Mat& mat) {
 	// 3. 根据通道数转换
 	switch (localMat.type()) {
 		// 8-bit 1 channel (grayscale)
-		// 
+		//
 	// 处理灰度图
 	case CV_8UC1: {
 		QImage image(mat.data, mat.cols, mat.rows, static_cast<int>(mat.step), QImage::Format_Grayscale8);

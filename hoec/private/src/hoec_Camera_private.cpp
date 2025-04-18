@@ -9,6 +9,6 @@
 #include<iostream>
 
 namespace rw {
-    namespace hoec {
-    }
+	namespace hoec {
+	}
 }

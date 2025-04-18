@@ -112,11 +112,11 @@ void ButtonScanner::initializeComponents()
 	QCoreApplication::processEvents(); // 保持 UI 响应
 	read_config();
 
-    // 构建 UI
-    loadingDialog.updateMessage("正在构建界面...");
-    QCoreApplication::processEvents();
-    build_ui();
-    this->setWindowFlags(Qt::FramelessWindowHint);
+	// 构建 UI
+	loadingDialog.updateMessage("正在构建界面...");
+	QCoreApplication::processEvents();
+	build_ui();
+	this->setWindowFlags(Qt::FramelessWindowHint);
 
 	// 连接信号与槽
 	loadingDialog.updateMessage("正在建立信号与槽连接...");
@@ -216,7 +216,6 @@ void ButtonScanner::destoryComponects()
 	loadingDialog.updateMessage("正在销毁图像保存引擎...");
 	QCoreApplication::processEvents();
 	globalStructData.destroyImageSaveEngine();
-
 
 	// 保存配置
 	loadingDialog.updateMessage("正在保存配置...");
@@ -357,8 +356,8 @@ void ButtonScanner::build_connect()
 	QObject::connect(this->labelClickable_title, &rw::rqw::ClickableLabel::clicked,
 		this, &ButtonScanner::labelClickable_title_clicked);
 
-    QObject::connect(&GlobalStructData::getInstance(), &GlobalStructData::updateLightState,
-        this, &ButtonScanner::onUpdateLightStateUi);
+	QObject::connect(&GlobalStructData::getInstance(), &GlobalStructData::updateLightState,
+		this, &ButtonScanner::onUpdateLightStateUi);
 }
 
 void ButtonScanner::read_config()
@@ -569,8 +568,6 @@ void ButtonScanner::clear_olderSavedImage()
 	}
 }
 
-
-
 void ButtonScanner::build_camera()
 {
 	auto& globalStruct = GlobalStructData::getInstance();
@@ -702,7 +699,7 @@ void ButtonScanner::build_locationThread()
 			{
 				auto& work1 = GlobalStructData::getInstance().productPriorityQueue1;
 
-				double tifeishijian1 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowTime1+ blowTime;
+				double tifeishijian1 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowTime1 + blowTime;
 				double tifeijuli1 = GlobalStructData::getInstance().dlgProduceLineSetConfig.blowDistance1;
 
 				float olderlacation1 = 0;
@@ -1038,7 +1035,7 @@ void ButtonScanner::pbtn_set_clicked()
 	passwordDlg->exec();
 	auto password = passwordValue->text();
 	if (password == "1234") {
-		dlgProduceLineSet->setFixedSize(this->width(),this->height());
+		dlgProduceLineSet->setFixedSize(this->width(), this->height());
 		dlgProduceLineSet->exec();
 		ui->pbtn_beltSpeed->setText(QString::number(GlobalStructData::getInstance().dlgProduceLineSetConfig.motorSpeed));
 	}
@@ -1071,7 +1068,6 @@ void ButtonScanner::pbtn_beltSpeed_clicked()
 		QMessageBox::warning(this, "错误", "请先停止生产线");
 	}
 	else {
-
 		auto numKeyBoard = new NumKeyBord(this, ui->pbtn_beltSpeed, 2);
 		numKeyBoard->exec();
 

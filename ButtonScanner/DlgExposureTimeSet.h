@@ -9,20 +9,20 @@ QT_END_NAMESPACE
 
 class DlgExposureTimeSet : public QDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    DlgExposureTimeSet(QWidget* parent = nullptr);
-    ~DlgExposureTimeSet();
+	DlgExposureTimeSet(QWidget* parent = nullptr);
+	~DlgExposureTimeSet();
 
 private:
-    void build_ui();
-    void build_connect();
+	void build_ui();
+	void build_connect();
 public:
-    void SetCamera();
-    void ResetCamera();
+	void SetCamera();
+	void ResetCamera();
 private:
-    Ui::DlgExposureTimeSetClass* ui;
+	Ui::DlgExposureTimeSetClass* ui;
 private slots:
-    void pbtn_exposureTimeValue_clicked();
+	void pbtn_exposureTimeValue_clicked();
 };

@@ -1,6 +1,5 @@
 #include "rqw_LabelClickable.h"
 
-
 namespace rw
 {
 	namespace rqw
@@ -13,5 +12,4 @@ namespace rw
 			QLabel::mousePressEvent(event);
 		}
 	}
-	
 }

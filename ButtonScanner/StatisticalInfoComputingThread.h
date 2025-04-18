@@ -6,22 +6,22 @@
 
 class StatisticalInfoComputingThread : public QThread
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    explicit StatisticalInfoComputingThread(QObject* parent = nullptr);
+	explicit StatisticalInfoComputingThread(QObject* parent = nullptr);
 
-    ~StatisticalInfoComputingThread() override;
+	~StatisticalInfoComputingThread() override;
 
-    void startThread();
+	void startThread();
 
-    void stopThread();
+	void stopThread();
 
 protected:
-    void run() override;
+	void run() override;
 
 signals:
-    void updateStatisticalInfo();
+	void updateStatisticalInfo();
 
 private:
-    std::atomic<bool> running; // 使用原子变量保证线程安全
+	std::atomic<bool> running; // 使用原子变量保证线程安全
 };

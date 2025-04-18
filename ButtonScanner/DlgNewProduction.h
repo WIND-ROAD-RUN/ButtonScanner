@@ -9,7 +9,6 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class DlgNewProductionClass; };
 QT_END_NAMESPACE
 
-
 struct DlgNewProductionInfo
 {
 	enum State
@@ -20,14 +19,14 @@ struct DlgNewProductionInfo
 	}state;
 
 	std::atomic_bool isActivate{ false };
-	size_t currentTabIndex{0};
+	size_t currentTabIndex{ 0 };
 };
 
 class DlgNewProduction : public QDialog
 {
 	Q_OBJECT
 public:
-	DlgNewProduction(QWidget *parent = nullptr);
+	DlgNewProduction(QWidget* parent = nullptr);
 
 	~DlgNewProduction();
 
@@ -36,7 +35,7 @@ private:
 	void build_connect();
 
 private:
-	Ui::DlgNewProductionClass *ui;
+	Ui::DlgNewProductionClass* ui;
 
 private:
 	void build_dialog();

@@ -70,7 +70,6 @@ private slots:
 	void rbtn_station3_checked(bool checked);
 	void rbtn_station4_checked(bool checked);
 
-
 	void pbtn_train_clicked();
 	void pbtn_test_clicked();
 	void pbtn_tranCompelete_clicked();
@@ -81,5 +80,4 @@ private slots:
 
 public slots:
 	void onFrameCaptured(cv::Mat frame, size_t index);
-
 };
