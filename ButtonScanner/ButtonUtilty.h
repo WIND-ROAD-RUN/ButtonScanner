@@ -14,6 +14,7 @@ public:
 	QString projectHome = R"(D:\zfkjData\ButtonScanner\)";
 public:
 	QString modelStorageManagerRootPath = projectHome+  R"(ModelStorage\)";
+	QString modelStorageManagerTempPath = modelStorageManagerRootPath + R"(Temp\)";
 public:
 	QString configRootPath = projectHome + R"(config\)";
 public:

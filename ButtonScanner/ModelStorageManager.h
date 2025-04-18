@@ -19,5 +19,28 @@ private:
 	void build_manager();
 	void destroy_manager();
 private:
+	void build_tempDirectory();
+public:
+	void clear_temp();
+private:
+	void check_work_temp(const QString & imageRootPath);
+private:
+	void check_work1Temp(const QString& imageRootPath);
+	size_t work1_good_count_;
+	size_t work1_bad_count_;
+private:
+	void check_work2Temp(const QString& imageRootPath);
+	size_t work2_good_count_;
+	size_t work2_bad_count_;
+private:
+	void check_work3Temp(const QString& imageRootPath);
+	size_t work3_good_count_;
+	size_t work3_bad_count_;
+private:
+	void check_work4Temp(const QString& imageRootPath);
+	size_t work4_good_count_;
+	size_t work4_bad_count_;
+
+private:
 	QString _rootPath;
 };

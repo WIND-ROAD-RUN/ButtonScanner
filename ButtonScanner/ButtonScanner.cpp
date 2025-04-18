@@ -141,7 +141,7 @@ void ButtonScanner::initializeComponents()
 	QCoreApplication::processEvents();
 	build_imageProcessorModule();
 
-	build_dlgAiLearn();;
+	build_dlgAiLearn();
 
 	// 构建相机
 	loadingDialog.updateMessage("正在构建相机...");
