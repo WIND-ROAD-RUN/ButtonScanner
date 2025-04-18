@@ -18,6 +18,7 @@
 #include"StatisticalInfoComputingThread.h"
 #include"MonitorCameraAndCardStateThread.h"
 #include"dsl_ThreadSafeMinHeap.h"
+#include"AiTrainModule.h"
 
 #include<QString>
 
@@ -37,6 +38,7 @@ class GlobalStructThread
 public:
 	std::unique_ptr<StatisticalInfoComputingThread> statisticalInfoComputingThread{ nullptr };
 	std::unique_ptr<MonitorCameraAndCardStateThread> monitorCameraAndCardStateThread{ nullptr };
+	std::unique_ptr<AiTrainModule> aiTrainModule{ nullptr };
 public:
 	void buildDetachThread();
 	void destroyDetachThread();

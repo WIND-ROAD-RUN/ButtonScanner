@@ -29,6 +29,9 @@ private:
 private:
 	void check_work1Temp(const QString& imageRootPath);
 public:
+	QVector<QString> getBadImagePathList();
+	QVector<QString> getGoodImagePathList();
+public:
 	size_t work1_good_count_;
 	size_t work1_bad_count_;
 private:

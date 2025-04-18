@@ -43,7 +43,8 @@ private:
 
 private:
 	DlgNewProductionInfo _info;
-
+public slots:
+	void appendAiTrainLog(QString log);
 public slots:
 	void img_display_work(cv::Mat frame, size_t index);
 private:

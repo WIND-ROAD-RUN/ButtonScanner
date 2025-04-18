@@ -121,6 +121,9 @@
     <ClCompile Include="ModelStorageManager.cpp">
       <Filter>Source Files\func</Filter>
     </ClCompile>
+    <ClCompile Include="AiTrainModule.cpp">
+      <Filter>Source Files\DetachThread</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ButtonScanner.h">
@@ -161,6 +164,9 @@
     </QtMoc>
     <QtMoc Include="ModelStorageManager.h">
       <Filter>Header Files\func</Filter>
+    </QtMoc>
+    <QtMoc Include="AiTrainModule.h">
+      <Filter>Header Files\DetachThread</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

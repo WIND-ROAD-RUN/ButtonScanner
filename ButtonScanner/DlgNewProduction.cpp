@@ -3,6 +3,11 @@
 
 #include"ButtonUtilty.h"
 #include"GlobalStruct.h"
+#include<QThread>
+#include<QtConcurrent>
+
+#include"imeot_ModelEngineOT.h"
+#include"imest_ModelEnginest.h"
 
 DlgNewProduction::DlgNewProduction(QWidget* parent)
 	: QDialog(parent)
@@ -263,6 +268,20 @@ void DlgNewProduction::pbtn_tab4_nex_step_clicked()
 
 void DlgNewProduction::pbtn_tab5_start_train_clicked()
 {
+	auto & aiTrainModule = GlobalStructThread::getInstance().aiTrainModule;
+	if (this->_info.state== DlgNewProductionInfo::CheckBladeShape)
+	{
+		aiTrainModule->setModelType(ModelType::ObejectDetection);
+	}
+	else if (this->_info.state == DlgNewProductionInfo::CheckColor)
+	{
+		aiTrainModule->setModelType(ModelType::Segment);
+	}
+	else
+	{
+		return;
+	}
+	aiTrainModule->startTrain();
 }
 
 void DlgNewProduction::pbtn_tab5_exit_clicked()
@@ -285,6 +304,15 @@ void DlgNewProduction::showEvent(QShowEvent* show_event)
 {
 	this->_info.isActivate = true;
 	QDialog::showEvent(show_event);
+}
+
+void DlgNewProduction::appendAiTrainLog(QString log)
+{
+	if (log.isEmpty())
+	{
+		return;
+	}
+	ui->plainTextEdit_tab5->appendPlainText(log);
 }
 
 void DlgNewProduction::img_display_work(cv::Mat frame, size_t index)
