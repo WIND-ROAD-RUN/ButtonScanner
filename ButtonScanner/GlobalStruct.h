@@ -1,10 +1,9 @@
 #pragma once
 
-//
-
 #include<memory>
 
 #include"ImageProcessorModule.h"
+#include"ModelStorageManager.h"
 
 #include"scc_Motion.h"
 #include"imest_ModelEngineST.h"
@@ -60,6 +59,8 @@ class GlobalStructData
 	:public QObject
 {
 	Q_OBJECT
+public:
+	std::unique_ptr<ModelStorageManager> modelStorageManager;
 public:
 	struct StatisticalInfo
 	{

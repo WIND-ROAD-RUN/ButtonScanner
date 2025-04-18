@@ -9,4 +9,9 @@ class ModelStorageManager  : public QObject
 public:
 	ModelStorageManager(QObject *parent);
 	~ModelStorageManager();
+public:
+	void setRootPath(QString path);
+	QString getRootPath();
+private:
+	QString _rootPath;
 };

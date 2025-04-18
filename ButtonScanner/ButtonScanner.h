@@ -70,6 +70,8 @@ private:
 	void build_dlgExposureTimeSet();
 	void build_dlgAiLearn();
 	void build_dlgNewProduction();
+	void build_modelStorageManager();
+	void destory_modelStorageManager();
 
 	void stop_all_axis();
 

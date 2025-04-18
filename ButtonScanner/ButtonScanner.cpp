@@ -11,6 +11,7 @@
 #include"GlobalStruct.h"
 #include"NumKeyBord.h"
 #include"cdm_ButtonScannerDlgAiLearn.h"
+#include"ButtonUtilty.h"
 
 #include<qdebug>
 #include<QtConcurrent>
@@ -111,6 +112,8 @@ void ButtonScanner::initializeComponents()
 	loadingDialog.updateMessage("正在加载配置...");
 	QCoreApplication::processEvents(); // 保持 UI 响应
 	read_config();
+
+	build_modelStorageManager();
 
 	// 构建 UI
 	loadingDialog.updateMessage("正在构建界面...");
@@ -217,6 +220,8 @@ void ButtonScanner::destoryComponects()
 	QCoreApplication::processEvents();
 	globalStructData.destroyImageSaveEngine();
 
+
+	destory_modelStorageManager();
 	// 保存配置
 	loadingDialog.updateMessage("正在保存配置...");
 	QCoreApplication::processEvents();
@@ -304,6 +309,19 @@ void ButtonScanner::build_dlgAiLearn()
 void ButtonScanner::build_dlgNewProduction()
 {
 	this->dlgNewProduction = new DlgNewProduction(this);
+}
+
+void ButtonScanner::build_modelStorageManager()
+{
+	auto& globalStruct = GlobalStructData::getInstance();
+	globalStruct.modelStorageManager = std::make_unique<ModelStorageManager>(this);
+	globalStruct.modelStorageManager->setRootPath(globalPath.moduleStorageManagerRootPath);
+}
+
+void ButtonScanner::destory_modelStorageManager()
+{
+	auto& globalStruct = GlobalStructData::getInstance();
+	globalStruct.modelStorageManager.reset();
 }
 
 void ButtonScanner::build_connect()
