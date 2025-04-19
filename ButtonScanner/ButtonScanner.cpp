@@ -179,7 +179,7 @@ void ButtonScanner::initializeComponents()
 	build_detachThread();
 
 	QObject::connect(GlobalStructThread::getInstance().aiTrainModule.get(), &AiTrainModule::appRunLog,
-		dlgNewProduction, &DlgNewProduction::appendAiTrainLog);
+		dlgNewProduction, &DlgNewProduction::appendAiTrainLog,Qt::QueuedConnection);
 
 	// 隐藏加载框
 	loadingDialog.close();

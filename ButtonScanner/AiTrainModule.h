@@ -49,6 +49,9 @@ private:
 	void copyTrainImgData(const QVector<AiTrainModule::DataItem> &  dataSet,const QString &path );
 	void copyTrainLabelData(const QVector<AiTrainModule::DataItem>& dataSet, const QString& path);
 public:
+	void trainSegmentModel();
+	void trainObbModel();
+public:
 	cv::Mat getMatFromPath(const QString & path);
 protected:
 	void run() override;
@@ -56,11 +59,11 @@ private:
 	QVector<labelAndImg> annotation_data_set(bool isBad);
 signals:
 	void appRunLog(QString log);
-private slots:
-	void ProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
+public slots:
+	void handleProcessOutput();
 
-	void ProcessReadOut();
-	
+	void handleProcessError();
 
+	void handleProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
 };
 

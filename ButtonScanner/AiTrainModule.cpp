@@ -10,12 +10,16 @@ AiTrainModule::AiTrainModule(QObject* parent)
 	auto enginePath = globalPath.modelRootPath + globalPath.engineFileName;
 	auto namePath = globalPath.modelRootPath + globalPath.nameFileName;
 	labelEngine = std::make_unique<rw::imeot::ModelEngineOT>(enginePath.toStdString(), namePath.toStdString());
-	_process = new QProcess(this);
+	_process = new QProcess();
+	connect(_process, &QProcess::readyReadStandardOutput, this, &AiTrainModule::handleProcessOutput);
+	connect(_process, &QProcess::readyReadStandardError, this, &AiTrainModule::handleProcessError);
+	connect(_process, &QProcess::finished, this, &AiTrainModule::handleProcessFinished);
 }
 
 AiTrainModule::~AiTrainModule()
 {
 	wait();
+	delete _process;
 }
 
 void AiTrainModule::startTrain()
@@ -286,6 +290,17 @@ void AiTrainModule::copyTrainLabelData(const QVector<AiTrainModule::DataItem>& d
 	}
 }
 
+void AiTrainModule::trainSegmentModel()
+{
+
+}
+
+void AiTrainModule::trainObbModel()
+{
+	auto str = "activate yolov5 && cd /d " + globalPath.yoloV5RootPath.toStdString() + " && python train.py";
+	_process->start("cmd.exe", { "/c",str.c_str() });
+}
+
 cv::Mat AiTrainModule::getMatFromPath(const QString& path)
 {
 	cv::Mat image = cv::imread(path.toStdString());
@@ -317,8 +332,18 @@ void AiTrainModule::run()
 	copyTrainData(dataSet);
 	copyTrainData(dataSetBad);
 
+	if (_modelType==ModelType::Segment)
+	{
+		emit appRunLog("开始训练分割模型");
+		trainSegmentModel();
+	}
+	else if (_modelType == ModelType::ObejectDetection)
+	{
+		emit appRunLog("开始训练检测模型");
+		trainObbModel();
+	}
 
-
+	exec();
 }
 
 QVector<AiTrainModule::labelAndImg> AiTrainModule::annotation_data_set(bool isBad)
@@ -370,48 +395,32 @@ QVector<AiTrainModule::labelAndImg> AiTrainModule::annotation_data_set(bool isBa
 	return dataSet;
 }
 
-void AiTrainModule::ProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
+void AiTrainModule::handleProcessOutput()
+{
+	QByteArray output = _process->readAllStandardOutput();
+	QString outputStr = QString::fromLocal8Bit(output);
+	emit appRunLog(outputStr); // 将输出内容发送到日志或界面
+}
+
+void AiTrainModule::handleProcessError()
+{
+	QByteArray errorOutput = _process->readAllStandardError();
+	QString errorStr = QString::fromLocal8Bit(errorOutput);
+	emit appRunLog(errorStr); // 将错误内容发送到日志或界面
+}
+
+void AiTrainModule::handleProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
 	if (exitStatus == QProcess::NormalExit)
 	{
-		//ui->pbtn_tranCompelete->move(pbtn_tranCompelete_rawX, pbtn_tranCompelete_rawY);
-		//ui->label_state->setText("训练完成");
-		qDebug() << "进来";
-		QProcess* processRobot_1 = new QProcess();
-		processRobot_1->start("cmd.exe");
-		processRobot_1->write("activate yolov5");
-		processRobot_1->write("&&");
 
-		//转onnx
-		processRobot_1->write("cd /d D:\\y\\yolov5-master\\ && start python export.py\n ");
 	}
 	else
 	{
 		//程序异常结束
 		qDebug() << "进来2";
 	}
+
+	quit();
 }
 
-void AiTrainModule::ProcessReadOut()
-{
-	auto out = _process->readAllStandardError();
-
-	QRegularExpression re(R"((?<!\d)(100|[1-9]?\d)%(?!\d))");  // 带捕获组的正则
-	QVector<int> results;
-
-	QRegularExpressionMatchIterator it = re.globalMatch(out);
-	while (it.hasNext()) {
-		QRegularExpressionMatch match = it.next();
-		results.append(
-			match.captured(1).toInt()
-		);
-	}
-
-	/*if (results.size() > 0) {
-		std::sort(results.begin(), results.end());
-		ui->progress_learn->setValue(results[results.length() - 1]);
-	}*/
-
-	auto log = QString::fromLocal8Bit(out.toStdString());
-	emit appRunLog(log);
-}
