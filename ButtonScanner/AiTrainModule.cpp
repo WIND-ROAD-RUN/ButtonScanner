@@ -314,6 +314,136 @@ void AiTrainModule::exportOnnexModel()
 	_processExportModel->start("cmd.exe", { "/c",str.c_str() });
 }
 
+void AiTrainModule::copyModelToTemp()
+{
+	// 源文件路径
+	QString sourceFilePath = globalPath.yoloV5RootPath + R"(runs\train\exp\weights\best.onnx)";
+
+	// 目标目录路径
+	QString targetDirectory = globalPath.modelStorageManagerTempPath;
+
+	// 确保目标目录存在，如果不存在则创建
+	QDir dir(targetDirectory);
+	if (!dir.exists()) {
+		if (!dir.mkpath(targetDirectory)) {
+			emit appRunLog("Failed to create target directory: " + targetDirectory);
+			return;
+		}
+	}
+
+	// 目标文件路径（包括重命名后的文件名）
+	QString targetFilePath = targetDirectory + "modelOnnx.onnx";
+
+	// 拷贝文件并重命名
+	if (QFile::copy(sourceFilePath, targetFilePath)) {
+		emit appRunLog("File copied and renamed successfully: " + targetFilePath);
+	}
+	else {
+		emit appRunLog("Failed to copy and rename file: " + sourceFilePath);
+	}
+
+}
+
+void AiTrainModule::packageModelToStorage()
+{
+	// 获取当前日期和时间
+	QDateTime currentDateTime = QDateTime::currentDateTime();
+	// 格式化为 "yyyyMMddHHmmss" 格式
+	QString formattedDateTime = currentDateTime.toString("yyyyMMddHHmmss");
+
+	auto storage=globalPath.modelStorageManagerRootPath+ formattedDateTime+R"(\)";
+	QString sourceFilePath = globalPath.modelStorageManagerTempPath;
+
+	copy_all_files_to_storage(sourceFilePath, storage);
+
+	auto& global = GlobalStructData::getInstance();
+
+	rw::cdm::AiModelConfig config;
+	config.id = formattedDateTime.toLong();
+	config.name = formattedDateTime.toStdString();
+	if (_modelType==ModelType::ObejectDetection)
+	{
+		config.modelType = rw::cdm::ModelType::BladeShape;
+	}
+	else if (_modelType == ModelType::Segment)
+	{
+		config.modelType = rw::cdm::ModelType::Color;
+	}
+	else
+	{
+		config.modelType = rw::cdm::ModelType::Undefined;
+	}
+	config.sideLight = global.mainWindowConfig.sideLight;
+	config.upLight = global.mainWindowConfig.upLight;
+	config.downLight = global.mainWindowConfig.downLight;
+	config.exposureTime = global.dlgExposureTimeSetConfig.expousureTime;
+	if (config.exposureTime<=200)
+	{
+		config.gain = 0;
+	}
+	else
+	{
+		config.gain = 5;
+	}
+	config.date = formattedDateTime.toStdString();
+	config.rootPath = storage.toStdString();
+
+	std::string savePath = storage.toStdString() + formattedDateTime.toStdString()+".xml";
+
+	global.storeContext->save(config, savePath);
+
+	global.modelStorageManager->addModelConfig(config);
+
+	global.modelStorageManager->saveIndexConfig();
+
+	emit appRunLog("模型打包完成");
+	emit updateTrainTitle("模型打包完成");
+}
+
+void AiTrainModule::copy_all_files_to_storage(const QString& sourceFilePath, const QString& storage)
+{
+	// 确保目标路径存在，如果不存在则创建
+	QDir storageDir(storage);
+	if (!storageDir.exists()) {
+		if (!storageDir.mkpath(storage)) {
+			emit appRunLog("Failed to create storage directory: " + storage);
+			return;
+		}
+	}
+
+	// 获取源目录
+	QDir sourceDir(sourceFilePath);
+	if (!sourceDir.exists()) {
+		emit appRunLog("Source directory does not exist: " + sourceFilePath);
+		return;
+	}
+
+	// 获取源目录中的所有文件
+	QStringList files = sourceDir.entryList(QDir::Files);
+	for (const QString& fileName : files) {
+		QString sourceFile = sourceDir.filePath(fileName); // 源文件完整路径
+		QString targetFile = storageDir.filePath(fileName); // 目标文件完整路径
+
+		// 拷贝文件
+		if (QFile::copy(sourceFile, targetFile)) {
+			emit appRunLog("Copied file: " + sourceFile + " to " + targetFile);
+		}
+		else {
+			emit appRunLog("Failed to copy file: " + sourceFile + " to " + targetFile);
+		}
+	}
+
+	// 获取源目录中的所有子目录
+	QStringList directories = sourceDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+	for (const QString& dirName : directories) {
+		QString sourceSubDir = sourceDir.filePath(dirName); // 源子目录完整路径
+		QString targetSubDir = storageDir.filePath(dirName); // 目标子目录完整路径
+
+		// 递归拷贝子目录
+		copy_all_files_to_storage(sourceSubDir, targetSubDir);
+	}
+}
+
 cv::Mat AiTrainModule::getMatFromPath(const QString& path)
 {
 	cv::Mat image = cv::imread(path.toStdString());
@@ -326,25 +456,25 @@ cv::Mat AiTrainModule::getMatFromPath(const QString& path)
 void AiTrainModule::run()
 {
 	emit updateTrainTitle("正在训练");
-	//emit appRunLog("训练启动....");
+	emit appRunLog("训练启动....");
 
-	//emit appRunLog("清理旧的训练数据....");
-	//clear_older_trainData();
+	emit appRunLog("清理旧的训练数据....");
+	clear_older_trainData();
 
-	////获取图片的label
-	//auto annotationGoodDataSet = annotation_data_set(false);
-	//auto annotationBadDataSet = annotation_data_set(true);
-	//auto dataSet = getDataSet(annotationGoodDataSet, _modelType, 1);
-	//auto dataSetBad = getDataSet(annotationBadDataSet, _modelType, 0);
-	//QString GoodSetLog = "其中正确的纽扣数据集有" + QString::number(dataSet.size()) + "条数据";
-	//QString BadSetLog = "其中错误的纽扣数据集有" + QString::number(dataSetBad.size()) + "条数据";
-	//emit appRunLog(GoodSetLog);
-	//emit appRunLog(BadSetLog);
+	//获取图片的label
+	auto annotationGoodDataSet = annotation_data_set(false);
+	auto annotationBadDataSet = annotation_data_set(true);
+	auto dataSet = getDataSet(annotationGoodDataSet, _modelType, 1);
+	auto dataSetBad = getDataSet(annotationBadDataSet, _modelType, 0);
+	QString GoodSetLog = "其中正确的纽扣数据集有" + QString::number(dataSet.size()) + "条数据";
+	QString BadSetLog = "其中错误的纽扣数据集有" + QString::number(dataSetBad.size()) + "条数据";
+	emit appRunLog(GoodSetLog);
+	emit appRunLog(BadSetLog);
 
-	////拷贝训练数据
-	//emit appRunLog("拷贝训练文件");
-	//copyTrainData(dataSet);
-	//copyTrainData(dataSetBad);
+	//拷贝训练数据
+	emit appRunLog("拷贝训练文件");
+	copyTrainData(dataSet);
+	copyTrainData(dataSetBad);
 
 	if (_modelType==ModelType::Segment)
 	{
@@ -462,8 +592,10 @@ void AiTrainModule::handleExportModelProcessFinished(int exitCode, QProcess::Exi
 {
 	if (exitStatus == QProcess::NormalExit)
 	{
-		emit updateProgress(100, 100);
 		emit updateTrainTitle("导出完成");
+		copyModelToTemp();
+		packageModelToStorage();
+		emit updateProgress(100, 100);
 	}
 	else
 	{

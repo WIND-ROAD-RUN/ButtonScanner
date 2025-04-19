@@ -3,6 +3,34 @@
 #include"oso_StorageContext.hpp"
 #include"GlobalStruct.h"
 
+void ModelStorageManager::addModelConfig(const rw::cdm::AiModelConfig& item)
+{
+    rw::cdm::ConfigIndexItem indexItem;
+    indexItem.id = item.id;
+    indexItem.model_name = item.name;
+	indexItem.model_type = item.modelType;
+    indexItem.root_path = item.rootPath;
+    _config_index.pushConfig(indexItem);
+}
+
+void ModelStorageManager::eraseModelConfig(const rw::cdm::AiModelConfig& item)
+{
+	rw::cdm::ConfigIndexItem indexItem;
+	indexItem.id = item.id;
+	indexItem.model_name = item.name;
+	indexItem.model_type = item.modelType;
+	indexItem.root_path = item.rootPath;
+	_config_index.deleteConfig(indexItem);
+}
+
+void ModelStorageManager::saveIndexConfig()
+{
+    auto& RootPath = globalPath.modelStorageManagerRootPath;
+    auto& globalStruct = GlobalStructData::getInstance();
+    QString configPath = RootPath + R"(modelStorageIndex.xml)";
+    globalStruct.storeContext->save(_config_index, configPath.toStdString());
+}
+
 ModelStorageManager::ModelStorageManager(QObject *parent)
 	: QObject(parent)
 {

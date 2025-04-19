@@ -12,6 +12,12 @@ class ModelStorageManager : public QObject
 private:
 	rw::cdm::AiModelConfigIndex _config_index{};
 public:
+	void addModelConfig(const rw::cdm::AiModelConfig& item);
+
+	void eraseModelConfig(const rw::cdm::AiModelConfig& item);
+
+	void saveIndexConfig();
+public:
 	ModelStorageManager(QObject* parent);
 	~ModelStorageManager();
 public:

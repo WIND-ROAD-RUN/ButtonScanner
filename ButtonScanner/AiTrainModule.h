@@ -53,6 +53,10 @@ private:
 	void trainSegmentModel();
 	void trainObbModel();
 	void exportOnnexModel();
+	void copyModelToTemp();
+	void packageModelToStorage();
+private:
+	void copy_all_files_to_storage(const QString& sourceFilePath, const QString& storage);
 public:
 	cv::Mat getMatFromPath(const QString& path);
 protected:
