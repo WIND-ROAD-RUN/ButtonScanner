@@ -10,16 +10,22 @@ AiTrainModule::AiTrainModule(QObject* parent)
 	auto enginePath = globalPath.modelRootPath + globalPath.engineFileName;
 	auto namePath = globalPath.modelRootPath + globalPath.nameFileName;
 	labelEngine = std::make_unique<rw::imeot::ModelEngineOT>(enginePath.toStdString(), namePath.toStdString());
-	_process = new QProcess();
-	connect(_process, &QProcess::readyReadStandardOutput, this, &AiTrainModule::handleProcessOutput);
-	connect(_process, &QProcess::readyReadStandardError, this, &AiTrainModule::handleProcessError);
-	connect(_process, &QProcess::finished, this, &AiTrainModule::handleProcessFinished);
+	_processTrainModel = new QProcess();
+	connect(_processTrainModel, &QProcess::readyReadStandardOutput, this, &AiTrainModule::handleTrainModelProcessOutput);
+	connect(_processTrainModel, &QProcess::readyReadStandardError, this, &AiTrainModule::handleTrainModelProcessError);
+	connect(_processTrainModel, &QProcess::finished, this, &AiTrainModule::handleTrainModelProcessFinished);
+
+	_processExportModel = new QProcess();
+	connect(_processExportModel, &QProcess::readyReadStandardOutput, this, &AiTrainModule::handleExportModelProcessOutput);
+	connect(_processExportModel, &QProcess::readyReadStandardError, this, &AiTrainModule::handleExportModelProcessError);
+	connect(_processExportModel, &QProcess::finished, this, &AiTrainModule::handleExportModelProcessFinished);
 }
 
 AiTrainModule::~AiTrainModule()
 {
 	wait();
-	delete _process;
+	delete _processTrainModel;
+	delete _processExportModel;
 }
 
 void AiTrainModule::startTrain()
@@ -293,13 +299,19 @@ void AiTrainModule::copyTrainLabelData(const QVector<AiTrainModule::DataItem>& d
 void AiTrainModule::trainSegmentModel()
 {
 	auto str = "activate yolov5 && cd /d " + globalPath.yoloV5RootPath.toStdString() +R"(segment\)" + " && python train.py";
-	_process->start("cmd.exe", { "/c",str.c_str() });
+	_processTrainModel->start("cmd.exe", { "/c",str.c_str() });
 }
 
 void AiTrainModule::trainObbModel()
 {
 	auto str = "activate yolov5 && cd /d " + globalPath.yoloV5RootPath.toStdString() + " && python train.py";
-	_process->start("cmd.exe", { "/c",str.c_str() });
+	_processTrainModel->start("cmd.exe", { "/c",str.c_str() });
+}
+
+void AiTrainModule::exportOnnexModel()
+{
+	auto str = "activate yolov5 && cd /d " + globalPath.yoloV5RootPath.toStdString() + " && python export.py";
+	_processExportModel->start("cmd.exe", { "/c",str.c_str() });
 }
 
 cv::Mat AiTrainModule::getMatFromPath(const QString& path)
@@ -397,16 +409,16 @@ QVector<AiTrainModule::labelAndImg> AiTrainModule::annotation_data_set(bool isBa
 	return dataSet;
 }
 
-void AiTrainModule::handleProcessOutput()
+void AiTrainModule::handleTrainModelProcessOutput()
 {
-	QByteArray output = _process->readAllStandardOutput();
+	QByteArray output = _processTrainModel->readAllStandardOutput();
 	QString outputStr = QString::fromLocal8Bit(output);
 	emit appRunLog(outputStr); // 将输出内容发送到日志或界面
 }
 
-void AiTrainModule::handleProcessError()
+void AiTrainModule::handleTrainModelProcessError()
 {
-	QByteArray errorOutput = _process->readAllStandardError();
+	QByteArray errorOutput = _processTrainModel->readAllStandardError();
 	QString errorStr = QString::fromLocal8Bit(errorOutput);
 	emit appRunLog(errorStr);
 	int total = 100;
@@ -418,17 +430,45 @@ void AiTrainModule::handleProcessError()
 	emit updateProgress(complete, 100);
 }
 
-void AiTrainModule::handleProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
+void AiTrainModule::handleTrainModelProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
 	if (exitStatus == QProcess::NormalExit)
 	{
-		emit updateTrainTitle("训练完成");
+		exportOnnexModel();
 	}
 	else
 	{
 		emit updateTrainTitle("训练失败");
+		quit();
 	}
 
+}
+
+void AiTrainModule::handleExportModelProcessOutput()
+{
+	QByteArray output = _processExportModel->readAllStandardOutput();
+	QString outputStr = QString::fromLocal8Bit(output);
+	emit appRunLog(outputStr); // 将输出内容发送到日志或界面
+}
+
+void AiTrainModule::handleExportModelProcessError()
+{
+	QByteArray errorOutput = _processExportModel->readAllStandardError();
+	QString errorStr = QString::fromLocal8Bit(errorOutput);
+	emit appRunLog(errorStr);
+}
+
+void AiTrainModule::handleExportModelProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
+{
+	if (exitStatus == QProcess::NormalExit)
+	{
+		emit updateProgress(100, 100);
+		emit updateTrainTitle("导出完成");
+	}
+	else
+	{
+		emit updateTrainTitle("导出失败");
+	}
 	quit();
 }
 

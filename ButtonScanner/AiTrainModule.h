@@ -23,7 +23,8 @@ private:
 public:
 	void setModelType(ModelType type) { _modelType = type; }
 public:
-	QProcess* _process;
+	QProcess* _processTrainModel;
+	QProcess* _processExportModel;
 private:
 	int _frameHeight;
 	int _framWidth;
@@ -48,9 +49,10 @@ private:
 	void copyTrainData(const QVector<AiTrainModule::DataItem>& dataSet);
 	void copyTrainImgData(const QVector<AiTrainModule::DataItem>& dataSet, const QString& path);
 	void copyTrainLabelData(const QVector<AiTrainModule::DataItem>& dataSet, const QString& path);
-public:
+private:
 	void trainSegmentModel();
 	void trainObbModel();
+	void exportOnnexModel();
 public:
 	cv::Mat getMatFromPath(const QString& path);
 protected:
@@ -64,11 +66,13 @@ signals:
 	void updateProgress(int value,int total);
 	void updateTrainTitle(QString s);
 public slots:
-	void handleProcessOutput();
+	void handleTrainModelProcessOutput();
+	void handleTrainModelProcessError();
+	void handleTrainModelProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
 
-	void handleProcessError();
-
-	void handleProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
+	void handleExportModelProcessOutput();
+	void handleExportModelProcessError();
+	void handleExportModelProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
 };
 
 
