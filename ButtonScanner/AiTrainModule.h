@@ -7,6 +7,7 @@
 #include"imeot_ModelEngineOT.h"
 
 #include"opencv2/opencv.hpp"
+#include<QProcess>
 
 enum class ModelType
 {
@@ -21,6 +22,8 @@ private:
 	ModelType _modelType;
 public:
 	void setModelType(ModelType type) { _modelType = type; }
+public:
+	QProcess* _process;
 private:
 	int _frameHeight;
 	int _framWidth;
@@ -42,6 +45,9 @@ private:
 	QVector<DataItem> getObjectDetectionDataSet(const QVector<labelAndImg>& annotationDataSet, int classId);
 private:
 	void clear_older_trainData();
+	void copyTrainData(const QVector<AiTrainModule::DataItem>& dataSet);
+	void copyTrainImgData(const QVector<AiTrainModule::DataItem> &  dataSet,const QString &path );
+	void copyTrainLabelData(const QVector<AiTrainModule::DataItem>& dataSet, const QString& path);
 public:
 	cv::Mat getMatFromPath(const QString & path);
 protected:
@@ -50,6 +56,11 @@ private:
 	QVector<labelAndImg> annotation_data_set(bool isBad);
 signals:
 	void appRunLog(QString log);
+private slots:
+	void ProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
+
+	void ProcessReadOut();
+	
 
 };
 

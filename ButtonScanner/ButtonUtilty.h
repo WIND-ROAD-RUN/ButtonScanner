@@ -22,7 +22,7 @@ public:
 	QString engineFileName = R"(model.engine)";
 	QString onnxFileName = R"(modelOnnx.onnx)";
 public:
-	QString yoloV5RootPath = R"(D:\zfkjData\yolov5-master\)";
+	QString yoloV5RootPath = R"(D:\y\yolov5-master\)";
 public:
 	QString imageSaveRootPath = projectHome + R"(SavedImages\)";
 }globalPath;

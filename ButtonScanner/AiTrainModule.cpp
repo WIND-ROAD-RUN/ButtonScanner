@@ -10,6 +10,7 @@ AiTrainModule::AiTrainModule(QObject* parent)
 	auto enginePath = globalPath.modelRootPath + globalPath.engineFileName;
 	auto namePath = globalPath.modelRootPath + globalPath.nameFileName;
 	labelEngine = std::make_unique<rw::imeot::ModelEngineOT>(enginePath.toStdString(), namePath.toStdString());
+	_process = new QProcess(this);
 }
 
 AiTrainModule::~AiTrainModule()
@@ -207,6 +208,84 @@ void AiTrainModule::clear_older_trainData()
 
 }
 
+void AiTrainModule::copyTrainData(const QVector<AiTrainModule::DataItem>& dataSet)
+{
+	if (_modelType == ModelType::ObejectDetection)
+	{
+		copyTrainImgData(dataSet, QString(globalPath.yoloV5RootPath + R"(\datasets\mydataset\tes\)"));
+		copyTrainImgData(dataSet, QString(globalPath.yoloV5RootPath + R"(\datasets\mydataset\train\images\)"));
+		copyTrainImgData(dataSet, QString(globalPath.yoloV5RootPath + R"(\datasets\mydataset\val\images\)"));
+
+		copyTrainLabelData(dataSet, QString(globalPath.yoloV5RootPath + R"(\datasets\mydataset\train\labels)"));
+		copyTrainLabelData(dataSet, QString(globalPath.yoloV5RootPath + R"(\datasets\mydataset\val\labels)"));
+	}
+	else if (_modelType == ModelType::Segment)
+	{
+		copyTrainImgData(dataSet, QString(globalPath.yoloV5RootPath + R"(\segdatasets\mydataset\tes\)"));
+		copyTrainImgData(dataSet, QString(globalPath.yoloV5RootPath + R"(\segdatasets\mydataset\train\images\)"));
+		copyTrainImgData(dataSet, QString(globalPath.yoloV5RootPath + R"(\segdatasets\mydataset\val\images\)"));
+
+		copyTrainLabelData(dataSet, QString(globalPath.yoloV5RootPath + R"(\segdatasets\mydataset\train\labels)"));
+		copyTrainLabelData(dataSet, QString(globalPath.yoloV5RootPath + R"(\segdatasets\mydataset\val\labels)"));
+	}
+}
+
+void AiTrainModule::copyTrainImgData(const QVector<AiTrainModule::DataItem>& dataSet, const QString& path)
+{
+	// 检查目标路径是否存在，如果不存在则创建
+	QDir dir(path);
+	if (!dir.exists()) {
+		if (!dir.mkpath(path)) {
+			emit appRunLog("Failed to create directory: " + path);
+			return;
+		}
+	}
+
+	// 遍历 dataSet 并拷贝图片
+	for (const auto& item : dataSet) {
+		QString sourcePath = item.first; // 图片的源路径
+		QString fileName = QFileInfo(sourcePath).fileName(); // 获取文件名
+		QString destinationPath = path + QDir::separator() + fileName; // 目标路径
+
+		// 拷贝文件
+		if (!QFile::copy(sourcePath, destinationPath)) {
+			emit appRunLog("Failed to copy file: " + sourcePath + " to " + destinationPath);
+		}
+		else {
+			emit appRunLog("Copied file: " + sourcePath + " to " + destinationPath);
+		}
+	}
+}
+
+void AiTrainModule::copyTrainLabelData(const QVector<AiTrainModule::DataItem>& dataSet, const QString& path)
+{
+	// 检查目标路径是否存在，如果不存在则创建
+	QDir dir(path);
+	if (!dir.exists()) {
+		if (!dir.mkpath(path)) {
+			emit appRunLog("Failed to create directory: " + path);
+			return;
+		}
+	}
+
+	// 遍历 dataSet 并保存 label 数据
+	for (const auto& item : dataSet) {
+		QString fileName = QFileInfo(item.first).baseName() + ".txt"; // 获取文件名并添加 .txt 后缀
+		QString filePath = path + QDir::separator() + fileName; // 目标文件路径
+
+		QFile file(filePath);
+		if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+			QTextStream out(&file);
+			out << item.second; // 写入 label 数据
+			file.close();
+			emit appRunLog("Saved label file: " + filePath);
+		}
+		else {
+			emit appRunLog("Failed to save label file: " + filePath);
+		}
+	}
+}
+
 cv::Mat AiTrainModule::getMatFromPath(const QString& path)
 {
 	cv::Mat image = cv::imread(path.toStdString());
@@ -232,6 +311,14 @@ void AiTrainModule::run()
 	QString BadSetLog = "其中错误的纽扣数据集有" + QString::number(dataSetBad.size()) + "条数据";
 	emit appRunLog(GoodSetLog);
 	emit appRunLog(BadSetLog);
+
+	//拷贝训练数据
+	emit appRunLog("拷贝训练文件");
+	copyTrainData(dataSet);
+	copyTrainData(dataSetBad);
+
+
+
 }
 
 QVector<AiTrainModule::labelAndImg> AiTrainModule::annotation_data_set(bool isBad)
@@ -281,4 +368,50 @@ QVector<AiTrainModule::labelAndImg> AiTrainModule::annotation_data_set(bool isBa
 	emit appRunLog("标注完" + QString::number(dataSet.size()) + "条数据");
 
 	return dataSet;
+}
+
+void AiTrainModule::ProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
+{
+	if (exitStatus == QProcess::NormalExit)
+	{
+		//ui->pbtn_tranCompelete->move(pbtn_tranCompelete_rawX, pbtn_tranCompelete_rawY);
+		//ui->label_state->setText("训练完成");
+		qDebug() << "进来";
+		QProcess* processRobot_1 = new QProcess();
+		processRobot_1->start("cmd.exe");
+		processRobot_1->write("activate yolov5");
+		processRobot_1->write("&&");
+
+		//转onnx
+		processRobot_1->write("cd /d D:\\y\\yolov5-master\\ && start python export.py\n ");
+	}
+	else
+	{
+		//程序异常结束
+		qDebug() << "进来2";
+	}
+}
+
+void AiTrainModule::ProcessReadOut()
+{
+	auto out = _process->readAllStandardError();
+
+	QRegularExpression re(R"((?<!\d)(100|[1-9]?\d)%(?!\d))");  // 带捕获组的正则
+	QVector<int> results;
+
+	QRegularExpressionMatchIterator it = re.globalMatch(out);
+	while (it.hasNext()) {
+		QRegularExpressionMatch match = it.next();
+		results.append(
+			match.captured(1).toInt()
+		);
+	}
+
+	/*if (results.size() > 0) {
+		std::sort(results.begin(), results.end());
+		ui->progress_learn->setValue(results[results.length() - 1]);
+	}*/
+
+	auto log = QString::fromLocal8Bit(out.toStdString());
+	emit appRunLog(log);
 }
