@@ -10,7 +10,6 @@
 #include"rqw_LabelClickable.h"
 
 #include"opencv2/opencv.hpp"
-#include"DlgAiLearn.h"
 #include<QImage>
 #include<memory>
 
@@ -34,8 +33,6 @@ private:
 	DlgProductSet* dlgProductSet = nullptr;
 	DlgExposureTimeSet* dlgExposureTimeSet = nullptr;
 	DlgNewProduction* dlgNewProduction = nullptr;
-public:
-	DlgAiLearn* dlgAiLearn = nullptr;
 public:
 	rw::rqw::ClickableLabel* labelClickable_title;
 private:
@@ -68,7 +65,6 @@ private:
 	void build_dlgProduceLineSet();
 	void build_dlgProductSet();
 	void build_dlgExposureTimeSet();
-	void build_dlgAiLearn();
 	void build_dlgNewProduction();
 	void build_modelStorageManager();
 	void destory_modelStorageManager();

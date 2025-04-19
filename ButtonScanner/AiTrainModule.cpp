@@ -455,6 +455,7 @@ cv::Mat AiTrainModule::getMatFromPath(const QString& path)
 
 void AiTrainModule::run()
 {
+	emit updateTrainState(true);
 	emit updateTrainTitle("正在训练");
 	emit appRunLog("训练启动....");
 
@@ -569,6 +570,7 @@ void AiTrainModule::handleTrainModelProcessFinished(int exitCode, QProcess::Exit
 	else
 	{
 		emit updateTrainTitle("训练失败");
+		emit updateTrainState(false);
 		quit();
 	}
 
@@ -596,10 +598,12 @@ void AiTrainModule::handleExportModelProcessFinished(int exitCode, QProcess::Exi
 		copyModelToTemp();
 		packageModelToStorage();
 		emit updateProgress(100, 100);
+		emit updateTrainState(false);
 	}
 	else
 	{
 		emit updateTrainTitle("导出失败");
+		emit updateTrainState(false);
 	}
 	quit();
 }

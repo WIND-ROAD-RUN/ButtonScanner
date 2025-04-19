@@ -43,6 +43,10 @@ private:
 
 private:
 	DlgNewProductionInfo _info;
+private:
+	bool _trainSate{ false };
+public slots:
+	void updateTrainState(bool isTrain);
 public slots:
 	void appendAiTrainLog(QString log);
 	void updateProgress(int value,int total);

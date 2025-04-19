@@ -160,10 +160,8 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     <QtRcc Include="ButtonScanner.qrc" />
     <QtUic Include="ButtonScanner.ui" />
     <QtMoc Include="ButtonScanner.h" />
-    <ClCompile Include="AiLearnTools.cpp" />
     <ClCompile Include="ButtonScanner.cpp" />
     <ClCompile Include="DlgExposureTimeSet.cpp" />
-    <ClCompile Include="DlgAiLearn.cpp" />
     <ClCompile Include="DlgNewProduction.cpp" />
     <ClCompile Include="DlgProduceLineSet.cpp" />
     <ClCompile Include="DlgProductSet.cpp" />
@@ -176,8 +174,6 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     <QtMoc Include="GlobalStruct.h" />
     <QtMoc Include="ImageProcessorModule.h" />
     <QtMoc Include="NumKeyBord.h" />
-    <QtMoc Include="DlgAiLearn.h" />
-    <ClInclude Include="AiLearnTools.h" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="ModelStorageManager.cpp" />
     <ClCompile Include="MonitorCameraAndCardStateThread.cpp" />
@@ -189,7 +185,6 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <QtUic Include="DlgExposureTimeSet.ui" />
-    <QtUic Include="DlgAiLearn.ui" />
     <QtUic Include="DlgNewProduction.ui" />
     <QtUic Include="DlgProduceLineSet.ui" />
     <QtUic Include="DlgProductSet.ui" />

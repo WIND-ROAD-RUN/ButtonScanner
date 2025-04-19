@@ -91,9 +91,6 @@
     <ClCompile Include="MonitorCameraAndCardStateThread.cpp">
       <Filter>Source Files\DetachThread</Filter>
     </ClCompile>
-    <ClCompile Include="DlgAiLearn.cpp">
-      <Filter>Source Files\ui</Filter>
-    </ClCompile>
     <ClCompile Include="LoadingDialog.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
@@ -101,9 +98,6 @@
       <Filter>Source Files\data</Filter>
     </ClCompile>
     <ClCompile Include="ImageProcessorModule.cpp">
-      <Filter>Source Files\func</Filter>
-    </ClCompile>
-    <ClCompile Include="AiLearnTools.cpp">
       <Filter>Source Files\func</Filter>
     </ClCompile>
     <ClCompile Include="PathGlobalStruct.cpp">
@@ -147,9 +141,6 @@
     <QtMoc Include="MonitorCameraAndCardStateThread.h">
       <Filter>Header Files\DetachThread</Filter>
     </QtMoc>
-    <QtMoc Include="DlgAiLearn.h">
-      <Filter>Header Files\ui</Filter>
-    </QtMoc>
     <QtMoc Include="LoadingDialog.h">
       <Filter>Header Files\ui</Filter>
     </QtMoc>
@@ -182,9 +173,6 @@
     <QtUic Include="LoadingDialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="DlgAiLearn.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
     <QtUic Include="DlgNewProduction.ui">
       <Filter>Form Files</Filter>
     </QtUic>
@@ -208,9 +196,6 @@
   <ItemGroup>
     <ClInclude Include="ThreadSafePriorityQueue.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AiLearnTools.h">
-      <Filter>Header Files\func</Filter>
     </ClInclude>
     <ClInclude Include="PathGlobalStruct.h">
       <Filter>Header Files\data</Filter>

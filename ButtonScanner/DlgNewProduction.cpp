@@ -304,6 +304,26 @@ void DlgNewProduction::showEvent(QShowEvent* show_event)
 {
 	this->_info.isActivate = true;
 	QDialog::showEvent(show_event);
+
+	if (_trainSate==true)
+	{
+		ui->tabWidget->setCurrentIndex(4);
+		this->_info.currentTabIndex = 4;
+	}
+	else
+	{
+		ui->label_trainState->setText("未开始训练");
+		ui->progressBar_tab5->setValue(0);
+		ui->plainTextEdit_tab5->clear();
+	}
+}
+
+void DlgNewProduction::updateTrainState(bool isTrain)
+{
+	_trainSate = isTrain;
+	ui->pbtn_tab5_finish->setEnabled(!isTrain);
+	ui->pbtn_tab5_startTrain->setEnabled(!isTrain);
+	ui->pbtn_tab5_preStep->setEnabled(!isTrain);
 }
 
 void DlgNewProduction::appendAiTrainLog(QString log)

@@ -10,7 +10,6 @@
 #include"DlgProduceLineSet.h"
 #include"GlobalStruct.h"
 #include"NumKeyBord.h"
-#include"cdm_ButtonScannerDlgAiLearn.h"
 #include"ButtonUtilty.h"
 
 #include<qdebug>
@@ -141,8 +140,6 @@ void ButtonScanner::initializeComponents()
 	QCoreApplication::processEvents();
 	build_imageProcessorModule();
 
-	build_dlgAiLearn();
-
 	// 构建相机
 	loadingDialog.updateMessage("正在构建相机...");
 	QCoreApplication::processEvents();
@@ -184,6 +181,9 @@ void ButtonScanner::initializeComponents()
 		dlgNewProduction, &DlgNewProduction::updateProgress, Qt::QueuedConnection);
 	QObject::connect(GlobalStructThread::getInstance().aiTrainModule.get(), &AiTrainModule::updateTrainTitle,
 		dlgNewProduction, &DlgNewProduction::updateProgressTitle, Qt::QueuedConnection);
+	QObject::connect(GlobalStructThread::getInstance().aiTrainModule.get(), &AiTrainModule::updateTrainState,
+		dlgNewProduction, &DlgNewProduction::updateTrainState, Qt::QueuedConnection);
+
 
 	// 隐藏加载框
 	loadingDialog.close();
@@ -307,10 +307,6 @@ void ButtonScanner::stop_all_axis()
 	motionPtr->SetIOOut(7, false);
 }
 
-void ButtonScanner::build_dlgAiLearn()
-{
-	this->dlgAiLearn = new DlgAiLearn(this);
-}
 
 void ButtonScanner::build_dlgNewProduction()
 {

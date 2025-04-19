@@ -69,6 +69,7 @@ signals:
 	void appRunLog(QString log);
 	void updateProgress(int value,int total);
 	void updateTrainTitle(QString s);
+	void updateTrainState(bool isTrain);
 public slots:
 	void handleTrainModelProcessOutput();
 	void handleTrainModelProcessError();

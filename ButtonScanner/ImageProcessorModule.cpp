@@ -150,10 +150,6 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 			eliminationLogic(frame, frame.image, errorInfo, defect, vecRecogResultTarget);
 		}
 	}
-	//如果新物料学习窗口在步骤1（学习坏的）、2（学习好的），就调用dlgAiLearn->onFrameCaptured
-	if (globalStruct.mainWindow->dlgAiLearn->step > 0 && globalStruct.mainWindow->dlgAiLearn->step < 3) {
-		globalStruct.mainWindow->dlgAiLearn->onFrameCaptured(frame.image, frame.index);
-	}
 
 	return frame.image.clone();
 }
