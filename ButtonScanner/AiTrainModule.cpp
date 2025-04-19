@@ -130,6 +130,83 @@ QVector<AiTrainModule::DataItem> AiTrainModule::getObjectDetectionDataSet(const 
 	return result;
 }
 
+void AiTrainModule::clear_older_trainData()
+{
+	QString workPlace = globalPath.yoloV5RootPath;
+	QDir dir(workPlace);
+	QString absolutePath = dir.absolutePath();
+
+	// 处理 Run 目录
+	{
+		QString runDir = workPlace + R"(runs\)";
+		QString trainDir = runDir + R"(train\)";
+		QString trainSeg = runDir + R"(train-seg\)";
+
+		// 删除 trainDir 及其所有子文件和子文件夹
+		QDir trainDirObj(trainDir);
+		if (trainDirObj.exists()) {
+			trainDirObj.removeRecursively();
+		}
+
+		// 删除 trainSeg 及其所有子文件和子文件夹
+		QDir trainSegObj(trainSeg);
+		if (trainSegObj.exists()) {
+			trainSegObj.removeRecursively();
+		}
+	}
+
+	// 处理 dataset 目录
+	{
+		QString dataSetDir = workPlace + R"(datasets\mydataset)";
+		QString trainDir = dataSetDir + R"(\train\)";
+		QString valDir = dataSetDir + R"(\val\)";
+		QString testDir = dataSetDir + R"(\tes\)";
+
+		// 删除 trainDir 及其所有子文件和子文件夹
+		QDir trainDirObj(trainDir);
+		if (trainDirObj.exists()) {
+			trainDirObj.removeRecursively();
+		}
+
+		// 删除 valDir 及其所有子文件和子文件夹
+		QDir valDirObj(valDir);
+		if (valDirObj.exists()) {
+			valDirObj.removeRecursively();
+		}
+
+		// 删除 testDir 及其所有子文件和子文件夹
+		QDir testDirObj(testDir);
+		if (testDirObj.exists()) {
+			testDirObj.removeRecursively();
+		}
+	}
+
+	//处理segDatasets
+	{
+		QString segDataSetDir = workPlace + R"(segDatasets\mydataset)";
+		QString trainDir = segDataSetDir + R"(\train\)";
+		QString valDir = segDataSetDir + R"(\val\)";
+		QString testDir = segDataSetDir + R"(\tes\)";
+		// 删除 trainDir 及其所有子文件和子文件夹
+		QDir trainDirObj(trainDir);
+		if (trainDirObj.exists()) {
+			trainDirObj.removeRecursively();
+		}
+		// 删除 valDir 及其所有子文件和子文件夹
+		QDir valDirObj(valDir);
+		if (valDirObj.exists()) {
+			valDirObj.removeRecursively();
+		}
+		// 删除 testDir 及其所有子文件和子文件夹
+		QDir testDirObj(testDir);
+		if (testDirObj.exists()) {
+			testDirObj.removeRecursively();
+		}
+	}
+	
+
+}
+
 cv::Mat AiTrainModule::getMatFromPath(const QString& path)
 {
 	cv::Mat image = cv::imread(path.toStdString());
@@ -142,6 +219,9 @@ cv::Mat AiTrainModule::getMatFromPath(const QString& path)
 void AiTrainModule::run()
 {
 	emit appRunLog("训练启动....");
+
+	emit appRunLog("清理旧的训练数据....");
+	clear_older_trainData();
 
 	//获取图片的label
 	auto annotationGoodDataSet = annotation_data_set(false);

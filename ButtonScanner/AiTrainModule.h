@@ -40,6 +40,8 @@ private:
 	QVector<DataItem> getDataSet(const QVector<labelAndImg> & annotationDataSet, ModelType type,int classId);
 	QVector<DataItem> getSegmentDataSet(const QVector<labelAndImg>& annotationDataSet, int classId);
 	QVector<DataItem> getObjectDetectionDataSet(const QVector<labelAndImg>& annotationDataSet, int classId);
+private:
+	void clear_older_trainData();
 public:
 	cv::Mat getMatFromPath(const QString & path);
 protected:
