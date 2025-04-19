@@ -78,6 +78,8 @@ public slots:
 	void handleExportModelProcessOutput();
 	void handleExportModelProcessError();
 	void handleExportModelProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
+public slots:
+	void cancelTrain();
 };
 
 

@@ -49,7 +49,7 @@ public slots:
 	void updateTrainState(bool isTrain);
 public slots:
 	void appendAiTrainLog(QString log);
-	void updateProgress(int value,int total);
+	void updateProgress(int value, int total);
 	void updateProgressTitle(QString s);
 public slots:
 	void img_display_work(cv::Mat frame, size_t index);
@@ -82,7 +82,9 @@ private slots:
 	void pbtn_tab5_exit_clicked();
 	void pbtn_tab5_pre_step_clicked();
 	void pbtn_tab5_finish_clicked();
-
+	void pbtn_tab5_cancelTrain_clicked();
+signals:
+	void cancelTrain();
 protected:
 	void showEvent(QShowEvent*) override;
 };

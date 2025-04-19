@@ -912,7 +912,7 @@
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_16" stretch="2,1">
+           <layout class="QHBoxLayout" name="horizontalLayout_16" stretch="2,2,2">
             <item>
              <spacer name="horizontalSpacer_8">
               <property name="orientation">
@@ -936,6 +936,19 @@
               </property>
               <property name="text">
                <string>开始训练</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pbtn_tab5_cancelTrain">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>终止训练</string>
               </property>
              </widget>
             </item>

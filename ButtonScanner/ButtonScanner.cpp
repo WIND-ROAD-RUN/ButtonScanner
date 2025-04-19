@@ -183,7 +183,8 @@ void ButtonScanner::initializeComponents()
 		dlgNewProduction, &DlgNewProduction::updateProgressTitle, Qt::QueuedConnection);
 	QObject::connect(GlobalStructThread::getInstance().aiTrainModule.get(), &AiTrainModule::updateTrainState,
 		dlgNewProduction, &DlgNewProduction::updateTrainState, Qt::QueuedConnection);
-
+	QObject::connect(dlgNewProduction, &DlgNewProduction::cancelTrain,
+		GlobalStructThread::getInstance().aiTrainModule.get(), &AiTrainModule::cancelTrain);
 
 	// 隐藏加载框
 	loadingDialog.close();

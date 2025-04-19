@@ -608,6 +608,21 @@ void AiTrainModule::handleExportModelProcessFinished(int exitCode, QProcess::Exi
 	quit();
 }
 
+void AiTrainModule::cancelTrain()
+{
+	if (_processTrainModel->state() == QProcess::Running) {
+		_processTrainModel->kill();
+		_processTrainModel->waitForFinished();
+	}
+	if (_processExportModel->state() == QProcess::Running) {
+		_processExportModel->kill();
+		_processExportModel->waitForFinished();
+	}
+	emit updateTrainTitle("训练已取消");
+	emit updateTrainState(false);
+	quit();
+}
+
 int AiTrainModule::parseProgress(const QString& logText, int& totalTasks) {
 	// 匹配整行日志的正则表达式
 	QRegularExpression lineRegex(R"((\d+/\d+)\s+\d+\.\d+G\s+\d+\.\d+\s+\d+\.\d+\s+\d+\.\d+\s+\d+\s+\d+:)");

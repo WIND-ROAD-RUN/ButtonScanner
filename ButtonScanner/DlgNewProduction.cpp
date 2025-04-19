@@ -74,6 +74,8 @@ void DlgNewProduction::build_connect()
 		this, &DlgNewProduction::pbtn_tab5_pre_step_clicked);
 	QObject::connect(ui->pbtn_tab5_finish, &QPushButton::clicked,
 		this, &DlgNewProduction::pbtn_tab5_finish_clicked);
+	QObject::connect(ui->pbtn_tab5_cancelTrain, &QPushButton::clicked,
+		this, &DlgNewProduction::pbtn_tab5_cancelTrain_clicked);
 }
 
 void DlgNewProduction::build_dialog()
@@ -300,6 +302,15 @@ void DlgNewProduction::pbtn_tab5_finish_clicked()
 	destroy();
 }
 
+void DlgNewProduction::pbtn_tab5_cancelTrain_clicked()
+{
+	auto result = QMessageBox::question(this, "确认", "你真的要终止训练吗，若终止的话当前的训练结果将会丢失");
+	if (result==QMessageBox::Yes)
+	{
+		emit cancelTrain();
+	}
+}
+
 void DlgNewProduction::showEvent(QShowEvent* show_event)
 {
 	this->_info.isActivate = true;
@@ -309,12 +320,14 @@ void DlgNewProduction::showEvent(QShowEvent* show_event)
 	{
 		ui->tabWidget->setCurrentIndex(4);
 		this->_info.currentTabIndex = 4;
+		ui->pbtn_tab5_cancelTrain->setEnabled(true);
 	}
 	else
 	{
 		ui->label_trainState->setText("未开始训练");
 		ui->progressBar_tab5->setValue(0);
 		ui->plainTextEdit_tab5->clear();
+		ui->pbtn_tab5_cancelTrain->setEnabled(false);
 	}
 }
 
@@ -324,6 +337,7 @@ void DlgNewProduction::updateTrainState(bool isTrain)
 	ui->pbtn_tab5_finish->setEnabled(!isTrain);
 	ui->pbtn_tab5_startTrain->setEnabled(!isTrain);
 	ui->pbtn_tab5_preStep->setEnabled(!isTrain);
+	ui->pbtn_tab5_cancelTrain->setEnabled(isTrain);
 }
 
 void DlgNewProduction::appendAiTrainLog(QString log)
