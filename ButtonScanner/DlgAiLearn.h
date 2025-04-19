@@ -80,4 +80,5 @@ private slots:
 
 public slots:
 	void onFrameCaptured(cv::Mat frame, size_t index);
+	void updateProgress(size_t value);
 };

@@ -359,6 +359,14 @@ void DlgAiLearn::onFrameCaptured(cv::Mat frame, size_t index)
 	}
 }
 
+void DlgAiLearn::updateProgress(size_t value)
+{
+	if (value > 100) {
+		value = 100;
+	}
+	ui->progress_learn->setValue(value);
+}
+
 void DlgAiLearn::pbtn_train_clicked()
 {
 	setAttribute(Qt::WA_TransparentForMouseEvents, true);

@@ -45,6 +45,8 @@ private:
 	DlgNewProductionInfo _info;
 public slots:
 	void appendAiTrainLog(QString log);
+	void updateProgress(int value,int total);
+	void updateProgressTitle(QString s);
 public slots:
 	void img_display_work(cv::Mat frame, size_t index);
 private:

@@ -225,12 +225,12 @@ void AiTrainModule::copyTrainData(const QVector<AiTrainModule::DataItem>& dataSe
 	}
 	else if (_modelType == ModelType::Segment)
 	{
-		copyTrainImgData(dataSet, QString(globalPath.yoloV5RootPath + R"(\segdatasets\mydataset\tes\)"));
-		copyTrainImgData(dataSet, QString(globalPath.yoloV5RootPath + R"(\segdatasets\mydataset\train\images\)"));
-		copyTrainImgData(dataSet, QString(globalPath.yoloV5RootPath + R"(\segdatasets\mydataset\val\images\)"));
+		copyTrainImgData(dataSet, QString(globalPath.yoloV5RootPath + R"(\datasets\mydataset\tes\)"));
+		copyTrainImgData(dataSet, QString(globalPath.yoloV5RootPath + R"(\datasets\mydataset\train\images\)"));
+		copyTrainImgData(dataSet, QString(globalPath.yoloV5RootPath + R"(\datasets\mydataset\val\images\)"));
 
-		copyTrainLabelData(dataSet, QString(globalPath.yoloV5RootPath + R"(\segdatasets\mydataset\train\labels)"));
-		copyTrainLabelData(dataSet, QString(globalPath.yoloV5RootPath + R"(\segdatasets\mydataset\val\labels)"));
+		copyTrainLabelData(dataSet, QString(globalPath.yoloV5RootPath + R"(\datasets\mydataset\train\labels)"));
+		copyTrainLabelData(dataSet, QString(globalPath.yoloV5RootPath + R"(\datasets\mydataset\val\labels)"));
 	}
 }
 
@@ -292,7 +292,8 @@ void AiTrainModule::copyTrainLabelData(const QVector<AiTrainModule::DataItem>& d
 
 void AiTrainModule::trainSegmentModel()
 {
-
+	auto str = "activate yolov5 && cd /d " + globalPath.yoloV5RootPath.toStdString() +R"(segment\)" + " && python train.py";
+	_process->start("cmd.exe", { "/c",str.c_str() });
 }
 
 void AiTrainModule::trainObbModel()
@@ -312,25 +313,26 @@ cv::Mat AiTrainModule::getMatFromPath(const QString& path)
 
 void AiTrainModule::run()
 {
-	emit appRunLog("训练启动....");
+	emit updateTrainTitle("正在训练");
+	//emit appRunLog("训练启动....");
 
-	emit appRunLog("清理旧的训练数据....");
-	clear_older_trainData();
+	//emit appRunLog("清理旧的训练数据....");
+	//clear_older_trainData();
 
-	//获取图片的label
-	auto annotationGoodDataSet = annotation_data_set(false);
-	auto annotationBadDataSet = annotation_data_set(true);
-	auto dataSet = getDataSet(annotationGoodDataSet, _modelType, 1);
-	auto dataSetBad = getDataSet(annotationBadDataSet, _modelType, 0);
-	QString GoodSetLog = "其中正确的纽扣数据集有" + QString::number(dataSet.size()) + "条数据";
-	QString BadSetLog = "其中错误的纽扣数据集有" + QString::number(dataSetBad.size()) + "条数据";
-	emit appRunLog(GoodSetLog);
-	emit appRunLog(BadSetLog);
+	////获取图片的label
+	//auto annotationGoodDataSet = annotation_data_set(false);
+	//auto annotationBadDataSet = annotation_data_set(true);
+	//auto dataSet = getDataSet(annotationGoodDataSet, _modelType, 1);
+	//auto dataSetBad = getDataSet(annotationBadDataSet, _modelType, 0);
+	//QString GoodSetLog = "其中正确的纽扣数据集有" + QString::number(dataSet.size()) + "条数据";
+	//QString BadSetLog = "其中错误的纽扣数据集有" + QString::number(dataSetBad.size()) + "条数据";
+	//emit appRunLog(GoodSetLog);
+	//emit appRunLog(BadSetLog);
 
-	//拷贝训练数据
-	emit appRunLog("拷贝训练文件");
-	copyTrainData(dataSet);
-	copyTrainData(dataSetBad);
+	////拷贝训练数据
+	//emit appRunLog("拷贝训练文件");
+	//copyTrainData(dataSet);
+	//copyTrainData(dataSetBad);
 
 	if (_modelType==ModelType::Segment)
 	{
@@ -406,21 +408,52 @@ void AiTrainModule::handleProcessError()
 {
 	QByteArray errorOutput = _process->readAllStandardError();
 	QString errorStr = QString::fromLocal8Bit(errorOutput);
-	emit appRunLog(errorStr); // 将错误内容发送到日志或界面
+	emit appRunLog(errorStr);
+	int total = 100;
+	auto complete = parseProgress(errorStr, total);
+	if (complete==-1)
+	{
+		return;
+	}
+	emit updateProgress(complete, 100);
 }
 
 void AiTrainModule::handleProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
 	if (exitStatus == QProcess::NormalExit)
 	{
-
+		emit updateTrainTitle("训练完成");
 	}
 	else
 	{
-		//程序异常结束
-		qDebug() << "进来2";
+		emit updateTrainTitle("训练失败");
 	}
 
 	quit();
+}
+
+int AiTrainModule::parseProgress(const QString& logText, int& totalTasks) {
+	// 匹配整行日志的正则表达式
+	QRegularExpression lineRegex(R"((\d+/\d+)\s+\d+\.\d+G\s+\d+\.\d+\s+\d+\.\d+\s+\d+\.\d+\s+\d+\s+\d+:)");
+	QRegularExpressionMatch lineMatch = lineRegex.match(logText);
+
+	if (lineMatch.hasMatch()) {
+		// 提取类似 "8/99" 的部分
+		QString progress = lineMatch.captured(1);
+
+		// 再次用正则表达式解析 "8/99"
+		QRegularExpression progressRegex(R"((\d+)/(\d+))");
+		QRegularExpressionMatch progressMatch = progressRegex.match(progress);
+
+		if (progressMatch.hasMatch()) {
+			int completedTasks = progressMatch.captured(1).toInt();
+			totalTasks = progressMatch.captured(2).toInt();
+			return completedTasks;
+		}
+	}
+
+	// 如果未匹配到，返回 -1 表示解析失败
+	totalTasks = -1;
+	return -1;
 }
 

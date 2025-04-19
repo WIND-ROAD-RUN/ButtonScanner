@@ -40,25 +40,29 @@ private:
 	std::unique_ptr<rw::imeot::ModelEngineOT> labelEngine;
 private:
 	rw::imeot::ProcessRectanglesResultOT getBody(std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult, bool& hasBody);
-	QVector<DataItem> getDataSet(const QVector<labelAndImg> & annotationDataSet, ModelType type,int classId);
+	QVector<DataItem> getDataSet(const QVector<labelAndImg>& annotationDataSet, ModelType type, int classId);
 	QVector<DataItem> getSegmentDataSet(const QVector<labelAndImg>& annotationDataSet, int classId);
 	QVector<DataItem> getObjectDetectionDataSet(const QVector<labelAndImg>& annotationDataSet, int classId);
 private:
 	void clear_older_trainData();
 	void copyTrainData(const QVector<AiTrainModule::DataItem>& dataSet);
-	void copyTrainImgData(const QVector<AiTrainModule::DataItem> &  dataSet,const QString &path );
+	void copyTrainImgData(const QVector<AiTrainModule::DataItem>& dataSet, const QString& path);
 	void copyTrainLabelData(const QVector<AiTrainModule::DataItem>& dataSet, const QString& path);
 public:
 	void trainSegmentModel();
 	void trainObbModel();
 public:
-	cv::Mat getMatFromPath(const QString & path);
+	cv::Mat getMatFromPath(const QString& path);
 protected:
 	void run() override;
 private:
 	QVector<labelAndImg> annotation_data_set(bool isBad);
+private:
+	int parseProgress(const QString& logText, int& totalTasks);
 signals:
 	void appRunLog(QString log);
+	void updateProgress(int value,int total);
+	void updateTrainTitle(QString s);
 public slots:
 	void handleProcessOutput();
 
@@ -66,4 +70,7 @@ public slots:
 
 	void handleProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
 };
+
+
+
 

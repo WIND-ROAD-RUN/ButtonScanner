@@ -315,6 +315,21 @@ void DlgNewProduction::appendAiTrainLog(QString log)
 	ui->plainTextEdit_tab5->appendPlainText(log);
 }
 
+void DlgNewProduction::updateProgress(int value,int total)
+{
+	int progress = static_cast<double>(value) / static_cast<double>(total) * 100;
+	ui->progressBar_tab5->setValue(progress);
+}
+
+void DlgNewProduction::updateProgressTitle(QString s)
+{
+	if (s.isEmpty())
+	{
+		return;
+	}
+	ui->label_trainState->setText(s);
+}
+
 void DlgNewProduction::img_display_work(cv::Mat frame, size_t index)
 {
 	if (_info.isActivate == false)
