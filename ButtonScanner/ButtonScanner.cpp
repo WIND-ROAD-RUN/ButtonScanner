@@ -17,7 +17,6 @@
 #include <future>
 #include<QDir>
 #include<QFileInfo>
-#include <PathGlobalStruct.h>
 
 void ButtonScanner::updateExposureTimeTrigger()
 {
@@ -254,6 +253,7 @@ void ButtonScanner::build_ui()
 	build_dlgProductSet();
 	build_dlgExposureTimeSet();
 	build_dlgNewProduction();
+	build_dlgSelectModel();
 	this->labelClickable_title = new rw::rqw::ClickableLabel(this);
 	labelClickable_title->setText(ui->label_title->text());
 	labelClickable_title->setStyleSheet(ui->label_title->styleSheet());
@@ -319,6 +319,11 @@ void ButtonScanner::build_modelStorageManager()
 	auto& globalStruct = GlobalStructData::getInstance();
 	globalStruct.modelStorageManager = std::make_unique<ModelStorageManager>(this);
 	globalStruct.modelStorageManager->setRootPath(globalPath.modelStorageManagerRootPath);
+}
+
+void ButtonScanner::build_dlgSelectModel()
+{
+	dlgSelectModel = new DlgSelectModel(this);
 }
 
 void ButtonScanner::destory_modelStorageManager()
@@ -1196,13 +1201,7 @@ void ButtonScanner::rbtn_ForAndAgainst_ckecked(bool checked)
 
 void ButtonScanner::labelClickable_title_clicked()
 {
-	auto path = QString::fromStdString(PathGlobalStruct::AiLearnConfig);
-
-	auto configFilePath = QFileDialog::getOpenFileName(this, "", path);
-
-	if (configFilePath != nullptr) {
-		GlobalStructData::getInstance().aiLearnOldConfigPath = configFilePath;
-	}
+	dlgSelectModel->show();
 }
 
 void ButtonScanner::pbtn_exit_clicked()

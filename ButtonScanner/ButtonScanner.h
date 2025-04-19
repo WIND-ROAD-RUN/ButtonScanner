@@ -7,6 +7,7 @@
 #include"DlgProductSet.h"
 #include"DlgExposureTimeSet.h"
 #include"DlgNewProduction.h"
+#include"DlgSelectModel.h"
 #include"rqw_LabelClickable.h"
 
 #include"opencv2/opencv.hpp"
@@ -33,6 +34,7 @@ private:
 	DlgProductSet* dlgProductSet = nullptr;
 	DlgExposureTimeSet* dlgExposureTimeSet = nullptr;
 	DlgNewProduction* dlgNewProduction = nullptr;
+	DlgSelectModel* dlgSelectModel = nullptr;
 public:
 	rw::rqw::ClickableLabel* labelClickable_title;
 private:
@@ -67,6 +69,7 @@ private:
 	void build_dlgExposureTimeSet();
 	void build_dlgNewProduction();
 	void build_modelStorageManager();
+	void build_dlgSelectModel();
 	void destory_modelStorageManager();
 
 	void stop_all_axis();

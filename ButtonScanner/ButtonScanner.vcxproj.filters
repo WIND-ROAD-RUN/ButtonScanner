@@ -100,9 +100,6 @@
     <ClCompile Include="ImageProcessorModule.cpp">
       <Filter>Source Files\func</Filter>
     </ClCompile>
-    <ClCompile Include="PathGlobalStruct.cpp">
-      <Filter>Source Files\data</Filter>
-    </ClCompile>
     <ClCompile Include="DlgNewProduction.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
@@ -117,6 +114,9 @@
     </ClCompile>
     <ClCompile Include="AiTrainModule.cpp">
       <Filter>Source Files\DetachThread</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgSelectModel.cpp">
+      <Filter>Source Files\ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +159,9 @@
     <QtMoc Include="AiTrainModule.h">
       <Filter>Header Files\DetachThread</Filter>
     </QtMoc>
+    <QtMoc Include="DlgSelectModel.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="DlgProductSet.ui">
@@ -174,6 +177,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="DlgNewProduction.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DlgSelectModel.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -196,9 +202,6 @@
   <ItemGroup>
     <ClInclude Include="ThreadSafePriorityQueue.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PathGlobalStruct.h">
-      <Filter>Header Files\data</Filter>
     </ClInclude>
     <ClInclude Include="ButtonUtilty.h">
       <Filter>Header Files\func</Filter>
