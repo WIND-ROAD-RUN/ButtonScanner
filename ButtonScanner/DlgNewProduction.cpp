@@ -109,6 +109,30 @@ void DlgNewProduction::set_motionRun(bool isRun)
 void DlgNewProduction::build_dialog()
 {
 	ui->tabWidget->setCurrentIndex(0);
+
+	QButtonGroup* tab3ChoiceGroup = new QButtonGroup(this);
+
+	tab3ChoiceGroup->addButton(ui->rbtn_tab3_checkBladeShape);
+	tab3ChoiceGroup->addButton(ui->rbtn_tab3_filterColor);
+
+	QButtonGroup* tab3WorkGroup = new QButtonGroup(this);
+	tab3WorkGroup->addButton(ui->rbtn_tab3_firstWork1);
+	tab3WorkGroup->addButton(ui->rbtn_tab3_firstWork2);
+	tab3WorkGroup->addButton(ui->rbtn_tab3_firstWork3);
+	tab3WorkGroup->addButton(ui->rbtn_tab3_firstWork4);
+
+	QButtonGroup* tab4ChoiceGroup = new QButtonGroup(this);
+
+	tab4ChoiceGroup->addButton(ui->rbtn_tab4_checkBladeShape);
+	tab4ChoiceGroup->addButton(ui->rbtn_tab4_filterColor);
+
+	QButtonGroup* tab4WorkGroup = new QButtonGroup(this);
+	tab4WorkGroup->addButton(ui->rbtn_tab4_firstWork1);
+	tab4WorkGroup->addButton(ui->rbtn_tab4_firstWork2);
+	tab4WorkGroup->addButton(ui->rbtn_tab4_firstWork3);
+	tab4WorkGroup->addButton(ui->rbtn_tab4_firstWork4);
+
+
 }
 
 void DlgNewProduction::destroy()
@@ -129,7 +153,7 @@ void DlgNewProduction::img_display_work1(const QPixmap& pixmap)
 	{
 		return;
 	}
-	if (this->_info.currentTabIndex == 2)
+	if (this->_info.currentTabIndex == 2 &&ui->rbtn_tab3_firstWork1->isChecked())
 	{
 		modelStorageManager->work1_bad_count_ +=1 ;
 		modelStorageManager->save_work1_image(pixmap.toImage(), false);
@@ -153,7 +177,7 @@ void DlgNewProduction::img_display_work2(const QPixmap& pixmap)
 	{
 		return;
 	}
-	if (this->_info.currentTabIndex == 2)
+	if (this->_info.currentTabIndex == 2&& ui->rbtn_tab3_firstWork2->isChecked())
 	{
 		modelStorageManager->work2_bad_count_ += 1;
 		modelStorageManager->save_work2_image(pixmap.toImage(), false);
@@ -177,7 +201,7 @@ void DlgNewProduction::img_display_work3(const QPixmap& pixmap)
 	{
 		return;
 	}
-	if (this->_info.currentTabIndex == 2)
+	if (this->_info.currentTabIndex == 2&& ui->rbtn_tab3_firstWork3->isChecked())
 	{
 		modelStorageManager->work3_bad_count_ += 1;
 		modelStorageManager->save_work3_image(pixmap.toImage(), false);
@@ -201,7 +225,7 @@ void DlgNewProduction::img_display_work4(const QPixmap& pixmap)
 	{
 		return;
 	}
-	if (this->_info.currentTabIndex == 2)
+	if (this->_info.currentTabIndex == 2&&ui->rbtn_tab3_firstWork4->isChecked())
 	{
 		modelStorageManager->work4_bad_count_ += 1;
 		modelStorageManager->save_work4_image(pixmap.toImage(), false);
