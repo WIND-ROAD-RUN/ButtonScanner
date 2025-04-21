@@ -818,14 +818,17 @@ void ButtonScanner::build_ioThread()
 				//启动程序
 				if (state == true)
 				{
-					globalStruct.isOpenRemoveFunc = true;
-					globalStruct.isDebugMode = false;
-					QMetaObject::invokeMethod(qApp, [this, state]
-						{
-							dlgExposureTimeSet->ResetCamera();
-							ui->rbtn_removeFunc->setChecked(true);
-							ui->rbtn_debug->setChecked(false);
-						});
+					if (dlgNewProduction->_info.isActivate==false)
+					{
+						globalStruct.isOpenRemoveFunc = true;
+						globalStruct.isDebugMode = false;
+						QMetaObject::invokeMethod(qApp, [this, state]
+							{
+								dlgExposureTimeSet->ResetCamera();
+								ui->rbtn_removeFunc->setChecked(true);
+								ui->rbtn_debug->setChecked(false);
+							});
+					}
 						//所有电机上电
 						QtConcurrent::run([this, &motionPtr]() {
 							QThread::msleep(500);

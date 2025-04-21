@@ -33,8 +33,9 @@ private:
 	DlgProduceLineSet* dlgProduceLineSet = nullptr;
 	DlgProductSet* dlgProductSet = nullptr;
 	DlgExposureTimeSet* dlgExposureTimeSet = nullptr;
-	DlgNewProduction* dlgNewProduction = nullptr;
 	DlgSelectModel* dlgSelectModel = nullptr;
+public:
+	DlgNewProduction* dlgNewProduction = nullptr;
 public:
 	rw::rqw::ClickableLabel* labelClickable_title;
 private:

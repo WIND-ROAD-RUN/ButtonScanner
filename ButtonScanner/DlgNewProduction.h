@@ -41,7 +41,7 @@ private:
 	void build_dialog();
 	void destroy();
 
-private:
+public:
 	DlgNewProductionInfo _info;
 private:
 	bool _trainSate{ false };
