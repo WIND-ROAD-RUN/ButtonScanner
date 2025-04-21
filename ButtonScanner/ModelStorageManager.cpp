@@ -189,6 +189,41 @@ void ModelStorageManager::check_work1Temp(const QString& imageRootPath)
     work1_bad_count_ = badPngFiles.size();
 }
 
+void ModelStorageManager::save_work1_image(const QImage& image, bool isgood)
+{
+    auto& RootPath = globalPath.modelStorageManagerTempPath;
+    QString imageTempDir = RootPath + R"(Image\)";
+    QString work1ImageTemp = imageTempDir + R"(work1\)";
+    QString folder = isgood ? work1ImageTemp + R"(good\)" : work1ImageTemp + R"(bad\)";
+
+    saveImageWithTimestamp(image, folder);
+}
+
+void ModelStorageManager::saveImageWithTimestamp(const QImage& image, const QString& folder)
+{
+    // 确保目标文件夹存在
+    QDir dir(folder);
+    if (!dir.exists()) {
+        if (!dir.mkpath(folder)) {
+            qWarning() << "Failed to create directory:" << folder;
+            return;
+        }
+    }
+
+    // 获取当前时间并格式化为 "yyyyMMddHHmmsszzz"
+    QString timestamp = QDateTime::currentDateTime().toString("yyyyMMddHHmmsszzz");
+    QString fileName = timestamp + ".png";
+    QString filePath = folder + QDir::separator() + fileName;
+
+    // 保存图片
+    if (image.save(filePath, "PNG")) {
+        qDebug() << "Saved image to:" << filePath;
+    }
+    else {
+        qWarning() << "Failed to save image to:" << filePath;
+    }
+}
+
 QVector<QString> ModelStorageManager::getBadImagePathList()
 {
     QVector<QString> badImagePathList;
@@ -289,6 +324,16 @@ void ModelStorageManager::check_work2Temp(const QString& imageRootPath)
     work2_bad_count_ = badPngFiles.size();
 }
 
+void ModelStorageManager::save_work2_image(const QImage& image, bool isgood)
+{
+    auto& RootPath = globalPath.modelStorageManagerTempPath;
+    QString imageTempDir = RootPath + R"(Image\)";
+    QString work2ImageTemp = imageTempDir + R"(work2\)";
+    QString folder = isgood ? work2ImageTemp + R"(good\)" : work2ImageTemp + R"(bad\)";
+
+    saveImageWithTimestamp(image, folder);
+}
+
 void ModelStorageManager::check_work3Temp(const QString& imageRootPath)
 {
     QString work3ImageTemp = imageRootPath + R"(work3\)";
@@ -328,6 +373,15 @@ void ModelStorageManager::check_work3Temp(const QString& imageRootPath)
     work3_bad_count_ = badPngFiles.size();
 }
 
+void ModelStorageManager::save_work3_image(const QImage& image, bool isgood)
+{
+	auto& RootPath = globalPath.modelStorageManagerTempPath;
+	QString imageTempDir = RootPath + R"(Image\)";
+	QString work3ImageTemp = imageTempDir + R"(work3\)";
+	QString folder = isgood ? work3ImageTemp + R"(good\)" : work3ImageTemp + R"(bad\)";
+	saveImageWithTimestamp(image, folder);
+}
+
 void ModelStorageManager::check_work4Temp(const QString& imageRootPath)
 {
     QString work4ImageTemp = imageRootPath + R"(work4\)";
@@ -365,4 +419,13 @@ void ModelStorageManager::check_work4Temp(const QString& imageRootPath)
 
     QStringList badPngFiles = badDir.entryList(QStringList() << "*.png", QDir::Files);
     work4_bad_count_ = badPngFiles.size();
+}
+
+void ModelStorageManager::save_work4_image(const QImage& image, bool isgood)
+{
+	auto& RootPath = globalPath.modelStorageManagerTempPath;
+	QString imageTempDir = RootPath + R"(Image\)";
+	QString work4ImageTemp = imageTempDir + R"(work4\)";
+	QString folder = isgood ? work4ImageTemp + R"(good\)" : work4ImageTemp + R"(bad\)";
+	saveImageWithTimestamp(image, folder);
 }

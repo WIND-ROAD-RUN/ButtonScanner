@@ -35,6 +35,10 @@ private:
 private:
 	void check_work1Temp(const QString& imageRootPath);
 public:
+	void save_work1_image(const QImage &  image,bool isgood);
+private:
+	void saveImageWithTimestamp(const QImage& image, const QString& folder);
+public:
 	QVector<QString> getBadImagePathList();
 	QVector<QString> getGoodImagePathList();
 public:
@@ -43,15 +47,21 @@ public:
 private:
 	void check_work2Temp(const QString& imageRootPath);
 public:
+	void save_work2_image(const QImage& image, bool isgood);
+public:
 	size_t work2_good_count_;
 	size_t work2_bad_count_;
 private:
 	void check_work3Temp(const QString& imageRootPath);
 public:
+	void save_work3_image(const QImage& image, bool isgood);
+public:
 	size_t work3_good_count_;
 	size_t work3_bad_count_;
 private:
 	void check_work4Temp(const QString& imageRootPath);
+public:
+	void save_work4_image(const QImage& image, bool isgood);
 public:
 	size_t work4_good_count_;
 	size_t work4_bad_count_;
