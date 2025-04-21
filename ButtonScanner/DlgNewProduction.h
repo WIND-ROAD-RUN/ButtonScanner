@@ -38,6 +38,9 @@ private:
 	Ui::DlgNewProductionClass* ui;
 
 private:
+	void set_motionRun(bool isRun);
+
+private:
 	void build_dialog();
 	void destroy();
 

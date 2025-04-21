@@ -8,6 +8,8 @@
 
 #include"imeot_ModelEngineOT.h"
 #include"imest_ModelEnginest.h"
+#include"rqw_CameraObjectThread.hpp"
+#include"rqw_CameraObject.hpp"
 
 DlgNewProduction::DlgNewProduction(QWidget* parent)
 	: QDialog(parent)
@@ -78,6 +80,32 @@ void DlgNewProduction::build_connect()
 		this, &DlgNewProduction::pbtn_tab5_cancelTrain_clicked);
 }
 
+void DlgNewProduction::set_motionRun(bool isRun)
+{
+	auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
+	if (isRun)
+	{
+		motionPtr->SetIOOut(1, true);
+		motionPtr->SetAxisType(0, 1);
+		double unit = GlobalStructData::getInstance().dlgProduceLineSetConfig.pulseFactor;
+		motionPtr->SetAxisPulse(0, unit);
+		double acc = GlobalStructData::getInstance().dlgProduceLineSetConfig.accelerationAndDeceleration;
+		motionPtr->SetAxisAcc(0, acc);
+		motionPtr->SetAxisDec(0, acc);
+		double speed = GlobalStructData::getInstance().dlgProduceLineSetConfig.motorSpeed;
+		motionPtr->SetAxisRunSpeed(0, speed);
+		// pidaimove->start(100);
+		motionPtr->AxisRun(0, -1);
+		motionPtr->SetIOOut(7, true);
+	}
+	else
+	{
+		motionPtr->StopAllAxis();
+		motionPtr->SetIOOut(1, isRun);
+		motionPtr->SetIOOut(7, isRun);
+	}
+}
+
 void DlgNewProduction::build_dialog()
 {
 	ui->tabWidget->setCurrentIndex(0);
@@ -85,6 +113,7 @@ void DlgNewProduction::build_dialog()
 
 void DlgNewProduction::destroy()
 {
+	set_motionRun(false);
 	_info.state = DlgNewProductionInfo::None;
 	ui->tabWidget->setCurrentIndex(0);
 	this->_info.currentTabIndex = 0;
@@ -213,6 +242,7 @@ void DlgNewProduction::pbtn_tab2_check_color_clicked()
 	ui->label_tab3_tabImgCount2->setText(QString::number(modelStorageManager->work2_bad_count_));
 	ui->label_tab3_tabImgCount3->setText(QString::number(modelStorageManager->work3_bad_count_));
 	ui->label_tab3_tabImgCount4->setText(QString::number(modelStorageManager->work4_bad_count_));
+	set_motionRun(true);
 }
 
 void DlgNewProduction::pbtn_tab2_check_blade_shape_clicked()
@@ -232,6 +262,7 @@ void DlgNewProduction::pbtn_tab2_check_blade_shape_clicked()
 	ui->label_tab3_tabImgCount2->setText(QString::number(modelStorageManager->work2_bad_count_));
 	ui->label_tab3_tabImgCount3->setText(QString::number(modelStorageManager->work3_bad_count_));
 	ui->label_tab3_tabImgCount4->setText(QString::number(modelStorageManager->work4_bad_count_));
+	set_motionRun(true);
 }
 
 void DlgNewProduction::pbtn_tab2_pre_step_clicked()
@@ -265,6 +296,7 @@ void DlgNewProduction::pbtn_tab3_pre_step_clicked()
 	ui->rbtn_tab3_checkBladeShape->setChecked(true);
 	ui->rbtn_tab4_checkBladeShape->setChecked(true);
 	ui->rbtn_tab5_checkBladeShape->setChecked(true);
+	set_motionRun(false);
 }
 
 void DlgNewProduction::pbtn_tab3_nex_step_clicked()
@@ -298,6 +330,7 @@ void DlgNewProduction::pbtn_tab4_nex_step_clicked()
 {
 	ui->tabWidget->setCurrentIndex(4);
 	this->_info.currentTabIndex = 4;
+	set_motionRun(false);
 }
 
 void DlgNewProduction::pbtn_tab5_start_train_clicked()
@@ -327,6 +360,7 @@ void DlgNewProduction::pbtn_tab5_pre_step_clicked()
 {
 	ui->tabWidget->setCurrentIndex(3);
 	this->_info.currentTabIndex = 3;
+	set_motionRun(true);
 }
 
 void DlgNewProduction::pbtn_tab5_finish_clicked()
