@@ -9,6 +9,7 @@
 #include"DlgNewProduction.h"
 #include"DlgSelectModel.h"
 #include"rqw_LabelClickable.h"
+#include"PicturesViewer.h"
 
 #include"opencv2/opencv.hpp"
 #include<QImage>
@@ -34,6 +35,7 @@ private:
 	DlgProductSet* dlgProductSet = nullptr;
 	DlgExposureTimeSet* dlgExposureTimeSet = nullptr;
 	DlgSelectModel* dlgSelectModel = nullptr;
+	PicturesViewer* picturesViewer = nullptr;
 public:
 	DlgNewProduction* dlgNewProduction = nullptr;
 public:
@@ -72,6 +74,7 @@ private:
 	void build_modelStorageManager();
 	void build_dlgSelectModel();
 	void destory_modelStorageManager();
+	void build_picturesViewer();
 
 	void stop_all_axis();
 

@@ -4,6 +4,7 @@
 #include"rqw_CameraObject.hpp"
 #include"hoec_CameraException.hpp"
 #include"LoadingDialog.h"
+#include"PicturesViewer.h"
 
 #include "ButtonScanner.h"
 #include"DlgProductSet.h"
@@ -254,6 +255,7 @@ void ButtonScanner::build_ui()
 	build_dlgExposureTimeSet();
 	build_dlgNewProduction();
 	build_dlgSelectModel();
+	build_picturesViewer();
 	this->labelClickable_title = new rw::rqw::ClickableLabel(this);
 	labelClickable_title->setText(ui->label_title->text());
 	labelClickable_title->setStyleSheet(ui->label_title->styleSheet());
@@ -330,6 +332,11 @@ void ButtonScanner::destory_modelStorageManager()
 {
 	auto& globalStruct = GlobalStructData::getInstance();
 	globalStruct.modelStorageManager.reset();
+}
+
+void ButtonScanner::build_picturesViewer()
+{
+	picturesViewer = new PicturesViewer(this);
 }
 
 void ButtonScanner::build_connect()
@@ -1204,7 +1211,7 @@ void ButtonScanner::rbtn_ForAndAgainst_ckecked(bool checked)
 
 void ButtonScanner::labelClickable_title_clicked()
 {
-	dlgSelectModel->show();
+	picturesViewer->show();
 }
 
 void ButtonScanner::pbtn_exit_clicked()
