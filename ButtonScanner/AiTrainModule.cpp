@@ -62,7 +62,7 @@ QVector<AiTrainModule::DataItem> AiTrainModule::getDataSet(const QVector<labelAn
 	case ModelType::Segment:
 		result = getSegmentDataSet(annotationDataSet, classId);
 		break;
-	case ModelType::ObejectDetection:
+	case ModelType::ObjectDetection:
 		result = getObjectDetectionDataSet(annotationDataSet, classId);
 		break;
 	default:
@@ -81,9 +81,9 @@ QVector<AiTrainModule::DataItem> AiTrainModule::getSegmentDataSet(const QVector<
 		std::string id = std::to_string(classId);
 
 		// 归一化中心点和宽高
-		double norCenterX = static_cast<double>(item.second.center_x) / static_cast<double>(_framWidth);
+		double norCenterX = static_cast<double>(item.second.center_x) / static_cast<double>(_frameWidth);
 		double norCenterY = static_cast<double>(item.second.center_y) / static_cast<double>(_frameHeight);
-		double norWidth = static_cast<double>(item.second.width) / static_cast<double>(_framWidth);
+		double norWidth = static_cast<double>(item.second.width) / static_cast<double>(_frameWidth);
 		double norHeight = static_cast<double>(item.second.height) / static_cast<double>(_frameHeight);
 
 		// 计算椭圆上的 30 个点
@@ -121,9 +121,9 @@ QVector<AiTrainModule::DataItem> AiTrainModule::getObjectDetectionDataSet(const 
 		std::string id = std::to_string(classId);
 		//normalization归一化
 
-		double norCenterX = static_cast<double>(item.second.center_x) / static_cast<double>(_framWidth);
+		double norCenterX = static_cast<double>(item.second.center_x) / static_cast<double>(_frameWidth);
 		double norCenterY = static_cast<double>(item.second.center_y) / static_cast<double>(_frameHeight);
-		double norWidth = static_cast<double>(item.second.width) / static_cast<double>(_framWidth);
+		double norWidth = static_cast<double>(item.second.width) / static_cast<double>(_frameWidth);
 		double norHeight = static_cast<double>(item.second.height) / static_cast<double>(_frameHeight);
 
 		auto textStr = id + " " +
@@ -215,7 +215,7 @@ void AiTrainModule::clear_older_trainData()
 
 void AiTrainModule::copyTrainData(const QVector<AiTrainModule::DataItem>& dataSet)
 {
-	if (_modelType == ModelType::ObejectDetection)
+	if (_modelType == ModelType::ObjectDetection)
 	{
 		copyTrainImgData(dataSet, QString(globalPath.yoloV5RootPath + R"(\datasets\mydataset\tes\)"));
 		copyTrainImgData(dataSet, QString(globalPath.yoloV5RootPath + R"(\datasets\mydataset\train\images\)"));
@@ -303,14 +303,14 @@ void AiTrainModule::trainObbModel()
 	_processTrainModel->start("cmd.exe", { "/c",str.c_str() });
 }
 
-void AiTrainModule::exportOnnexModel()
+void AiTrainModule::exportOnnxModel()
 {
 	if (_modelType==ModelType::Segment)
 	{
 		auto str = "activate yolov5 && cd /d " + globalPath.yoloV5RootPath.toStdString() + " && python export_seg.py";
 		_processExportModel->start("cmd.exe", { "/c",str.c_str() });
 	}
-	else if (_modelType == ModelType::ObejectDetection)
+	else if (_modelType == ModelType::ObjectDetection)
 	{
 		auto str = "activate yolov5 && cd /d " + globalPath.yoloV5RootPath.toStdString() + " && python export.py";
 		_processExportModel->start("cmd.exe", { "/c",str.c_str() });
@@ -326,7 +326,7 @@ void AiTrainModule::copyModelToTemp()
 	{
 		sourceFilePath = globalPath.yoloV5RootPath + R"(runs\train-seg\exp\weights\best.onnx)";
 	}
-	else if (_modelType == ModelType::ObejectDetection)
+	else if (_modelType == ModelType::ObjectDetection)
 	{
 		sourceFilePath = globalPath.yoloV5RootPath + R"(runs\train\exp\weights\best.onnx)";
 	}
@@ -349,7 +349,7 @@ void AiTrainModule::copyModelToTemp()
 	{
 		targetFilePath = targetDirectory + "customSO.onnx";
 	}
-	else if (_modelType == ModelType::ObejectDetection)
+	else if (_modelType == ModelType::ObjectDetection)
 	{
 		targetFilePath = targetDirectory + "customOO.onnx";
 	}
@@ -388,7 +388,7 @@ void AiTrainModule::packageModelToStorage()
 	std::hash<std::string> hasher;
 	config.id = static_cast<long>(hasher(formattedDateTime.toStdString()));
 	config.name = formattedDateTime.toStdString();
-	if (_modelType==ModelType::ObejectDetection)
+	if (_modelType==ModelType::ObjectDetection)
 	{
 		config.modelType = rw::cdm::ModelType::BladeShape;
 	}
@@ -509,7 +509,7 @@ void AiTrainModule::run()
 		emit appRunLog("开始训练分割模型");
 		trainSegmentModel();
 	}
-	else if (_modelType == ModelType::ObejectDetection)
+	else if (_modelType == ModelType::ObjectDetection)
 	{
 		emit appRunLog("开始训练检测模型");
 		trainObbModel();
@@ -543,7 +543,7 @@ QVector<AiTrainModule::labelAndImg> AiTrainModule::annotation_data_set(bool isBa
 		if (image.empty()) {
 			continue;
 		}
-		_framWidth = image.cols;
+		_frameWidth = image.cols;
 		_frameHeight = image.rows;
 		cv::Mat resultMat;
 		std::vector<rw::imeot::ProcessRectanglesResultOT> result;
@@ -581,7 +581,7 @@ void AiTrainModule::handleTrainModelProcessError()
 	emit appRunLog(errorStr);
 	int total = 100;
 	int complete=-1;
-	if (_modelType==ModelType::ObejectDetection){
+	if (_modelType==ModelType::ObjectDetection){
 		 complete = parseProgressOO(errorStr, total);
 	}
 	else if (_modelType == ModelType::Segment)
@@ -601,7 +601,7 @@ void AiTrainModule::handleTrainModelProcessFinished(int exitCode, QProcess::Exit
 {
 	if (exitStatus == QProcess::NormalExit)
 	{
-		exportOnnexModel();
+		exportOnnxModel();
 	}
 	else
 	{

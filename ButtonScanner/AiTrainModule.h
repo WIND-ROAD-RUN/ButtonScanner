@@ -12,7 +12,7 @@
 enum class ModelType
 {
 	Segment,
-	ObejectDetection,
+	ObjectDetection,
 };
 
 class AiTrainModule : public QThread
@@ -27,7 +27,7 @@ public:
 	QProcess* _processExportModel;
 private:
 	int _frameHeight;
-	int _framWidth;
+	int _frameWidth;
 public:
 	using labelAndImg = QPair<QString, rw::imeot::ProcessRectanglesResultOT>;
 	using DataItem = QPair<QString, QString>;
@@ -52,7 +52,7 @@ private:
 private:
 	void trainSegmentModel();
 	void trainObbModel();
-	void exportOnnexModel();
+	void exportOnnxModel();
 	void copyModelToTemp();
 	void packageModelToStorage();
 private:
