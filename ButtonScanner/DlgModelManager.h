@@ -18,7 +18,8 @@ public:
 	DlgModelManager(QWidget *parent = nullptr);
 	~DlgModelManager();
 private:
-	QStringListModel* _ModelListmodel;
+	QStringListModel* _ModelListModel;
+	QStandardItemModel* _ModelInfoModel;
 	rw::cdm::AiModelConfigIndex _configIndex;
 private:
 	void build_ui();
@@ -33,6 +34,13 @@ private slots:
 protected:
 	void showEvent(QShowEvent*) override;
 private:
+	QString formatDateString(const std::string& dateStr);
+	
+private:
+	QString findXmlFile(const QString& rootPath);
+    
+private:
 	void flashModelList();
+	void falshModelInfoTabel();
 
 };
