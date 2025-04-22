@@ -3,10 +3,8 @@
 #include"AiTrainModule.h"
 #include"GlobalStruct.h"
 
-
 AiTrainModule::AiTrainModule(QObject* parent)
 	: QThread(parent) {
-
 	auto enginePath = globalPath.modelRootPath + globalPath.engineFileName;
 	auto namePath = globalPath.modelRootPath + globalPath.nameFileName;
 	labelEngine = std::make_unique<rw::imeot::ModelEngineOT>(enginePath.toStdString(), namePath.toStdString());
@@ -69,7 +67,6 @@ QVector<AiTrainModule::DataItem> AiTrainModule::getDataSet(const QVector<labelAn
 		break;
 	}
 	return result;
-
 }
 
 QVector<AiTrainModule::DataItem> AiTrainModule::getSegmentDataSet(const QVector<labelAndImg>& annotationDataSet, int classId)
@@ -112,7 +109,6 @@ QVector<AiTrainModule::DataItem> AiTrainModule::getSegmentDataSet(const QVector<
 	return result;
 }
 
-
 QVector<AiTrainModule::DataItem> AiTrainModule::getObjectDetectionDataSet(const QVector<labelAndImg>& annotationDataSet, int classId)
 {
 	QVector<AiTrainModule::DataItem> result;
@@ -130,7 +126,6 @@ QVector<AiTrainModule::DataItem> AiTrainModule::getObjectDetectionDataSet(const 
 			std::to_string(norCenterX) + " " + std::to_string(norCenterY) + " "
 			+ std::to_string(norWidth) + " " + std::to_string(norHeight);
 
-		
 		result.append({ item.first, QString::fromStdString(textStr) });
 	}
 	return result;
@@ -233,7 +228,6 @@ void AiTrainModule::clear_older_trainData()
 			}
 		}
 	}
-
 }
 
 void AiTrainModule::copyTrainData(const QVector<AiTrainModule::DataItem>& dataSet)
@@ -316,7 +310,7 @@ void AiTrainModule::copyTrainLabelData(const QVector<AiTrainModule::DataItem>& d
 
 void AiTrainModule::trainSegmentModel()
 {
-	auto str = "activate yolov5 && cd /d " + globalPath.yoloV5RootPath.toStdString() +R"(segment\)" + " && python train.py";
+	auto str = "activate yolov5 && cd /d " + globalPath.yoloV5RootPath.toStdString() + R"(segment\)" + " && python train.py";
 	_processTrainModel->start("cmd.exe", { "/c",str.c_str() });
 }
 
@@ -328,7 +322,7 @@ void AiTrainModule::trainObbModel()
 
 void AiTrainModule::exportOnnxModel()
 {
-	if (_modelType==ModelType::Segment)
+	if (_modelType == ModelType::Segment)
 	{
 		auto str = "activate yolov5 && cd /d " + globalPath.yoloV5RootPath.toStdString() + " && python export_seg.py";
 		_processExportModel->start("cmd.exe", { "/c",str.c_str() });
@@ -343,9 +337,9 @@ void AiTrainModule::exportOnnxModel()
 void AiTrainModule::copyModelToTemp()
 {
 	// 源文件路径
-	QString sourceFilePath=globalPath.yoloV5RootPath + R"(runs\train\exp\weights\best.onnx)";
+	QString sourceFilePath = globalPath.yoloV5RootPath + R"(runs\train\exp\weights\best.onnx)";
 
-	if (_modelType==ModelType::Segment)
+	if (_modelType == ModelType::Segment)
 	{
 		sourceFilePath = globalPath.yoloV5RootPath + R"(runs\train-seg\exp\weights\best.onnx)";
 	}
@@ -368,7 +362,7 @@ void AiTrainModule::copyModelToTemp()
 
 	QString targetFilePath = targetDirectory + "modelOnnx.onnx";
 
-	if (_modelType==ModelType::Segment)
+	if (_modelType == ModelType::Segment)
 	{
 		targetFilePath = targetDirectory + "customSO.onnx";
 	}
@@ -390,7 +384,6 @@ void AiTrainModule::copyModelToTemp()
 	else {
 		emit appRunLog("Failed to copy and rename file: " + sourceFilePath);
 	}
-
 }
 
 void AiTrainModule::packageModelToStorage()
@@ -400,7 +393,7 @@ void AiTrainModule::packageModelToStorage()
 	// 格式化为 "yyyyMMddHHmmss" 格式
 	QString formattedDateTime = currentDateTime.toString("yyyyMMddHHmmss");
 
-	auto storage=globalPath.modelStorageManagerRootPath+ formattedDateTime+R"(\)";
+	auto storage = globalPath.modelStorageManagerRootPath + formattedDateTime + R"(\)";
 	QString sourceFilePath = globalPath.modelStorageManagerTempPath;
 
 	copy_all_files_to_storage(sourceFilePath, storage);
@@ -411,7 +404,7 @@ void AiTrainModule::packageModelToStorage()
 	std::hash<std::string> hasher;
 	config.id = static_cast<long>(hasher(formattedDateTime.toStdString()));
 	config.name = formattedDateTime.toStdString();
-	if (_modelType==ModelType::ObjectDetection)
+	if (_modelType == ModelType::ObjectDetection)
 	{
 		config.modelType = rw::cdm::ModelType::BladeShape;
 	}
@@ -427,7 +420,7 @@ void AiTrainModule::packageModelToStorage()
 	config.upLight = global.mainWindowConfig.upLight;
 	config.downLight = global.mainWindowConfig.downLight;
 	config.exposureTime = global.dlgExposureTimeSetConfig.expousureTime;
-	if (config.exposureTime<=200)
+	if (config.exposureTime <= 200)
 	{
 		config.gain = 0;
 	}
@@ -438,7 +431,7 @@ void AiTrainModule::packageModelToStorage()
 	config.date = formattedDateTime.toStdString();
 	config.rootPath = storage.toStdString();
 
-	std::string savePath = storage.toStdString() + formattedDateTime.toStdString()+".xml";
+	std::string savePath = storage.toStdString() + formattedDateTime.toStdString() + ".xml";
 
 	global.storeContext->save(config, savePath);
 
@@ -529,7 +522,7 @@ void AiTrainModule::run()
 	copyTrainData(dataSet);
 	copyTrainData(dataSetBad);
 
-	if (_modelType==ModelType::Segment)
+	if (_modelType == ModelType::Segment)
 	{
 		emit appRunLog("开始训练分割模型");
 		trainSegmentModel();
@@ -545,7 +538,7 @@ void AiTrainModule::run()
 
 QVector<AiTrainModule::labelAndImg> AiTrainModule::annotation_data_set(bool isBad)
 {
-	QVector<QString> imageList ;
+	QVector<QString> imageList;
 	if (isBad)
 	{
 		emit appRunLog("正在标注要筛选的纽扣数据集");
@@ -556,7 +549,7 @@ QVector<AiTrainModule::labelAndImg> AiTrainModule::annotation_data_set(bool isBa
 		emit appRunLog("正在标注正确的纽扣的数据集");
 		imageList = GlobalStructData::getInstance().modelStorageManager->getGoodImagePathList();
 	}
-	
+
 	int i = 0;
 
 	QVector<labelAndImg> dataSet;
@@ -605,17 +598,16 @@ void AiTrainModule::handleTrainModelProcessError()
 	QString errorStr = QString::fromLocal8Bit(errorOutput);
 	emit appRunLog(errorStr);
 	int total = 100;
-	int complete=-1;
-	if (_modelType==ModelType::ObjectDetection){
-		 complete = parseProgressOO(errorStr, total);
+	int complete = -1;
+	if (_modelType == ModelType::ObjectDetection) {
+		complete = parseProgressOO(errorStr, total);
 	}
 	else if (_modelType == ModelType::Segment)
 	{
 		complete = parseProgressSO(errorStr, total);
 	}
 
-	
-	if (complete==-1)
+	if (complete == -1)
 	{
 		return;
 	}
@@ -736,4 +728,3 @@ int AiTrainModule::parseProgressSO(const QString& logText, int& totalTasks) {
 	totalTasks = -1;
 	return -1;
 }
-

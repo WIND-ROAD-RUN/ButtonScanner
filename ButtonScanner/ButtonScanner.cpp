@@ -177,7 +177,7 @@ void ButtonScanner::initializeComponents()
 	build_detachThread();
 
 	QObject::connect(GlobalStructThread::getInstance().aiTrainModule.get(), &AiTrainModule::appRunLog,
-		dlgNewProduction, &DlgNewProduction::appendAiTrainLog,Qt::QueuedConnection);
+		dlgNewProduction, &DlgNewProduction::appendAiTrainLog, Qt::QueuedConnection);
 	QObject::connect(GlobalStructThread::getInstance().aiTrainModule.get(), &AiTrainModule::updateProgress,
 		dlgNewProduction, &DlgNewProduction::updateProgress, Qt::QueuedConnection);
 	QObject::connect(GlobalStructThread::getInstance().aiTrainModule.get(), &AiTrainModule::updateTrainTitle,
@@ -310,7 +310,6 @@ void ButtonScanner::stop_all_axis()
 
 	motionPtr->SetIOOut(7, false);
 }
-
 
 void ButtonScanner::build_dlgNewProduction()
 {
@@ -630,7 +629,7 @@ void ButtonScanner::build_imageProcessorModule()
 	QFileInfo onnxEngineOOFile(onnxEnginePathOOFull);
 	QFileInfo onnxEngineSOFile(onnxEnginePathSOFull);
 
-	if (!engineFile.exists() || !nameFile.exists() || !onnxEngineOOFile.exists()|| !onnxEngineSOFile.exists()) {
+	if (!engineFile.exists() || !nameFile.exists() || !onnxEngineOOFile.exists() || !onnxEngineSOFile.exists()) {
 		QMessageBox::critical(this, "Error", "Engine file or Name file does not exist. The application will now exit.");
 		QApplication::quit();
 		return;
@@ -827,7 +826,7 @@ void ButtonScanner::build_ioThread()
 				//启动程序
 				if (state == true)
 				{
-					if (dlgNewProduction->_info.isActivate==false)
+					if (dlgNewProduction->_info.isActivate == false)
 					{
 						globalStruct.isOpenRemoveFunc = true;
 						globalStruct.isDebugMode = false;
@@ -838,23 +837,23 @@ void ButtonScanner::build_ioThread()
 								ui->rbtn_debug->setChecked(false);
 							});
 					}
-						//所有电机上电
-						QtConcurrent::run([this, &motionPtr]() {
-							QThread::msleep(500);
-							motionPtr->SetIOOut(1, true);
-							//启动电机
-							motionPtr->SetAxisType(0, 1);
-							double unit = GlobalStructData::getInstance().dlgProduceLineSetConfig.pulseFactor;
-							motionPtr->SetAxisPulse(0, unit);
-							double acc = GlobalStructData::getInstance().dlgProduceLineSetConfig.accelerationAndDeceleration;
-							motionPtr->SetAxisAcc(0, acc);
-							motionPtr->SetAxisDec(0, acc);
-							double speed = GlobalStructData::getInstance().dlgProduceLineSetConfig.motorSpeed;
-							motionPtr->SetAxisRunSpeed(0, speed);
-							// pidaimove->start(100);
-							motionPtr->AxisRun(0, -1);
-							motionPtr->SetIOOut(7, true);
-							});
+					//所有电机上电
+					QtConcurrent::run([this, &motionPtr]() {
+						QThread::msleep(500);
+						motionPtr->SetIOOut(1, true);
+						//启动电机
+						motionPtr->SetAxisType(0, 1);
+						double unit = GlobalStructData::getInstance().dlgProduceLineSetConfig.pulseFactor;
+						motionPtr->SetAxisPulse(0, unit);
+						double acc = GlobalStructData::getInstance().dlgProduceLineSetConfig.accelerationAndDeceleration;
+						motionPtr->SetAxisAcc(0, acc);
+						motionPtr->SetAxisDec(0, acc);
+						double speed = GlobalStructData::getInstance().dlgProduceLineSetConfig.motorSpeed;
+						motionPtr->SetAxisRunSpeed(0, speed);
+						// pidaimove->start(100);
+						motionPtr->AxisRun(0, -1);
+						motionPtr->SetIOOut(7, true);
+						});
 				}
 				//停止点
 				state = motionPtr->GetIOIn(2);

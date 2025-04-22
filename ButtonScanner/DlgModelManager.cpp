@@ -53,7 +53,6 @@ void DlgModelManager::build_connect()
 		this, &DlgModelManager::pbtn_deleteModel_clicked);
 	QObject::connect(ui->pbtn_loadModel, &QPushButton::clicked,
 		this, &DlgModelManager::pbtn_loadModel_clicked);
-
 }
 
 void DlgModelManager::copySOModel()
@@ -97,7 +96,6 @@ void DlgModelManager::copySOModel()
 		qDebug() << "文件拷贝失败:" << sourceFile << "到" << targetFile;
 		QMessageBox::warning(this, "错误", "文件拷贝失败: " + sourceFile + " 到 " + targetFile);
 	}
-
 }
 
 void DlgModelManager::pbtn_exit_clicked()
@@ -124,7 +122,7 @@ void DlgModelManager::onModelListSelectionChanged(const QModelIndex& current, co
 void DlgModelManager::pbtn_nextModel_clicked()
 {
 	auto maxIndex = _modelConfigs.size();
-	auto currentIndex=ui->listView_modelList->currentIndex();
+	auto currentIndex = ui->listView_modelList->currentIndex();
 	ui->listView_modelList->setCurrentIndex(currentIndex.siblingAtColumn(0).siblingAtRow((currentIndex.row() + 1) % maxIndex));
 }
 
@@ -138,7 +136,7 @@ void DlgModelManager::pbtn_preModel_clicked()
 void DlgModelManager::pbtn_deleteModel_clicked()
 {
 	auto isDelete = QMessageBox::question(this, "确定", "你真的要删除吗？该模型所有数据将会被清空");
-	if (isDelete!=QMessageBox::Yes)
+	if (isDelete != QMessageBox::Yes)
 	{
 		return;
 	}
@@ -171,11 +169,11 @@ void DlgModelManager::pbtn_loadModel_clicked()
 	_loadingDialog->updateMessage("加载中");
 	auto currentIndex = ui->listView_modelList->currentIndex();
 	auto& config = _modelConfigs.at(currentIndex.row());
-	if (config.modelType==rw::cdm::ModelType::BladeShape)
+	if (config.modelType == rw::cdm::ModelType::BladeShape)
 	{
 		copyOOModel();
 	}
-	else if (config.modelType==rw::cdm::ModelType::Color)
+	else if (config.modelType == rw::cdm::ModelType::Color)
 	{
 		copySOModel();
 	}
@@ -196,7 +194,6 @@ void DlgModelManager::showEvent(QShowEvent* show_event)
 	flashModelList();
 	flashModelInfoTable(0);
 	flashExampleImage(0);
-
 }
 
 QString DlgModelManager::formatDateString(const std::string& dateStr)
@@ -365,7 +362,7 @@ void DlgModelManager::flashModelList()
 		auto configPath = findXmlFile(QString::fromStdString(item.root_path));
 		if (configPath.isEmpty())
 		{
-			QMessageBox::warning(this, "警告", QString::fromStdString(item.root_path)+"模型配置文件不存在");
+			QMessageBox::warning(this, "警告", QString::fromStdString(item.root_path) + "模型配置文件不存在");
 			rw::cdm::AiModelConfig aiModelConfig;
 			_modelConfigs.push_back(aiModelConfig);
 			continue;
@@ -384,7 +381,6 @@ void DlgModelManager::flashModelList()
 	}
 }
 
-
 void DlgModelManager::flashModelInfoTable(size_t index)
 {
 	_ModelInfoModel->clear();
@@ -399,7 +395,7 @@ void DlgModelManager::flashModelInfoTable(size_t index)
 	// 设置第一列无标题
 	_ModelInfoModel->setHeaderData(0, Qt::Horizontal, QVariant()); // 清空第一列的标题
 
-	if (_configIndex.modelIndexs.size()<=index)
+	if (_configIndex.modelIndexs.size() <= index)
 	{
 		return;
 	}
@@ -460,10 +456,10 @@ void DlgModelManager::flashExampleImage(size_t index)
 	}
 	auto& config = _modelConfigs.at(index);
 	auto& rootPath = config.rootPath;
-	auto goodImageList=getImagePaths(QString::fromStdString(rootPath),true,1);
-	auto badImageList = getImagePaths(QString::fromStdString(rootPath), false,1);
+	auto goodImageList = getImagePaths(QString::fromStdString(rootPath), true, 1);
+	auto badImageList = getImagePaths(QString::fromStdString(rootPath), false, 1);
 
-	if (goodImageList.size()==0)
+	if (goodImageList.size() == 0)
 	{
 		ui->label_imgDisplayOK->setText("未找到图片");
 	}
@@ -473,7 +469,7 @@ void DlgModelManager::flashExampleImage(size_t index)
 		ui->label_imgDisplayOK->setPixmap(image.scaled(ui->label_imgDisplayOK->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 	}
 
-	if (badImageList.size()==0)
+	if (badImageList.size() == 0)
 	{
 		ui->label_imgDisplayNG->setText("未找到图片");
 	}
@@ -482,7 +478,6 @@ void DlgModelManager::flashExampleImage(size_t index)
 		QPixmap image(badImageList.at(0));
 		ui->label_imgDisplayNG->setPixmap(image.scaled(ui->label_imgDisplayNG->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 	}
-
 }
 
 void DlgModelManager::copyTargetImageFromStorageInTemp()
@@ -497,9 +492,9 @@ void DlgModelManager::copyTargetImageFromStorageInTemp()
 	}
 
 	auto& config = _modelConfigs.at(currentIndex.row());
-	auto rootPath=config.rootPath;
+	auto rootPath = config.rootPath;
 
-	auto & tempRootPath = globalPath.modelStorageManagerTempPath;
+	auto& tempRootPath = globalPath.modelStorageManagerTempPath;
 
 	QString sourceImagePath = QString::fromStdString(rootPath + "/Image");
 	QString targetImagePath = tempRootPath + "/Image";
@@ -542,7 +537,6 @@ void DlgModelManager::copyTargetImageFromStorageInTemp()
 
 		copyDirectoryRecursively(sourceSubDir, targetSubDir);
 	}
-
 }
 
 void DlgModelManager::copyOOModel()

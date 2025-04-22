@@ -12,9 +12,9 @@ class PicturesViewer : public QMainWindow
 	Q_OBJECT
 
 public:
-	PicturesViewer(QWidget *parent = nullptr);
+	PicturesViewer(QWidget* parent = nullptr);
 	~PicturesViewer();
 
 private:
-	Ui::PicturesViewerClass *ui;
+	Ui::PicturesViewerClass* ui;
 };

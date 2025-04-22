@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "PicturesViewer.h"
 
-PicturesViewer::PicturesViewer(QWidget *parent)
+PicturesViewer::PicturesViewer(QWidget* parent)
 	: QMainWindow(parent)
 	, ui(new Ui::PicturesViewerClass())
 {

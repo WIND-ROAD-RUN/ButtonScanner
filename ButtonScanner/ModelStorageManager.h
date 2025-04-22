@@ -37,7 +37,7 @@ private:
 private:
 	void check_work1Temp(const QString& imageRootPath);
 public:
-	void save_work1_image(const QImage &  image,bool isgood);
+	void save_work1_image(const QImage& image, bool isgood);
 private:
 	void saveImageWithTimestamp(const QImage& image, const QString& folder);
 public:

@@ -68,7 +68,7 @@ private:
 	int parseProgressSO(const QString& logText, int& totalTasks);
 signals:
 	void appRunLog(QString log);
-	void updateProgress(int value,int total);
+	void updateProgress(int value, int total);
 	void updateTrainTitle(QString s);
 	void updateTrainState(bool isTrain);
 public slots:
@@ -82,7 +82,3 @@ public slots:
 public slots:
 	void cancelTrain();
 };
-
-
-
-

@@ -877,7 +877,7 @@ void ImageProcessingModule::BuildModule()
 
 void ImageProcessingModule::reloadOOModel()
 {
-	for (auto & item: _processors)
+	for (auto& item : _processors)
 	{
 		item->buildModelEngineOnnxOO(modelOnnxOOPath, modelNamePath);
 	}

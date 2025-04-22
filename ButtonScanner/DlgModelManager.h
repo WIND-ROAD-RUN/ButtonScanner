@@ -16,7 +16,7 @@ class DlgModelManager : public QDialog
 	Q_OBJECT
 
 public:
-	DlgModelManager(QWidget *parent = nullptr);
+	DlgModelManager(QWidget* parent = nullptr);
 	~DlgModelManager();
 private:
 	QStringListModel* _ModelListModel;
@@ -29,7 +29,7 @@ private:
 	void build_connect();
 
 private:
-	Ui::DlgModelManagerClass *ui;
+	Ui::DlgModelManagerClass* ui;
 
 protected:
 	void showEvent(QShowEvent*) override;
@@ -41,10 +41,10 @@ private:
 	QVector<QString> getImagePaths(const QString& rootPath, bool isGood, int maxCount);
 	void deleteDirectory(const QString& targetPath);
 	bool copyDirectoryRecursively(const QString& sourceDirPath, const QString& targetDirPath);
-	
+
 private:
 	QString findXmlFile(const QString& rootPath);
-    
+
 private:
 	void flashModelList();
 	void flashModelInfoTable(size_t index);
