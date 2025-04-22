@@ -43,6 +43,10 @@ void DlgModelManager::build_connect()
 		this, &DlgModelManager::pbtn_exit_clicked);
 	QObject::connect(ui->listView_modelList->selectionModel(), &QItemSelectionModel::currentChanged,
 		this, &DlgModelManager::onModelListSelectionChanged);
+	QObject::connect(ui->pbtn_nextModel, &QPushButton::clicked,
+		this, &DlgModelManager::pbtn_nextModel_clicked);
+	QObject::connect(ui->pbtn_preModel, &QPushButton::clicked,
+		this, &DlgModelManager::pbtn_preModel_clicked);
 
 }
 
@@ -65,6 +69,20 @@ void DlgModelManager::onModelListSelectionChanged(const QModelIndex& current, co
 	// 刷新模型信息表和示例图片
 	flashModelInfoTable(selectedIndex);
 	flashExampleImage(selectedIndex);
+}
+
+void DlgModelManager::pbtn_nextModel_clicked()
+{
+	auto maxIndex = _modelConfigs.size();
+	auto currentIndex=ui->listView_modelList->currentIndex();
+	ui->listView_modelList->setCurrentIndex(currentIndex.siblingAtColumn(0).siblingAtRow((currentIndex.row() + 1) % maxIndex));
+}
+
+void DlgModelManager::pbtn_preModel_clicked()
+{
+	auto maxIndex = _modelConfigs.size();
+	auto currentIndex = ui->listView_modelList->currentIndex();
+	ui->listView_modelList->setCurrentIndex(currentIndex.siblingAtColumn(0).siblingAtRow((currentIndex.row() - 1 + maxIndex) % maxIndex));
 }
 
 void DlgModelManager::showEvent(QShowEvent* show_event)

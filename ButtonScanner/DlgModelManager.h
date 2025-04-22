@@ -31,6 +31,8 @@ private:
 private slots:
 	void pbtn_exit_clicked();
 	void onModelListSelectionChanged(const QModelIndex& current, const QModelIndex& previous);
+	void pbtn_nextModel_clicked();
+	void pbtn_preModel_clicked();
 protected:
 	void showEvent(QShowEvent*) override;
 private:
