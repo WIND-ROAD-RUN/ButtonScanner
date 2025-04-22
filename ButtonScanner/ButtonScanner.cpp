@@ -1132,6 +1132,10 @@ void ButtonScanner::pbtn_resetProduct_clicked()
 
 void ButtonScanner::pbtn_openSaveLocation_clicked()
 {
+	//picturesViewer->setRootPath();
+	auto& globalStruct = GlobalStructData::getInstance();
+	QString imageSavePath = globalStruct.imageSaveEngine->getRootPath();
+	picturesViewer->setRootPath(imageSavePath);
 	picturesViewer->show();
 }
 
