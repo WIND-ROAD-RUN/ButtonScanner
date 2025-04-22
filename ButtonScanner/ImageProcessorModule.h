@@ -13,7 +13,9 @@
 
 #include"imeoo_ModelEngineOO.h"
 #include"imest_ModelEngineST.h"
+#include"imeso_ModelEngineSO.h"
 #include"imeot_ModelEngineOT.h"
+#include "imeso_ModelEngineSO.h"
 
 struct ImagePainter
 {
@@ -61,16 +63,17 @@ signals:
 
 private:
 	std::unique_ptr<rw::imeot::ModelEngineOT> _modelEnginePtr;
-
-	std::unique_ptr<rw::imeoo::ModelEngineOO> _modelEnginePtrOnnx;
+	std::unique_ptr<rw::imeoo::ModelEngineOO> _modelEnginePtrOnnxOO;
+	std::unique_ptr<rw::imeso::ModelEngineSO> _modelEnginePtrOnnxSO;
 
 public:
 	void buildModelEngine(const QString& enginePath, const QString& namePath);
 
-	void buildModelEngineOnnx(const QString& enginePath, const QString& namePath);
+	void buildModelEngineOnnxOO(const QString& enginePath, const QString& namePath);
+	void buildModelEngineOnnxSO(const QString& enginePath, const QString& namePath);
 
 private:
-	bool isInAred(int x);
+	bool isInArea(int x);
 	std::vector<rw::imeot::ProcessRectanglesResultOT> getDefectInBody(rw::imeot::ProcessRectanglesResultOT body, const std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult);
 
 private:
@@ -98,7 +101,8 @@ class ImageProcessingModule : public QObject {
 public:
 	QString modelEnginePath;
 	QString modelNamePath;
-	QString modelEnginePathOnnx;
+	QString modelOnnxOOPath;
+	QString modelOnnxSOPath;
 public:
 	void BuildModule();
 public:

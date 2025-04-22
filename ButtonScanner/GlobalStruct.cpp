@@ -59,21 +59,24 @@ void GlobalStructData::buildImageProcessingModule(size_t num)
 	imageProcessingModule1 = std::make_unique<ImageProcessingModule>(num, this);
 	imageProcessingModule1->modelEnginePath = enginePath;
 	imageProcessingModule1->modelNamePath = namePath;
-	imageProcessingModule1->modelEnginePathOnnx = onnxEnginePath1;
+	imageProcessingModule1->modelOnnxOOPath = onnxEngineOOPath;
+	imageProcessingModule1->modelOnnxSOPath = onnxEngineSOPath;
 	imageProcessingModule1->index = 1;
 	imageProcessingModule1->BuildModule();
 
 	imageProcessingModule2 = std::make_unique<ImageProcessingModule>(num, this);
 	imageProcessingModule2->modelEnginePath = enginePath;
 	imageProcessingModule2->modelNamePath = namePath;
-	imageProcessingModule2->modelEnginePathOnnx = onnxEnginePath1;
+	imageProcessingModule2->modelOnnxOOPath = onnxEngineOOPath;
+	imageProcessingModule2->modelOnnxSOPath = onnxEngineSOPath;
 	imageProcessingModule2->index = 2;
 	imageProcessingModule2->BuildModule();
 
 	imageProcessingModule3 = std::make_unique<ImageProcessingModule>(num, this);
 	imageProcessingModule3->modelEnginePath = enginePath;
 	imageProcessingModule3->modelNamePath = namePath;
-	imageProcessingModule3->modelEnginePathOnnx = onnxEnginePath1;
+	imageProcessingModule3->modelOnnxOOPath = onnxEngineOOPath;
+	imageProcessingModule3->modelOnnxSOPath = onnxEngineSOPath;
 	imageProcessingModule3->index = 3;
 	imageProcessingModule3->BuildModule();
 	auto processers3 = imageProcessingModule3->getProcessors();
@@ -81,7 +84,8 @@ void GlobalStructData::buildImageProcessingModule(size_t num)
 	imageProcessingModule4 = std::make_unique<ImageProcessingModule>(num, this);
 	imageProcessingModule4->modelEnginePath = enginePath;
 	imageProcessingModule4->modelNamePath = namePath;
-	imageProcessingModule4->modelEnginePathOnnx = onnxEnginePath1;
+	imageProcessingModule4->modelOnnxOOPath = onnxEngineOOPath;
+	imageProcessingModule4->modelOnnxSOPath = onnxEngineSOPath;
 	imageProcessingModule4->index = 4;
 	imageProcessingModule4->BuildModule();
 	auto processers4 = imageProcessingModule4->getProcessors();

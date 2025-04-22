@@ -21,6 +21,8 @@ public:
 	QString nameFileName = R"(index.names)";
 	QString engineFileName = R"(model.engine)";
 	QString onnxFileName = R"(modelOnnx.onnx)";
+	QString onnxFileNameOO = R"(customOO.onnx)";
+	QString onnxFileNameSO = R"(customSO.onnx)";
 public:
 	QString yoloV5RootPath = R"(D:\y\yolov5-master\)";
 public:

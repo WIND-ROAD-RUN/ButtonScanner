@@ -12,12 +12,19 @@ void ImageProcessor::buildModelEngine(const QString& enginePath, const QString& 
 	_modelEnginePtr = std::make_unique<rw::imeot::ModelEngineOT>(enginePath.toStdString(), namePath.toStdString());
 }
 
-void ImageProcessor::buildModelEngineOnnx(const QString& enginePath, const QString& namePath)
+void ImageProcessor::buildModelEngineOnnxOO(const QString& enginePath, const QString& namePath)
 {
-	_modelEnginePtrOnnx = std::make_unique<rw::imeoo::ModelEngineOO>(enginePath.toStdString(), namePath.toStdString());
+	_modelEnginePtrOnnxOO.reset();
+	_modelEnginePtrOnnxOO = std::make_unique<rw::imeoo::ModelEngineOO>(enginePath.toStdString(), namePath.toStdString());
 }
 
-bool ImageProcessor::isInAred(int x)
+void ImageProcessor::buildModelEngineOnnxSO(const QString& enginePath, const QString& namePath)
+{
+	_modelEnginePtrOnnxSO.reset();
+	_modelEnginePtrOnnxSO = std::make_unique<rw::imeso::ModelEngineSO>(enginePath.toStdString(), namePath.toStdString());
+}
+
+bool ImageProcessor::isInArea(int x)
 {
 	auto& globalStruct = GlobalStructData::getInstance();
 	if (imageProcessingModuleIndex == 1)
@@ -90,9 +97,9 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 
 	cv::Mat resultImage1;
 	std::vector<rw::imeoo::ProcessRectanglesResultOO > vecRecogResultOnnx;
-	// 使用 QtConcurrent::run 将 _modelEnginePtrOnnx->ProcessMask 放到后台线程中执行
+
 	QFuture<void> onnxFuture = QtConcurrent::run([&]() {
-		_modelEnginePtrOnnx->ProcessMask(frame.image, resultImage1, vecRecogResultOnnx);
+		_modelEnginePtrOnnxOO->ProcessMask(frame.image, resultImage1, vecRecogResultOnnx);
 		});
 
 	cv::Mat resultImage;
@@ -164,8 +171,8 @@ rw::imeot::ProcessRectanglesResultOT ImageProcessor::getBody(std::vector<rw::ime
 	{
 		if (i.classID == 0)
 		{
-			auto isInArea = isInAred(i.center_x);
-			if (isInArea)
+			auto isIn = isInArea(i.center_x);
+			if (isIn)
 			{
 				if ((i.width * i.height) > (result.width * result.height))
 				{
@@ -859,7 +866,8 @@ void ImageProcessingModule::BuildModule()
 		ImageProcessor* processor = new ImageProcessor(_queue, _mutex, _condition, workIndexCount, this);
 		workIndexCount++;
 		processor->buildModelEngine(modelEnginePath, modelNamePath);
-		processor->buildModelEngineOnnx(modelEnginePath, modelNamePath);
+		processor->buildModelEngineOnnxOO(modelOnnxOOPath, modelNamePath);
+		processor->buildModelEngineOnnxSO(modelOnnxSOPath, modelNamePath);
 		processor->imageProcessingModuleIndex = index;
 		connect(processor, &ImageProcessor::imageReady, this, &ImageProcessingModule::imageReady, Qt::QueuedConnection);
 		_processors.push_back(processor);
