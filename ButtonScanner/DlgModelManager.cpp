@@ -47,6 +47,8 @@ void DlgModelManager::build_connect()
 		this, &DlgModelManager::pbtn_nextModel_clicked);
 	QObject::connect(ui->pbtn_preModel, &QPushButton::clicked,
 		this, &DlgModelManager::pbtn_preModel_clicked);
+	QObject::connect(ui->pbtn_deleteModel, &QPushButton::clicked,
+		this, &DlgModelManager::pbtn_deleteModel_clicked);
 
 }
 
@@ -83,6 +85,36 @@ void DlgModelManager::pbtn_preModel_clicked()
 	auto maxIndex = _modelConfigs.size();
 	auto currentIndex = ui->listView_modelList->currentIndex();
 	ui->listView_modelList->setCurrentIndex(currentIndex.siblingAtColumn(0).siblingAtRow((currentIndex.row() - 1 + maxIndex) % maxIndex));
+}
+
+void DlgModelManager::pbtn_deleteModel_clicked()
+{
+	auto isDelete = QMessageBox::question(this, "确定", "你真的要删除吗？该模型所有数据将会被清空");
+	if (isDelete!=QMessageBox::Yes)
+	{
+		return;
+	}
+	auto currentIndex = ui->listView_modelList->currentIndex();
+	if (!currentIndex.isValid()) {
+		return;
+	}
+
+	auto& targetPath = _configIndex.modelIndexs.at(currentIndex.row()).root_path;
+	deleteDirectory(QString::fromStdString(targetPath));
+
+	_ModelListModel->removeRows(currentIndex.row(), 1);
+	auto deleteConfig = _configIndex.modelIndexs.at(currentIndex.row());
+	_configIndex.deleteConfig(deleteConfig);
+	auto& globalStruct = GlobalStructData::getInstance();
+	auto& modelStorageManager = globalStruct.modelStorageManager;
+
+	rw::cdm::AiModelConfig configItem = _modelConfigs.at(currentIndex.row());
+	modelStorageManager->eraseModelConfig(configItem);
+	_modelConfigs.remove(currentIndex.row());
+
+	// 清空模型信息表和示例图片（可选）
+	flashModelInfoTable(0);
+	flashExampleImage(0);
 }
 
 void DlgModelManager::showEvent(QShowEvent* show_event)
@@ -194,6 +226,25 @@ QVector<QString> DlgModelManager::getImagePaths(const QString& rootPath, bool is
 	}
 
 	return imagePaths;
+}
+
+void DlgModelManager::deleteDirectory(const QString& targetPath)
+{
+	QDir dir(targetPath);
+
+	// 检查路径是否存在
+	if (!dir.exists()) {
+		qDebug() << "路径不存在:" << targetPath;
+		return;
+	}
+
+	// 使用 QDir 的 removeRecursively 方法删除路径及其内容
+	if (dir.removeRecursively()) {
+		qDebug() << "成功删除路径及其内容:" << targetPath;
+	}
+	else {
+		qDebug() << "删除路径失败:" << targetPath;
+	}
 }
 
 QString DlgModelManager::findXmlFile(const QString& rootPath)

@@ -28,11 +28,6 @@ private:
 private:
 	Ui::DlgModelManagerClass *ui;
 
-private slots:
-	void pbtn_exit_clicked();
-	void onModelListSelectionChanged(const QModelIndex& current, const QModelIndex& previous);
-	void pbtn_nextModel_clicked();
-	void pbtn_preModel_clicked();
 protected:
 	void showEvent(QShowEvent*) override;
 private:
@@ -41,6 +36,7 @@ private:
 	QString formatDateString(const std::string& dateStr);
 	QVector<QString> getImagePaths(const QString& rootPath, bool isGood);
 	QVector<QString> getImagePaths(const QString& rootPath, bool isGood, int maxCount);
+	void deleteDirectory(const QString& targetPath);
 	
 private:
 	QString findXmlFile(const QString& rootPath);
@@ -49,5 +45,13 @@ private:
 	void flashModelList();
 	void flashModelInfoTable(size_t index);
 	void flashExampleImage(size_t index);
+
+
+private slots:
+	void pbtn_exit_clicked();
+	void onModelListSelectionChanged(const QModelIndex& current, const QModelIndex& previous);
+	void pbtn_nextModel_clicked();
+	void pbtn_preModel_clicked();
+	void pbtn_deleteModel_clicked();
 
 };
