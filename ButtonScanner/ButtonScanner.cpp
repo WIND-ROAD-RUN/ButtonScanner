@@ -255,7 +255,6 @@ void ButtonScanner::build_ui()
 	build_dlgProductSet();
 	build_dlgExposureTimeSet();
 	build_dlgNewProduction();
-	build_dlgSelectModel();
 	build_picturesViewer();
 	build_dlgModelManager();
 	this->labelClickable_title = new rw::rqw::ClickableLabel(this);
@@ -323,11 +322,6 @@ void ButtonScanner::build_modelStorageManager()
 	auto& globalStruct = GlobalStructData::getInstance();
 	globalStruct.modelStorageManager = std::make_unique<ModelStorageManager>(this);
 	globalStruct.modelStorageManager->setRootPath(globalPath.modelStorageManagerRootPath);
-}
-
-void ButtonScanner::build_dlgSelectModel()
-{
-	dlgSelectModel = new DlgSelectModel(this);
 }
 
 void ButtonScanner::destory_modelStorageManager()
