@@ -30,17 +30,22 @@ private:
 
 private slots:
 	void pbtn_exit_clicked();
-
+	void onModelListSelectionChanged(const QModelIndex& current, const QModelIndex& previous);
 protected:
 	void showEvent(QShowEvent*) override;
 private:
+	QVector<rw::cdm::AiModelConfig> _modelConfigs;
+private:
 	QString formatDateString(const std::string& dateStr);
+	QVector<QString> getImagePaths(const QString& rootPath, bool isGood);
+	QVector<QString> getImagePaths(const QString& rootPath, bool isGood, int maxCount);
 	
 private:
 	QString findXmlFile(const QString& rootPath);
     
 private:
 	void flashModelList();
-	void falshModelInfoTabel();
+	void flashModelInfoTable(size_t index);
+	void flashExampleImage(size_t index);
 
 };
