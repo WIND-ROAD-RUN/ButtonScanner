@@ -1,0 +1,11 @@
+train: D:\y\yolov5-master\datasets\mydataset\train\images
+val: D:\y\yolov5-master\datasets\mydataset\train\images
+test: D:\y\yolov5-master\datasets\mydataset\train\images
+
+nc: 12
+names: ['body', 'hole','pobian','qikong','duyan','moshi',liaotou','zangwu','xiaoyan','poyan','liehen','maofa']
+
+  
+
+
+
