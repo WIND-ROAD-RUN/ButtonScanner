@@ -5,6 +5,7 @@
 #include "cdm_AiModelConfig.h"
 #include"cdm_AiModelConfigIndex.h"
 #include "ui_DlgModelManager.h"
+#include"LoadingDialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class DlgModelManagerClass; };
@@ -20,7 +21,9 @@ public:
 private:
 	QStringListModel* _ModelListModel;
 	QStandardItemModel* _ModelInfoModel;
+	LoadingDialog* _loadingDialog;
 	rw::cdm::AiModelConfigIndex _configIndex;
+
 private:
 	void build_ui();
 	void build_connect();
@@ -37,6 +40,7 @@ private:
 	QVector<QString> getImagePaths(const QString& rootPath, bool isGood);
 	QVector<QString> getImagePaths(const QString& rootPath, bool isGood, int maxCount);
 	void deleteDirectory(const QString& targetPath);
+	bool copyDirectoryRecursively(const QString& sourceDirPath, const QString& targetDirPath);
 	
 private:
 	QString findXmlFile(const QString& rootPath);
@@ -46,6 +50,9 @@ private:
 	void flashModelInfoTable(size_t index);
 	void flashExampleImage(size_t index);
 
+private:
+	void copyTargetImageFromStorageInTemp();
+
 
 private slots:
 	void pbtn_exit_clicked();
@@ -53,5 +60,5 @@ private slots:
 	void pbtn_nextModel_clicked();
 	void pbtn_preModel_clicked();
 	void pbtn_deleteModel_clicked();
-
+	void pbtn_loadModel_clicked();
 };

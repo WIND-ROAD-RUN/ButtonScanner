@@ -35,6 +35,8 @@ void DlgModelManager::build_ui()
 		"   font-size: 18px;" // 设置字体大小
 		"}"
 	);
+
+	_loadingDialog = new LoadingDialog();
 }
 
 void DlgModelManager::build_connect()
@@ -49,6 +51,8 @@ void DlgModelManager::build_connect()
 		this, &DlgModelManager::pbtn_preModel_clicked);
 	QObject::connect(ui->pbtn_deleteModel, &QPushButton::clicked,
 		this, &DlgModelManager::pbtn_deleteModel_clicked);
+	QObject::connect(ui->pbtn_loadModel, &QPushButton::clicked,
+		this, &DlgModelManager::pbtn_loadModel_clicked);
 
 }
 
@@ -115,6 +119,15 @@ void DlgModelManager::pbtn_deleteModel_clicked()
 	// 清空模型信息表和示例图片（可选）
 	flashModelInfoTable(0);
 	flashExampleImage(0);
+}
+
+void DlgModelManager::pbtn_loadModel_clicked()
+{
+	_loadingDialog->show();
+	_loadingDialog->updateMessage("加载中");
+	copyTargetImageFromStorageInTemp();
+	_loadingDialog->hide();
+	this->hide();
 }
 
 void DlgModelManager::showEvent(QShowEvent* show_event)
@@ -410,4 +423,108 @@ void DlgModelManager::flashExampleImage(size_t index)
 		ui->label_imgDisplayNG->setPixmap(image.scaled(ui->label_imgDisplayNG->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 	}
 
+}
+
+void DlgModelManager::copyTargetImageFromStorageInTemp()
+{
+	auto& globalStruct = GlobalStructData::getInstance();
+	auto& modelStorageManager = globalStruct.modelStorageManager;
+	//清理临时目录
+	modelStorageManager->clear_temp();
+	auto currentIndex = ui->listView_modelList->currentIndex();
+	if (!currentIndex.isValid()) {
+		return;
+	}
+
+	auto& config = _modelConfigs.at(currentIndex.row());
+	auto rootPath=config.rootPath;
+
+	auto & tempRootPath = globalPath.modelStorageManagerTempPath;
+
+	QString sourceImagePath = QString::fromStdString(rootPath + "/Image");
+	QString targetImagePath = tempRootPath + "/Image";
+
+	QDir sourceDir(sourceImagePath);
+	if (!sourceDir.exists()) {
+		qDebug() << "源路径不存在:" << sourceImagePath;
+		return;
+	}
+
+	QDir targetDir(targetImagePath);
+	if (!targetDir.exists()) {
+		if (!targetDir.mkpath(targetImagePath)) {
+			qDebug() << "无法创建目标路径:" << targetImagePath;
+			return;
+		}
+	}
+
+	// 获取源路径下的所有文件和子目录
+	QStringList files = sourceDir.entryList(QDir::Files);
+	for (const QString& fileName : files) {
+		QString sourceFile = sourceDir.filePath(fileName);
+		QString targetFile = targetDir.filePath(fileName);
+
+		// 如果目标文件已存在，则覆盖
+		if (QFile::exists(targetFile)) {
+			QFile::remove(targetFile);
+		}
+
+		if (!QFile::copy(sourceFile, targetFile)) {
+			qDebug() << "无法拷贝文件:" << sourceFile << "到" << targetFile;
+		}
+	}
+
+	// 递归拷贝子目录
+	QStringList directories = sourceDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+	for (const QString& dirName : directories) {
+		QString sourceSubDir = sourceDir.filePath(dirName);
+		QString targetSubDir = targetDir.filePath(dirName);
+
+		copyDirectoryRecursively(sourceSubDir, targetSubDir);
+	}
+
+}
+
+bool DlgModelManager::copyDirectoryRecursively(const QString& sourceDirPath, const QString& targetDirPath)
+{
+	QDir sourceDir(sourceDirPath);
+	if (!sourceDir.exists()) {
+		return false;
+	}
+
+	QDir targetDir(targetDirPath);
+	if (!targetDir.exists()) {
+		if (!targetDir.mkpath(targetDirPath)) {
+			return false;
+		}
+	}
+
+	// 拷贝文件
+	QStringList files = sourceDir.entryList(QDir::Files);
+	for (const QString& fileName : files) {
+		QString sourceFile = sourceDir.filePath(fileName);
+		QString targetFile = targetDir.filePath(fileName);
+
+		// 如果目标文件已存在，则覆盖
+		if (QFile::exists(targetFile)) {
+			QFile::remove(targetFile);
+		}
+
+		if (!QFile::copy(sourceFile, targetFile)) {
+			return false;
+		}
+	}
+
+	// 递归拷贝子目录
+	QStringList directories = sourceDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+	for (const QString& dirName : directories) {
+		QString sourceSubDir = sourceDir.filePath(dirName);
+		QString targetSubDir = targetDir.filePath(dirName);
+
+		if (!copyDirectoryRecursively(sourceSubDir, targetSubDir)) {
+			return false;
+		}
+	}
+
+	return true;
 }
