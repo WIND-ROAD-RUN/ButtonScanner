@@ -1213,6 +1213,17 @@ void ButtonScanner::rbtn_ForAndAgainst_ckecked(bool checked)
 
 void ButtonScanner::labelClickable_title_clicked()
 {
+	auto& global = GlobalStructData::getInstance();
+	if (global.isTrainModel)
+	{
+		QMessageBox::warning(this, "警告", "正在训练模型，请稍后再试");
+		return;
+	}
+	if (global.isOpenRemoveFunc)
+	{
+		QMessageBox::warning(this, "警告", "正在运行剔废功能，请关闭后再试");
+		return;
+	}
 	dlgModelManager->show();
 }
 
