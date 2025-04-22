@@ -75,45 +75,40 @@ QVector<AiTrainModule::DataItem> AiTrainModule::getDataSet(const QVector<labelAn
 QVector<AiTrainModule::DataItem> AiTrainModule::getSegmentDataSet(const QVector<labelAndImg>& annotationDataSet, int classId)
 {
 	QVector<AiTrainModule::DataItem> result;
+
 	for (const auto& item : annotationDataSet)
 	{
-		std::string id = classId ==0 ? "0" : "1";
-		//normalization归一化
+		std::string id = std::to_string(classId);
 
+		// 归一化中心点和宽高
 		double norCenterX = static_cast<double>(item.second.center_x) / static_cast<double>(_framWidth);
 		double norCenterY = static_cast<double>(item.second.center_y) / static_cast<double>(_frameHeight);
 		double norWidth = static_cast<double>(item.second.width) / static_cast<double>(_framWidth);
 		double norHeight = static_cast<double>(item.second.height) / static_cast<double>(_frameHeight);
 
-		auto textStr = id + " " +
-			std::to_string(norCenterX) + " " + std::to_string(norCenterY) + " "
-			+ std::to_string(norWidth) + " " + std::to_string(norHeight);
+		// 计算椭圆上的 30 个点
+		constexpr int numPoints = 30;
+		std::string pointsStr;
+		for (int i = 0; i < numPoints; ++i)
+		{
+			// 计算角度（均匀分布在 0 到 2π 之间）
+			double angle = 2.0 * M_PI * i / numPoints;
 
-		using Point = std::pair<double, double>;
-		std::vector< Point> points;
-		points.reserve(31);
+			// 椭圆公式：x = centerX + a * cos(angle), y = centerY + b * sin(angle)
+			double x = norCenterX + (norWidth / 2.0) * std::cos(angle);
+			double y = norCenterY + (norHeight / 2.0) * std::sin(angle);
 
-		double angleStep = 2 * M_PI / 30;
-
-		//算出半径
-		auto r = (norHeight + (norWidth - norHeight) / 2) / 2;
-
-		for (int i = 0; i < 30; i++) {
-			double theta = i * angleStep;
-			double x = norCenterX + r * std::cos(theta);
-			double y = norCenterY + r * std::sin(theta);
-			points.push_back(Point{ x, y });
+			// 将点添加到字符串中
+			pointsStr += " " + std::to_string(x) + " " + std::to_string(y);
 		}
-		points.push_back(points[0]);
 
-		textStr += " ";
-		for (int i = 0; i < 31; i++) {
-			textStr += std::to_string(points[i].first) + "_" + std::to_string(points[i].second);
-			if (i != 30)
-				textStr += ",";
-		}
+		// 组合最终的标注字符串
+		auto textStr = id + pointsStr;
+
+		// 添加到结果集
 		result.append({ item.first, QString::fromStdString(textStr) });
 	}
+
 	return result;
 }
 
