@@ -305,14 +305,31 @@ void AiTrainModule::trainObbModel()
 
 void AiTrainModule::exportOnnexModel()
 {
-	auto str = "activate yolov5 && cd /d " + globalPath.yoloV5RootPath.toStdString() + " && python export.py";
-	_processExportModel->start("cmd.exe", { "/c",str.c_str() });
+	if (_modelType==ModelType::Segment)
+	{
+		auto str = "activate yolov5 && cd /d " + globalPath.yoloV5RootPath.toStdString() + " && python export_seg.py";
+		_processExportModel->start("cmd.exe", { "/c",str.c_str() });
+	}
+	else if (_modelType == ModelType::ObejectDetection)
+	{
+		auto str = "activate yolov5 && cd /d " + globalPath.yoloV5RootPath.toStdString() + " && python export.py";
+		_processExportModel->start("cmd.exe", { "/c",str.c_str() });
+	}
 }
 
 void AiTrainModule::copyModelToTemp()
 {
 	// 源文件路径
-	QString sourceFilePath = globalPath.yoloV5RootPath + R"(runs\train\exp\weights\best.onnx)";
+	QString sourceFilePath=globalPath.yoloV5RootPath + R"(runs\train\exp\weights\best.onnx)";
+
+	if (_modelType==ModelType::Segment)
+	{
+		sourceFilePath = globalPath.yoloV5RootPath + R"(runs\train-seg\exp\weights\best.onnx)";
+	}
+	else if (_modelType == ModelType::ObejectDetection)
+	{
+		sourceFilePath = globalPath.yoloV5RootPath + R"(runs\train\exp\weights\best.onnx)";
+	}
 
 	// 目标目录路径
 	QString targetDirectory = globalPath.modelStorageManagerTempPath;
@@ -326,8 +343,22 @@ void AiTrainModule::copyModelToTemp()
 		}
 	}
 
-	// 目标文件路径（包括重命名后的文件名）
 	QString targetFilePath = targetDirectory + "modelOnnx.onnx";
+
+	if (_modelType==ModelType::Segment)
+	{
+		targetFilePath = targetDirectory + "customSO.onnx";
+	}
+	else if (_modelType == ModelType::ObejectDetection)
+	{
+		targetFilePath = targetDirectory + "customOO.onnx";
+	}
+
+	if (QFile::exists(targetFilePath)) {
+		if (!QFile::remove(targetFilePath)) {
+			emit appRunLog("Failed to remove existing file:" + targetFilePath);
+		}
+	}
 
 	// 拷贝文件并重命名
 	if (QFile::copy(sourceFilePath, targetFilePath)) {
@@ -549,7 +580,16 @@ void AiTrainModule::handleTrainModelProcessError()
 	QString errorStr = QString::fromLocal8Bit(errorOutput);
 	emit appRunLog(errorStr);
 	int total = 100;
-	auto complete = parseProgress(errorStr, total);
+	int complete=-1;
+	if (_modelType==ModelType::ObejectDetection){
+		 complete = parseProgressOO(errorStr, total);
+	}
+	else if (_modelType == ModelType::Segment)
+	{
+		complete = parseProgressSO(errorStr, total);
+	}
+
+	
 	if (complete==-1)
 	{
 		return;
@@ -619,7 +659,7 @@ void AiTrainModule::cancelTrain()
 	quit();
 }
 
-int AiTrainModule::parseProgress(const QString& logText, int& totalTasks) {
+int AiTrainModule::parseProgressOO(const QString& logText, int& totalTasks) {
 	// 匹配整行日志的正则表达式
 	QRegularExpression lineRegex(R"((\d+/\d+)\s+\d+\.\d+G\s+\d+\.\d+\s+\d+\.\d+\s+\d+\.\d+\s+\d+\s+\d+:)");
 	QRegularExpressionMatch lineMatch = lineRegex.match(logText);
@@ -629,6 +669,31 @@ int AiTrainModule::parseProgress(const QString& logText, int& totalTasks) {
 		QString progress = lineMatch.captured(1);
 
 		// 再次用正则表达式解析 "8/99"
+		QRegularExpression progressRegex(R"((\d+)/(\d+))");
+		QRegularExpressionMatch progressMatch = progressRegex.match(progress);
+
+		if (progressMatch.hasMatch()) {
+			int completedTasks = progressMatch.captured(1).toInt();
+			totalTasks = progressMatch.captured(2).toInt();
+			return completedTasks;
+		}
+	}
+
+	// 如果未匹配到，返回 -1 表示解析失败
+	totalTasks = -1;
+	return -1;
+}
+
+int AiTrainModule::parseProgressSO(const QString& logText, int& totalTasks) {
+	// 匹配整行日志的正则表达式
+	QRegularExpression lineRegex(R"((\d+/\d+)\s+\d+\.\d+G\s+[\d\.]+\s+[\d\.]+\s+[\d\.]+\s+[\d\.]+\s+\d+\s+\d+:)");
+	QRegularExpressionMatch lineMatch = lineRegex.match(logText);
+
+	if (lineMatch.hasMatch()) {
+		// 提取类似 "3/99" 的部分
+		QString progress = lineMatch.captured(1);
+
+		// 再次用正则表达式解析 "3/99"
 		QRegularExpression progressRegex(R"((\d+)/(\d+))");
 		QRegularExpressionMatch progressMatch = progressRegex.match(progress);
 

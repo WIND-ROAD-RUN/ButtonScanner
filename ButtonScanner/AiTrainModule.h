@@ -64,7 +64,8 @@ protected:
 private:
 	QVector<labelAndImg> annotation_data_set(bool isBad);
 private:
-	int parseProgress(const QString& logText, int& totalTasks);
+	int parseProgressOO(const QString& logText, int& totalTasks);
+	int parseProgressSO(const QString& logText, int& totalTasks);
 signals:
 	void appRunLog(QString log);
 	void updateProgress(int value,int total);
