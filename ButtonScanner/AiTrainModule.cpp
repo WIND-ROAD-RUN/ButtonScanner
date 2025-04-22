@@ -209,7 +209,30 @@ void AiTrainModule::clear_older_trainData()
 			testDirObj.removeRecursively();
 		}
 	}
-	
+	// 处理Temp下所有的onnx文件
+	{
+		QString tempDir = globalPath.modelStorageManagerTempPath;
+		QDir tempDirObj(tempDir);
+		if (!tempDirObj.exists()) {
+			return;
+		}
+
+		// 获取所有 .onnx 文件
+		QStringList filters;
+		filters << "*.onnx";
+		QStringList onnxFiles = tempDirObj.entryList(filters, QDir::Files);
+
+		// 删除每个 .onnx 文件
+		for (const QString& fileName : onnxFiles) {
+			QString filePath = tempDirObj.filePath(fileName);
+			if (!QFile::remove(filePath)) {
+				qDebug() << "Failed to remove file:" << filePath;
+			}
+			else {
+				qDebug() << "Removed file:" << filePath;
+			}
+		}
+	}
 
 }
 
