@@ -52,7 +52,8 @@ private:
 
 private:
 	void copyTargetImageFromStorageInTemp();
-
+	void copyOOModel();
+	void copySOModel();
 
 private slots:
 	void pbtn_exit_clicked();

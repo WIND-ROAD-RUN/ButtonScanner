@@ -56,6 +56,45 @@ void DlgModelManager::build_connect()
 
 }
 
+void DlgModelManager::copySOModel()
+{
+	auto currentIndex = ui->listView_modelList->currentIndex();
+	if (!currentIndex.isValid()) {
+		qDebug() << "未选择模型";
+		return;
+	}
+
+	auto& config = _modelConfigs.at(currentIndex.row());
+	QString sourceFile = QString::fromStdString(config.rootPath) + "/customSO.onnx";
+	QString targetFile = globalPath.modelRootPath + "/customSO.onnx";
+
+	// 检查源文件是否存在
+	if (!QFile::exists(sourceFile)) {
+		qDebug() << "源文件不存在:" << sourceFile;
+		QMessageBox::warning(this, "错误", "源文件不存在: " + sourceFile);
+		return;
+	}
+
+	// 如果目标文件已存在，则先删除
+	if (QFile::exists(targetFile)) {
+		if (!QFile::remove(targetFile)) {
+			qDebug() << "无法删除目标文件:" << targetFile;
+			QMessageBox::warning(this, "错误", "无法删除目标文件: " + targetFile);
+			return;
+		}
+	}
+
+	// 拷贝文件
+	if (QFile::copy(sourceFile, targetFile)) {
+		qDebug() << "文件拷贝成功:" << sourceFile << "到" << targetFile;
+	}
+	else {
+		qDebug() << "文件拷贝失败:" << sourceFile << "到" << targetFile;
+		QMessageBox::warning(this, "错误", "文件拷贝失败: " + sourceFile + " 到 " + targetFile);
+	}
+
+}
+
 void DlgModelManager::pbtn_exit_clicked()
 {
 	this->hide();
@@ -125,6 +164,22 @@ void DlgModelManager::pbtn_loadModel_clicked()
 {
 	_loadingDialog->show();
 	_loadingDialog->updateMessage("加载中");
+	auto currentIndex = ui->listView_modelList->currentIndex();
+	auto& config = _modelConfigs.at(currentIndex.row());
+	if (config.modelType==rw::cdm::ModelType::BladeShape)
+	{
+		copyOOModel();
+	}
+	else if (config.modelType==rw::cdm::ModelType::Color)
+	{
+		copySOModel();
+	}
+	else
+	{
+		QMessageBox::warning(this, "警告", "模型类型不支持");
+		_loadingDialog->hide();
+		return;
+	}
 	copyTargetImageFromStorageInTemp();
 	_loadingDialog->hide();
 	this->hide();
@@ -483,6 +538,44 @@ void DlgModelManager::copyTargetImageFromStorageInTemp()
 		copyDirectoryRecursively(sourceSubDir, targetSubDir);
 	}
 
+}
+
+void DlgModelManager::copyOOModel()
+{
+	auto currentIndex = ui->listView_modelList->currentIndex();
+	if (!currentIndex.isValid()) {
+		qDebug() << "未选择模型";
+		return;
+	}
+
+	auto& config = _modelConfigs.at(currentIndex.row());
+	QString sourceFile = QString::fromStdString(config.rootPath) + "/customOO.onnx";
+	QString targetFile = globalPath.modelRootPath + "/customOO.onnx";
+
+	// 检查源文件是否存在
+	if (!QFile::exists(sourceFile)) {
+		qDebug() << "源文件不存在:" << sourceFile;
+		QMessageBox::warning(this, "错误", "源文件不存在: " + sourceFile);
+		return;
+	}
+
+	// 如果目标文件已存在，则先删除
+	if (QFile::exists(targetFile)) {
+		if (!QFile::remove(targetFile)) {
+			qDebug() << "无法删除目标文件:" << targetFile;
+			QMessageBox::warning(this, "错误", "无法删除目标文件: " + targetFile);
+			return;
+		}
+	}
+
+	// 拷贝文件
+	if (QFile::copy(sourceFile, targetFile)) {
+		qDebug() << "文件拷贝成功:" << sourceFile << "到" << targetFile;
+	}
+	else {
+		qDebug() << "文件拷贝失败:" << sourceFile << "到" << targetFile;
+		QMessageBox::warning(this, "错误", "文件拷贝失败: " + sourceFile + " 到 " + targetFile);
+	}
 }
 
 bool DlgModelManager::copyDirectoryRecursively(const QString& sourceDirPath, const QString& targetDirPath)
