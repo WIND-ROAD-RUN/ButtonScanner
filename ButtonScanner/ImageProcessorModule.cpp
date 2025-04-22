@@ -875,6 +875,22 @@ void ImageProcessingModule::BuildModule()
 	}
 }
 
+void ImageProcessingModule::reloadOOModel()
+{
+	for (auto & item: _processors)
+	{
+		item->buildModelEngineOnnxOO(modelOnnxOOPath, modelNamePath);
+	}
+}
+
+void ImageProcessingModule::reloadSOModel()
+{
+	for (auto& item : _processors)
+	{
+		item->buildModelEngineOnnxSO(modelOnnxSOPath, modelNamePath);
+	}
+}
+
 ImageProcessingModule::ImageProcessingModule(int numConsumers, QObject* parent)
 	: QObject(parent), _numConsumers(numConsumers) {
 }

@@ -58,6 +58,7 @@ void DlgModelManager::build_connect()
 
 void DlgModelManager::copySOModel()
 {
+	auto& globalStruct = GlobalStructData::getInstance();
 	auto currentIndex = ui->listView_modelList->currentIndex();
 	if (!currentIndex.isValid()) {
 		qDebug() << "未选择模型";
@@ -86,6 +87,10 @@ void DlgModelManager::copySOModel()
 
 	// 拷贝文件
 	if (QFile::copy(sourceFile, targetFile)) {
+		globalStruct.imageProcessingModule1->reloadSOModel();
+		globalStruct.imageProcessingModule2->reloadSOModel();
+		globalStruct.imageProcessingModule3->reloadSOModel();
+		globalStruct.imageProcessingModule4->reloadSOModel();
 		qDebug() << "文件拷贝成功:" << sourceFile << "到" << targetFile;
 	}
 	else {
@@ -542,6 +547,7 @@ void DlgModelManager::copyTargetImageFromStorageInTemp()
 
 void DlgModelManager::copyOOModel()
 {
+	auto& globalStruct = GlobalStructData::getInstance();
 	auto currentIndex = ui->listView_modelList->currentIndex();
 	if (!currentIndex.isValid()) {
 		qDebug() << "未选择模型";
@@ -570,6 +576,10 @@ void DlgModelManager::copyOOModel()
 
 	// 拷贝文件
 	if (QFile::copy(sourceFile, targetFile)) {
+		globalStruct.imageProcessingModule1->reloadOOModel();
+		globalStruct.imageProcessingModule2->reloadOOModel();
+		globalStruct.imageProcessingModule3->reloadOOModel();
+		globalStruct.imageProcessingModule4->reloadOOModel();
 		qDebug() << "文件拷贝成功:" << sourceFile << "到" << targetFile;
 	}
 	else {

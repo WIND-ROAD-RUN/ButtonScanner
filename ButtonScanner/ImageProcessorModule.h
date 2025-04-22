@@ -105,6 +105,9 @@ public:
 	QString modelOnnxSOPath;
 public:
 	void BuildModule();
+
+	void reloadOOModel();
+	void reloadSOModel();
 public:
 	ImageProcessingModule(int numConsumers, QObject* parent = nullptr);
 
