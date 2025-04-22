@@ -505,6 +505,8 @@ cv::Mat AiTrainModule::getMatFromPath(const QString& path)
 
 void AiTrainModule::run()
 {
+	auto& global = GlobalStructData::getInstance();
+	global.isTrainModel = true;
 	emit updateTrainState(true);
 	emit updateTrainTitle("正在训练");
 	emit appRunLog("训练启动....");
@@ -630,9 +632,10 @@ void AiTrainModule::handleTrainModelProcessFinished(int exitCode, QProcess::Exit
 	{
 		emit updateTrainTitle("训练失败");
 		emit updateTrainState(false);
+		auto& global = GlobalStructData::getInstance();
+		global.isTrainModel = false;
 		quit();
 	}
-
 }
 
 void AiTrainModule::handleExportModelProcessOutput()
@@ -664,6 +667,8 @@ void AiTrainModule::handleExportModelProcessFinished(int exitCode, QProcess::Exi
 		emit updateTrainTitle("导出失败");
 		emit updateTrainState(false);
 	}
+	auto& global = GlobalStructData::getInstance();
+	global.isTrainModel = false;
 	quit();
 }
 
