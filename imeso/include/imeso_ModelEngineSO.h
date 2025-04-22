@@ -9,7 +9,7 @@ namespace rw
 {
 	namespace imeso
 	{
-		class ModelEngineOT
+		class ModelEngineSO
 		{
 		private:
 			int _index{ -1 };
@@ -17,8 +17,8 @@ namespace rw
 			std::string _nameFilePath;
 			bool _isCreated{ false };
 		public:
-			ModelEngineOT(std::string modelPath, std::string nameFilePath);
-			~ModelEngineOT();
+			ModelEngineSO(std::string modelPath, std::string nameFilePath);
+			~ModelEngineSO();
 		public:
 			bool ProcessMask(cv::Mat& img, cv::Mat& resultMat, cv::Mat maskMat, std::vector<ProcessRectanglesResultSO>& result);
 		};

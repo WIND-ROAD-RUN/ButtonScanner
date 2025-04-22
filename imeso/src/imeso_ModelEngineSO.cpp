@@ -22,7 +22,7 @@ namespace rw
 			return result;
 		}
 
-		ModelEngineOT::ModelEngineOT(std::string modelPath, std::string nameFilePath)
+		ModelEngineSO::ModelEngineSO(std::string modelPath, std::string nameFilePath)
 		{
 			_modelPath = modelPath;
 			_nameFilePath = nameFilePath;
@@ -34,14 +34,14 @@ namespace rw
 			_isCreated = true;
 		}
 
-		ModelEngineOT::~ModelEngineOT()
+		ModelEngineSO::~ModelEngineSO()
 		{
 			if (_isCreated) {
 				yolov5v6_seg_ort_destroy(_index);
 			}
 		}
 
-		bool ModelEngineOT::ProcessMask(cv::Mat& img, cv::Mat& resultMat, cv::Mat maskMat,
+		bool ModelEngineSO::ProcessMask(cv::Mat& img, cv::Mat& resultMat, cv::Mat maskMat,
 			std::vector<ProcessRectanglesResultSO>& result)
 		{
 			try
