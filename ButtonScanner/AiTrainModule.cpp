@@ -359,7 +359,8 @@ void AiTrainModule::packageModelToStorage()
 	auto& global = GlobalStructData::getInstance();
 
 	rw::cdm::AiModelConfig config;
-	config.id = formattedDateTime.toLong();
+	std::hash<std::string> hasher;
+	config.id = static_cast<long>(hasher(formattedDateTime.toStdString()));
 	config.name = formattedDateTime.toStdString();
 	if (_modelType==ModelType::ObejectDetection)
 	{
