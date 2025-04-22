@@ -3,6 +3,11 @@
 #include"oso_StorageContext.hpp"
 #include"GlobalStruct.h"
 
+rw::cdm::AiModelConfigIndex ModelStorageManager::getModelConfigIndex()
+{
+	return _config_index;
+}
+
 void ModelStorageManager::addModelConfig(const rw::cdm::AiModelConfig& item)
 {
     rw::cdm::ConfigIndexItem indexItem;

@@ -1212,11 +1212,10 @@ void ButtonScanner::rbtn_ForAndAgainst_ckecked(bool checked)
 
 void ButtonScanner::labelClickable_title_clicked()
 {
-	dlgModelManager->exec();
+	dlgModelManager->show();
 }
 
 void ButtonScanner::pbtn_exit_clicked()
 {
-
 	this->close();
 }
