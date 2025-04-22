@@ -8,6 +8,7 @@
 #include"DlgExposureTimeSet.h"
 #include"DlgNewProduction.h"
 #include"DlgSelectModel.h"
+#include"DlgModelManager.h"
 #include"rqw_LabelClickable.h"
 #include"PicturesViewer.h"
 
@@ -36,6 +37,7 @@ private:
 	DlgExposureTimeSet* dlgExposureTimeSet = nullptr;
 	DlgSelectModel* dlgSelectModel = nullptr;
 	PicturesViewer* picturesViewer = nullptr;
+	DlgModelManager* dlgModelManager = nullptr;
 public:
 	DlgNewProduction* dlgNewProduction = nullptr;
 public:
@@ -75,6 +77,7 @@ private:
 	void build_dlgSelectModel();
 	void destory_modelStorageManager();
 	void build_picturesViewer();
+	void build_dlgModelManager();
 
 	void stop_all_axis();
 

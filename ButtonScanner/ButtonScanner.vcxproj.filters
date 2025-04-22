@@ -121,6 +121,9 @@
     <ClCompile Include="PicturesViewer.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
+    <ClCompile Include="DlgModelManager.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ButtonScanner.h">
@@ -168,6 +171,9 @@
     <QtMoc Include="PicturesViewer.h">
       <Filter>Header Files\ui</Filter>
     </QtMoc>
+    <QtMoc Include="DlgModelManager.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="DlgProductSet.ui">
@@ -189,6 +195,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="PicturesViewer.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DlgModelManager.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

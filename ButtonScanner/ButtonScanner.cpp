@@ -1,17 +1,18 @@
 #include "stdafx.h"
 
-#include"rqw_CameraObjectThread.hpp"
-#include"rqw_CameraObject.hpp"
-#include"hoec_CameraException.hpp"
+#include "ButtonScanner.h"
+
 #include"LoadingDialog.h"
 #include"PicturesViewer.h"
-
-#include "ButtonScanner.h"
 #include"DlgProductSet.h"
 #include"DlgProduceLineSet.h"
 #include"GlobalStruct.h"
 #include"NumKeyBord.h"
 #include"ButtonUtilty.h"
+
+#include"rqw_CameraObjectThread.hpp"
+#include"rqw_CameraObject.hpp"
+#include"hoec_CameraException.hpp"
 
 #include<qdebug>
 #include<QtConcurrent>
@@ -256,6 +257,7 @@ void ButtonScanner::build_ui()
 	build_dlgNewProduction();
 	build_dlgSelectModel();
 	build_picturesViewer();
+	build_dlgModelManager();
 	this->labelClickable_title = new rw::rqw::ClickableLabel(this);
 	labelClickable_title->setText(ui->label_title->text());
 	labelClickable_title->setStyleSheet(ui->label_title->styleSheet());
@@ -337,6 +339,11 @@ void ButtonScanner::destory_modelStorageManager()
 void ButtonScanner::build_picturesViewer()
 {
 	picturesViewer = new PicturesViewer(this);
+}
+
+void ButtonScanner::build_dlgModelManager()
+{
+	dlgModelManager = new DlgModelManager(this);
 }
 
 void ButtonScanner::build_connect()
@@ -1211,12 +1218,11 @@ void ButtonScanner::rbtn_ForAndAgainst_ckecked(bool checked)
 
 void ButtonScanner::labelClickable_title_clicked()
 {
-	picturesViewer->show();
+	dlgModelManager->exec();
 }
 
 void ButtonScanner::pbtn_exit_clicked()
 {
-	//TODO: question messagebox
 
 	this->close();
 }

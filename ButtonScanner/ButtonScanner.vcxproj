@@ -157,12 +157,14 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     <QtMoc Include="ModelStorageManager.h" />
     <QtMoc Include="DlgSelectModel.h" />
     <QtMoc Include="PicturesViewer.h" />
+    <QtMoc Include="DlgModelManager.h" />
     <ClInclude Include="ThreadSafePriorityQueue.h" />
     <QtRcc Include="ButtonScanner.qrc" />
     <QtUic Include="ButtonScanner.ui" />
     <QtMoc Include="ButtonScanner.h" />
     <ClCompile Include="ButtonScanner.cpp" />
     <ClCompile Include="DlgExposureTimeSet.cpp" />
+    <ClCompile Include="DlgModelManager.cpp" />
     <ClCompile Include="DlgNewProduction.cpp" />
     <ClCompile Include="DlgProduceLineSet.cpp" />
     <ClCompile Include="DlgProductSet.cpp" />
@@ -187,6 +189,7 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <QtUic Include="DlgExposureTimeSet.ui" />
+    <QtUic Include="DlgModelManager.ui" />
     <QtUic Include="DlgNewProduction.ui" />
     <QtUic Include="DlgProduceLineSet.ui" />
     <QtUic Include="DlgProductSet.ui" />
