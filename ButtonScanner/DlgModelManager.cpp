@@ -6,9 +6,20 @@ DlgModelManager::DlgModelManager(QWidget *parent)
 	, ui(new Ui::DlgModelManagerClass())
 {
 	ui->setupUi(this);
+
+	build_ui();
+	build_connect();
 }
 
 DlgModelManager::~DlgModelManager()
 {
 	delete ui;
+}
+
+void DlgModelManager::build_ui()
+{
+}
+
+void DlgModelManager::build_connect()
+{
 }

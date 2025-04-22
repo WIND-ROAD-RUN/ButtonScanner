@@ -115,9 +115,6 @@
     <ClCompile Include="AiTrainModule.cpp">
       <Filter>Source Files\DetachThread</Filter>
     </ClCompile>
-    <ClCompile Include="DlgSelectModel.cpp">
-      <Filter>Source Files\ui</Filter>
-    </ClCompile>
     <ClCompile Include="PicturesViewer.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
@@ -165,9 +162,6 @@
     <QtMoc Include="AiTrainModule.h">
       <Filter>Header Files\DetachThread</Filter>
     </QtMoc>
-    <QtMoc Include="DlgSelectModel.h">
-      <Filter>Header Files\ui</Filter>
-    </QtMoc>
     <QtMoc Include="PicturesViewer.h">
       <Filter>Header Files\ui</Filter>
     </QtMoc>
@@ -189,9 +183,6 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="DlgNewProduction.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="DlgSelectModel.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="PicturesViewer.ui">

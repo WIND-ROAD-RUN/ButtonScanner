@@ -16,5 +16,11 @@ public:
 	~DlgModelManager();
 
 private:
+	void build_ui();
+	void build_connect();
+
+private:
 	Ui::DlgModelManagerClass *ui;
+private slots:
+	void
 };

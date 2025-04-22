@@ -155,7 +155,6 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     <QtMoc Include="LoadingDialog.h" />
     <QtMoc Include="DlgNewProduction.h" />
     <QtMoc Include="ModelStorageManager.h" />
-    <QtMoc Include="DlgSelectModel.h" />
     <QtMoc Include="PicturesViewer.h" />
     <QtMoc Include="DlgModelManager.h" />
     <ClInclude Include="ThreadSafePriorityQueue.h" />
@@ -168,7 +167,6 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     <ClCompile Include="DlgNewProduction.cpp" />
     <ClCompile Include="DlgProduceLineSet.cpp" />
     <ClCompile Include="DlgProductSet.cpp" />
-    <ClCompile Include="DlgSelectModel.cpp" />
     <ClCompile Include="GlobalStruct.cpp" />
     <ClCompile Include="ImageProcessorModule.cpp" />
     <ClCompile Include="LoadingDialog.cpp" />
@@ -193,7 +191,6 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     <QtUic Include="DlgNewProduction.ui" />
     <QtUic Include="DlgProduceLineSet.ui" />
     <QtUic Include="DlgProductSet.ui" />
-    <QtUic Include="DlgSelectModel.ui" />
     <QtUic Include="LoadingDialog.ui" />
     <QtUic Include="PicturesViewer.ui" />
   </ItemGroup>
