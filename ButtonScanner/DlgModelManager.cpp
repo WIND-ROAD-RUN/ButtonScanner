@@ -83,6 +83,8 @@ void DlgModelManager::copySOModel()
 		globalStruct.imageProcessingModule3->reloadSOModel();
 		globalStruct.imageProcessingModule4->reloadSOModel();
 		qDebug() << "文件拷贝成功:" << sourceFile << "到" << targetFile;
+		auto& globalStruct = GlobalStructData::getInstance();
+		globalStruct.isOpenColor = true;
 	}
 	else {
 		qDebug() << "文件拷贝失败:" << sourceFile << "到" << targetFile;
@@ -157,6 +159,9 @@ void DlgModelManager::pbtn_deleteModel_clicked()
 
 void DlgModelManager::pbtn_loadModel_clicked()
 {
+	auto& globalStruct = GlobalStructData::getInstance();
+	globalStruct.isOpenBladeShape = false;
+	globalStruct.isOpenColor = false;
 	_loadingDialog->show();
 	_loadingDialog->updateMessage("加载中");
 	auto currentIndex = ui->listView_modelList->currentIndex();
@@ -567,6 +572,8 @@ void DlgModelManager::copyOOModel()
 		globalStruct.imageProcessingModule3->reloadOOModel();
 		globalStruct.imageProcessingModule4->reloadOOModel();
 		qDebug() << "文件拷贝成功:" << sourceFile << "到" << targetFile;
+		auto& globalStruct = GlobalStructData::getInstance();
+		globalStruct.isOpenBladeShape = false;
 	}
 	else {
 		qDebug() << "文件拷贝失败:" << sourceFile << "到" << targetFile;
