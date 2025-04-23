@@ -66,6 +66,7 @@ private:
 	void destoryComponects();
 
 	void build_ui();
+	void read_image();
 	void build_mainWindowData();
 	void build_dlgProduceLineSet();
 	void build_dlgProductSet();

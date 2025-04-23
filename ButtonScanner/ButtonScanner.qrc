@@ -3,5 +3,6 @@
         <file>image/product.png</file>
         <file>image/close.png</file>
         <file>image/exit.png</file>
+        <file>image/lightBulb.png</file>
     </qresource>
 </RCC>

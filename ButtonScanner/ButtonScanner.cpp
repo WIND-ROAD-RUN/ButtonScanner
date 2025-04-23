@@ -249,6 +249,7 @@ void ButtonScanner::destoryComponects()
 void ButtonScanner::build_ui()
 {
 	//Set RadioButton ,make sure these can be checked at the same time
+	read_image();
 	set_radioButton();
 	build_mainWindowData();
 	build_dlgProduceLineSet();
@@ -262,6 +263,18 @@ void ButtonScanner::build_ui()
 	labelClickable_title->setStyleSheet(ui->label_title->styleSheet());
 	ui->hLayout_title->replaceWidget(ui->label_title, labelClickable_title);
 	delete ui->label_title;
+}
+
+void ButtonScanner::read_image()
+{
+	QString imagePath = ":/ButtonScanner/image/lightBulb.png";
+	QPixmap pixmap(imagePath);
+
+	if (pixmap.isNull()) {
+		QMessageBox::critical(this, "Error", "无法加载图片。");
+		return;
+	}
+	ui->label_lightBulb->setPixmap(pixmap.scaled(ui->label_lightBulb->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 void ButtonScanner::build_mainWindowData()
@@ -842,6 +855,7 @@ void ButtonScanner::build_ioThread()
 					{
 						ui->rbtn_removeFunc->setChecked(false);
 						ui->rbtn_debug->setChecked(false);
+						ui->label_lightBulb->setVisible(false);
 					});
 					// pidaimove->stop();
 					motionPtr->StopAllAxis();
@@ -866,6 +880,7 @@ void ButtonScanner::build_ioThread()
 								dlgExposureTimeSet->ResetCamera();
 								ui->rbtn_removeFunc->setChecked(true);
 								ui->rbtn_debug->setChecked(false);
+								ui->label_lightBulb->setVisible(true);
 							});
 					}
 					//所有电机上电
@@ -896,6 +911,7 @@ void ButtonScanner::build_ioThread()
 						{
 							ui->rbtn_removeFunc->setChecked(false);
 							ui->rbtn_debug->setChecked(false);
+							ui->label_lightBulb->setVisible(false);
 						});
 						motionPtr->StopAllAxis();
 						motionPtr->SetIOOut(1, false);
