@@ -80,8 +80,17 @@ private:
 	cv::Mat processAI(MatInfo& frame, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResultTarget);
 
 	rw::imeot::ProcessRectanglesResultOT getBody(std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult, bool& hasBody);
+	rw::imeoo::ProcessRectanglesResultOO getBody(std::vector<rw::imeoo::ProcessRectanglesResultOO>& processRectanglesResult, bool& hasBody);
+	rw::imeso::ProcessRectanglesResultSO getBody(std::vector<rw::imeso::ProcessRectanglesResultSO>& processRectanglesResult, bool& hasBody);
 
-	void eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResultTarget);
+	void eliminationLogic(
+		MatInfo& frame, 
+		cv::Mat& resultImage, 
+		QVector<QString>& errorInfo, 
+		std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult, 
+		std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResultTarget, 
+		std::vector<rw::imeoo::ProcessRectanglesResultOO>& processRectanglesResultOO, 
+		std::vector<rw::imeso::ProcessRectanglesResultSO>&processRectanglesResultSO);
 
 	void drawErrorLocate(QImage& image, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult, const QColor& drawColor);
 

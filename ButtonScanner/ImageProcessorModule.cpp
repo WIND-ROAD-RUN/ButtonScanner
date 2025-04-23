@@ -96,10 +96,27 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 	auto& globalStruct = GlobalStructData::getInstance();
 
 	cv::Mat resultImage1;
-	std::vector<rw::imeoo::ProcessRectanglesResultOO > vecRecogResultOnnx;
+	std::vector<rw::imeoo::ProcessRectanglesResultOO > vecReconResultOnnxOO;
+	std::vector<rw::imeso::ProcessRectanglesResultSO > vecReconResultOnnxSO;
+
+	auto openBladeShape = globalStruct.mainWindowConfig.isPositive && globalStruct.isOpenBladeShape;
+	auto openColor = globalStruct.mainWindowConfig.isPositive && globalStruct.isOpenColor;
 
 	QFuture<void> onnxFuture = QtConcurrent::run([&]() {
-		_modelEnginePtrOnnxOO->ProcessMask(frame.image, resultImage1, vecRecogResultOnnx);
+		if (globalStruct.mainWindowConfig.isPositive)
+		{
+			if (openBladeShape)
+			{
+				_modelEnginePtrOnnxOO->ProcessMask(frame.image, resultImage1, vecReconResultOnnxOO);
+			}
+			if (openColor)
+			{
+				cv::Mat maskImage = cv::Mat::zeros(frame.image.size(), CV_8UC1);
+				_modelEnginePtrOnnxSO->ProcessMask(frame.image, resultImage1, maskImage, vecReconResultOnnxSO);
+			}
+
+		}
+
 		});
 
 	cv::Mat resultImage;
@@ -110,9 +127,25 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 	onnxFuture.waitForFinished();
 
 	if (globalStruct.isOpenRemoveFunc || (globalStruct.isDebugMode)) {
-		bool hasBody;
+		bool hasBody=false;
 		auto body = getBody(vecRecogResult, hasBody);
-		if (!hasBody)
+
+		bool hasBodyOnnxOO = false;
+		auto bodyOnnxOO = getBody(vecReconResultOnnxOO, hasBodyOnnxOO);
+
+		bool hasBodyOnnxSO = false;
+		auto bodyOnnxSO = getBody(vecReconResultOnnxSO, hasBodyOnnxSO);
+
+		if (openBladeShape)
+		{
+			hasBodyOnnxOO = true;
+		}
+		if (openColor)
+		{
+			hasBodyOnnxSO = true;
+		}
+
+		if ((!hasBody)||(!hasBodyOnnxOO)||(!hasBodyOnnxSO))
 		{
 			if (globalStruct.isOpenRemoveFunc) {
 				globalStruct.statisticalInfo.wasteCount++;
@@ -154,7 +187,13 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 		else
 		{
 			auto defect = getDefectInBody(body, vecRecogResult);
-			eliminationLogic(frame, frame.image, errorInfo, defect, vecRecogResultTarget);
+			eliminationLogic(frame, 
+				frame.image,
+				errorInfo, 
+				defect, 
+				vecRecogResultTarget,
+				vecReconResultOnnxOO,
+				vecReconResultOnnxSO);
 		}
 	}
 
@@ -185,13 +224,80 @@ rw::imeot::ProcessRectanglesResultOT ImageProcessor::getBody(std::vector<rw::ime
 	return result;
 }
 
-void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVector<QString>& errorInfo, std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResultTarget)
+rw::imeoo::ProcessRectanglesResultOO ImageProcessor::getBody(
+	std::vector<rw::imeoo::ProcessRectanglesResultOO>& processRectanglesResult, bool& hasBody)
+{
+	hasBody = false;
+	rw::imeoo::ProcessRectanglesResultOO result;
+	int area = 0;
+	for (auto& i : processRectanglesResult)
+	{
+		if (i.classID == 0)
+		{
+			auto center_x = i.left_top.first + (i.right_bottom.first - i.left_top.first) / 2;
+			auto center_y = i.left_top.second + (i.right_bottom.second - i.left_top.second) / 2;
+			auto width = i.right_bottom.first - i.left_top.first;
+			auto height = i.right_bottom.second - i.left_top.second;
+			auto isIn = isInArea(center_x);
+			if (isIn)
+			{
+				if ((width * height) > area)
+				{
+					result = i;
+					hasBody = true;
+					area = width * height;
+				}
+
+			}
+		}
+	}
+	return result;
+}
+
+rw::imeso::ProcessRectanglesResultSO ImageProcessor::getBody(
+	std::vector<rw::imeso::ProcessRectanglesResultSO>& processRectanglesResult, bool& hasBody)
+{
+	hasBody = false;
+	rw::imeso::ProcessRectanglesResultSO result;
+	int area = 0;
+	for (auto& i : processRectanglesResult)
+	{
+		if (i.classID == 0)
+		{
+			auto center_x = i.left_top.first + (i.right_bottom.first - i.left_top.first) / 2;
+			auto center_y = i.left_top.second + (i.right_bottom.second - i.left_top.second) / 2;
+			auto width = i.right_bottom.first - i.left_top.first;
+			auto height = i.right_bottom.second - i.left_top.second;
+			auto isIn = isInArea(center_x);
+			if (isIn)
+			{
+				if ((width * height) > area)
+				{
+					result = i;
+					hasBody = true;
+					area = width * height;
+				}
+			}
+		}
+	}
+	return result;
+}
+
+void
+ImageProcessor::eliminationLogic(
+	MatInfo& frame, 
+	cv::Mat& resultImage, QVector<QString>& errorInfo, 
+	std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult, 
+	std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResultTarget, 
+	std::vector<rw::imeoo::ProcessRectanglesResultOO>& processRectanglesResultOO, std::vector<rw::imeso::ProcessRectanglesResultSO>& processRectanglesResultSO)
 {
 	auto saveIamge = resultImage.clone();
 	auto& globalStruct = GlobalStructData::getInstance();
 
 	auto& systemConfig = globalStruct.dlgProduceLineSetConfig;
 	auto& checkConfig = globalStruct.dlgProductSetConfig;
+	auto& mainWindowSet = globalStruct.mainWindowConfig;
+	auto& dlgHideScoreSet = globalStruct.dlgHideScoreSetConfig;
 
 	double& pixEquivalent = systemConfig.pixelEquivalent1;
 	switch (frame.index)
@@ -293,6 +399,35 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		hole.emplace_back(processRectanglesResult[konJingIndexs[i]]);
 	}
 
+	if (mainWindowSet.isPositive)
+	{
+		if (globalStruct.isOpenBladeShape)
+		{
+			if (processRectanglesResultOO.size()!=0)
+			{
+				if ((processRectanglesResultOO.at(0).classID==0)&&(processRectanglesResultOO.at(0).score>dlgHideScoreSet.forAndAgainstScore))
+				{
+					errorInfo.emplace_back("刀型错误");
+					isBad = true;
+					_isbad = true;
+				}
+			}
+		}
+		if (globalStruct.isOpenColor)
+		{
+			if (processRectanglesResultSO.size() != 0)
+			{
+				if ((processRectanglesResultSO.at(0).classID == 0) && (processRectanglesResultSO.at(0).score > dlgHideScoreSet.forAndAgainstScore))
+				{
+					errorInfo.emplace_back("颜色错误");
+					isBad = true;
+					_isbad = true;
+				}
+			}
+
+		}
+	}
+
 	//检查外径
 	if (checkConfig.outsideDiameterEnable)
 	{
@@ -378,7 +513,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		for (int i = 0; i < qiKonIndexs.size(); i++)
 		{
 			auto score = processRectanglesResult[qiKonIndexs[i]].score;
-			if (score >= 0.3)
+			if (score >= checkConfig.poreEnableScore / 100)
 			{
 				isBad = true;
 				_isbad = true;
@@ -397,7 +532,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		for (int i = 0; i < duYanIndexs.size(); i++)
 		{
 			auto score = processRectanglesResult[duYanIndexs[i]].score;
-			if (score >= 0.1)
+			if (score >= checkConfig.blockEyeEnableScore / 100)
 			{
 				isBad = true;
 				_isbad = true;
@@ -416,7 +551,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		for (int i = 0; i < moShiIndexs.size(); i++)
 		{
 			auto score = processRectanglesResult[moShiIndexs[i]].score;
-			if (score >= 0.1)
+			if (score >= checkConfig.grindStoneEnableScore / 100)
 			{
 				isBad = true;
 				_isbad = true;
@@ -435,7 +570,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		for (int i = 0; i < liaoTouIndexs.size(); i++)
 		{
 			auto score = processRectanglesResult[liaoTouIndexs[i]].score;
-			if (score >= 0.1)
+			if (score >= checkConfig.materialHeadEnableScore / 100)
 			{
 				isBad = true;
 				_isbad = true;
@@ -454,7 +589,7 @@ void ImageProcessor::eliminationLogic(MatInfo& frame, cv::Mat& resultImage, QVec
 		for (int i = 0; i < youQiIndexs.size(); i++)
 		{
 			auto score = processRectanglesResult[youQiIndexs[i]].score;
-			if (score >= 0.5)
+			if (score >= checkConfig.paintEnableScore / 100)
 			{
 				isBad = true;
 				_isbad = true;
