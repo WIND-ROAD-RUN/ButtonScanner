@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>4</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -545,7 +545,7 @@ QGroupBox::title {
     border-radius: 4px;
     font: bold 14px;
     color: #666;
-    background-color: #F8F8F8;
+    background-color: rgb(202, 202, 202);
     padding: 5px; 
 }
 
@@ -1286,7 +1286,7 @@ QGroupBox::title {
     border-radius: 4px;
     font: bold 14px;
     color: #666;
-    background-color: #F8F8F8;
+    background-color:rgb(202, 202, 202);
     padding: 5px; 
 }
 
@@ -2204,7 +2204,7 @@ QPlainTextEdit.compact .linenumber {
     border-radius: 4px;
     font: bold 14px;
     color: #666;
-    background-color: #F8F8F8;
+    background-color: rgb(202, 202, 202);
     padding: 5px; 
 }
 

@@ -25,7 +25,7 @@
     border-radius: 4px;
     font: bold 14px;
     color: #666;
-    background-color: #F8F8F8;
+    background-color: rgb(202, 202, 202);
     padding: 10px; 
 }
 
@@ -201,7 +201,7 @@ QGroupBox::title {
     border-radius: 4px;
     font: bold 14px;
     color: #666;
-    background-color: #F8F8F8;
+    background-color: rgb(202, 202, 202);
     padding: 10px; 
 }
 
@@ -333,7 +333,7 @@ QScrollBar #qt_scrollarea_corner {
     border-radius: 4px;
     font: bold 14px;
     color: #666;
-    background-color: #F8F8F8;
+    background-color: rgb(161, 161, 161);
     padding: 2px; 
 }
 
