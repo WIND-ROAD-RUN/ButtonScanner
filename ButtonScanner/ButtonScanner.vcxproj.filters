@@ -222,7 +222,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ButtonUtilty.h">
-      <Filter>Header Files\func</Filter>
+      <Filter>Header Files\data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

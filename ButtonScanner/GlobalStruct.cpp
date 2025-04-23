@@ -101,6 +101,8 @@ void GlobalStructData::ReadConfig()
 	ReadMainWindowConfig();
 	ReadDlgProduceLineSetConfig();
 	ReadDlgProductSetConfig();
+	ReadDlgExposureTimeSetConfig();
+	ReadDlgHideScoreSetConfig();
 }
 
 void GlobalStructData::ReadMainWindowConfig()
@@ -153,11 +155,23 @@ void GlobalStructData::ReadDlgExposureTimeSetConfig()
 	}
 }
 
+void GlobalStructData::ReadDlgHideScoreSetConfig()
+{
+	auto loadDlgHideScoreSetConfig = storeContext->load(dlgHideScoreSetPath.toStdString());
+	if (loadDlgHideScoreSetConfig) {
+		dlgHideScoreSetConfig = *loadDlgHideScoreSetConfig;
+	}
+	else {
+		LOG()  "Load main window config failed.";
+	}
+}
+
 void GlobalStructData::saveConfig()
 {
 	saveMainWindowConfig();
 	saveDlgProduceLineSetConfig();
 	saveDlgProductSetConfig();
+	saveDlgExposureTimeSetConfig();
 }
 
 void GlobalStructData::saveMainWindowConfig()
@@ -177,6 +191,11 @@ void GlobalStructData::saveDlgProductSetConfig() {
 void GlobalStructData::saveDlgExposureTimeSetConfig()
 {
 	storeContext->save(dlgExposureTimeSetConfig, dlgExposureTimeSetFilePath.toStdString());
+}
+
+void GlobalStructData::saveDlgHideScoreSetConfig()
+{
+	storeContext->save(dlgHideScoreSetConfig, dlgHideScoreSetPath.toStdString());
 }
 
 bool GlobalStructData::isTargetCamera(const QString& cameraIndex, const QString& targetName)

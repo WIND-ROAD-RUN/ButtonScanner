@@ -86,6 +86,7 @@ private:
 	void read_config_produceLineConfig();
 	void read_config_productSetConfig();
 	void read_config_exposureTimeSetConfig();
+	void read_config_hideScoreSet();
 
 public:
 	void build_imageSaveEngine();

@@ -12,6 +12,7 @@
 #include"cdm_ButtonScannerDlgProductSet.h"
 #include"cdm_ButtonScannerDlgExposureTimeSet.h"
 #include "cdm_ButtonScannerProduceLineSet.h"
+#include"cdm_ButtonScannerDlgHideScoreSet.h"
 #include"dsl_PriorityQueue.hpp"
 #include"oso_StorageContext.hpp"
 #include"rqw_ImageSaveEngine.h"
@@ -87,22 +88,26 @@ public:
 	void ReadDlgProduceLineSetConfig();
 	void ReadDlgProductSetConfig();
 	void ReadDlgExposureTimeSetConfig();
+	void ReadDlgHideScoreSetConfig();
 public:
 	void saveConfig();
 	void saveMainWindowConfig();
 	void saveDlgProduceLineSetConfig();
 	void saveDlgProductSetConfig();
 	void saveDlgExposureTimeSetConfig();
+	void saveDlgHideScoreSetConfig();
 	std::unique_ptr<rw::oso::StorageContext> storeContext{ nullptr };
 public:
 	QString mainWindowFilePath;
 	QString dlgProduceLineSetFilePath;
 	QString dlgProductSetFilePath;
 	QString dlgExposureTimeSetFilePath;
+	QString dlgHideScoreSetPath;
 	rw::cdm::ButtonScannerMainWindow mainWindowConfig{};
 	rw::cdm::ButtonScannerProduceLineSet dlgProduceLineSetConfig{};
 	rw::cdm::ButtonScannerDlgProductSet dlgProductSetConfig{};
 	rw::cdm::ButtonScannerDlgExposureTimeSet dlgExposureTimeSetConfig{};
+	rw::cdm::DlgHideScoreSet dlgHideScoreSetConfig{};
 public:
 	QString cameraIp1{ "11" };
 	QString cameraIp2{ "12" };

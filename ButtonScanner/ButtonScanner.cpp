@@ -402,6 +402,7 @@ void ButtonScanner::read_config()
 	read_config_productSetConfig();
 	read_config_produceLineConfig();
 	read_config_exposureTimeSetConfig();
+	read_config_hideScoreSet();
 }
 
 void ButtonScanner::read_config_mainWindowConfig()
@@ -521,6 +522,36 @@ void ButtonScanner::read_config_exposureTimeSetConfig()
 	}
 	else {
 		globalStruct.ReadDlgExposureTimeSetConfig();
+	}
+}
+
+void ButtonScanner::read_config_hideScoreSet()
+{
+	auto& globalStruct = GlobalStructData::getInstance();
+
+	QString dlgHideScoreSetFilePathFull = globalPath.configRootPath + "dlgHideScoreSet.xml";
+	QFileInfo dlgHideScoreSetFile(dlgHideScoreSetFilePathFull);
+
+	globalStruct.dlgHideScoreSetPath = dlgHideScoreSetFilePathFull;
+
+	if (!dlgHideScoreSetFile.exists()) {
+		QDir configDir = QFileInfo(dlgHideScoreSetFilePathFull).absoluteDir();
+		if (!configDir.exists()) {
+			configDir.mkpath(".");
+		}
+		QFile file(dlgHideScoreSetFilePathFull);
+		if (file.open(QIODevice::WriteOnly)) {
+			file.close();
+		}
+		else {
+			QMessageBox::critical(this, "Error", "无法创建配置文件mainWindowConfig.xml");
+		}
+		globalStruct.dlgHideScoreSetConfig = rw::cdm::DlgHideScoreSet();
+		globalStruct.saveDlgHideScoreSetConfig();
+		return;
+	}
+	else {
+		globalStruct.ReadDlgHideScoreSetConfig();
 	}
 }
 
