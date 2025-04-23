@@ -371,6 +371,7 @@ QGroupBox::title {
     border-radius: 4px;
     background-color: white;
     color: #444;
+    font-size: 15px; 
 }
 
 QPushButton:hover {
@@ -656,6 +657,7 @@ QRadioButton::indicator:pressed {
     border-radius: 4px;
     background-color: white;
     color: #444;
+    font-size: 15px; 
 }
 
 QPushButton:hover {
@@ -1022,6 +1024,7 @@ QRadioButton::indicator:pressed {
     border-radius: 4px;
     background-color: white;
     color: #444;
+    font-size: 15px; 
 }
 
 QPushButton:hover {
@@ -1063,6 +1066,7 @@ QPushButton:pressed {
     border-radius: 4px;
     background-color: white;
     color: #444;
+    font-size: 15px; 
 }
 
 QPushButton:hover {
@@ -1095,6 +1099,7 @@ QPushButton:pressed {
     border-radius: 4px;
     background-color: white;
     color: #444;
+    font-size: 15px; 
 }
 
 QPushButton:hover {
@@ -1127,6 +1132,7 @@ QPushButton:pressed {
     border-radius: 4px;
     background-color: white;
     color: #444;
+    font-size: 15px; 
 }
 
 QPushButton:hover {
