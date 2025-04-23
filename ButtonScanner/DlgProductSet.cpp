@@ -29,9 +29,11 @@ void DlgProductSet::build_ui()
 	}
 
 	_clickedLabel = new rw::rqw::ClickableLabel(this);
+	_clickedLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	_dlgHideScoreSet = new DlgHideScoreSet(this);
 
 	ui->horizontalLayout_firstRow->replaceWidget(ui->label_pic, _clickedLabel);
+	ui->horizontalLayout_firstRow->update();
 	delete ui->label_pic;
 	readConfig();
 	read_image();
@@ -104,19 +106,7 @@ void DlgProductSet::read_image()
 		QMessageBox::critical(this, "Error", "无法加载图片。");
 		return;
 	}
-	_clickedLabel->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-	QSize labelSize = _clickedLabel->sizeHint();
-
-	qreal pixelRatio = devicePixelRatioF();
-
-	QPixmap scaledPixmap = pixmap.scaled(labelSize * pixelRatio, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-	scaledPixmap.setDevicePixelRatio(pixelRatio);
-
-	_clickedLabel->setPixmap(scaledPixmap);
-
-	_clickedLabel->setScaledContents(true);
+	_clickedLabel->setPixmap(pixmap);
 }
 
 void DlgProductSet::build_connect()
