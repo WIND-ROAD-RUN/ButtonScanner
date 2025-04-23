@@ -28,14 +28,6 @@ void DlgModelManager::build_ui()
 	_ModelInfoModel = new QStandardItemModel(this);
 	ui->tableView_modelInfo->setModel(_ModelInfoModel);
 
-	// 设置 QListView 的样式表，调整项的高度和字体大小
-	ui->listView_modelList->setStyleSheet(
-		"QListView::item {"
-		"   height: 50px;" // 设置项的高度
-		"   font-size: 18px;" // 设置字体大小
-		"}"
-	);
-
 	_loadingDialog = new LoadingDialog();
 }
 

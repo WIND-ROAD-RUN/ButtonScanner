@@ -1957,13 +1957,241 @@ QGroupBox::title {
           </item>
           <item>
            <widget class="QProgressBar" name="progressBar_tab5">
+            <property name="styleSheet">
+             <string notr="true">/* 基础进度条 */
+QProgressBar {
+    border: 1px solid #AAAAAA;
+    border-radius: 3px;
+    background: #FFFFFF;
+    color: #444444;
+    font-size: 14px;
+    text-align: center;
+    height: 24px;
+}
+
+/* 进度填充 */
+QProgressBar::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #888888,
+        stop:1 #666666
+    );
+    border-radius: 2px;
+    margin: 2px;
+}
+
+/* 状态变体 */
+QProgressBar[state=&quot;success&quot;]::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #88AA88,
+        stop:1 #669966
+    );
+}
+
+QProgressBar[state=&quot;error&quot;]::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #CC6666,
+        stop:1 #AA4444
+    );
+}
+
+QProgressBar[state=&quot;warning&quot;]::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #FFD700,
+        stop:1 #D4B000
+    );
+}
+
+/* 禁用状态 */
+QProgressBar:disabled {
+    border-color: #DDDDDD;
+    background: #F5F5F5;
+    color: #AAAAAA;
+}
+
+QProgressBar:disabled::chunk {
+    background: #DDDDDD;
+}
+
+/* 紧凑模式 */
+QProgressBar.compact {
+    height: 16px;
+    font-size: 12px;
+    border-radius: 2px;
+}
+
+QProgressBar.compact::chunk {
+    margin: 1px;
+}
+
+/* 垂直模式 */
+QProgressBar.vertical {
+    width: 24px;
+    height: 200px;
+}
+
+QProgressBar.vertical::chunk {
+    width: 100%;
+    margin: 2px 0;
+}
+
+/* 不确定模式 */
+QProgressBar:indeterminate::chunk {
+    background: repeating-linear-gradient(
+        45deg,
+        #666666,
+        #666666 10px,
+        #888888 10px,
+        #888888 20px
+    );
+    animation: progress-stripes 1s linear infinite;
+}
+
+@keyframes progress-stripes {
+    from { background-position: 0 0; }
+    to { background-position: 40px 0; }
+}
+
+/* 环形进度条变体 */
+QProgressBar.circular {
+    border-radius: 50%;
+    border: 2px solid #AAAAAA;
+    width: 64px;
+    height: 64px;
+    qproperty-format: &quot;&quot;;
+}
+
+QProgressBar.circular::chunk {
+    border-radius: 50%;
+    background: conic-gradient(
+        from 90deg,
+        #666666 0%,
+        #666666 var(--progress),
+        transparent var(--progress),
+        transparent 100%
+    );
+}</string>
+            </property>
             <property name="value">
              <number>0</number>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPlainTextEdit" name="plainTextEdit_tab5"/>
+           <widget class="QPlainTextEdit" name="plainTextEdit_tab5">
+            <property name="styleSheet">
+             <string notr="true">/* 基础文本编辑框 */
+QPlainTextEdit {
+    border: 1px solid #AAAAAA;
+    border-radius: 3px;
+    background: #FFFFFF;
+    color: #444444;
+    font-size: 14px;
+    font-family: &quot;Consolas&quot;, monospace;
+    padding: 4px;
+    selection-background-color: #666666;
+    selection-color: #FFFFFF;
+}
+
+/* 光标样式 */
+QPlainTextEdit::cursor {
+    width: 1.5px;
+    background: #444444;
+}
+
+/* 行号栏 */
+QPlainTextEdit .linenumber {
+    background: #F8F8F8;
+    border-right: 1px solid #DDDDDD;
+    color: #888888;
+    padding: 0 8px;
+    font-family: &quot;Segoe UI&quot;, sans-serif;
+    font-size: 13px;
+    qproperty-alignment: AlignRight;
+}
+
+/* 当前行高亮 */
+QPlainTextEdit::current-line {
+    background: #F5F5F5;
+    border: none;
+}
+
+/* 断点标记 */
+QPlainTextEdit[breakpoint=&quot;true&quot;]::block-mark {
+    background: #FF6666;
+    border-radius: 4px;
+    width: 12px;
+    margin: 2px;
+}
+
+/* 代码折叠区域 */
+QPlainTextEdit::fold-area {
+    background: #F0F0F0;
+    border: 1px solid #DDDDDD;
+}
+
+/* 滚动条系统 */
+QScrollBar:vertical {
+    width: 10px;
+    background: #FFFFFF;
+}
+
+QScrollBar::handle:vertical {
+    background: #CCCCCC;
+    border-radius: 4px;
+    min-height: 20px;
+}
+
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical {
+    background: transparent;
+}
+
+/* 禁用状态 */
+QPlainTextEdit:disabled {
+    background: #F5F5F5;
+    color: #AAAAAA;
+    border-color: #DDDDDD;
+}
+
+/* 只读状态 */
+QPlainTextEdit[readOnly=&quot;true&quot;] {
+    background: #FFFFFF;
+    border-color: #CCCCCC;
+}
+
+/* 错误波浪线 */
+QPlainTextEdit::error-wave {
+    color: #FF6666;
+    wave-height: 2px;
+    wave-length: 4px;
+}
+
+/* 搜索高亮 */
+QPlainTextEdit::search-highlight {
+    background: #FFD700;
+    border-radius: 2px;
+}
+
+/* 紧凑型变体 */
+QPlainTextEdit.compact {
+    font-size: 13px;
+    padding: 2px;
+}
+
+QPlainTextEdit.compact .linenumber {
+    font-size: 12px;
+    padding: 0 6px;
+}</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

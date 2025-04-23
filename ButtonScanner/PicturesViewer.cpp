@@ -23,21 +23,6 @@ void PicturesViewer::build_ui()
 
 	_picturesListModel = new QStandardItemModel(this);
 	ui->listView_picturesList->setModel(_picturesListModel);
-
-    ui->listView_picturesList->setStyleSheet(
-        "QListView::item {"
-        "   height: 50px;" 
-        "   font-size: 18px;" 
-        "}"
-    );
-
-    ui->treeView_categoryTree->setStyleSheet(
-        "QTreeView::item {"
-        "   height: 50px;"
-        "   font-size: 18px;" 
-        "}"
-    );
-
 }
 
 void PicturesViewer::build_connect()

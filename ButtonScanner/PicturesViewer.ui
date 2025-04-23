@@ -41,7 +41,122 @@ QGroupBox::title {
         </property>
         <layout class="QGridLayout" name="gridLayout">
          <item row="0" column="0">
-          <widget class="QTreeView" name="treeView_categoryTree"/>
+          <widget class="QTreeView" name="treeView_categoryTree">
+           <property name="styleSheet">
+            <string notr="true">/* 基础树形视图 */
+QTreeView {
+    border: 1px solid #AAAAAA;
+    border-radius: 3px;
+    background: #FFFFFF;
+    color: #444444;
+    font-size: 14px;
+    outline: 0;
+    padding: 2px;
+    show-decoration-selected: 1;
+    indentation: 24px;  /* 层级缩进 */
+}
+
+/* 树形分支线 */
+QTreeView::branch {
+    background: #FFFFFF;
+    border-left: 1px dotted #DDDDDD;  /* 层级连接线 */
+    margin-left: 12px;
+}
+
+QTreeView::branch:has-siblings {
+    border-left: none;
+}
+
+/* 展开/折叠图标 */
+QTreeView::branch:closed:has-children {
+    border-image: url(:/icons/tree_closed_gray.svg) 0;
+}
+
+QTreeView::branch:open:has-children {
+    border-image: url(:/icons/tree_open_gray.svg) 0;
+}
+
+/* 列表项通用样式 */
+QTreeView::item {
+    height: 28px;
+    padding: 4px 8px;
+    border-radius: 2px;
+    margin: 1px 0;
+    border: 1px solid transparent;
+}
+
+/* 悬停效果 */
+QTreeView::item:hover {
+    background: #F8F8F8;
+    border-color: #888888;
+}
+
+/* 选中状态 */
+QTreeView::item:selected {
+    background: #666666;
+    color: #FFFFFF;
+    border-color: #555555;
+}
+
+/* 焦点状态 */
+QTreeView::item:selected:focus {
+    background: qlineargradient(
+        x1:0, y1:0, x2:0, y2:1,
+        stop:0 #666666, 
+        stop:1 #555555
+    );
+}
+
+/* 禁用状态 */
+QTreeView:disabled {
+    border-color: #DDDDDD;
+    color: #AAAAAA;
+}
+
+QTreeView::item:disabled {
+    background: #F5F5F5;
+    color: #AAAAAA;
+}
+
+/* 紧凑型变体 */
+QTreeView.compact {
+    font-size: 13px;
+    indentation: 20px;
+}
+
+QTreeView.compact::item {
+    height: 24px;
+    padding: 2px 6px;
+}
+
+/* 交替行颜色 */
+QTreeView::item:alternate {
+    background: #FAFAFA;
+}
+
+/* 表头样式 */
+QHeaderView {
+    background: #FFFFFF;
+}
+
+QHeaderView::section {
+    background: #F8F8F8;
+    border: 1px solid #DDDDDD;
+    padding: 6px 8px;
+    color: #666666;
+    font-weight: 500;
+}
+
+/* 排序指示器 */
+QHeaderView::down-arrow {
+    image: url(:/icons/sort_desc_gray.svg);
+}
+
+QHeaderView::up-arrow {
+    image: url(:/icons/sort_asc_gray.svg);
+}</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -102,7 +217,108 @@ QGroupBox::title {
         </property>
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="0" column="0">
-          <widget class="QListView" name="listView_picturesList"/>
+          <widget class="QListView" name="listView_picturesList">
+           <property name="styleSheet">
+            <string notr="true">/* 基础列表视图 */
+QListView {
+    border: 1px solid #AAAAAA;
+    border-radius: 3px;
+    background: #FFFFFF;
+    color: #444444;
+    font-size: 20px;
+    outline: 0; 
+    padding: 2px;
+}
+
+/* 列表项通用样式 */
+QListView::item {
+    height: 28px;
+    padding: 4px 8px;
+    border-radius: 2px;
+    margin: 1px 2px;
+}
+
+/* 悬停效果 */
+QListView::item:hover {
+    background: #F8F8F8;
+    border: 1px solid #888888;
+}
+
+/* 选中状态 */
+QListView::item:selected {
+    background: #666666;
+    color: #FFFFFF;
+    border: 1px solid #555555;
+}
+
+/* 焦点状态 */
+QListView::item:selected:active {
+    background: qlineargradient(
+        x1:0, y1:0, x2:0, y2:1,
+        stop:0 #666666, 
+        stop:1 #555555
+    );
+}
+
+/* 禁用状态 */
+QListView:disabled {
+    border-color: #DDDDDD;
+    color: #AAAAAA;
+}
+
+QListView::item:disabled {
+    background: #F5F5F5;
+    color: #AAAAAA;
+}
+
+/* 紧凑型变体 */
+QListView.compact {
+    font-size: 13px;
+}
+
+QListView.compact::item {
+    height: 24px;
+    padding: 2px 6px;
+}
+
+/* 滚动条样式 */
+QScrollBar:vertical {
+    width: 10px;
+    background: #FFFFFF;
+}
+
+QScrollBar::handle:vertical {
+    background: #CCCCCC;
+    border-radius: 4px;
+    min-height: 20px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #AAAAAA;
+}
+
+QScrollBar::add-line:vertical, 
+QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+/* 强调型变体 */
+QListView.emphasized::item:selected {
+    background: #4A4A4A;
+    border-color: #3A3A3A;
+}
+
+/* 交替行颜色 */
+QListView::item:alternate {
+    background: #FAFAFA;
+}
+
+/* 角部处理 */
+QScrollBar #qt_scrollarea_corner {
+    background: #FFFFFF;
+}</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
