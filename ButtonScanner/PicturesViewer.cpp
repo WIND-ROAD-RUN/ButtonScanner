@@ -23,6 +23,21 @@ void PicturesViewer::build_ui()
 
 	_picturesListModel = new QStandardItemModel(this);
 	ui->listView_picturesList->setModel(_picturesListModel);
+
+    ui->listView_picturesList->setStyleSheet(
+        "QListView::item {"
+        "   height: 50px;" 
+        "   font-size: 18px;" 
+        "}"
+    );
+
+    ui->treeView_categoryTree->setStyleSheet(
+        "QTreeView::item {"
+        "   height: 50px;"
+        "   font-size: 18px;" 
+        "}"
+    );
+
 }
 
 void PicturesViewer::build_connect()
@@ -225,7 +240,7 @@ void PicturesViewer::onPictureSelectionChanged(const QItemSelection& selected, c
 		qDebug() << "Failed to load image:" << selectedPicturePath;
 		return;
 	}
-
+    ui->statusBar->showMessage("当前图片路径: " + selectedPicturePath);
 	ui->label_imgDisplay->setPixmap(pixmap.scaled(ui->label_imgDisplay->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
