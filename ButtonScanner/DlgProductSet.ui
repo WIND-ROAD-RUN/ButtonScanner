@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1132</width>
-    <height>842</height>
+    <width>1280</width>
+    <height>1024</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1624,7 +1624,7 @@ QRadioButton::indicator:pressed {
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="rbtn_poreEnableScore">
+           <widget class="QPushButton" name="pbtn_poreEnableScore">
             <property name="styleSheet">
              <string notr="true">QPushButton {
     padding: 6px 14px;
@@ -1712,7 +1712,7 @@ QRadioButton::indicator:pressed {
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="rbtn_paintEnableScore">
+           <widget class="QPushButton" name="pbtn_paintEnableScore">
             <property name="styleSheet">
              <string notr="true">QPushButton {
     padding: 6px 14px;
@@ -3781,7 +3781,7 @@ QRadioButton::indicator:pressed {
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="rbtn_grindStoneScore">
+           <widget class="QPushButton" name="pbtn_grindStoneScore">
             <property name="styleSheet">
              <string notr="true">QPushButton {
     padding: 6px 14px;
@@ -3873,7 +3873,7 @@ QRadioButton::indicator:pressed {
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="rbtn_blockEyeScore">
+           <widget class="QPushButton" name="pbtn_blockEyeScore">
             <property name="styleSheet">
              <string notr="true">QPushButton {
     padding: 6px 14px;
@@ -3965,7 +3965,7 @@ QRadioButton::indicator:pressed {
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="rbtn_materialHeadScore">
+           <widget class="QPushButton" name="pbtn_materialHeadScore">
             <property name="styleSheet">
              <string notr="true">QPushButton {
     padding: 6px 14px;
