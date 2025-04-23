@@ -82,9 +82,6 @@
     <ClCompile Include="DlgProductSet.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
-    <ClCompile Include="NumKeyBord.cpp">
-      <Filter>Source Files\ui</Filter>
-    </ClCompile>
     <ClCompile Include="StatisticalInfoComputingThread.cpp">
       <Filter>Source Files\DetachThread</Filter>
     </ClCompile>
@@ -139,9 +136,6 @@
       <Filter>Header Files\ui</Filter>
     </QtMoc>
     <QtMoc Include="DlgProductSet.h">
-      <Filter>Header Files\ui</Filter>
-    </QtMoc>
-    <QtMoc Include="NumKeyBord.h">
       <Filter>Header Files\ui</Filter>
     </QtMoc>
     <QtMoc Include="StatisticalInfoComputingThread.h">

@@ -178,12 +178,10 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     <QtMoc Include="DlgProduceLineSet.h" />
     <QtMoc Include="GlobalStruct.h" />
     <QtMoc Include="ImageProcessorModule.h" />
-    <QtMoc Include="NumKeyBord.h" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="ModelStorageManager.cpp" />
     <ClCompile Include="MonitorCameraAndCardStateThread.cpp" />
     <ClCompile Include="NumberKeyboard.cpp" />
-    <ClCompile Include="NumKeyBord.cpp" />
     <ClCompile Include="PicturesViewer.cpp" />
     <ClCompile Include="StatisticalInfoComputingThread.cpp" />
     <ClCompile Include="stdafx.cpp">

@@ -8,7 +8,6 @@
 #include"DlgProductSet.h"
 #include"DlgProduceLineSet.h"
 #include"GlobalStruct.h"
-#include"NumKeyBord.h"
 #include"ButtonUtilty.h"
 
 #include"rqw_CameraObjectThread.hpp"
@@ -1126,15 +1125,17 @@ void ButtonScanner::pbtn_beltSpeed_clicked()
 		QMessageBox::warning(this, "错误", "请先停止生产线");
 	}
 	else {
-		auto numKeyBoard = new NumKeyBord(this, ui->pbtn_beltSpeed, 2);
-		numKeyBoard->exec();
-
-		auto& GlobalStructData = GlobalStructData::getInstance();
-		GlobalStructData.mainWindowConfig.beltSpeed = ui->pbtn_beltSpeed->text().toDouble();
-		GlobalStructData.dlgProduceLineSetConfig.motorSpeed = ui->pbtn_beltSpeed->text().toDouble();
-
-		delete numKeyBoard;
-		dlgProduceLineSet->updateBeltSpeed();
+		NumberKeyboard numKeyBord;
+		numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+		auto isAccept = numKeyBord.exec();
+		if (isAccept == QDialog::Accepted) {
+			auto value = numKeyBord.getValue();
+			auto& GlobalStructData = GlobalStructData::getInstance();
+			ui->pbtn_beltSpeed->setText(value);
+			GlobalStructData.mainWindowConfig.beltSpeed = value.toDouble();
+			GlobalStructData.dlgProduceLineSetConfig.motorSpeed = ui->pbtn_beltSpeed->text().toDouble();
+			dlgProduceLineSet->updateBeltSpeed();
+		}
 	}
 }
 
