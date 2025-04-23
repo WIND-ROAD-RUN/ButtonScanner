@@ -23,4 +23,6 @@ private:
 
 private slots:
 	void pbtn_close_clicked();
+	void pbtn_outsideDiameterScore_clicked();
+	void pbtn_forAndAgainstScore_clicked();
 };
