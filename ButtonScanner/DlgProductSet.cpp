@@ -28,6 +28,9 @@ void DlgProductSet::build_ui()
 		}
 	}
 
+	_clickedLabel = new rw::rqw::ClickableLabel(this);
+	ui->horizontalLayout_firstRow->replaceWidget(ui->label_pic, _clickedLabel);
+	delete ui->label_pic;
 	readConfig();
 	read_image();
 	build_radioButton();
@@ -99,23 +102,19 @@ void DlgProductSet::read_image()
 		QMessageBox::critical(this, "Error", "无法加载图片。");
 		return;
 	}
+	_clickedLabel->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-	// 获取 QLabel 的实际显示尺寸
-	QSize labelSize = ui->label_pic->sizeHint();
+	QSize labelSize = _clickedLabel->sizeHint();
 
-	// 获取设备像素比率
 	qreal pixelRatio = devicePixelRatioF();
 
-	// 将 QPixmap 缩放到 QLabel 的实际显示尺寸，并保持纵横比
 	QPixmap scaledPixmap = pixmap.scaled(labelSize * pixelRatio, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
-	// 设置设备像素比率
 	scaledPixmap.setDevicePixelRatio(pixelRatio);
 
-	ui->label_pic->setPixmap(scaledPixmap);
+	_clickedLabel->setPixmap(scaledPixmap);
 
-	// 确保 QLabel 在调整大小时自动缩放图片
-	ui->label_pic->setScaledContents(true);
+	_clickedLabel->setScaledContents(true);
 }
 
 void DlgProductSet::build_connect()

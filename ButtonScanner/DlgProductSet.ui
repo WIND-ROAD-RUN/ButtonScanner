@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_14" stretch="3,2,1">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,1,1">
+    <layout class="QHBoxLayout" name="horizontalLayout_firstRow" stretch="1,1,1">
      <item>
       <widget class="QGroupBox" name="groupBox">
        <property name="styleSheet">

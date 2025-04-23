@@ -2,6 +2,7 @@
 
 #include <QDialog>
 #include "ui_DlgProductSet.h"
+#include"rqw_LabelClickable.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class DlgProductSetClass; };
@@ -14,7 +15,8 @@ class DlgProductSet : public QDialog
 public:
 	DlgProductSet(QWidget* parent = nullptr);
 	~DlgProductSet();
-
+private:
+	rw::rqw::ClickableLabel* _clickedLabel;
 private:
 	void build_ui();
 public:
