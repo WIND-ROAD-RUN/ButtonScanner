@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "DlgExposureTimeSet.h"
 
-#include"NumKeyBord.h"
 #include"GlobalStruct.h"
+#include"NumberKeyboard.h"
 
 DlgExposureTimeSet::DlgExposureTimeSet(QWidget* parent)
 	: QDialog(parent)
@@ -85,33 +85,30 @@ void DlgExposureTimeSet::ResetCamera()
 
 void DlgExposureTimeSet::pbtn_exposureTimeValue_clicked()
 {
-	auto olderValue = ui->pbtn_exposureTimeValue->text().toInt();
-	auto numKeyBord = new NumKeyBord(this, ui->pbtn_exposureTimeValue, 1);
-	numKeyBord->exec();
-	delete numKeyBord;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto newValue = numKeyBord.getValue().toInt();
+		if (newValue < 100) {
+			QMessageBox::warning(this, "错误", "曝光时间范围应设置为100~700");
+			return;
+		}
+		if (newValue > 700) {
+			QMessageBox::warning(this, "错误", "曝光时间范围应设置为100~700");
+			return;
+		}
 
-	auto newValue = ui->pbtn_exposureTimeValue->text().toInt();
-	if (newValue < 100) {
-		ui->pbtn_exposureTimeValue->setText(QString::number(olderValue));
-		QMessageBox::warning(this, "错误", "曝光时间范围应设置为100~700");
-		return;
+
+		auto& globalStruct = GlobalStructData::getInstance();
+		globalStruct.dlgExposureTimeSetConfig.expousureTime = newValue;
+
+		globalStruct.setCameraExposureTime(1, newValue);
+		globalStruct.setCameraExposureTime(2, newValue);
+		globalStruct.setCameraExposureTime(3, newValue);
+		globalStruct.setCameraExposureTime(4, newValue);
+
+		globalStruct.saveDlgExposureTimeSetConfig();
 	}
-	if (newValue > 700) {
-		ui->pbtn_exposureTimeValue->setText(QString::number(olderValue));
-		QMessageBox::warning(this, "错误", "曝光时间范围应设置为100~700");
-		return;
-	}
-	if (newValue == olderValue) {
-		return;
-	}
-
-	auto& globalStruct = GlobalStructData::getInstance();
-	globalStruct.dlgExposureTimeSetConfig.expousureTime = newValue;
-
-	globalStruct.setCameraExposureTime(1, newValue);
-	globalStruct.setCameraExposureTime(2, newValue);
-	globalStruct.setCameraExposureTime(3, newValue);
-	globalStruct.setCameraExposureTime(4, newValue);
-
-	globalStruct.saveDlgExposureTimeSetConfig();
 }

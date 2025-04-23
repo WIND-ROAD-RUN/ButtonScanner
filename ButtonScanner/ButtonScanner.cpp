@@ -1087,26 +1087,21 @@ void ButtonScanner::updateStatisticalInfoUI()
 
 void ButtonScanner::pbtn_set_clicked()
 {
-	/*auto passwordValue = new QPushButton(this);
-	auto passwordDlg = new NumKeyBord(this, passwordValue, 2);
-	passwordDlg->exec();
-	auto password = passwordValue->text();
-	if (password == "1234") {
-		dlgProduceLineSet->setFixedSize(this->width(), this->height());
-		dlgProduceLineSet->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
-		dlgProduceLineSet->exec();
-		ui->pbtn_beltSpeed->setText(QString::number(GlobalStructData::getInstance().dlgProduceLineSetConfig.motorSpeed));
-	}
-	else {
-		QMessageBox::warning(this, "Error", "密码错误，请重新输入");
-	}
-
-	delete passwordValue;
-	delete passwordDlg;*/
-
 	NumberKeyboard numKeyBord;
 	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
-	numKeyBord.exec();
+	auto isAccept=numKeyBord.exec();
+	if (isAccept==QDialog::Accepted)
+	{
+		if (numKeyBord.getValue() == "1234") {
+			dlgProduceLineSet->setFixedSize(this->width(), this->height());
+			dlgProduceLineSet->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+			dlgProduceLineSet->exec();
+			ui->pbtn_beltSpeed->setText(QString::number(GlobalStructData::getInstance().dlgProduceLineSetConfig.motorSpeed));
+		}
+		else {
+			QMessageBox::warning(this, "Error", "密码错误，请重新输入");
+		}
+	}
 }
 
 void ButtonScanner::pbtn_newProduction_clicked()
