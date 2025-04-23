@@ -212,6 +212,36 @@ rw::cdm::ButtonScannerDlgProductSet::ButtonScannerDlgProductSet(const rw::oso::O
 		throw std::runtime_error("$variable$materialHeadEnable is not found");
 	}
 	materialHeadEnable = materialHeadEnableItem->getValueAsBool();
+
+	auto poreEnableScoreItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$poreEnableScore$"));
+	if (!poreEnableScoreItem) {
+		throw std::runtime_error("$variable$poreEnableScore is not found");
+	}
+	poreEnableScore = poreEnableScoreItem->getValueAsDouble();
+
+	auto paintEnableScoreItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$paintEnableScore$"));
+	if (!paintEnableScoreItem) {
+		throw std::runtime_error("$variable$paintEnableScore is not found");
+	}
+	paintEnableScore = paintEnableScoreItem->getValueAsDouble();
+
+	auto grindStoneEnableScoreItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$grindStoneEnableScore$"));
+	if (!grindStoneEnableScoreItem) {
+		throw std::runtime_error("$variable$grindStoneEnableScore is not found");
+	}
+	grindStoneEnableScore = grindStoneEnableScoreItem->getValueAsDouble();
+
+	auto blockEyeEnableScoreItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$blockEyeEnableScore$"));
+	if (!blockEyeEnableScoreItem) {
+		throw std::runtime_error("$variable$blockEyeEnableScore is not found");
+	}
+	blockEyeEnableScore = blockEyeEnableScoreItem->getValueAsDouble();
+
+	auto materialHeadEnableScoreItem = oso::ObjectStoreCoreToItem(assembly.getItem("$variable$materialHeadEnableScore$"));
+	if (!materialHeadEnableScoreItem) {
+		throw std::runtime_error("$variable$materialHeadEnableScore is not found");
+	}
+	materialHeadEnableScore = materialHeadEnableScoreItem->getValueAsDouble();
 }
 
 rw::cdm::ButtonScannerDlgProductSet::ButtonScannerDlgProductSet(const ButtonScannerDlgProductSet& buttonScannerMainWindow)
@@ -262,6 +292,12 @@ rw::cdm::ButtonScannerDlgProductSet::ButtonScannerDlgProductSet(const ButtonScan
 	grindStoneEnable = buttonScannerMainWindow.grindStoneEnable;
 	blockEyeEnable = buttonScannerMainWindow.blockEyeEnable;
 	materialHeadEnable = buttonScannerMainWindow.materialHeadEnable;
+
+	poreEnableScore = buttonScannerMainWindow.poreEnableScore;
+	paintEnableScore = buttonScannerMainWindow.paintEnableScore;
+	grindStoneEnableScore = buttonScannerMainWindow.grindStoneEnableScore;
+	blockEyeEnableScore = buttonScannerMainWindow.blockEyeEnableScore;
+	materialHeadEnableScore = buttonScannerMainWindow.materialHeadEnableScore;
 }
 
 rw::cdm::ButtonScannerDlgProductSet& rw::cdm::ButtonScannerDlgProductSet::operator=(const ButtonScannerDlgProductSet& buttonScannerMainWindow)
@@ -313,6 +349,12 @@ rw::cdm::ButtonScannerDlgProductSet& rw::cdm::ButtonScannerDlgProductSet::operat
 		grindStoneEnable = buttonScannerMainWindow.grindStoneEnable;
 		blockEyeEnable = buttonScannerMainWindow.blockEyeEnable;
 		materialHeadEnable = buttonScannerMainWindow.materialHeadEnable;
+
+		poreEnableScore = buttonScannerMainWindow.poreEnableScore;
+		paintEnableScore = buttonScannerMainWindow.paintEnableScore;
+		grindStoneEnableScore = buttonScannerMainWindow.grindStoneEnableScore;
+		blockEyeEnableScore = buttonScannerMainWindow.blockEyeEnableScore;
+		materialHeadEnableScore = buttonScannerMainWindow.materialHeadEnableScore;
 	}
 	return *this;
 }
@@ -492,6 +534,31 @@ rw::cdm::ButtonScannerDlgProductSet::operator rw::oso::ObjectStoreAssembly() con
 	materialHeadEnableItem->setValueFromBool(materialHeadEnable);
 	assembly.addItem(materialHeadEnableItem);
 
+	auto poreEnableScoreItem = std::make_shared<oso::ObjectStoreItem>();
+	poreEnableScoreItem->setName("$variable$poreEnableScore$");
+	poreEnableScoreItem->setValueFromDouble(materialHeadEnable);
+	assembly.addItem(poreEnableScoreItem);
+
+	auto paintEnableScoreItem = std::make_shared<oso::ObjectStoreItem>();
+	paintEnableScoreItem->setName("$variable$paintEnableScore$");
+	paintEnableScoreItem->setValueFromDouble(materialHeadEnable);
+	assembly.addItem(paintEnableScoreItem);
+
+	auto grindStoneEnableScoreItem = std::make_shared<oso::ObjectStoreItem>();
+	grindStoneEnableScoreItem->setName("$variable$grindStoneEnableScore$");
+	grindStoneEnableScoreItem->setValueFromDouble(materialHeadEnable);
+	assembly.addItem(grindStoneEnableScoreItem);
+
+	auto blockEyeEnableScoreItem = std::make_shared<oso::ObjectStoreItem>();
+	blockEyeEnableScoreItem->setName("$variable$blockEyeEnableScore$");
+	blockEyeEnableScoreItem->setValueFromDouble(materialHeadEnable);
+	assembly.addItem(blockEyeEnableScoreItem);
+
+	auto materialHeadEnableScoreItem = std::make_shared<oso::ObjectStoreItem>();
+	materialHeadEnableScoreItem->setName("$variable$materialHeadEnableScore$");
+	materialHeadEnableScoreItem->setValueFromDouble(materialHeadEnable);
+	assembly.addItem(materialHeadEnableScoreItem);
+
 	return assembly;
 }
 
@@ -542,7 +609,13 @@ bool rw::cdm::ButtonScannerDlgProductSet::operator==(const ButtonScannerDlgProdu
 
 		grindStoneEnable == buttonScannerMainWindow.grindStoneEnable &&
 		blockEyeEnable == buttonScannerMainWindow.blockEyeEnable &&
-		materialHeadEnable == buttonScannerMainWindow.materialHeadEnable;
+		materialHeadEnable == buttonScannerMainWindow.materialHeadEnable &&
+
+		poreEnableScore == buttonScannerMainWindow.poreEnableScore&&
+		paintEnableScore == buttonScannerMainWindow.paintEnableScore&&
+		grindStoneEnableScore == buttonScannerMainWindow.grindStoneEnableScore&&
+		blockEyeEnableScore == buttonScannerMainWindow.blockEyeEnableScore&&
+		materialHeadEnableScore == buttonScannerMainWindow.materialHeadEnableScore;
 }
 
 bool rw::cdm::ButtonScannerDlgProductSet::operator!=(const ButtonScannerDlgProductSet& account) const

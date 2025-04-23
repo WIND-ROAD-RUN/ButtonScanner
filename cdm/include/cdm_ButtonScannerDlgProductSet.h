@@ -37,7 +37,10 @@ namespace rw
 			double innerRadius{ 0 };
 
 			bool poreEnable{ false };
+			double poreEnableScore{ 0 };//
+
 			bool paintEnable{ false };
+			double paintEnableScore{ 0 };//
 
 			bool holesCountEnable{ false };
 			double holesCountValue{ 0 };
@@ -66,8 +69,13 @@ namespace rw
 			double largeColorDifferenceDeviation{ 0 };
 
 			bool grindStoneEnable{ false };
+			double grindStoneEnableScore{ 0 };//
+
 			bool blockEyeEnable{ false };
+			double blockEyeEnableScore{ 0 };//
+
 			bool materialHeadEnable{ false };
+			double materialHeadEnableScore{ 0 };//
 		};
 	}
 }

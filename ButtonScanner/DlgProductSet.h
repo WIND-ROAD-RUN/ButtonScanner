@@ -48,7 +48,14 @@ private slots:
 	void pbtn_specifyColorDifferenceDeviation_clicked();
 	void pbtn_largeColorDifferenceDeviation_clicked();
 	void pbtn_edgeDamageSimilarity_clicked();
+private slots:
+	void pbtn_poreEnableScore_clicked();
+	void pbtn_paintEnableScore_clicked();
+	void pbtn_grindStoneScore_clicked();
+	void pbtn_blockEyeScore_clicked();
+	void pbtn_materialHeadScore_clicked();
 
+private slots:
 	void rbtn_outsideDiameterEnable_checked(bool checked);
 	void rbtn_edgeDamageEnable_checked(bool checked);
 	void rbtn_shieldingRangeEnable_checked(bool checked);

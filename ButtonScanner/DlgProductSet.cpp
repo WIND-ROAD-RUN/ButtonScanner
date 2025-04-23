@@ -151,6 +151,16 @@ void DlgProductSet::build_connect()
 		this, &DlgProductSet::pbtn_largeColorDifferenceDeviation_clicked);
 	QObject::connect(ui->pbtn_edgeDamageSimilarity, &QPushButton::clicked,
 		this, &DlgProductSet::pbtn_edgeDamageSimilarity_clicked);
+	QObject::connect(ui->pbtn_poreEnableScore, &QPushButton::clicked,
+		this, &DlgProductSet::pbtn_poreEnableScore_clicked);
+	QObject::connect(ui->pbtn_paintEnableScore, &QPushButton::clicked,
+		this, &DlgProductSet::pbtn_paintEnableScore_clicked);
+	QObject::connect(ui->pbtn_grindStoneScore, &QPushButton::clicked,
+		this, &DlgProductSet::pbtn_grindStoneScore_clicked);
+	QObject::connect(ui->pbtn_blockEyeScore, &QPushButton::clicked,
+		this, &DlgProductSet::pbtn_blockEyeScore_clicked);
+	QObject::connect(ui->pbtn_materialHeadScore, &QPushButton::clicked,
+		this, &DlgProductSet::pbtn_materialHeadScore_clicked);
 
 	QObject::connect(ui->rbtn_outsideDiameterEnable, &QRadioButton::clicked,
 		this, &DlgProductSet::rbtn_outsideDiameterEnable_checked);
@@ -401,6 +411,27 @@ void DlgProductSet::pbtn_edgeDamageSimilarity_clicked()
 	GlobalStructData.dlgProductSetConfig.edgeDamageSimilarity = ui->pbtn_edgeDamageSimilarity->text().toDouble();
 
 	delete numKeyBoard;
+}
+
+void DlgProductSet::pbtn_poreEnableScore_clicked()
+{
+
+}
+
+void DlgProductSet::pbtn_paintEnableScore_clicked()
+{
+}
+
+void DlgProductSet::pbtn_grindStoneScore_clicked()
+{
+}
+
+void DlgProductSet::pbtn_blockEyeScore_clicked()
+{
+}
+
+void DlgProductSet::pbtn_materialHeadScore_clicked()
+{
 }
 
 void DlgProductSet::rbtn_outsideDiameterEnable_checked(bool checked)
