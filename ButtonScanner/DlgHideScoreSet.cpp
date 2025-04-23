@@ -2,7 +2,7 @@
 #include "DlgHideScoreSet.h"
 
 #include "GlobalStruct.h"
-#include "NumKeyBord.h"
+#include"NumberKeyboard.h"
 
 DlgHideScoreSet::DlgHideScoreSet(QWidget *parent)
 	: QDialog(parent)
@@ -48,20 +48,28 @@ void DlgHideScoreSet::pbtn_close_clicked()
 
 void DlgHideScoreSet::pbtn_outsideDiameterScore_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_outsideDiameterScore, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgHideScoreSetConfig.outsideDiameterScore = ui->pbtn_outsideDiameterScore->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_outsideDiameterScore->setText(value);
+		GlobalStructData.dlgHideScoreSetConfig.outsideDiameterScore = value.toDouble();
+	}
 }
 
 void DlgHideScoreSet::pbtn_forAndAgainstScore_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_forAndAgainstScore, 2);
-	numKeyBoard->exec();
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgHideScoreSetConfig.forAndAgainstScore = ui->pbtn_forAndAgainstScore->text().toDouble();
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_forAndAgainstScore->setText(value);
+		GlobalStructData.dlgHideScoreSetConfig.forAndAgainstScore = value.toDouble();
+	}
 }

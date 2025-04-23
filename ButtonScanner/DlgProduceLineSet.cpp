@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "DlgProduceLineSet.h"
 
-#include"NumKeyBord.h"
+#include"NumberKeyboard.h"
 #include"GlobalStruct.h"
 
 DlgProduceLineSet::DlgProduceLineSet(QWidget* parent)
@@ -160,200 +160,255 @@ void DlgProduceLineSet::updateBeltSpeed()
 
 void DlgProduceLineSet::pbtn_blowDistance1_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowDistance1, 2);
-	numKeyBoard->exec();
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_blowDistance1->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.blowDistance1 = value.toDouble();
+	}
 
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.blowDistance1 = ui->pbtn_blowDistance1->text().toDouble();
-
-	delete numKeyBoard;
 }
 
 void DlgProduceLineSet::pbtn_blowTime1_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime1, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.blowTime1 = ui->pbtn_blowTime1->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_blowTime1->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.blowTime1 = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_blowDistance2_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowDistance2, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.blowDistance2 = ui->pbtn_blowDistance2->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_blowDistance2->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.blowDistance2 = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_blowTime2_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime2, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.blowTime2 = ui->pbtn_blowTime2->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_blowTime2->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.blowTime2 = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_blowDistance3_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowDistance3, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.blowDistance3 = ui->pbtn_blowDistance3->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_blowDistance3->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.blowDistance3 = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_blowTime3_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime3, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.blowTime3 = ui->pbtn_blowTime3->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_blowTime3->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.blowTime3 = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_blowDistance4_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowDistance4, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.blowDistance4 = ui->pbtn_blowDistance4->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_blowDistance4->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.blowDistance4 = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_blowTime4_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime4, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.blowTime4 = ui->pbtn_blowTime4->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_blowTime4->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.blowTime4 = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_pixelEquivalent1_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pixelEquivalent1, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.pixelEquivalent1 = ui->pbtn_pixelEquivalent1->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_pixelEquivalent1->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.pixelEquivalent1 = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_pixelEquivalent2_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pixelEquivalent2, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.pixelEquivalent2 = ui->pbtn_pixelEquivalent2->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_pixelEquivalent2->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.pixelEquivalent2 = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_pixelEquivalent3_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pixelEquivalent3, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.pixelEquivalent3 = ui->pbtn_pixelEquivalent3->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_pixelEquivalent3->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.pixelEquivalent3 = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_pixelEquivalent4_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pixelEquivalent4, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.pixelEquivalent4 = ui->pbtn_pixelEquivalent4->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_pixelEquivalent4->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.pixelEquivalent4 = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_limit1_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_limit1, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.limit1 = ui->pbtn_limit1->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_limit1->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.limit1 = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_limit2_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_limit2, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.limit2 = ui->pbtn_limit2->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_limit2->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.limit2 = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_limit3_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_limit3, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.limit3 = ui->pbtn_limit3->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_limit3->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.limit3 = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_limit4_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_limit4, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.limit4 = ui->pbtn_limit4->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_limit4->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.limit4 = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_minBrightness_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_minBrightness, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.minBrightness = ui->pbtn_minBrightness->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_minBrightness->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.minBrightness = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_maxBrightness_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_maxBrightness, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.maxBrightness = ui->pbtn_maxBrightness->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_maxBrightness->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.maxBrightness = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_motorSpeed_clicked()
@@ -366,13 +421,16 @@ void DlgProduceLineSet::pbtn_motorSpeed_clicked()
 	}
 	else
 	{
-		auto numKeyBoard = new NumKeyBord(this, ui->pbtn_motorSpeed, 2);
-		numKeyBoard->exec();
-
-		auto& GlobalStructData = GlobalStructData::getInstance();
-		GlobalStructData.dlgProduceLineSetConfig.motorSpeed = ui->pbtn_motorSpeed->text().toDouble();
-
-		delete numKeyBoard;
+		NumberKeyboard numKeyBord;
+		numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+		auto isAccept = numKeyBord.exec();
+		if (isAccept == QDialog::Accepted)
+		{
+			auto value = numKeyBord.getValue();
+			auto& GlobalStructData = GlobalStructData::getInstance();
+			ui->pbtn_motorSpeed->setText(value);
+			GlobalStructData.dlgProduceLineSetConfig.motorSpeed = value.toDouble();
+		}
 
 		get_blowTime();
 	}
@@ -380,44 +438,56 @@ void DlgProduceLineSet::pbtn_motorSpeed_clicked()
 
 void DlgProduceLineSet::pbtn_beltReductionRatio_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_beltReductionRatio, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.beltReductionRatio = ui->pbtn_beltReductionRatio->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_beltReductionRatio->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.beltReductionRatio = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_accelerationAndDeceleration_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_accelerationAndDeceleration, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.accelerationAndDeceleration = ui->pbtn_accelerationAndDeceleration->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_accelerationAndDeceleration->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.accelerationAndDeceleration = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_codeWheel_clicked() {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_codeWheel, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.codeWheel = ui->pbtn_codeWheel->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_codeWheel->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.codeWheel = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_pulseFactor_clicked() {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_pulseFactor, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProduceLineSetConfig.pulseFactor = ui->pbtn_pulseFactor->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_pulseFactor->setText(value);
+		GlobalStructData.dlgProduceLineSetConfig.pulseFactor = value.toDouble();
+	}
 }
 
 void DlgProduceLineSet::pbtn_close_clicked()
