@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "DlgProductSet.h"
-#include"NumKeyBord.h"
+#include "NumberKeyboard.h"
 
 #include "GlobalStruct.h"
 
@@ -217,259 +217,342 @@ void DlgProductSet::build_radioButton()
 }
 
 void DlgProductSet::pbtn_outsideDiameterValue_clicked() {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_outsideDiameterValue, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.outsideDiameterValue = ui->pbtn_outsideDiameterValue->text().toDouble();
-
-	ui->pbtn_blowTime->setText(QString::number(get_blowTime()));
-	GlobalStructData.dlgProductSetConfig.blowTime = ui->pbtn_blowTime->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_outsideDiameterValue->setText(value);
+		GlobalStructData.dlgProductSetConfig.outsideDiameterValue = value.toDouble();
+		// 计算并更新 blowTime
+		ui->pbtn_blowTime->setText(QString::number(get_blowTime()));
+		GlobalStructData.dlgProductSetConfig.blowTime = ui->pbtn_blowTime->text().toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_outsideDiameterDeviation_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_outsideDiameterDeviation, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.outsideDiameterDeviation = ui->pbtn_outsideDiameterDeviation->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_outsideDiameterDeviation->setText(value);
+		GlobalStructData.dlgProductSetConfig.outsideDiameterDeviation = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_photography_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_photography, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.photography = ui->pbtn_photography->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_photography->setText(value);
+		GlobalStructData.dlgProductSetConfig.photography = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_blowTime_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blowTime, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.blowTime = ui->pbtn_blowTime->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_blowTime->setText(value);
+		GlobalStructData.dlgProductSetConfig.blowTime = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_outerRadius_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_outerRadius, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.outerRadius = ui->pbtn_outerRadius->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_outerRadius->setText(value);
+		GlobalStructData.dlgProductSetConfig.outerRadius = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_innerRadius_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_innerRadius, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.innerRadius = ui->pbtn_innerRadius->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_innerRadius->setText(value);
+		GlobalStructData.dlgProductSetConfig.innerRadius = value.toDouble();
+	}
 }
 
 void DlgProductSet::ptn_holesCountValue_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->ptn_holesCountValue, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.holesCountValue = ui->ptn_holesCountValue->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->ptn_holesCountValue->setText(value);
+		GlobalStructData.dlgProductSetConfig.holesCountValue = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_brokenEyeSimilarity_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_brokenEyeSimilarity, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.brokenEyeSimilarity = ui->pbtn_brokenEyeSimilarity->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_brokenEyeSimilarity->setText(value);
+		GlobalStructData.dlgProductSetConfig.brokenEyeSimilarity = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_crackSimilarity_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_crackSimilarity, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.crackSimilarity = ui->pbtn_crackSimilarity->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_crackSimilarity->setText(value);
+		GlobalStructData.dlgProductSetConfig.crackSimilarity = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_apertureValue_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_apertureValue, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.apertureValue = ui->pbtn_apertureValue->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_apertureValue->setText(value);
+		GlobalStructData.dlgProductSetConfig.apertureValue = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_apertureSimilarity_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_apertureSimilarity, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.apertureSimilarity = ui->pbtn_apertureSimilarity->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_apertureSimilarity->setText(value);
+		GlobalStructData.dlgProductSetConfig.apertureSimilarity = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_holeCenterDistanceValue_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_holeCenterDistanceValue, 2);
-	numKeyBoard->exec();
 
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.holeCenterDistanceValue = ui->pbtn_holeCenterDistanceValue->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_holeCenterDistanceValue->setText(value);
+		GlobalStructData.dlgProductSetConfig.holeCenterDistanceValue = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_holeCenterDistanceSimilarity_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_holeCenterDistanceSimilarity, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.holeCenterDistanceSimilarity = ui->pbtn_holeCenterDistanceSimilarity->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_holeCenterDistanceSimilarity->setText(value);
+		GlobalStructData.dlgProductSetConfig.holeCenterDistanceSimilarity = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_specifyColorDifferenceR_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_specifyColorDifferenceR, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.specifyColorDifferenceR = ui->pbtn_specifyColorDifferenceR->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_specifyColorDifferenceR->setText(value);
+		GlobalStructData.dlgProductSetConfig.specifyColorDifferenceR = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_specifyColorDifferenceG_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_specifyColorDifferenceG, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.specifyColorDifferenceG = ui->pbtn_specifyColorDifferenceG->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_specifyColorDifferenceG->setText(value);
+		GlobalStructData.dlgProductSetConfig.specifyColorDifferenceG = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_specifyColorDifferenceB_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_specifyColorDifferenceB, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.specifyColorDifferenceB = ui->pbtn_specifyColorDifferenceB->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_specifyColorDifferenceB->setText(value);
+		GlobalStructData.dlgProductSetConfig.specifyColorDifferenceB = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_specifyColorDifferenceDeviation_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_specifyColorDifferenceDeviation, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.specifyColorDifferenceDeviation = ui->pbtn_specifyColorDifferenceDeviation->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_specifyColorDifferenceDeviation->setText(value);
+		GlobalStructData.dlgProductSetConfig.specifyColorDifferenceDeviation = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_largeColorDifferenceDeviation_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_largeColorDifferenceDeviation, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.largeColorDifferenceDeviation = ui->pbtn_largeColorDifferenceDeviation->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_largeColorDifferenceDeviation->setText(value);
+		GlobalStructData.dlgProductSetConfig.largeColorDifferenceDeviation = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_edgeDamageSimilarity_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_edgeDamageSimilarity, 2);
-	numKeyBoard->exec();
-
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.edgeDamageSimilarity = ui->pbtn_edgeDamageSimilarity->text().toDouble();
-
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_edgeDamageSimilarity->setText(value);
+		GlobalStructData.dlgProductSetConfig.edgeDamageSimilarity = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_poreEnableScore_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_poreEnableScore, 2);
-	numKeyBoard->exec();
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.poreEnableScore = ui->pbtn_poreEnableScore->text().toDouble();
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_poreEnableScore->setText(value);
+		GlobalStructData.dlgProductSetConfig.poreEnableScore = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_paintEnableScore_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_paintEnableScore, 2);
-	numKeyBoard->exec();
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.paintEnableScore = ui->pbtn_paintEnableScore->text().toDouble();
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_paintEnableScore->setText(value);
+		GlobalStructData.dlgProductSetConfig.paintEnableScore = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_grindStoneScore_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_grindStoneScore, 2);
-	numKeyBoard->exec();
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.grindStoneEnableScore = ui->pbtn_grindStoneScore->text().toDouble();
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_grindStoneScore->setText(value);
+		GlobalStructData.dlgProductSetConfig.grindStoneEnableScore = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_blockEyeScore_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blockEyeScore, 2);
-	numKeyBoard->exec();
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.blockEyeEnableScore = ui->pbtn_blockEyeScore->text().toDouble();
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_blockEyeScore->setText(value);
+		GlobalStructData.dlgProductSetConfig.blockEyeEnableScore = value.toDouble();
+	}
 }
 
 void DlgProductSet::pbtn_materialHeadScore_clicked()
 {
-	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_materialHeadScore, 2);
-	numKeyBoard->exec();
-	auto& GlobalStructData = GlobalStructData::getInstance();
-	GlobalStructData.dlgProductSetConfig.materialHeadEnableScore = ui->pbtn_materialHeadScore->text().toDouble();
-	delete numKeyBoard;
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
+	{
+		auto value = numKeyBord.getValue();
+		auto& GlobalStructData = GlobalStructData::getInstance();
+		ui->pbtn_materialHeadScore->setText(value);
+		GlobalStructData.dlgProductSetConfig.materialHeadEnableScore = value.toDouble();
+	}
 }
 
 void DlgProductSet::rbtn_outsideDiameterEnable_checked(bool checked)
