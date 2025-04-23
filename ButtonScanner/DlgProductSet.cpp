@@ -77,6 +77,8 @@ void DlgProductSet::readConfig()
 	ui->pbtn_materialHeadScore->setText(QString::number(GlobalStructData.dlgProductSetConfig.materialHeadEnableScore));
 
 	ui->pbtn_holeCenterDistanceSimilarity->setText(QString::number(GlobalStructData.dlgProductSetConfig.holeCenterDistanceSimilarity));
+
+	ui->pbtn_specifyColorDifferenceDeviation->setText(QString::number(GlobalStructData.dlgProductSetConfig.specifyColorDifferenceDeviation));
 }
 
 float DlgProductSet::get_blowTime()
