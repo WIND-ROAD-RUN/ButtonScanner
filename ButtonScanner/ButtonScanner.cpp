@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "ButtonScanner.h"
+#include"NumberKeyboard.h"
 
 #include"LoadingDialog.h"
 #include"PicturesViewer.h"
@@ -1086,7 +1087,7 @@ void ButtonScanner::updateStatisticalInfoUI()
 
 void ButtonScanner::pbtn_set_clicked()
 {
-	auto passwordValue = new QPushButton(this);
+	/*auto passwordValue = new QPushButton(this);
 	auto passwordDlg = new NumKeyBord(this, passwordValue, 2);
 	passwordDlg->exec();
 	auto password = passwordValue->text();
@@ -1101,7 +1102,11 @@ void ButtonScanner::pbtn_set_clicked()
 	}
 
 	delete passwordValue;
-	delete passwordDlg;
+	delete passwordDlg;*/
+
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	numKeyBord.exec();
 }
 
 void ButtonScanner::pbtn_newProduction_clicked()
