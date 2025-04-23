@@ -19,6 +19,9 @@ private:
 	void build_connect();
 
 private:
+	void readConfig();
+
+private:
 	Ui::DlgHideScoreSetClass *ui;
 
 private slots:

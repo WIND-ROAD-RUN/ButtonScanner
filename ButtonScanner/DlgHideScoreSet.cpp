@@ -21,6 +21,7 @@ DlgHideScoreSet::~DlgHideScoreSet()
 
 void DlgHideScoreSet::build_ui()
 {
+	readConfig();
 }
 
 void DlgHideScoreSet::build_connect()
@@ -31,6 +32,13 @@ void DlgHideScoreSet::build_connect()
 		&DlgHideScoreSet::pbtn_outsideDiameterScore_clicked);
 	QObject::connect(ui->pbtn_forAndAgainstScore, &QPushButton::clicked, this,
 		&DlgHideScoreSet::pbtn_forAndAgainstScore_clicked);
+}
+
+void DlgHideScoreSet::readConfig()
+{
+	auto& GlobalStructData = GlobalStructData::getInstance();
+	ui->pbtn_outsideDiameterScore->setText(QString::number(GlobalStructData.dlgHideScoreSetConfig.outsideDiameterScore));
+	ui->pbtn_forAndAgainstScore->setText(QString::number(GlobalStructData.dlgHideScoreSetConfig.forAndAgainstScore));
 }
 
 void DlgHideScoreSet::pbtn_close_clicked()

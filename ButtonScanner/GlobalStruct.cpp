@@ -172,6 +172,7 @@ void GlobalStructData::saveConfig()
 	saveDlgProduceLineSetConfig();
 	saveDlgProductSetConfig();
 	saveDlgExposureTimeSetConfig();
+	saveDlgHideScoreSetConfig();
 }
 
 void GlobalStructData::saveMainWindowConfig()
