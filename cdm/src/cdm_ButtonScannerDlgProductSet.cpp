@@ -536,27 +536,27 @@ rw::cdm::ButtonScannerDlgProductSet::operator rw::oso::ObjectStoreAssembly() con
 
 	auto poreEnableScoreItem = std::make_shared<oso::ObjectStoreItem>();
 	poreEnableScoreItem->setName("$variable$poreEnableScore$");
-	poreEnableScoreItem->setValueFromDouble(materialHeadEnable);
+	poreEnableScoreItem->setValueFromDouble(poreEnableScore);
 	assembly.addItem(poreEnableScoreItem);
 
 	auto paintEnableScoreItem = std::make_shared<oso::ObjectStoreItem>();
 	paintEnableScoreItem->setName("$variable$paintEnableScore$");
-	paintEnableScoreItem->setValueFromDouble(materialHeadEnable);
+	paintEnableScoreItem->setValueFromDouble(paintEnableScore);
 	assembly.addItem(paintEnableScoreItem);
 
 	auto grindStoneEnableScoreItem = std::make_shared<oso::ObjectStoreItem>();
 	grindStoneEnableScoreItem->setName("$variable$grindStoneEnableScore$");
-	grindStoneEnableScoreItem->setValueFromDouble(materialHeadEnable);
+	grindStoneEnableScoreItem->setValueFromDouble(grindStoneEnableScore);
 	assembly.addItem(grindStoneEnableScoreItem);
 
 	auto blockEyeEnableScoreItem = std::make_shared<oso::ObjectStoreItem>();
 	blockEyeEnableScoreItem->setName("$variable$blockEyeEnableScore$");
-	blockEyeEnableScoreItem->setValueFromDouble(materialHeadEnable);
+	blockEyeEnableScoreItem->setValueFromDouble(blockEyeEnableScore);
 	assembly.addItem(blockEyeEnableScoreItem);
 
 	auto materialHeadEnableScoreItem = std::make_shared<oso::ObjectStoreItem>();
 	materialHeadEnableScoreItem->setName("$variable$materialHeadEnableScore$");
-	materialHeadEnableScoreItem->setValueFromDouble(materialHeadEnable);
+	materialHeadEnableScoreItem->setValueFromDouble(materialHeadEnableScore);
 	assembly.addItem(materialHeadEnableScoreItem);
 
 	return assembly;
