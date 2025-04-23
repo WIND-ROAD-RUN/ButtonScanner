@@ -1061,6 +1061,7 @@ void ButtonScanner::pbtn_set_clicked()
 	auto password = passwordValue->text();
 	if (password == "1234") {
 		dlgProduceLineSet->setFixedSize(this->width(), this->height());
+		dlgProduceLineSet->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
 		dlgProduceLineSet->exec();
 		ui->pbtn_beltSpeed->setText(QString::number(GlobalStructData::getInstance().dlgProduceLineSetConfig.motorSpeed));
 	}
@@ -1081,6 +1082,7 @@ void ButtonScanner::pbtn_newProduction_clicked()
 		return;
 	}
 	if (dlgNewProduction != nullptr) {
+		dlgNewProduction->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
 		dlgNewProduction->show();
 	}
 }
@@ -1109,6 +1111,7 @@ void ButtonScanner::pbtn_score_clicked()
 {
 	dlgProductSet->readConfig();
 	dlgProductSet->setFixedSize(this->width(), this->height());
+	dlgProductSet->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
 	dlgProductSet->exec();
 }
 
@@ -1132,10 +1135,10 @@ void ButtonScanner::pbtn_resetProduct_clicked()
 
 void ButtonScanner::pbtn_openSaveLocation_clicked()
 {
-	//picturesViewer->setRootPath();
 	auto& globalStruct = GlobalStructData::getInstance();
 	QString imageSavePath = globalStruct.imageSaveEngine->getRootPath();
 	picturesViewer->setRootPath(imageSavePath);
+	picturesViewer->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
 	picturesViewer->show();
 }
 
@@ -1225,6 +1228,7 @@ void ButtonScanner::labelClickable_title_clicked()
 		QMessageBox::warning(this, "警告", "正在运行剔废功能，请关闭后再试");
 		return;
 	}
+	dlgModelManager->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
 	dlgModelManager->show();
 }
 

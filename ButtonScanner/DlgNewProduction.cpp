@@ -304,6 +304,7 @@ void DlgNewProduction::pbtn_tab2_exit_clicked()
 
 void DlgNewProduction::pbtn_tab3_open_img_locate_clicked()
 {
+	picturesViewer->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
 	picturesViewer->show();
 }
 
@@ -340,6 +341,7 @@ void DlgNewProduction::pbtn_tab3_nex_step_clicked()
 
 void DlgNewProduction::pbtn_tab4_open_img_locate_clicked()
 {
+	picturesViewer->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
 	picturesViewer->show();
 }
 
