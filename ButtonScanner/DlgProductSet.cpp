@@ -29,6 +29,8 @@ void DlgProductSet::build_ui()
 	}
 
 	_clickedLabel = new rw::rqw::ClickableLabel(this);
+	_dlgHideScoreSet = new DlgHideScoreSet(this);
+
 	ui->horizontalLayout_firstRow->replaceWidget(ui->label_pic, _clickedLabel);
 	delete ui->label_pic;
 	readConfig();
@@ -201,6 +203,9 @@ void DlgProductSet::build_connect()
 		this, &DlgProductSet::rbtn_blockEyeEnable_checked);
 	QObject::connect(ui->rbtn_materialHeadEnable, &QRadioButton::clicked,
 		this, &DlgProductSet::rbtn_materialHeadEnable_checked);
+
+	QObject::connect(_clickedLabel, &rw::rqw::ClickableLabel::clicked,
+		this, &DlgProductSet::clickedLabel_clicked);
 }
 
 void DlgProductSet::build_radioButton()
@@ -561,4 +566,9 @@ void DlgProductSet::pbtn_close_clicked() {
 	auto& GlobalStructData = GlobalStructData::getInstance();
 	GlobalStructData.saveDlgProductSetConfig();
 	this->close();
+}
+
+void DlgProductSet::clickedLabel_clicked()
+{
+	_dlgHideScoreSet->show();
 }

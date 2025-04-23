@@ -3,6 +3,7 @@
 #include <QDialog>
 #include "ui_DlgProductSet.h"
 #include"rqw_LabelClickable.h"
+#include"DlgHideScoreSet.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class DlgProductSetClass; };
@@ -11,7 +12,8 @@ QT_END_NAMESPACE
 class DlgProductSet : public QDialog
 {
 	Q_OBJECT
-
+private:
+	DlgHideScoreSet* _dlgHideScoreSet;
 public:
 	DlgProductSet(QWidget* parent = nullptr);
 	~DlgProductSet();
@@ -73,4 +75,6 @@ private slots:
 	void rbtn_grindStoneEnable_checked(bool checked);
 	void rbtn_blockEyeEnable_checked(bool checked);
 	void rbtn_materialHeadEnable_checked(bool checked);
+private slots:
+	void clickedLabel_clicked();
 };
