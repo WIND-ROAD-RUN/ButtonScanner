@@ -69,6 +69,14 @@ void DlgProductSet::readConfig()
 	ui->rbtn_materialHeadEnable->setChecked(GlobalStructData.dlgProductSetConfig.materialHeadEnable);
 
 	ui->pbtn_blowTime->setText(QString::number(get_blowTime()));
+
+	ui->pbtn_poreEnableScore->setText(QString::number(GlobalStructData.dlgProductSetConfig.poreEnableScore));
+	ui->pbtn_paintEnableScore->setText(QString::number(GlobalStructData.dlgProductSetConfig.paintEnableScore));
+	ui->pbtn_grindStoneScore->setText(QString::number(GlobalStructData.dlgProductSetConfig.grindStoneEnableScore));
+	ui->pbtn_blockEyeScore->setText(QString::number(GlobalStructData.dlgProductSetConfig.blockEyeEnableScore));
+	ui->pbtn_materialHeadScore->setText(QString::number(GlobalStructData.dlgProductSetConfig.materialHeadEnableScore));
+
+	ui->pbtn_holeCenterDistanceSimilarity->setText(QString::number(GlobalStructData.dlgProductSetConfig.holeCenterDistanceSimilarity));
 }
 
 float DlgProductSet::get_blowTime()
@@ -415,23 +423,47 @@ void DlgProductSet::pbtn_edgeDamageSimilarity_clicked()
 
 void DlgProductSet::pbtn_poreEnableScore_clicked()
 {
-
+	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_poreEnableScore, 2);
+	numKeyBoard->exec();
+	auto& GlobalStructData = GlobalStructData::getInstance();
+	GlobalStructData.dlgProductSetConfig.poreEnableScore = ui->pbtn_poreEnableScore->text().toDouble();
+	delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_paintEnableScore_clicked()
 {
+	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_paintEnableScore, 2);
+	numKeyBoard->exec();
+	auto& GlobalStructData = GlobalStructData::getInstance();
+	GlobalStructData.dlgProductSetConfig.paintEnableScore = ui->pbtn_paintEnableScore->text().toDouble();
+	delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_grindStoneScore_clicked()
 {
+	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_grindStoneScore, 2);
+	numKeyBoard->exec();
+	auto& GlobalStructData = GlobalStructData::getInstance();
+	GlobalStructData.dlgProductSetConfig.grindStoneEnableScore = ui->pbtn_grindStoneScore->text().toDouble();
+	delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_blockEyeScore_clicked()
 {
+	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_blockEyeScore, 2);
+	numKeyBoard->exec();
+	auto& GlobalStructData = GlobalStructData::getInstance();
+	GlobalStructData.dlgProductSetConfig.blockEyeEnableScore = ui->pbtn_blockEyeScore->text().toDouble();
+	delete numKeyBoard;
 }
 
 void DlgProductSet::pbtn_materialHeadScore_clicked()
 {
+	auto numKeyBoard = new NumKeyBord(this, ui->pbtn_materialHeadScore, 2);
+	numKeyBoard->exec();
+	auto& GlobalStructData = GlobalStructData::getInstance();
+	GlobalStructData.dlgProductSetConfig.materialHeadEnableScore = ui->pbtn_materialHeadScore->text().toDouble();
+	delete numKeyBoard;
 }
 
 void DlgProductSet::rbtn_outsideDiameterEnable_checked(bool checked)
