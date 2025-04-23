@@ -2,6 +2,7 @@
 
 #include <QDialog>
 #include "ui_DlgNewProduction.h"
+#include"PicturesViewer.h"
 
 #include"opencv2/opencv.hpp"
 
@@ -29,7 +30,8 @@ public:
 	DlgNewProduction(QWidget* parent = nullptr);
 
 	~DlgNewProduction();
-
+public:
+	PicturesViewer * picturesViewer;
 private:
 	void build_ui();
 	void build_connect();

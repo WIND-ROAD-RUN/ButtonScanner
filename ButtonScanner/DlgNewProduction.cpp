@@ -3,6 +3,7 @@
 
 #include"ButtonUtilty.h"
 #include"GlobalStruct.h"
+#include"PicturesViewer.h"
 #include<QThread>
 #include<QtConcurrent>
 
@@ -29,6 +30,9 @@ void DlgNewProduction::build_ui()
 {
 	ui->tabWidget->tabBar()->hide();
 	build_dialog();
+	picturesViewer = new PicturesViewer(this);
+	auto tempImagePath = globalPath.modelStorageManagerTempPath + R"(Image\)";
+	picturesViewer->setRootPath(tempImagePath);
 }
 
 void DlgNewProduction::build_connect()
@@ -300,6 +304,7 @@ void DlgNewProduction::pbtn_tab2_exit_clicked()
 
 void DlgNewProduction::pbtn_tab3_open_img_locate_clicked()
 {
+	picturesViewer->show();
 }
 
 void DlgNewProduction::pbtn_tab3_exit_clicked()
@@ -335,6 +340,7 @@ void DlgNewProduction::pbtn_tab3_nex_step_clicked()
 
 void DlgNewProduction::pbtn_tab4_open_img_locate_clicked()
 {
+	picturesViewer->show();
 }
 
 void DlgNewProduction::pbtn_tab4_exit_clicked()
