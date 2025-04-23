@@ -25,6 +25,7 @@
     <ClInclude Include="include\cdm_ButtonScannerDlgProductSet.h" />
     <ClInclude Include="include\cdm_ButtonScannerMainWindow.h" />
     <ClInclude Include="include\cdm_AiModelConfigIndex.h" />
+    <ClInclude Include="include\cdm_ButtonScannerDlgHideScoreSet.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\cdm_AiModelConfigIndex.cpp" />
@@ -33,6 +34,7 @@
     <ClCompile Include="src\cdm_ButtonScannerDlgProductSet.cpp" />
     <ClCompile Include="src\cdm_ButtonScannerProduceLineSet.cpp" />
     <ClCompile Include="src\cdm_ButtonScannerMainWindow.cpp" />
+    <ClCompile Include="src\cdm_ButtonScannerDlgHideScoreSet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\oso\oso.vcxproj">
