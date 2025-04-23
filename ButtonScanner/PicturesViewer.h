@@ -34,12 +34,19 @@ private:
 	QModelIndex findFirstDeepestIndex(QStandardItemModel* model);
 	QModelIndex findDeepestChild(QStandardItem* parentItem);
 	void updatePicturesList(const QString& directoryPath, const QStringList& imageFiles);
+	QList<QModelIndex> getAllIndexes(QStandardItemModel* model);
+	void collectIndexes(QStandardItem* item, QList<QModelIndex>& indexes);
 private:
 	Ui::PicturesViewerClass* ui;
 
 private slots:
 	void pbtn_exit_clicked();
 	void onCategorySelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-	
+	void onPictureSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+	void pbtn_nextPicture_clicked();
+	void pbtn_prevPicture_clicked();
+	void pbtn_preCategory_clicked();
+	void pbtn_nextCategory_clicked();
+	void pbtn_delete_clicked();
 
 };

@@ -33,6 +33,23 @@ void PicturesViewer::build_connect()
     QObject::connect(ui->treeView_categoryTree->selectionModel(), &QItemSelectionModel::selectionChanged,
         this, &PicturesViewer::onCategorySelectionChanged);
 
+    QObject::connect(ui->listView_picturesList->selectionModel(), &QItemSelectionModel::selectionChanged,
+        this, &PicturesViewer::onPictureSelectionChanged);
+
+    QObject::connect(ui->pbtn_nextPicture, &QPushButton::clicked,
+		this, &PicturesViewer::pbtn_nextPicture_clicked);
+
+    QObject::connect(ui->pbtn_prePicture, &QPushButton::clicked,
+		this, &PicturesViewer::pbtn_prevPicture_clicked);
+
+	QObject::connect(ui->pbtn_preCategory, &QPushButton::clicked,
+		this, &PicturesViewer::pbtn_preCategory_clicked);
+
+	QObject::connect(ui->pbtn_nextCategory, &QPushButton::clicked,
+		this, &PicturesViewer::pbtn_nextCategory_clicked);
+
+    QObject::connect(ui->pbtn_delete, &QPushButton::clicked,
+        this, &PicturesViewer::pbtn_delete_clicked);
 }
 
 void PicturesViewer::setRootPath(const QString& path)
@@ -177,5 +194,176 @@ void PicturesViewer::updatePicturesList(const QString& directoryPath, const QStr
 
     for (QStandardItem* item : items) {
         _picturesListModel->appendRow(item);
+    }
+
+    if (!imageFiles.isEmpty()) {
+        QModelIndex firstIndex = _picturesListModel->index(0, 0);
+        ui->listView_picturesList->setCurrentIndex(firstIndex);
+    }
+    else
+    {
+        ui->label_imgDisplay->clear();
+    }
+}
+
+void PicturesViewer::onPictureSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
+{
+    // 检查是否有选中的项
+    if (selected.indexes().isEmpty()) {
+        qDebug() << "No picture selected.";
+        return;
+    }
+
+    // 获取当前选中的索引
+    QModelIndex currentIndex = selected.indexes().first();
+
+    // 获取存储的绝对路径
+    QString selectedPicturePath = currentIndex.data(Qt::UserRole).toString();
+
+	QPixmap pixmap(selectedPicturePath);
+	if (pixmap.isNull()) {
+		qDebug() << "Failed to load image:" << selectedPicturePath;
+		return;
+	}
+
+	ui->label_imgDisplay->setPixmap(pixmap.scaled(ui->label_imgDisplay->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+}
+
+void PicturesViewer::pbtn_nextPicture_clicked()
+{
+    QModelIndex currentIndex = ui->listView_picturesList->currentIndex();
+
+    QStandardItem* currentItem = _picturesListModel->itemFromIndex(currentIndex);
+    if (!currentItem) {
+        return;
+    }
+
+    int rowCount = _picturesListModel->rowCount();
+
+    int nextRow = (currentIndex.row() + 1) % rowCount;
+
+    QStandardItem* nextItem = _picturesListModel->item(nextRow, 0);
+    if (nextItem) {
+        ui->listView_picturesList->setCurrentIndex(nextItem->index());
+    }
+}
+
+void PicturesViewer::pbtn_prevPicture_clicked()
+{
+	QModelIndex currentIndex = ui->listView_picturesList->currentIndex();
+
+	QStandardItem* currentItem = _picturesListModel->itemFromIndex(currentIndex);
+	if (!currentItem) {
+		return;
+	}
+
+	int prevRow = (currentIndex.row() - 1 + _picturesListModel->rowCount()) % _picturesListModel->rowCount();
+
+	QStandardItem* prevItem = _picturesListModel->item(prevRow, 0);
+	if (prevItem) {
+		ui->listView_picturesList->setCurrentIndex(prevItem->index());
+	}
+}
+
+QList<QModelIndex> PicturesViewer::getAllIndexes(QStandardItemModel* model)
+{
+    QList<QModelIndex> indexes;
+    QStandardItem* rootItem = model->invisibleRootItem();
+    collectIndexes(rootItem, indexes);
+    return indexes;
+}
+
+void PicturesViewer::collectIndexes(QStandardItem* item, QList<QModelIndex>& indexes)
+{
+    if (!item) {
+        return;
+    }
+
+    for (int i = 0; i < item->rowCount(); ++i) {
+        QStandardItem* child = item->child(i);
+        if (child) {
+            indexes.append(child->index());
+            collectIndexes(child, indexes);
+        }
+    }
+}
+
+void PicturesViewer::pbtn_preCategory_clicked()
+{
+    QModelIndex currentIndex = ui->treeView_categoryTree->currentIndex();
+    QList<QModelIndex> allIndexes = getAllIndexes(_categoryModel);
+
+    if (allIndexes.isEmpty()) {
+        return;
+    }
+
+    int currentIndexPosition = allIndexes.indexOf(currentIndex);
+    int prevIndexPosition = (currentIndexPosition - 1 + allIndexes.size()) % allIndexes.size();
+
+    QModelIndex prevIndex = allIndexes.at(prevIndexPosition);
+    ui->treeView_categoryTree->setCurrentIndex(prevIndex);
+}
+
+void PicturesViewer::pbtn_nextCategory_clicked()
+{
+    QModelIndex currentIndex = ui->treeView_categoryTree->currentIndex();
+    QList<QModelIndex> allIndexes = getAllIndexes(_categoryModel);
+
+    if (allIndexes.isEmpty()) {
+        return;
+    }
+
+    int currentIndexPosition = allIndexes.indexOf(currentIndex);
+    int nextIndexPosition = (currentIndexPosition + 1) % allIndexes.size();
+
+    QModelIndex nextIndex = allIndexes.at(nextIndexPosition);
+    ui->treeView_categoryTree->setCurrentIndex(nextIndex);
+}
+
+void PicturesViewer::pbtn_delete_clicked()
+{
+    // 获取当前选中的索引
+    QModelIndex currentIndex = ui->listView_picturesList->currentIndex();
+
+    // 检查索引是否有效
+    if (!currentIndex.isValid()) {
+        qDebug() << "No picture selected for deletion.";
+        return;
+    }
+
+    // 获取当前选中图片的绝对路径
+    QString picturePath = currentIndex.data(Qt::UserRole).toString();
+
+    // 删除文件
+    QFile file(picturePath);
+    if (file.exists()) {
+        if (file.remove()) {
+            qDebug() << "Deleted picture:" << picturePath;
+        }
+        else {
+            qDebug() << "Failed to delete picture:" << picturePath;
+            return;
+        }
+    }
+    else {
+        qDebug() << "File does not exist:" << picturePath;
+        return;
+    }
+
+    // 从模型中移除当前项
+    _picturesListModel->removeRow(currentIndex.row());
+
+    // 获取新的索引
+    int rowCount = _picturesListModel->rowCount();
+    if (rowCount > 0) {
+        // 如果还有图片，设置索引为下一张图片
+        int nextRow = currentIndex.row() % rowCount;
+        QModelIndex nextIndex = _picturesListModel->index(nextRow, 0);
+        ui->listView_picturesList->setCurrentIndex(nextIndex);
+    }
+    else {
+        // 如果没有图片了，清空图片显示并设置索引为无效
+        ui->label_imgDisplay->clear();
+        ui->listView_picturesList->clearSelection();
     }
 }
