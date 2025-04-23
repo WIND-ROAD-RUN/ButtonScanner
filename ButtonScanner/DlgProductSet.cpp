@@ -570,5 +570,6 @@ void DlgProductSet::pbtn_close_clicked() {
 
 void DlgProductSet::clickedLabel_clicked()
 {
+	_dlgHideScoreSet->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
 	_dlgHideScoreSet->show();
 }

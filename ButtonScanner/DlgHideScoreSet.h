@@ -14,7 +14,13 @@ class DlgHideScoreSet : public QDialog
 public:
 	DlgHideScoreSet(QWidget *parent = nullptr);
 	~DlgHideScoreSet();
+private:
+	void build_ui();
+	void build_connect();
 
 private:
 	Ui::DlgHideScoreSetClass *ui;
+
+private slots:
+	void pbtn_close_clicked();
 };
