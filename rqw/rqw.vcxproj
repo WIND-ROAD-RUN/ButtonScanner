@@ -107,6 +107,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\NumberKeyboard.cpp" />
+    <ClCompile Include="src\PicturesViewer.cpp" />
     <ClCompile Include="src\rqw_LabelWarning.cpp" />
     <ClCompile Include="src\rqw_LabelClickable.cpp" />
     <ClCompile Include="src\rqw_ImageSaveEngine.cpp" />
@@ -120,6 +121,7 @@
     <QtMoc Include="include\rqw_ImageSaveEngine.h" />
     <QtMoc Include="include\rqw_CameraObject.hpp" />
     <QtMoc Include="include\NumberKeyboard.h" />
+    <QtMoc Include="include\PicturesViewer.h" />
     <ClInclude Include="include\rqw_CameraObjectCore.hpp" />
     <QtMoc Include="include\rqw_CameraObjectThread.hpp" />
     <ClInclude Include="include\rqw_global.h" />
@@ -134,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="NumberKeyboard.ui" />
+    <QtUic Include="PicturesViewer.ui" />
     <QtUic Include="WarningInfoList.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

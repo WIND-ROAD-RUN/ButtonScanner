@@ -61,6 +61,9 @@
     <QtMoc Include="include\NumberKeyboard.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="include\PicturesViewer.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\rqw_CameraObject.cpp">
@@ -87,12 +90,18 @@
     <ClCompile Include="src\NumberKeyboard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\PicturesViewer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="WarningInfoList.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="NumberKeyboard.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="PicturesViewer.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

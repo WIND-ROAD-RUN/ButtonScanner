@@ -155,7 +155,6 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     <QtMoc Include="LoadingDialog.h" />
     <QtMoc Include="DlgNewProduction.h" />
     <QtMoc Include="ModelStorageManager.h" />
-    <QtMoc Include="PicturesViewer.h" />
     <QtMoc Include="DlgModelManager.h" />
     <QtMoc Include="DlgHideScoreSet.h" />
     <ClInclude Include="ThreadSafePriorityQueue.h" />
@@ -180,7 +179,6 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="ModelStorageManager.cpp" />
     <ClCompile Include="MonitorCameraAndCardStateThread.cpp" />
-    <ClCompile Include="PicturesViewer.cpp" />
     <ClCompile Include="StatisticalInfoComputingThread.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>
@@ -193,7 +191,6 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     <QtUic Include="DlgProduceLineSet.ui" />
     <QtUic Include="DlgProductSet.ui" />
     <QtUic Include="LoadingDialog.ui" />
-    <QtUic Include="PicturesViewer.ui" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\cdm\cdm.vcxproj">
