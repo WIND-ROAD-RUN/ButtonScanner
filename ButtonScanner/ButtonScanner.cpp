@@ -732,6 +732,11 @@ void ButtonScanner::build_motion()
 		motionPtr->SetAxisType(2, 3);
 		motionPtr->SetAxisPulse(1, globalStruct.dlgProduceLineSetConfig.codeWheel);
 		motionPtr->SetAxisPulse(2, globalStruct.dlgProduceLineSetConfig.codeWheel);
+		updateCardLabelState(true);
+	}
+	else
+	{
+		updateCardLabelState(false);
 	}
 }
 
