@@ -995,10 +995,16 @@ void ButtonScanner::build_detachThread()
 	globalStruct.buildDetachThread();
 	QObject::connect(globalStruct.statisticalInfoComputingThread.get(), &StatisticalInfoComputingThread::updateStatisticalInfo,
 		this, &ButtonScanner::updateStatisticalInfoUI, Qt::QueuedConnection);
+	QObject::connect(globalStruct.statisticalInfoComputingThread.get(), &StatisticalInfoComputingThread::addWarningInfo,
+		this, &ButtonScanner::onAddWarningInfo, Qt::QueuedConnection);
+
 	QObject::connect(globalStruct.monitorCameraAndCardStateThread.get(), &MonitorCameraAndCardStateThread::updateCameraLabelState,
 		this, &ButtonScanner::updateCameraLabelState, Qt::QueuedConnection);
 	QObject::connect(globalStruct.monitorCameraAndCardStateThread.get(), &MonitorCameraAndCardStateThread::updateCardLabelState,
 		this, &ButtonScanner::updateCardLabelState, Qt::QueuedConnection);
+	QObject::connect(globalStruct.monitorCameraAndCardStateThread.get(), &MonitorCameraAndCardStateThread::addWarningInfo,
+		this, &ButtonScanner::onAddWarningInfo, Qt::QueuedConnection);
+
 }
 
 QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
@@ -1312,6 +1318,11 @@ void ButtonScanner::labelClickable_title_clicked()
 	}
 	_dlgModelManager->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
 	_dlgModelManager->show();
+}
+
+void ButtonScanner::onAddWarningInfo(QString message, bool updateTimestampIfSame, int redDuration)
+{
+	labelWarning->addWarning(message, updateTimestampIfSame, redDuration);
 }
 
 void ButtonScanner::pbtn_exit_clicked()

@@ -153,4 +153,6 @@ private slots:
 	void rbtn_forAndAgainst_checked(bool checked);
 private:
 	void labelClickable_title_clicked();
+public slots:
+	void onAddWarningInfo(QString message, bool updateTimestampIfSame, int redDuration );
 };

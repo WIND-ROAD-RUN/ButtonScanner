@@ -72,6 +72,7 @@ void MonitorCameraAndCardStateThread::check_cameraState1()
 		else {
 			emit destroyCamera1();
 			emit updateCameraLabelState(1, false);
+			emit addWarningInfo("相机1断连", true, 5000);
 		}
 	}
 	else {
@@ -102,6 +103,7 @@ void MonitorCameraAndCardStateThread::check_cameraState2()
 		else {
 			emit destroyCamera2();
 			emit updateCameraLabelState(2, false);
+			emit addWarningInfo("相机2断连", true, 5000);
 		}
 	}
 	else {
@@ -132,6 +134,7 @@ void MonitorCameraAndCardStateThread::check_cameraState3()
 		else {
 			emit destroyCamera3();
 			emit updateCameraLabelState(3, false);
+			emit addWarningInfo("相机3断连", true, 5000);
 		}
 	}
 	else {
@@ -161,6 +164,7 @@ void MonitorCameraAndCardStateThread::check_cameraState4()
 		else {
 			emit destroyCamera4();
 			emit updateCameraLabelState(4, false);
+			emit addWarningInfo("相机4断连", true, 5000);
 		}
 	}
 	else {
