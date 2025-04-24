@@ -928,10 +928,10 @@ void ButtonScanner::build_ioThread()
 				auto qiya = motionPtr->GetIOIn(7);
 				if (qiya == true) {
 					//气压正常
-					motionPtr->SetIOOut(8, true);
+					motionPtr->SetIOOut(8, false);
 				}
 				else {
-					motionPtr->SetIOOut(8, false);
+					motionPtr->SetIOOut(8, true);
 				}
 
 				if (globalStruct.mainWindowConfig.upLight) {
