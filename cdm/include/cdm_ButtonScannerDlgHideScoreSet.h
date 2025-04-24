@@ -8,7 +8,6 @@ namespace rw {
 	}
 }
 
-
 namespace rw
 {
 	namespace cdm
@@ -27,9 +26,8 @@ namespace rw
 			bool operator==(const DlgHideScoreSet& account) const;
 			bool operator!=(const DlgHideScoreSet& account) const;
 		public:
-			double outsideDiameterScore{0};
+			double outsideDiameterScore{ 0 };
 			double forAndAgainstScore{ 0 };
 		};
-		
 	}
 }

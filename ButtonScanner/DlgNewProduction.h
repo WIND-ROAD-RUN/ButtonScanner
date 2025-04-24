@@ -31,7 +31,7 @@ public:
 
 	~DlgNewProduction();
 public:
-	PicturesViewer * picturesViewer;
+	PicturesViewer* picturesViewer;
 private:
 	void build_ui();
 	void build_connect();

@@ -166,8 +166,6 @@ void ModelStorageManager::clear_temp()
 			qDebug() << "Removed file:" << filePath;
 		}
 	}
-
-
 }
 
 void ModelStorageManager::check_work_temp(const QString& imageRootPath)

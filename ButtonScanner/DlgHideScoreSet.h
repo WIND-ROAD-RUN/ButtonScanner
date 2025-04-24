@@ -12,7 +12,7 @@ class DlgHideScoreSet : public QDialog
 	Q_OBJECT
 
 public:
-	DlgHideScoreSet(QWidget *parent = nullptr);
+	DlgHideScoreSet(QWidget* parent = nullptr);
 	~DlgHideScoreSet();
 private:
 	void build_ui();
@@ -22,7 +22,7 @@ private:
 	void readConfig();
 
 private:
-	Ui::DlgHideScoreSetClass *ui;
+	Ui::DlgHideScoreSetClass* ui;
 
 private slots:
 	void pbtn_close_clicked();

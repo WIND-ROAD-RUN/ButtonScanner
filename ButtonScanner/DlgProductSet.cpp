@@ -364,7 +364,6 @@ void DlgProductSet::pbtn_apertureSimilarity_clicked()
 
 void DlgProductSet::pbtn_holeCenterDistanceValue_clicked()
 {
-
 	NumberKeyboard numKeyBord;
 	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
 	auto isAccept = numKeyBord.exec();

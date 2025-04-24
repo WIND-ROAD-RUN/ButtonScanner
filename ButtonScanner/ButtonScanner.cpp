@@ -957,9 +957,9 @@ void ButtonScanner::build_ioThread()
 				else {
 					QMetaObject::invokeMethod(qApp, [this, state]
 						{
-							labelWarning->addWarning("气压不正常",true);
+							labelWarning->addWarning("气压不正常", true);
 						});
-					motionPtr->SetIOOut(8, true);
+						motionPtr->SetIOOut(8, true);
 				}
 
 				if (globalStruct.mainWindowConfig.upLight) {
@@ -1004,7 +1004,6 @@ void ButtonScanner::build_detachThread()
 		this, &ButtonScanner::updateCardLabelState, Qt::QueuedConnection);
 	QObject::connect(globalStruct.monitorCameraAndCardStateThread.get(), &MonitorCameraAndCardStateThread::addWarningInfo,
 		this, &ButtonScanner::onAddWarningInfo, Qt::QueuedConnection);
-
 }
 
 QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)
@@ -1144,8 +1143,8 @@ void ButtonScanner::pbtn_set_clicked()
 {
 	NumberKeyboard numKeyBord;
 	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
-	auto isAccept=numKeyBord.exec();
-	if (isAccept==QDialog::Accepted)
+	auto isAccept = numKeyBord.exec();
+	if (isAccept == QDialog::Accepted)
 	{
 		if (numKeyBord.getValue() == "1234") {
 			_dlgProduceLineSet->setFixedSize(this->width(), this->height());

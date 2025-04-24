@@ -28,7 +28,6 @@ namespace rw
 			void addWarning(const QString& message, int redDuration = 5000);
 			void addWarning(const QString& message, bool updateTimestampIfSame, int redDuration = 5000);
 
-
 			// 设置队列最大容量
 			void setMaxHistorySize(size_t maxSize);
 

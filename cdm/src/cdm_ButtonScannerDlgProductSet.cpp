@@ -611,10 +611,10 @@ bool rw::cdm::ButtonScannerDlgProductSet::operator==(const ButtonScannerDlgProdu
 		blockEyeEnable == buttonScannerMainWindow.blockEyeEnable &&
 		materialHeadEnable == buttonScannerMainWindow.materialHeadEnable &&
 
-		poreEnableScore == buttonScannerMainWindow.poreEnableScore&&
-		paintEnableScore == buttonScannerMainWindow.paintEnableScore&&
-		grindStoneEnableScore == buttonScannerMainWindow.grindStoneEnableScore&&
-		blockEyeEnableScore == buttonScannerMainWindow.blockEyeEnableScore&&
+		poreEnableScore == buttonScannerMainWindow.poreEnableScore &&
+		paintEnableScore == buttonScannerMainWindow.paintEnableScore &&
+		grindStoneEnableScore == buttonScannerMainWindow.grindStoneEnableScore &&
+		blockEyeEnableScore == buttonScannerMainWindow.blockEyeEnableScore &&
 		materialHeadEnableScore == buttonScannerMainWindow.materialHeadEnableScore;
 }
 

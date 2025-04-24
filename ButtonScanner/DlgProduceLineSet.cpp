@@ -170,7 +170,6 @@ void DlgProduceLineSet::pbtn_blowDistance1_clicked()
 		ui->pbtn_blowDistance1->setText(value);
 		GlobalStructData.dlgProduceLineSetConfig.blowDistance1 = value.toDouble();
 	}
-
 }
 
 void DlgProduceLineSet::pbtn_blowTime1_clicked()

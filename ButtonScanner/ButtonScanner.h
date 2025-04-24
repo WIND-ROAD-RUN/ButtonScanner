@@ -154,5 +154,5 @@ private slots:
 private:
 	void labelClickable_title_clicked();
 public slots:
-	void onAddWarningInfo(QString message, bool updateTimestampIfSame, int redDuration );
+	void onAddWarningInfo(QString message, bool updateTimestampIfSame, int redDuration);
 };

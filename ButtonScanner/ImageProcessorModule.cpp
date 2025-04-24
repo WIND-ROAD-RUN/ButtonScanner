@@ -114,9 +114,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 				cv::Mat maskImage = cv::Mat::zeros(frame.image.size(), CV_8UC1);
 				_modelEnginePtrOnnxSO->ProcessMask(frame.image, resultImage1, maskImage, vecReconResultOnnxSO);
 			}
-
 		}
-
 		});
 
 	cv::Mat resultImage;
@@ -127,7 +125,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 	onnxFuture.waitForFinished();
 
 	if (globalStruct.isOpenRemoveFunc || (globalStruct.isDebugMode)) {
-		bool hasBody=false;
+		bool hasBody = false;
 		auto body = getBody(vecRecogResult, hasBody);
 
 		bool hasBodyOnnxOO = false;
@@ -145,7 +143,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 			hasBodyOnnxSO = true;
 		}
 
-		if ((!hasBody)||(!hasBodyOnnxOO)||(!hasBodyOnnxSO))
+		if ((!hasBody) || (!hasBodyOnnxOO) || (!hasBodyOnnxSO))
 		{
 			if (globalStruct.isOpenRemoveFunc) {
 				globalStruct.statisticalInfo.wasteCount++;
@@ -187,10 +185,10 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 		else
 		{
 			auto defect = getDefectInBody(body, vecRecogResult);
-			eliminationLogic(frame, 
+			eliminationLogic(frame,
 				frame.image,
-				errorInfo, 
-				defect, 
+				errorInfo,
+				defect,
 				vecRecogResultTarget,
 				vecReconResultOnnxOO,
 				vecReconResultOnnxSO);
@@ -247,7 +245,6 @@ rw::imeoo::ProcessRectanglesResultOO ImageProcessor::getBody(
 					hasBody = true;
 					area = width * height;
 				}
-
 			}
 		}
 	}
@@ -285,10 +282,10 @@ rw::imeso::ProcessRectanglesResultSO ImageProcessor::getBody(
 
 void
 ImageProcessor::eliminationLogic(
-	MatInfo& frame, 
-	cv::Mat& resultImage, QVector<QString>& errorInfo, 
-	std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult, 
-	std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResultTarget, 
+	MatInfo& frame,
+	cv::Mat& resultImage, QVector<QString>& errorInfo,
+	std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult,
+	std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResultTarget,
 	std::vector<rw::imeoo::ProcessRectanglesResultOO>& processRectanglesResultOO, std::vector<rw::imeso::ProcessRectanglesResultSO>& processRectanglesResultSO)
 {
 	auto saveIamge = resultImage.clone();
@@ -403,9 +400,9 @@ ImageProcessor::eliminationLogic(
 	{
 		if (globalStruct.isOpenBladeShape)
 		{
-			if (processRectanglesResultOO.size()!=0)
+			if (processRectanglesResultOO.size() != 0)
 			{
-				if ((processRectanglesResultOO.at(0).classID==0)&&(processRectanglesResultOO.at(0).score>dlgHideScoreSet.forAndAgainstScore))
+				if ((processRectanglesResultOO.at(0).classID == 0) && (processRectanglesResultOO.at(0).score > dlgHideScoreSet.forAndAgainstScore))
 				{
 					errorInfo.emplace_back("刀型错误");
 					isBad = true;
@@ -424,7 +421,6 @@ ImageProcessor::eliminationLogic(
 					_isbad = true;
 				}
 			}
-
 		}
 	}
 

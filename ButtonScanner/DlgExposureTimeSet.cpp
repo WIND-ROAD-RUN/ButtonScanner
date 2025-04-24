@@ -103,7 +103,6 @@ void DlgExposureTimeSet::pbtn_exposureTimeValue_clicked()
 			return;
 		}
 
-
 		auto& globalStruct = GlobalStructData::getInstance();
 		globalStruct.dlgExposureTimeSetConfig.expousureTime = newValue;
 

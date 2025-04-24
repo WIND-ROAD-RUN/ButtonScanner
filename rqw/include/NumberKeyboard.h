@@ -12,7 +12,7 @@ class NumberKeyboard : public QDialog
 private:
 	QString value;
 public:
-	NumberKeyboard(QWidget *parent = nullptr);
+	NumberKeyboard(QWidget* parent = nullptr);
 	~NumberKeyboard();
 public:
 	QString getValue() const { return value; }
@@ -23,7 +23,7 @@ protected:
 	void showEvent(QShowEvent*) override;
 
 private:
-	Ui::NumberKeyboardClass *ui;
+	Ui::NumberKeyboardClass* ui;
 private slots:
 	void pbtn_num1_clicked();
 	void pbtn_num2_clicked();

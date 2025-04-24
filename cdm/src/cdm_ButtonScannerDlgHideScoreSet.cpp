@@ -54,7 +54,6 @@ namespace rw
 			forAndAgainstScoreItem->setValueFromDouble(forAndAgainstScore);
 			assembly.addItem(forAndAgainstScoreItem);
 			return assembly;
-
 		}
 
 		bool DlgHideScoreSet::operator==(const DlgHideScoreSet& account) const
@@ -68,5 +67,4 @@ namespace rw
 			return !(*this == account);
 		}
 	}
-
 }

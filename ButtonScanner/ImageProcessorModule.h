@@ -84,13 +84,13 @@ private:
 	rw::imeso::ProcessRectanglesResultSO getBody(std::vector<rw::imeso::ProcessRectanglesResultSO>& processRectanglesResult, bool& hasBody);
 
 	void eliminationLogic(
-		MatInfo& frame, 
-		cv::Mat& resultImage, 
-		QVector<QString>& errorInfo, 
-		std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult, 
-		std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResultTarget, 
-		std::vector<rw::imeoo::ProcessRectanglesResultOO>& processRectanglesResultOO, 
-		std::vector<rw::imeso::ProcessRectanglesResultSO>&processRectanglesResultSO);
+		MatInfo& frame,
+		cv::Mat& resultImage,
+		QVector<QString>& errorInfo,
+		std::vector<rw::imeot::ProcessRectanglesResultOT>& processRectanglesResult,
+		std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResultTarget,
+		std::vector<rw::imeoo::ProcessRectanglesResultOO>& processRectanglesResultOO,
+		std::vector<rw::imeso::ProcessRectanglesResultSO>& processRectanglesResultSO);
 
 	void drawErrorLocate(QImage& image, std::vector<rw::imeot::ProcessRectanglesResultOT>& vecRecogResult, const QColor& drawColor);
 

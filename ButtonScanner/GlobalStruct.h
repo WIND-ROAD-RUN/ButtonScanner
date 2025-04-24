@@ -80,8 +80,8 @@ public:
 	std::atomic_bool isDebugMode{ false };
 	std::atomic_bool isOpenDefect{ false };
 	std::atomic_bool isTrainModel{ false };
-	std::atomic_bool isOpenColor{false};
-	std::atomic_bool isOpenBladeShape{false};
+	std::atomic_bool isOpenColor{ false };
+	std::atomic_bool isOpenBladeShape{ false };
 public:
 	void buildConfigManager(rw::oso::StorageType type);
 public:

@@ -11,28 +11,28 @@ QT_END_NAMESPACE
 
 class WarningInfoList : public QDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit WarningInfoList(QWidget* parent = nullptr);
-    ~WarningInfoList();
+	explicit WarningInfoList(QWidget* parent = nullptr);
+	~WarningInfoList();
 private:
-    void build_ui();
+	void build_ui();
 	void build_connect();
 public:
 
-    // 设置警告信息
-    void setWarningHistory(const std::deque<std::pair<QDateTime, QString>>& history);
+	// 设置警告信息
+	void setWarningHistory(const std::deque<std::pair<QDateTime, QString>>& history);
 
 signals:
-    // 信号：清空警告信息
-    void clearWarnings();
+	// 信号：清空警告信息
+	void clearWarnings();
 
 private slots:
-    // 槽函数：清空警告信息
-    void onClearWarnings();
+	// 槽函数：清空警告信息
+	void onClearWarnings();
 
 private:
-    Ui::WarningInfoListClass* ui;
-    QStandardItemModel* _model; // 数据模型
+	Ui::WarningInfoListClass* ui;
+	QStandardItemModel* _model; // 数据模型
 };

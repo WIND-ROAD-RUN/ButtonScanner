@@ -26,7 +26,7 @@ private:
 	void build_connect();
 
 public:
-	void setRootPath(const QString & path);
+	void setRootPath(const QString& path);
 protected:
 	void showEvent(QShowEvent*) override;
 private:
@@ -49,5 +49,4 @@ private slots:
 	void pbtn_preCategory_clicked();
 	void pbtn_nextCategory_clicked();
 	void pbtn_delete_clicked();
-
 };

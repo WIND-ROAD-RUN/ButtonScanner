@@ -4,7 +4,7 @@
 #include "GlobalStruct.h"
 #include"NumberKeyboard.h"
 
-DlgHideScoreSet::DlgHideScoreSet(QWidget *parent)
+DlgHideScoreSet::DlgHideScoreSet(QWidget* parent)
 	: QDialog(parent)
 	, ui(new Ui::DlgHideScoreSetClass())
 {
