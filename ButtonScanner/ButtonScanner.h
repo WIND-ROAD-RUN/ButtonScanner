@@ -9,6 +9,7 @@
 #include"DlgNewProduction.h"
 #include"DlgModelManager.h"
 #include"rqw_LabelClickable.h"
+#include"rqw_LabelWarning.h"
 #include"PicturesViewer.h"
 
 #include"opencv2/opencv.hpp"
@@ -40,6 +41,7 @@ public:
 	DlgNewProduction* dlgNewProduction = nullptr;
 public:
 	rw::rqw::ClickableLabel* labelClickable_title;
+	rw::rqw::LabelWarning* labelWarning;
 private:
 	//变量监控线程关机的时候停止
 	bool _mark_thread = false;

@@ -106,11 +106,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\rqw_LabelWarning.cpp" />
     <ClCompile Include="src\rqw_LabelClickable.cpp" />
     <ClCompile Include="src\rqw_ImageSaveEngine.cpp" />
     <ClCompile Include="src\rqw_CameraObject.cpp" />
     <ClCompile Include="src\rqw_CameraObjectCore.cpp" />
     <ClCompile Include="src\rqw_CameraObjectThread.cpp" />
+    <ClCompile Include="src\WarningInfoList.cpp" />
+    <QtMoc Include="include\WarningInfoList.h" />
+    <QtMoc Include="include\rqw_LabelWarning.h" />
     <QtMoc Include="include\rqw_LabelClickable.h" />
     <QtMoc Include="include\rqw_ImageSaveEngine.h" />
     <QtMoc Include="include\rqw_CameraObject.hpp" />
@@ -125,6 +129,9 @@
     <ProjectReference Include="..\scc\scc.vcxproj">
       <Project>{8ddd6baf-f0c8-4316-9f7a-2d6cd16e4e09}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="WarningInfoList.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

@@ -260,6 +260,10 @@ void ButtonScanner::build_ui()
 	build_picturesViewer();
 	build_dlgModelManager();
 	this->labelClickable_title = new rw::rqw::ClickableLabel(this);
+	labelWarning = new rw::rqw::LabelWarning(this);
+	ui->gBox_warningInfo->layout()->replaceWidget(ui->label_warningInfo, labelWarning);
+	delete ui->label_warningInfo;
+
 	labelClickable_title->setText(ui->label_title->text());
 	labelClickable_title->setStyleSheet(ui->label_title->styleSheet());
 	ui->hLayout_title->replaceWidget(ui->label_title, labelClickable_title);
