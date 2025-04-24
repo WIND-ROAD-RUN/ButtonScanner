@@ -113,6 +113,7 @@ namespace rw
 
 		void LabelWarning::labelClicked()
 		{
+			warningInfoList->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
 			warningInfoList->show();
 		}
 	}
