@@ -136,7 +136,7 @@
      </widget>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="vLayout_SideBar" stretch="4,8,3,2,1">
+     <layout class="QVBoxLayout" name="vLayout_SideBar" stretch="8,16,6,4,3,2">
       <item>
        <widget class="QGroupBox" name="groupBox_head">
         <property name="styleSheet">
@@ -1054,6 +1054,23 @@ QPushButton:pressed {
       </item>
       <item>
        <widget class="QGroupBox" name="gBox_set">
+        <property name="styleSheet">
+         <string notr="true">QGroupBox {
+    font-size: 20px;
+    font-weight: bold;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+	border-radius: 15px
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 5px;
+    color: #2c3e50;
+}</string>
+        </property>
         <property name="title">
          <string/>
         </property>
@@ -1162,6 +1179,23 @@ QPushButton:pressed {
       </item>
       <item>
        <widget class="QGroupBox" name="gBox_produceSet">
+        <property name="styleSheet">
+         <string notr="true">QGroupBox {
+    font-size: 20px;
+    font-weight: bold;
+    background-color: rgb(181, 181, 181);
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+	border-radius: 15px
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 5px;
+    color: #2c3e50;
+}</string>
+        </property>
         <property name="title">
          <string/>
         </property>
@@ -1299,6 +1333,39 @@ QRadioButton::indicator:pressed {
            </property>
            <property name="text">
             <string>正反</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="gBox_warningInfo">
+        <property name="styleSheet">
+         <string notr="true">QGroupBox {
+    font-size: 20px;
+    font-weight: bold;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+	border-radius: 15px
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 5px;
+    color: #2c3e50;
+}</string>
+        </property>
+        <property name="title">
+         <string/>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="label_warningInfo">
+           <property name="text">
+            <string>暂无报警信息</string>
            </property>
           </widget>
          </item>
