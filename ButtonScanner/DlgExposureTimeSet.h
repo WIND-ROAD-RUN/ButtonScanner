@@ -25,4 +25,5 @@ private:
 	Ui::DlgExposureTimeSetClass* ui;
 private slots:
 	void pbtn_exposureTimeValue_clicked();
+	void pbtn_close_clicked();
 };

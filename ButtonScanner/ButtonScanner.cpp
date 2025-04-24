@@ -43,6 +43,7 @@ void ButtonScanner::onExposureTimeTriggerAreaClicked()
 	auto isRuning = ui->rbtn_removeFunc->isChecked();
 	if (!isRuning) {
 		_dlgExposureTimeSet->SetCamera(); // 设置相机为实时采集
+		_dlgExposureTimeSet->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
 		_dlgExposureTimeSet->exec(); // 显示对话框
 		_dlgExposureTimeSet->ResetCamera(); // 重置相机为硬件触发
 	}

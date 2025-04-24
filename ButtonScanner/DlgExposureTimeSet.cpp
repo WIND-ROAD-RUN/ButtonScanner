@@ -30,6 +30,9 @@ void DlgExposureTimeSet::build_connect()
 {
 	QObject::connect(ui->pbtn_exposureTimeValue, &QPushButton::clicked,
 		this, &DlgExposureTimeSet::pbtn_exposureTimeValue_clicked);
+
+	QObject::connect(ui->pbtn_close, &QPushButton::clicked,
+		this, &DlgExposureTimeSet::pbtn_close_clicked);
 }
 
 void DlgExposureTimeSet::SetCamera()
@@ -111,4 +114,9 @@ void DlgExposureTimeSet::pbtn_exposureTimeValue_clicked()
 
 		globalStruct.saveDlgExposureTimeSetConfig();
 	}
+}
+
+void DlgExposureTimeSet::pbtn_close_clicked()
+{
+	this->close();
 }
