@@ -158,7 +158,6 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     <QtMoc Include="PicturesViewer.h" />
     <QtMoc Include="DlgModelManager.h" />
     <QtMoc Include="DlgHideScoreSet.h" />
-    <QtMoc Include="NumberKeyboard.h" />
     <ClInclude Include="ThreadSafePriorityQueue.h" />
     <QtRcc Include="ButtonScanner.qrc" />
     <QtUic Include="ButtonScanner.ui" />
@@ -181,7 +180,6 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="ModelStorageManager.cpp" />
     <ClCompile Include="MonitorCameraAndCardStateThread.cpp" />
-    <ClCompile Include="NumberKeyboard.cpp" />
     <ClCompile Include="PicturesViewer.cpp" />
     <ClCompile Include="StatisticalInfoComputingThread.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -195,7 +193,6 @@ xcopy /E /I /Y "$(SolutionDir)ThirdSource" "$(TargetDir)ThirdSource"
     <QtUic Include="DlgProduceLineSet.ui" />
     <QtUic Include="DlgProductSet.ui" />
     <QtUic Include="LoadingDialog.ui" />
-    <QtUic Include="NumberKeyboard.ui" />
     <QtUic Include="PicturesViewer.ui" />
   </ItemGroup>
   <ItemGroup>

@@ -121,9 +121,6 @@
     <ClCompile Include="DlgHideScoreSet.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
-    <ClCompile Include="NumberKeyboard.cpp">
-      <Filter>Source Files\ui</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ButtonScanner.h">
@@ -171,9 +168,6 @@
     <QtMoc Include="DlgHideScoreSet.h">
       <Filter>Header Files\ui</Filter>
     </QtMoc>
-    <QtMoc Include="NumberKeyboard.h">
-      <Filter>Header Files\ui</Filter>
-    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="DlgProductSet.ui">
@@ -198,9 +192,6 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="DlgHideScoreSet.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="NumberKeyboard.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

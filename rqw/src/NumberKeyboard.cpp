@@ -1,5 +1,5 @@
-#include "stdafx.h"
 #include "NumberKeyboard.h"
+#include "ui_NumberKeyboard.h"
 
 NumberKeyboard::NumberKeyboard(QWidget *parent)
 	: QDialog(parent)
