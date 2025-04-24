@@ -60,6 +60,30 @@ namespace rw
 			_timerToBlack->stop();
 		}
 
+		void LabelWarning::addWarning(const QString& message, bool updateTimestampIfSame, int redDuration)
+		{
+			// 如果启用了更新时间戳的功能，并且当前警告信息与上一次相同
+			if (updateTimestampIfSame && !_history.empty() && _history.back().second == message) {
+				// 更新最后一条警告信息的时间戳
+				_history.back().first = QDateTime::currentDateTime();
+
+				// 更新当前警告信息
+				_currentMessage = message;
+				this->setText(_currentMessage);
+
+				// 重置红色到灰色的定时器
+				_timerToGray->start(redDuration);
+
+				// 停止灰色到黑色的定时器（如果正在运行）
+				_timerToBlack->stop();
+
+				return;
+			}
+
+			// 如果信息不同或未启用时间戳更新功能，按正常逻辑添加警告信息
+			addWarning(message, redDuration);
+		}
+
 		void LabelWarning::setMaxHistorySize(size_t maxSize)
 		{
 			_maxHistorySize = maxSize;
