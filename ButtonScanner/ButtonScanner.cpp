@@ -42,9 +42,9 @@ void ButtonScanner::onExposureTimeTriggerAreaClicked()
 {
 	auto isRuning = ui->rbtn_removeFunc->isChecked();
 	if (!isRuning) {
-		dlgExposureTimeSet->SetCamera(); // 设置相机为实时采集
-		dlgExposureTimeSet->exec(); // 显示对话框
-		dlgExposureTimeSet->ResetCamera(); // 重置相机为硬件触发
+		_dlgExposureTimeSet->SetCamera(); // 设置相机为实时采集
+		_dlgExposureTimeSet->exec(); // 显示对话框
+		_dlgExposureTimeSet->ResetCamera(); // 重置相机为硬件触发
 	}
 }
 
@@ -80,7 +80,7 @@ ButtonScanner::ButtonScanner(QWidget* parent)
 
 ButtonScanner::~ButtonScanner()
 {
-	destoryComponects();
+	destroyComponents();
 
 	delete ui;
 }
@@ -102,7 +102,7 @@ void ButtonScanner::set_radioButton()
 
 void ButtonScanner::initializeComponents()
 {
-	mark_Thread = true;
+	_mark_thread = true;
 
 	// 创建加载框
 	LoadingDialog loadingDialog(this);
@@ -191,7 +191,7 @@ void ButtonScanner::initializeComponents()
 	loadingDialog.close();
 }
 
-void ButtonScanner::destoryComponects()
+void ButtonScanner::destroyComponents()
 {
 	// 创建加载框
 	LoadingDialog loadingDialog(this);
@@ -200,7 +200,7 @@ void ButtonScanner::destoryComponects()
 	// 停止线程标志
 	loadingDialog.updateMessage("正在停止线程...");
 	QCoreApplication::processEvents();
-	mark_Thread = false;
+	_mark_thread = false;
 
 	// 销毁分离线程
 	loadingDialog.updateMessage("正在销毁后台线程...");
@@ -229,7 +229,7 @@ void ButtonScanner::destoryComponects()
 	QCoreApplication::processEvents();
 	globalStructData.destroyImageSaveEngine();
 
-	destory_modelStorageManager();
+	destroy_modelStorageManager();
 	// 保存配置
 	loadingDialog.updateMessage("正在保存配置...");
 	QCoreApplication::processEvents();
@@ -298,21 +298,21 @@ void ButtonScanner::build_mainWindowData()
 
 void ButtonScanner::build_dlgProduceLineSet()
 {
-	this->dlgProduceLineSet = new DlgProduceLineSet(this);
+	this->_dlgProduceLineSet = new DlgProduceLineSet(this);
 }
 
 void ButtonScanner::build_dlgProductSet()
 {
-	this->dlgProductSet = new DlgProductSet(this);
+	this->_dlgProductSet = new DlgProductSet(this);
 }
 
 void ButtonScanner::build_dlgExposureTimeSet()
 {
-	this->dlgExposureTimeSet = new DlgExposureTimeSet(this);
+	this->_dlgExposureTimeSet = new DlgExposureTimeSet(this);
 	//设置对话框的初始位置
-	int x = this->x() + (this->width() - dlgExposureTimeSet->width()) / 2;
-	int y = this->y() + (this->height() - dlgExposureTimeSet->height()) / 2;
-	dlgExposureTimeSet->move(x, y);
+	int x = this->x() + (this->width() - _dlgExposureTimeSet->width()) / 2;
+	int y = this->y() + (this->height() - _dlgExposureTimeSet->height()) / 2;
+	_dlgExposureTimeSet->move(x, y);
 }
 
 void ButtonScanner::stop_all_axis()
@@ -336,7 +336,7 @@ void ButtonScanner::build_modelStorageManager()
 	globalStruct.modelStorageManager->setRootPath(globalPath.modelStorageManagerRootPath);
 }
 
-void ButtonScanner::destory_modelStorageManager()
+void ButtonScanner::destroy_modelStorageManager()
 {
 	auto& globalStruct = GlobalStructData::getInstance();
 	globalStruct.modelStorageManager.reset();
@@ -344,12 +344,12 @@ void ButtonScanner::destory_modelStorageManager()
 
 void ButtonScanner::build_picturesViewer()
 {
-	picturesViewer = new PicturesViewer(this);
+	_picturesViewer = new PicturesViewer(this);
 }
 
 void ButtonScanner::build_dlgModelManager()
 {
-	dlgModelManager = new DlgModelManager(this);
+	_dlgModelManager = new DlgModelManager(this);
 }
 
 void ButtonScanner::build_connect()
@@ -370,28 +370,28 @@ void ButtonScanner::build_connect()
 		this, &ButtonScanner::pbtn_score_clicked);
 
 	QObject::connect(ui->rbtn_debug, &QRadioButton::clicked,
-		this, &ButtonScanner::rbtn_debug_ckecked);
+		this, &ButtonScanner::rbtn_debug_checked);
 
 	QObject::connect(ui->rbtn_takePicture, &QRadioButton::clicked,
-		this, &ButtonScanner::rbtn_takePicture_ckecked);
+		this, &ButtonScanner::rbtn_takePicture_checked);
 
 	QObject::connect(ui->rbtn_removeFunc, &QRadioButton::clicked,
-		this, &ButtonScanner::rbtn_removeFunc_ckecked);
+		this, &ButtonScanner::rbtn_removeFunc_checked);
 
 	QObject::connect(ui->rbtn_upLight, &QRadioButton::clicked,
-		this, &ButtonScanner::rbtn_upLight_ckecked);
+		this, &ButtonScanner::rbtn_upLight_checked);
 
 	QObject::connect(ui->rbtn_sideLight, &QRadioButton::clicked,
-		this, &ButtonScanner::rbtn_sideLight_ckecked);
+		this, &ButtonScanner::rbtn_sideLight_checked);
 
 	QObject::connect(ui->rbtn_downLight, &QRadioButton::clicked,
-		this, &ButtonScanner::rbtn_downLight_ckecked);
+		this, &ButtonScanner::rbtn_downLight_checked);
 
 	QObject::connect(ui->rbtn_defect, &QRadioButton::clicked,
-		this, &ButtonScanner::rbtn_defect_ckecked);
+		this, &ButtonScanner::rbtn_defect_checked);
 
 	QObject::connect(ui->rbtn_ForAndAgainst, &QRadioButton::clicked,
-		this, &ButtonScanner::rbtn_ForAndAgainst_ckecked);
+		this, &ButtonScanner::rbtn_forAndAgainst_checked);
 
 	QObject::connect(ui->pbtn_resetProduct, &QPushButton::clicked,
 		this, &ButtonScanner::pbtn_resetProduct_clicked);
@@ -654,7 +654,7 @@ void ButtonScanner::build_camera()
 	auto build4Result = globalStruct.buildCamera4();
 	updateCameraLabelState(4, build4Result);
 
-	dlgExposureTimeSet->ResetCamera(); //启动设置相机为默认状态
+	_dlgExposureTimeSet->ResetCamera(); //启动设置相机为默认状态
 }
 
 void ButtonScanner::build_imageProcessorModule()
@@ -738,7 +738,7 @@ void ButtonScanner::build_locationThread()
 {
 	//线程内部
 	QFuture<void>  m_monitorFuture = QtConcurrent::run([this]() {
-		while (mark_Thread)
+		while (_mark_thread)
 		{
 			auto& globalStruct = GlobalStructData::getInstance();
 			auto& blowTime = globalStruct.dlgProductSetConfig.blowTime;
@@ -841,7 +841,7 @@ void ButtonScanner::build_ioThread()
 		//获取Zmotion
 		auto& motionPtr = zwy::scc::GlobalMotion::getInstance().motionPtr;
 
-		while (mark_Thread)
+		while (_mark_thread)
 		{
 			bool state = false;
 			state = motionPtr->GetIOIn(2);
@@ -877,7 +877,7 @@ void ButtonScanner::build_ioThread()
 						globalStruct.isDebugMode = false;
 						QMetaObject::invokeMethod(qApp, [this, state]
 							{
-								dlgExposureTimeSet->ResetCamera();
+								_dlgExposureTimeSet->ResetCamera();
 								ui->rbtn_removeFunc->setChecked(true);
 								ui->rbtn_debug->setChecked(false);
 								ui->label_lightBulb->setVisible(true);
@@ -1108,9 +1108,9 @@ void ButtonScanner::pbtn_set_clicked()
 	if (isAccept==QDialog::Accepted)
 	{
 		if (numKeyBord.getValue() == "1234") {
-			dlgProduceLineSet->setFixedSize(this->width(), this->height());
-			dlgProduceLineSet->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
-			dlgProduceLineSet->exec();
+			_dlgProduceLineSet->setFixedSize(this->width(), this->height());
+			_dlgProduceLineSet->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+			_dlgProduceLineSet->exec();
 			ui->pbtn_beltSpeed->setText(QString::number(GlobalStructData::getInstance().dlgProduceLineSetConfig.motorSpeed));
 		}
 		else {
@@ -1150,17 +1150,17 @@ void ButtonScanner::pbtn_beltSpeed_clicked()
 			ui->pbtn_beltSpeed->setText(value);
 			GlobalStructData.mainWindowConfig.beltSpeed = value.toDouble();
 			GlobalStructData.dlgProduceLineSetConfig.motorSpeed = ui->pbtn_beltSpeed->text().toDouble();
-			dlgProduceLineSet->updateBeltSpeed();
+			_dlgProduceLineSet->updateBeltSpeed();
 		}
 	}
 }
 
 void ButtonScanner::pbtn_score_clicked()
 {
-	dlgProductSet->readConfig();
-	dlgProductSet->setFixedSize(this->width(), this->height());
-	dlgProductSet->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
-	dlgProductSet->exec();
+	_dlgProductSet->readConfig();
+	_dlgProductSet->setFixedSize(this->width(), this->height());
+	_dlgProductSet->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	_dlgProductSet->exec();
 }
 
 void ButtonScanner::pbtn_resetProduct_clicked()
@@ -1185,17 +1185,17 @@ void ButtonScanner::pbtn_openSaveLocation_clicked()
 {
 	auto& globalStruct = GlobalStructData::getInstance();
 	QString imageSavePath = globalStruct.imageSaveEngine->getRootPath();
-	picturesViewer->setRootPath(imageSavePath);
-	picturesViewer->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
-	picturesViewer->show();
+	_picturesViewer->setRootPath(imageSavePath);
+	_picturesViewer->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	_picturesViewer->show();
 }
 
-void ButtonScanner::rbtn_debug_ckecked(bool checked)
+void ButtonScanner::rbtn_debug_checked(bool checked)
 {
 	auto isRuning = ui->rbtn_removeFunc->isChecked();
 	if (!isRuning) {
 		if (checked) {
-			dlgExposureTimeSet->SetCamera(); // 设置相机为实时采集
+			_dlgExposureTimeSet->SetCamera(); // 设置相机为实时采集
 			auto& GlobalStructData = GlobalStructData::getInstance();
 			GlobalStructData.mainWindowConfig.isDebugMode = checked;
 			GlobalStructData.isDebugMode = checked;
@@ -1204,7 +1204,7 @@ void ButtonScanner::rbtn_debug_ckecked(bool checked)
 			auto& GlobalStructData = GlobalStructData::getInstance();
 			GlobalStructData.mainWindowConfig.isDebugMode = checked;
 			GlobalStructData.isDebugMode = checked;
-			dlgExposureTimeSet->ResetCamera(); // 重置相机为硬件触发
+			_dlgExposureTimeSet->ResetCamera(); // 重置相机为硬件触发
 		}
 	}
 	else {
@@ -1212,7 +1212,7 @@ void ButtonScanner::rbtn_debug_ckecked(bool checked)
 	}
 }
 
-void ButtonScanner::rbtn_takePicture_ckecked(bool checked)
+void ButtonScanner::rbtn_takePicture_checked(bool checked)
 {
 	auto& GlobalStructData = GlobalStructData::getInstance();
 	GlobalStructData.mainWindowConfig.isTakePictures = checked;
@@ -1220,35 +1220,35 @@ void ButtonScanner::rbtn_takePicture_ckecked(bool checked)
 	GlobalStructData.isTakePictures = checked;
 }
 
-void ButtonScanner::rbtn_removeFunc_ckecked(bool checked)
+void ButtonScanner::rbtn_removeFunc_checked(bool checked)
 {
 	auto& GlobalStructData = GlobalStructData::getInstance();
 	GlobalStructData.mainWindowConfig.isEliminating = checked;
 	GlobalStructData.saveConfig();
 }
 
-void ButtonScanner::rbtn_upLight_ckecked(bool checked)
+void ButtonScanner::rbtn_upLight_checked(bool checked)
 {
 	auto& GlobalStructData = GlobalStructData::getInstance();
 	GlobalStructData.mainWindowConfig.upLight = checked;
 	GlobalStructData.saveConfig();
 }
 
-void ButtonScanner::rbtn_sideLight_ckecked(bool checked)
+void ButtonScanner::rbtn_sideLight_checked(bool checked)
 {
 	auto& GlobalStructData = GlobalStructData::getInstance();
 	GlobalStructData.mainWindowConfig.sideLight = checked;
 	GlobalStructData.saveConfig();
 }
 
-void ButtonScanner::rbtn_downLight_ckecked(bool checked)
+void ButtonScanner::rbtn_downLight_checked(bool checked)
 {
 	auto& GlobalStructData = GlobalStructData::getInstance();
 	GlobalStructData.mainWindowConfig.downLight = checked;
 	GlobalStructData.saveConfig();
 }
 
-void ButtonScanner::rbtn_defect_ckecked(bool checked)
+void ButtonScanner::rbtn_defect_checked(bool checked)
 {
 	auto& GlobalStructData = GlobalStructData::getInstance();
 	GlobalStructData.mainWindowConfig.isDefect = checked;
@@ -1256,7 +1256,7 @@ void ButtonScanner::rbtn_defect_ckecked(bool checked)
 	GlobalStructData.isOpenDefect = checked;
 }
 
-void ButtonScanner::rbtn_ForAndAgainst_ckecked(bool checked)
+void ButtonScanner::rbtn_forAndAgainst_checked(bool checked)
 {
 	auto& GlobalStructData = GlobalStructData::getInstance();
 	GlobalStructData.mainWindowConfig.isPositive = checked;
@@ -1276,8 +1276,8 @@ void ButtonScanner::labelClickable_title_clicked()
 		QMessageBox::warning(this, "警告", "正在运行剔废功能，请关闭后再试");
 		return;
 	}
-	dlgModelManager->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
-	dlgModelManager->show();
+	_dlgModelManager->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	_dlgModelManager->show();
 }
 
 void ButtonScanner::pbtn_exit_clicked()

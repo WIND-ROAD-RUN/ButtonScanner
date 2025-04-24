@@ -31,18 +31,18 @@ class ButtonScanner : public QMainWindow
 {
 	Q_OBJECT
 private:
-	DlgProduceLineSet* dlgProduceLineSet = nullptr;
-	DlgProductSet* dlgProductSet = nullptr;
-	DlgExposureTimeSet* dlgExposureTimeSet = nullptr;
-	PicturesViewer* picturesViewer = nullptr;
-	DlgModelManager* dlgModelManager = nullptr;
+	DlgProduceLineSet* _dlgProduceLineSet = nullptr;
+	DlgProductSet* _dlgProductSet = nullptr;
+	DlgExposureTimeSet* _dlgExposureTimeSet = nullptr;
+	PicturesViewer* _picturesViewer = nullptr;
+	DlgModelManager* _dlgModelManager = nullptr;
 public:
 	DlgNewProduction* dlgNewProduction = nullptr;
 public:
 	rw::rqw::ClickableLabel* labelClickable_title;
 private:
 	//变量监控线程关机的时候停止
-	bool mark_Thread = false;
+	bool _mark_thread = false;
 public:
 	QRect exposureTimeTriggerArea; // 指定区域
 	float exposureTimeTriggerWidthRatio = 0.3f;
@@ -63,7 +63,7 @@ private:
 
 private:
 	void initializeComponents();
-	void destoryComponects();
+	void destroyComponents();
 
 	void build_ui();
 	void read_image();
@@ -73,7 +73,7 @@ private:
 	void build_dlgExposureTimeSet();
 	void build_dlgNewProduction();
 	void build_modelStorageManager();
-	void destory_modelStorageManager();
+	void destroy_modelStorageManager();
 	void build_picturesViewer();
 	void build_dlgModelManager();
 
@@ -81,7 +81,7 @@ private:
 
 	void build_connect();
 private:
-	//read_cofig必须在最前面运行
+	//read_config必须在最前面运行
 	void read_config();
 	void read_config_mainWindowConfig();
 	void read_config_produceLineConfig();
@@ -141,14 +141,14 @@ private slots:
 	void pbtn_resetProduct_clicked();
 	void pbtn_openSaveLocation_clicked();
 private slots:
-	void rbtn_debug_ckecked(bool checked);
-	void rbtn_takePicture_ckecked(bool checked);
-	void rbtn_removeFunc_ckecked(bool checked);
-	void rbtn_upLight_ckecked(bool checked);
-	void rbtn_sideLight_ckecked(bool checked);
-	void rbtn_downLight_ckecked(bool checked);
-	void rbtn_defect_ckecked(bool checked);
-	void rbtn_ForAndAgainst_ckecked(bool checked);
+	void rbtn_debug_checked(bool checked);
+	void rbtn_takePicture_checked(bool checked);
+	void rbtn_removeFunc_checked(bool checked);
+	void rbtn_upLight_checked(bool checked);
+	void rbtn_sideLight_checked(bool checked);
+	void rbtn_downLight_checked(bool checked);
+	void rbtn_defect_checked(bool checked);
+	void rbtn_forAndAgainst_checked(bool checked);
 private:
 	void labelClickable_title_clicked();
 };
