@@ -51,6 +51,9 @@ namespace rw
 
 			void labelClicked();
 
+		private slots:
+			void clearWarningHistory(); // 清空历史记录
+
 		private:
 			QTimer* _timerToGray;    // 定时器，用于控制红色变灰色
 			QTimer* _timerToBlack;   // 定时器，用于控制灰色变黑色

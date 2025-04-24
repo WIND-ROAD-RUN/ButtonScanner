@@ -17,6 +17,7 @@ namespace rw
 			connect(_timerToGray, &QTimer::timeout, this, &LabelWarning::onTimeoutToGray);
 			connect(_timerToBlack, &QTimer::timeout, this, &LabelWarning::onTimeoutToBlack);
 			connect(this, &ClickableLabel::clicked, this, &LabelWarning::labelClicked);
+			connect(warningInfoList, &WarningInfoList::clearWarnings, this, &LabelWarning::clearWarningHistory);
 		}
 
 		LabelWarning::LabelWarning(QWidget* parent)
@@ -113,8 +114,14 @@ namespace rw
 
 		void LabelWarning::labelClicked()
 		{
+			warningInfoList->setWarningHistory(_history);
 			warningInfoList->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
 			warningInfoList->show();
+		}
+
+		void LabelWarning::clearWarningHistory()
+		{
+			_history.clear();
 		}
 	}
 }
