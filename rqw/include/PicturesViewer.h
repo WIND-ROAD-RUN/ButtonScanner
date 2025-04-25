@@ -49,4 +49,5 @@ private slots:
 	void pbtn_preCategory_clicked();
 	void pbtn_nextCategory_clicked();
 	void pbtn_delete_clicked();
+	void pbtn_delete_total_clicked();
 };

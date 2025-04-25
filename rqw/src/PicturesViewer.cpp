@@ -2,6 +2,8 @@
 
 #include "ui_PicturesViewer.h"
 
+#include<QMessageBox>
+
 PicturesViewer::PicturesViewer(QWidget* parent)
 	: QMainWindow(parent)
 	, ui(new Ui::PicturesViewerClass())
@@ -51,6 +53,9 @@ void PicturesViewer::build_connect()
 
 	QObject::connect(ui->pbtn_delete, &QPushButton::clicked,
 		this, &PicturesViewer::pbtn_delete_clicked);
+
+	QObject::connect(ui->pbtn_deleteTotal, &QPushButton::clicked,
+		this, &PicturesViewer::pbtn_delete_total_clicked);
 }
 
 void PicturesViewer::setRootPath(const QString& path)
@@ -366,4 +371,60 @@ void PicturesViewer::pbtn_delete_clicked()
 		ui->label_imgDisplay->clear();
 		ui->listView_picturesList->clearSelection();
 	}
+}
+
+void PicturesViewer::pbtn_delete_total_clicked()
+{
+	auto result=QMessageBox::question(this, "提示", "是否删除当前目录下所有图片？", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+	if (result == QMessageBox::No) {
+		return;
+	}
+	// 获取当前选中的索引
+	QModelIndex currentIndex = ui->treeView_categoryTree->currentIndex();
+	// 检查索引是否有效
+	if (!currentIndex.isValid()) {
+		qDebug() << "No category selected for deletion.";
+		return;
+	}
+
+	// 获取当前选中目录的绝对路径
+	QString categoryPath = currentIndex.data(Qt::UserRole).toString();
+	QDir dir(categoryPath);
+
+	// 检查目录是否存在
+	if (!dir.exists()) {
+		qDebug() << "Directory does not exist:" << categoryPath;
+		return;
+	}
+
+	// 删除目录中的所有文件
+	QStringList fileFilters;
+	fileFilters << "*"; // 匹配所有文件
+	QStringList files = dir.entryList(fileFilters, QDir::Files | QDir::NoSymLinks);
+	for (const QString& file : files) {
+		QString filePath = dir.filePath(file);
+		if (!QFile::remove(filePath)) {
+			qDebug() << "Failed to delete file:" << filePath;
+		}
+		else {
+			qDebug() << "Deleted file:" << filePath;
+		}
+	}
+
+	// 删除目录中的所有子文件夹及其内容
+	QStringList subDirs = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+	for (const QString& subDir : subDirs) {
+		QDir subDirPath(dir.filePath(subDir));
+		if (!subDirPath.removeRecursively()) {
+			qDebug() << "Failed to delete subdirectory:" << subDirPath.path();
+		}
+		else {
+			qDebug() << "Deleted subdirectory:" << subDirPath.path();
+		}
+	}
+
+	qDebug() << "Cleared all contents of directory:" << categoryPath;
+
+	// 更新目录列表
+	updateCategoryList();
 }
