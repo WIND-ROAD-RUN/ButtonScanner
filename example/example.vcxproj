@@ -63,6 +63,24 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\imeso\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6_segOnnxRuntime\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>yolov5v6_seg_ort.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(VcpkgRoot)\installed\x64-windows\include\opencv4;$(SolutionDir)\imeso\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdLibrary\YOLOV5V6_segOnnxRuntime\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>yolov5v6_seg_ort.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -104,6 +122,9 @@
   <ItemGroup>
     <ProjectReference Include="..\cdm\cdm.vcxproj">
       <Project>{6f547121-d09c-4daa-896f-e71aae7deae4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\imeso\imeso.vcxproj">
+      <Project>{bd6b8180-ffaa-410d-98b3-5421e220712d}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
