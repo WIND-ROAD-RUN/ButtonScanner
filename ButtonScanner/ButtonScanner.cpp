@@ -885,7 +885,7 @@ void ButtonScanner::build_ioThread()
 					{
 						ui->rbtn_removeFunc->setChecked(false);
 						ui->rbtn_debug->setChecked(false);
-						ui->label_lightBulb->setVisible(false);
+						ui->label_lightBulb->setVisible(true);
 					});
 					// pidaimove->stop();
 					motionPtr->StopAllAxis();
@@ -910,7 +910,7 @@ void ButtonScanner::build_ioThread()
 								_dlgExposureTimeSet->ResetCamera();
 								ui->rbtn_removeFunc->setChecked(true);
 								ui->rbtn_debug->setChecked(false);
-								ui->label_lightBulb->setVisible(true);
+								ui->label_lightBulb->setVisible(false);
 							});
 					}
 					//所有电机上电
