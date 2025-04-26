@@ -109,6 +109,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 			if (openBladeShape)
 			{
 				_modelEnginePtrOnnxOO->ProcessMask(frame.image, resultImage1, vecReconResultOnnxOO);
+				LOG() vecReconResultOnnxOO.size();
 			}
 			if (openColor)
 			{
@@ -150,6 +151,9 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 		{
 			hasBody = true;
 		}
+
+
+		LOG() "" << "hasBodyOnnxOO:" << hasBodyOnnxOO << "hasBodyOnnxSO:" << hasBodyOnnxSO << "hasBody:" << hasBody;
 
 		if ((!hasBody) || (!hasBodyOnnxOO) || (!hasBodyOnnxSO))
 		{
@@ -239,6 +243,7 @@ rw::imeoo::ProcessRectanglesResultOO ImageProcessor::getBody(
 	hasBody = false;
 	rw::imeoo::ProcessRectanglesResultOO result;
 	int area = 0;
+	LOG() processRectanglesResult.size();
 	for (auto& i : processRectanglesResult)
 	{
 		if (i.classID == 0)
