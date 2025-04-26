@@ -94,8 +94,8 @@ void DlgExposureTimeSet::pbtn_exposureTimeValue_clicked()
 	if (isAccept == QDialog::Accepted)
 	{
 		auto newValue = numKeyBord.getValue().toInt();
-		if (newValue < 100) {
-			QMessageBox::warning(this, "错误", "曝光时间范围应设置为100~700");
+		if (newValue < 10) {
+			QMessageBox::warning(this, "错误", "曝光时间范围应设置为10~700");
 			return;
 		}
 		if (newValue > 700) {
@@ -104,6 +104,7 @@ void DlgExposureTimeSet::pbtn_exposureTimeValue_clicked()
 		}
 
 		auto& globalStruct = GlobalStructData::getInstance();
+		ui->pbtn_exposureTimeValue->setText(QString::number(newValue));
 		globalStruct.dlgExposureTimeSetConfig.expousureTime = newValue;
 
 		globalStruct.setCameraExposureTime(1, newValue);
