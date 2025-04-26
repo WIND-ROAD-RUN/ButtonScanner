@@ -952,14 +952,15 @@ void ButtonScanner::build_ioThread()
 				auto qiya = motionPtr->GetIOIn(7);
 				if (qiya == true) {
 					//气压正常
-					motionPtr->SetIOOut(8, false);
-				}
-				else {
+					motionPtr->SetIOOut(8, true);
 					QMetaObject::invokeMethod(qApp, [this, state]
 						{
 							labelWarning->addWarning("气压不正常", true);
 						});
-						motionPtr->SetIOOut(8, true);
+				}
+				else {
+
+						motionPtr->SetIOOut(8, false);
 				}
 
 				if (globalStruct.mainWindowConfig.upLight) {

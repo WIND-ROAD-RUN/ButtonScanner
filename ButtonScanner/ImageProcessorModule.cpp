@@ -101,6 +101,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 
 	auto openBladeShape = globalStruct.mainWindowConfig.isPositive && globalStruct.isOpenBladeShape;
 	auto openColor = globalStruct.mainWindowConfig.isPositive && globalStruct.isOpenColor;
+	auto openDefect = globalStruct.mainWindowConfig.isDefect;
 
 	QFuture<void> onnxFuture = QtConcurrent::run([&]() {
 		if (globalStruct.mainWindowConfig.isPositive)
@@ -120,7 +121,10 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 	cv::Mat resultImage;
 	cv::Mat maskImage = cv::Mat::zeros(frame.image.size(), CV_8UC1);
 
-	_modelEnginePtr->ProcessMask(frame.image, resultImage, vecRecogResult);
+	if (openDefect)
+	{
+		_modelEnginePtr->ProcessMask(frame.image, resultImage, vecRecogResult);
+	}
 
 	onnxFuture.waitForFinished();
 
@@ -134,13 +138,17 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 		bool hasBodyOnnxSO = false;
 		auto bodyOnnxSO = getBody(vecReconResultOnnxSO, hasBodyOnnxSO);
 
-		if (openBladeShape)
+		if (!openBladeShape)
 		{
 			hasBodyOnnxOO = true;
 		}
-		if (openColor)
+		if (!openColor)
 		{
 			hasBodyOnnxSO = true;
+		}
+		if (!openDefect)
+		{
+			hasBody = true;
 		}
 
 		if ((!hasBody) || (!hasBodyOnnxOO) || (!hasBodyOnnxSO))
@@ -184,14 +192,17 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 		}
 		else
 		{
-			auto defect = getDefectInBody(body, vecRecogResult);
-			eliminationLogic(frame,
-				frame.image,
-				errorInfo,
-				defect,
-				vecRecogResultTarget,
-				vecReconResultOnnxOO,
-				vecReconResultOnnxSO);
+			if (openDefect||openColor||openBladeShape)
+			{
+				auto defect = getDefectInBody(body, vecRecogResult);
+				eliminationLogic(frame,
+					frame.image,
+					errorInfo,
+					defect,
+					vecRecogResultTarget,
+					vecReconResultOnnxOO,
+					vecReconResultOnnxSO);
+			}
 		}
 	}
 
@@ -295,6 +306,7 @@ ImageProcessor::eliminationLogic(
 	auto& checkConfig = globalStruct.dlgProductSetConfig;
 	auto& mainWindowSet = globalStruct.mainWindowConfig;
 	auto& dlgHideScoreSet = globalStruct.dlgHideScoreSetConfig;
+	auto openDefect = globalStruct.mainWindowConfig.isDefect;
 
 	double& pixEquivalent = systemConfig.pixelEquivalent1;
 	switch (frame.index)
@@ -425,7 +437,7 @@ ImageProcessor::eliminationLogic(
 	}
 
 	//检查外径
-	if (checkConfig.outsideDiameterEnable)
+	if (checkConfig.outsideDiameterEnable&& openDefect)
 	{
 		ImagePainter::drawCirclesOnImage(resultImage, body);
 		if (waiJingIndexs.size() == 0)
@@ -460,7 +472,7 @@ ImageProcessor::eliminationLogic(
 	}
 
 	//检查孔数
-	if (checkConfig.holesCountEnable)
+	if (checkConfig.holesCountEnable && openDefect)
 	{
 		ImagePainter::drawCirclesOnImage(resultImage, hole);
 		// 获取当前时间
@@ -485,7 +497,7 @@ ImageProcessor::eliminationLogic(
 	}
 
 	//检查大破边
-	if (checkConfig.edgeDamageEnable)
+	if (checkConfig.edgeDamageEnable && openDefect)
 	{
 		for (int i = 0; i < daPoBianIndexs.size(); i++)
 		{
@@ -504,7 +516,7 @@ ImageProcessor::eliminationLogic(
 		}
 	}
 	//检查气孔
-	if (checkConfig.poreEnable)
+	if (checkConfig.poreEnable && openDefect)
 	{
 		for (int i = 0; i < qiKonIndexs.size(); i++)
 		{
@@ -523,7 +535,7 @@ ImageProcessor::eliminationLogic(
 	}
 
 	//检查堵眼
-	if (checkConfig.blockEyeEnable)
+	if (checkConfig.blockEyeEnable && openDefect)
 	{
 		for (int i = 0; i < duYanIndexs.size(); i++)
 		{
@@ -542,7 +554,7 @@ ImageProcessor::eliminationLogic(
 	}
 
 	//检查磨石
-	if (checkConfig.grindStoneEnable)
+	if (checkConfig.grindStoneEnable && openDefect)
 	{
 		for (int i = 0; i < moShiIndexs.size(); i++)
 		{
@@ -561,7 +573,7 @@ ImageProcessor::eliminationLogic(
 	}
 
 	//检查料头
-	if (checkConfig.materialHeadEnable)
+	if (checkConfig.materialHeadEnable && openDefect)
 	{
 		for (int i = 0; i < liaoTouIndexs.size(); i++)
 		{
@@ -580,7 +592,7 @@ ImageProcessor::eliminationLogic(
 	}
 
 	//检查脏污
-	if (checkConfig.paintEnable)
+	if (checkConfig.paintEnable && openDefect)
 	{
 		for (int i = 0; i < youQiIndexs.size(); i++)
 		{
@@ -599,7 +611,7 @@ ImageProcessor::eliminationLogic(
 	}
 
 	//检查裂痕
-	if (checkConfig.crackEnable)
+	if (checkConfig.crackEnable && openDefect)
 	{
 		for (int i = 0; i < lieHenIndexs.size(); i++)
 		{
@@ -678,7 +690,7 @@ ImageProcessor::eliminationLogic(
 	//}
 
 	//检查孔心距
-	if (checkConfig.holeCenterDistanceEnable)
+	if (checkConfig.holeCenterDistanceEnable && openDefect)
 	{
 		for (int i = 0; i < konJingIndexs.size(); i++)
 		{
