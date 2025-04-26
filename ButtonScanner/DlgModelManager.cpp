@@ -169,10 +169,14 @@ void DlgModelManager::pbtn_loadModel_clicked()
 	if (config.modelType == rw::cdm::ModelType::BladeShape)
 	{
 		copyOOModel();
+		globalStruct.isOpenBladeShape = true;
+		globalStruct.isOpenColor = false;
 	}
 	else if (config.modelType == rw::cdm::ModelType::Color)
 	{
 		copySOModel();
+		globalStruct.isOpenBladeShape = false;
+		globalStruct.isOpenColor = true;
 	}
 	else
 	{
@@ -180,6 +184,55 @@ void DlgModelManager::pbtn_loadModel_clicked()
 		_loadingDialog->hide();
 		return;
 	}
+
+	if (globalStruct.camera1)
+	{
+		globalStruct.camera1->setExposureTime(config.exposureTime);
+		globalStruct.camera1->setGain(config.gain);
+	}
+	if (globalStruct.camera2)
+	{
+		globalStruct.camera2->setExposureTime(config.exposureTime);
+		globalStruct.camera2->setGain(config.gain);
+	}
+	if (globalStruct.camera3)
+	{
+		globalStruct.camera3->setExposureTime(config.exposureTime);
+		globalStruct.camera3->setGain(config.gain);
+	}
+	if (globalStruct.camera4)
+	{
+		globalStruct.camera4->setExposureTime(config.exposureTime);
+		globalStruct.camera4->setGain(config.gain);
+	}
+
+	if (config.upLight)
+	{
+		globalStruct.setUpLight(true);
+	}
+	else
+	{
+		globalStruct.setUpLight(false);
+	}
+
+	if (config.downLight)
+	{
+		globalStruct.setDownLight(true);
+	}
+	else
+	{
+		globalStruct.setDownLight(false);
+	}
+
+	if (config.sideLight)
+	{
+		globalStruct.setSideLight(true);
+	}
+	else
+	{
+		globalStruct.setSideLight(false);
+	}
+
 	copyTargetImageFromStorageInTemp();
 	_loadingDialog->hide();
 	this->hide();
