@@ -66,6 +66,27 @@ void ButtonScanner::resizeEvent(QResizeEvent* event)
 	// 当窗口大小发生变化时，更新 targetArea
 	updateExposureTimeTrigger();
 	QMainWindow::resizeEvent(event);
+
+	// 获取 gBoix_ImageDisplay 的中心点
+	int displayX = ui->gBoix_ImageDisplay->x();
+	int displayY = ui->gBoix_ImageDisplay->y();
+	int displayWidth = ui->gBoix_ImageDisplay->width();
+	int displayHeight = ui->gBoix_ImageDisplay->height();
+
+	int centerX = displayX + displayWidth / 2;
+	int centerY = displayY + displayHeight / 2;
+
+	// 获取 label_lightBulb 的宽度和高度
+	int bulbWidth = label_lightBulb->width();
+	int bulbHeight = label_lightBulb->height();
+
+	// 计算 label_lightBulb 的新位置，使其中心对齐
+	int newX = centerX - bulbWidth / 2;
+	int newY = centerY - bulbHeight / 2;
+
+	// 设置 label_lightBulb 的位置
+	label_lightBulb->setGeometry(newX, newY, bulbWidth, bulbHeight);
+
 }
 
 ButtonScanner::ButtonScanner(QWidget* parent)
@@ -249,6 +270,8 @@ void ButtonScanner::destroyComponents()
 
 void ButtonScanner::build_ui()
 {
+	label_lightBulb = new QLabel(this);
+
 	//Set RadioButton ,make sure these can be checked at the same time
 	read_image();
 	set_radioButton();
@@ -279,7 +302,7 @@ void ButtonScanner::read_image()
 		QMessageBox::critical(this, "Error", "无法加载图片。");
 		return;
 	}
-	ui->label_lightBulb->setPixmap(pixmap.scaled(ui->label_lightBulb->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+	label_lightBulb->setPixmap(pixmap.scaled(label_lightBulb->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 void ButtonScanner::build_mainWindowData()
@@ -885,7 +908,7 @@ void ButtonScanner::build_ioThread()
 					{
 						ui->rbtn_removeFunc->setChecked(false);
 						ui->rbtn_debug->setChecked(false);
-						ui->label_lightBulb->setVisible(true);
+						label_lightBulb->setVisible(true);
 					});
 					// pidaimove->stop();
 					motionPtr->StopAllAxis();
@@ -910,7 +933,7 @@ void ButtonScanner::build_ioThread()
 								_dlgExposureTimeSet->ResetCamera();
 								ui->rbtn_removeFunc->setChecked(true);
 								ui->rbtn_debug->setChecked(false);
-								ui->label_lightBulb->setVisible(false);
+								label_lightBulb->setVisible(false);
 							});
 					}
 					//所有电机上电
@@ -941,7 +964,7 @@ void ButtonScanner::build_ioThread()
 						{
 							ui->rbtn_removeFunc->setChecked(false);
 							ui->rbtn_debug->setChecked(false);
-							ui->label_lightBulb->setVisible(false);
+							label_lightBulb->setVisible(false);
 						});
 						motionPtr->StopAllAxis();
 						motionPtr->SetIOOut(1, false);
@@ -1005,6 +1028,29 @@ void ButtonScanner::build_detachThread()
 		this, &ButtonScanner::updateCardLabelState, Qt::QueuedConnection);
 	QObject::connect(globalStruct.monitorCameraAndCardStateThread.get(), &MonitorCameraAndCardStateThread::addWarningInfo,
 		this, &ButtonScanner::onAddWarningInfo, Qt::QueuedConnection);
+}
+
+void ButtonScanner::showEvent(QShowEvent* event)
+{
+
+	int displayX = ui->gBoix_ImageDisplay->x();
+	int displayY = ui->gBoix_ImageDisplay->y();
+	int displayWidth = ui->gBoix_ImageDisplay->width();
+	int displayHeight = ui->gBoix_ImageDisplay->height();
+
+	int centerX = displayX + displayWidth / 2;
+	int centerY = displayY + displayHeight / 2;
+
+	// 获取 label_lightBulb 的宽度和高度
+	int bulbWidth = label_lightBulb->width();
+	int bulbHeight = label_lightBulb->height();
+
+	// 计算 label_lightBulb 的新位置，使其中心对齐
+	int newX = centerX - bulbWidth / 2;
+	int newY = centerY - bulbHeight / 2;
+
+	// 设置 label_lightBulb 的位置
+	label_lightBulb->setGeometry(newX+30, newY, bulbWidth, bulbHeight);
 }
 
 QImage ButtonScanner::cvMatToQImage(const cv::Mat& mat)

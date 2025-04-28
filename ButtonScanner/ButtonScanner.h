@@ -32,6 +32,8 @@ class ButtonScanner : public QMainWindow
 {
 	Q_OBJECT
 private:
+	QLabel* label_lightBulb;
+private:
 	DlgProduceLineSet* _dlgProduceLineSet = nullptr;
 	DlgProductSet* _dlgProductSet = nullptr;
 	DlgExposureTimeSet* _dlgExposureTimeSet = nullptr;
@@ -110,6 +112,9 @@ public:
 	void build_ioThread();
 
 	void build_detachThread();
+public:
+	void showEvent(QShowEvent* event) override;
+	
 
 private:
 	Ui::ButtonScannerClass* ui;
