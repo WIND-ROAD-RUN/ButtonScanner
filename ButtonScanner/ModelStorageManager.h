@@ -9,6 +9,8 @@
 class ModelStorageManager : public QObject
 {
 	Q_OBJECT
+public:
+	QString imageSavePath;
 private:
 	rw::cdm::AiModelConfigIndex _config_index{};
 public:
@@ -32,7 +34,7 @@ private:
 	void build_tempDirectory();
 public:
 	void clear_temp();
-private:
+public:
 	void check_work_temp(const QString& imageRootPath);
 private:
 	void check_work1Temp(const QString& imageRootPath);

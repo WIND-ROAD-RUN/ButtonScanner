@@ -156,6 +156,7 @@ void PicturesViewer::addSubFolders(const QDir& parentDir, QStandardItem* parentI
 void PicturesViewer::pbtn_exit_clicked()
 {
 	this->hide();
+	emit viewerClosed();
 }
 
 void PicturesViewer::onCategorySelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)

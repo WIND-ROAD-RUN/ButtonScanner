@@ -39,6 +39,8 @@ private:
 	void collectIndexes(QStandardItem* item, QList<QModelIndex>& indexes);
 private:
 	Ui::PicturesViewerClass* ui;
+signals:
+	void viewerClosed();
 
 private slots:
 	void pbtn_exit_clicked();

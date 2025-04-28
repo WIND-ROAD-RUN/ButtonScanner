@@ -82,6 +82,9 @@ void DlgNewProduction::build_connect()
 		this, &DlgNewProduction::pbtn_tab5_finish_clicked);
 	QObject::connect(ui->pbtn_tab5_cancelTrain, &QPushButton::clicked,
 		this, &DlgNewProduction::pbtn_tab5_cancelTrain_clicked);
+
+	QObject::connect(picturesViewer, &PicturesViewer::viewerClosed,
+		this, &DlgNewProduction::flashImgCount);
 }
 
 void DlgNewProduction::set_motionRun(bool isRun)
@@ -504,4 +507,20 @@ void DlgNewProduction::pbtn_tab1_ok_clicked()
 	{
 		return;
 	}
+}
+
+void DlgNewProduction::flashImgCount()
+{
+	auto& modelStorageManager = GlobalStructData::getInstance().modelStorageManager;
+
+	modelStorageManager->check_work_temp(modelStorageManager->imageSavePath);
+	ui->label_tab3_tabImgCount1->setText(QString::number(modelStorageManager->work1_bad_count_));
+	ui->label_tab3_tabImgCount2->setText(QString::number(modelStorageManager->work2_bad_count_));
+	ui->label_tab3_tabImgCount3->setText(QString::number(modelStorageManager->work3_bad_count_));
+	ui->label_tab3_tabImgCount4->setText(QString::number(modelStorageManager->work4_bad_count_));
+
+	ui->label_tab4_tabImgCount1->setText(QString::number(modelStorageManager->work1_good_count_));
+	ui->label_tab4_tabImgCount2->setText(QString::number(modelStorageManager->work2_good_count_));
+	ui->label_tab4_tabImgCount3->setText(QString::number(modelStorageManager->work3_good_count_));
+	ui->label_tab4_tabImgCount4->setText(QString::number(modelStorageManager->work4_good_count_));
 }

@@ -104,6 +104,7 @@ void ModelStorageManager::build_tempDirectory()
 			return;
 		}
 	}
+	imageSavePath = imageTempDir;
 	check_work_temp(imageTempDir);
 }
 

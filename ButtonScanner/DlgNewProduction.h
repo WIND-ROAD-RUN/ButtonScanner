@@ -92,4 +92,6 @@ signals:
 	void cancelTrain();
 protected:
 	void showEvent(QShowEvent*) override;
+public slots:
+	void flashImgCount();
 };
