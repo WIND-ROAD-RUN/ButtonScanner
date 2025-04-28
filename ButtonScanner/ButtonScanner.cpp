@@ -40,12 +40,18 @@ void ButtonScanner::updateExposureTimeTrigger()
 
 void ButtonScanner::onExposureTimeTriggerAreaClicked()
 {
+	auto& globalStructData = GlobalStructData::getInstance();
 	auto isRuning = ui->rbtn_removeFunc->isChecked();
 	if (!isRuning) {
+		auto & isDebug = globalStructData.isDebugMode;
 		_dlgExposureTimeSet->SetCamera(); // 设置相机为实时采集
 		_dlgExposureTimeSet->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
 		_dlgExposureTimeSet->exec(); // 显示对话框
 		_dlgExposureTimeSet->ResetCamera(); // 重置相机为硬件触发
+		if (isDebug)
+		{
+			rbtn_debug_checked(isDebug);
+		}
 	}
 }
 
