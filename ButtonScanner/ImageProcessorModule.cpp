@@ -441,6 +441,80 @@ ImageProcessor::eliminationLogic(
 		}
 	}
 
+	//检查色差
+	if (checkConfig.specifyColorDifferenceEnable && openDefect)
+	{
+		int RMin = checkConfig.specifyColorDifferenceR-checkConfig.specifyColorDifferenceDeviation;
+		RMin = std::clamp(RMin, 0, 255);
+		int RMax = checkConfig.specifyColorDifferenceR - checkConfig.specifyColorDifferenceDeviation;
+		RMax = std::clamp(RMax, 0, 255);
+		int GMin = checkConfig.specifyColorDifferenceG - checkConfig.specifyColorDifferenceDeviation;
+		GMin = std::clamp(GMin, 0, 255);
+		int GMax = checkConfig.specifyColorDifferenceG + checkConfig.specifyColorDifferenceDeviation;
+		GMax = std::clamp(GMax, 0, 255);
+		int BMin = checkConfig.specifyColorDifferenceB - checkConfig.specifyColorDifferenceDeviation;
+		BMin = std::clamp(BMin, 0, 255);
+		int BMax = checkConfig.specifyColorDifferenceB + checkConfig.specifyColorDifferenceDeviation;
+		BMax = std::clamp(BMax, 0, 255);
+
+		if (!body.empty())
+		{
+			auto top_left_x = body[0].center_x - (body[0].width / 2);
+			auto top_left_y = body[0].center_y - (body[0].height / 2);
+			cv::Rect rect(top_left_x, top_left_y, body[0].width, body[0].height);
+
+			std::vector<cv::Rect> excludeRegions;
+			for (int i = 0; i < konJingIndexs.size(); i++)
+			{
+				auto top_left_x = processRectanglesResult[konJingIndexs[i]].center_x - (processRectanglesResult[konJingIndexs[i]].width / 2);
+				auto top_left_y = processRectanglesResult[konJingIndexs[i]].center_y - (processRectanglesResult[konJingIndexs[i]].height / 2);
+				cv::Rect excludeRect(top_left_x, top_left_y, processRectanglesResult[konJingIndexs[i]].width, processRectanglesResult[konJingIndexs[i]].height);
+				excludeRegions.push_back(excludeRect);
+			}
+
+			auto currentRGB = 
+				ImageProcessUtilty::calculateRegionRGB(frame.image, rect, 
+					ImageProcessUtilty::CropMode::InscribedCircle, excludeRegions,ImageProcessUtilty::CropMode::InscribedCircle);
+
+			if (RMin <=currentRGB[0]&& currentRGB[0]<=RMax)
+			{
+				isBad = true;
+				_isbad = true;
+			}
+			else
+			{
+				isBad = false;
+				_isbad = false;
+				errorInfo.emplace_back("B数值不在指定范围内");
+			}
+
+			if (GMin <= currentRGB[1] && currentRGB[1] <= GMax)
+			{
+				isBad = true;
+				_isbad = true;
+			}
+			else
+			{
+				isBad = false;
+				_isbad = false;
+				errorInfo.emplace_back("G数值不在指定范围内");
+			}
+
+			if (BMin <= currentRGB[2] && currentRGB[2] <= BMax)
+			{
+				isBad = true;
+				_isbad = true;
+			}
+			else
+			{
+				isBad = false;
+				_isbad = false;
+				errorInfo.emplace_back("B数值不在指定范围内");
+			}
+		}
+
+	}
+
 	//检查外径
 	if (checkConfig.outsideDiameterEnable && openDefect)
 	{
