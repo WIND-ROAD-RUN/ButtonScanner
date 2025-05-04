@@ -37,6 +37,17 @@ struct ImagePainter
 	static void drawCirclesOnImage(cv::Mat& image, const std::vector<rw::imeot::ProcessRectanglesResultOT>& rectangles);
 };
 
+struct ImageProcessUtilty
+{
+	enum class CropMode {
+		Rectangle,       // 计算矩形区域的平均 RGB 值
+		InscribedCircle  // 计算矩形内接圆的平均 RGB 值
+	};
+
+	static cv::Vec3f calculateRegionRGB(const cv::Mat& image, const cv::Rect& rect, CropMode mode,
+		std::vector<cv::Rect> excludeRegions = {}, CropMode excludeMode = CropMode::Rectangle);
+};
+
 struct MatInfo {
 	cv::Mat image;
 	float location;

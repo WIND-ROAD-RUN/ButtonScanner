@@ -196,7 +196,7 @@ cv::Mat ImageProcessor::processAI(MatInfo& frame, QVector<QString>& errorInfo, s
 		}
 		else
 		{
-			if (openDefect||openColor||openBladeShape)
+			if (openDefect || openColor || openBladeShape)
 			{
 				auto defect = getDefectInBody(body, vecRecogResult);
 				eliminationLogic(frame,
@@ -442,7 +442,7 @@ ImageProcessor::eliminationLogic(
 	}
 
 	//检查外径
-	if (checkConfig.outsideDiameterEnable&& openDefect)
+	if (checkConfig.outsideDiameterEnable && openDefect)
 	{
 		ImagePainter::drawCirclesOnImage(resultImage, body);
 		if (waiJingIndexs.size() == 0)
@@ -1155,3 +1155,66 @@ void ImagePainter::drawCirclesOnImage(cv::Mat& image, const std::vector<rw::imeo
 		cv::circle(image, cv::Point(centerX, centerY), radius, color, 5); // 2 表示线宽
 	}
 }
+
+cv::Vec3f ImageProcessUtilty::calculateRegionRGB(const cv::Mat& image, const cv::Rect& rect, CropMode mode, std::vector<cv::Rect> excludeRegions, CropMode excludeMode)
+{
+	// 检查图像是否为空
+	if (image.empty()) {
+		throw std::invalid_argument("Input image is empty.");
+	}
+
+	// 检查图像是否为彩色图像
+	if (image.channels() != 3) {
+		throw std::invalid_argument("Input image must be a 3-channel (RGB) image.");
+	}
+
+	// 检查矩形是否在图像范围内
+	cv::Rect imageBounds(0, 0, image.cols, image.rows);
+	cv::Rect validRect = rect & imageBounds; // 取交集，确保矩形在图像范围内
+
+	if (validRect.width <= 0 || validRect.height <= 0) {
+		throw std::invalid_argument("The rectangle is outside the image bounds.");
+	}
+
+	// 创建掩码
+	cv::Mat mask = cv::Mat::zeros(image.size(), CV_8UC1);
+
+	// 根据模式标记主区域
+	if (mode == CropMode::Rectangle) {
+		mask(validRect).setTo(255);
+	}
+	else if (mode == CropMode::InscribedCircle) {
+		int radius = std::min(validRect.width, validRect.height) / 2;
+		cv::Point center(validRect.x + validRect.width / 2, validRect.y + validRect.height / 2);
+		cv::circle(mask, center, radius, cv::Scalar(255), -1);
+	}
+	else {
+		throw std::invalid_argument("Invalid crop mode.");
+	}
+
+	// 处理需要排除的区域
+	for (const auto& excludeRect : excludeRegions) {
+		// 确保排除区域在主区域内，且不等于主区域
+		if ((excludeRect & validRect) != excludeRect || excludeRect == validRect) {
+			continue; // 跳过无效的排除区域
+		}
+
+		if (excludeMode == CropMode::Rectangle) {
+			// 在掩码中去掉矩形区域
+			mask(excludeRect).setTo(0);
+		}
+		else if (excludeMode == CropMode::InscribedCircle) {
+			// 计算内接圆的半径和中心点
+			int radius = std::min(excludeRect.width, excludeRect.height) / 2;
+			cv::Point center(excludeRect.x + excludeRect.width / 2, excludeRect.y + excludeRect.height / 2);
+			cv::circle(mask, center, radius, cv::Scalar(0), -1);
+		}
+	}
+
+	// 使用掩码计算平均 RGB 值
+	cv::Scalar meanRGB = cv::mean(image, mask);
+
+	// 返回平均 RGB 值
+	return cv::Vec3f(meanRGB[2], meanRGB[1], meanRGB[0]); // 注意：OpenCV 的通道顺序是 BGR
+}
+
