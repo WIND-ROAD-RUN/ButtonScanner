@@ -512,7 +512,109 @@ ImageProcessor::eliminationLogic(
 				errorInfo.emplace_back("B数值不在指定范围内");
 			}
 		}
+	}
 
+	//检查大色差
+	if (checkConfig.largeColorDifferenceEnable && openDefect)
+	{
+		//添加刷新逻辑防止下一次启动的时候无法筛选
+		static std::vector<int> RList;
+		static std::vector<int> GList;
+		static std::vector<int> BList;
+		if (!body.empty())
+		{
+			auto top_left_x = body[0].center_x - (body[0].width / 2);
+			auto top_left_y = body[0].center_y - (body[0].height / 2);
+			cv::Rect rect(top_left_x, top_left_y, body[0].width, body[0].height);
+
+			std::vector<cv::Rect> excludeRegions;
+			for (int i = 0; i < konJingIndexs.size(); i++)
+			{
+				auto top_left_x = processRectanglesResult[konJingIndexs[i]].center_x - (processRectanglesResult[konJingIndexs[i]].width / 2);
+				auto top_left_y = processRectanglesResult[konJingIndexs[i]].center_y - (processRectanglesResult[konJingIndexs[i]].height / 2);
+				cv::Rect excludeRect(top_left_x, top_left_y, processRectanglesResult[konJingIndexs[i]].width, processRectanglesResult[konJingIndexs[i]].height);
+				excludeRegions.push_back(excludeRect);
+			}
+
+			auto currentRGB =
+				ImageProcessUtilty::calculateRegionRGB(frame.image, rect,
+					ImageProcessUtilty::CropMode::InscribedCircle, excludeRegions, ImageProcessUtilty::CropMode::InscribedCircle);
+
+			if (RList.size() < 3)
+			{
+				if (RList.size() < 3)
+				{
+					RList.push_back(currentRGB[0]);
+				}
+
+				if (GList.size() < 3)
+				{
+					GList.push_back(currentRGB[1]);
+				}
+
+				if (BList.size() < 3)
+				{
+					BList.push_back(currentRGB[2]);
+				}
+			}
+			else
+			{
+				int averageR = static_cast<int>(std::accumulate(RList.begin(), RList.end(), 0)) / RList.size();
+				int averageG = static_cast<int>(std::accumulate(GList.begin(), GList.end(), 0)) / GList.size();
+				int averageB = static_cast<int>(std::accumulate(BList.begin(), BList.end(), 0)) / BList.size();
+
+				int RMin = averageR - checkConfig.largeColorDifferenceDeviation;
+				RMin = std::clamp(RMin, 0, 255);
+				int RMax = averageR - checkConfig.largeColorDifferenceDeviation;
+				RMax = std::clamp(RMax, 0, 255);
+				int GMin = averageG - checkConfig.largeColorDifferenceDeviation;
+				GMin = std::clamp(GMin, 0, 255);
+				int GMax = averageG + checkConfig.largeColorDifferenceDeviation;
+				GMax = std::clamp(GMax, 0, 255);
+				int BMin = averageB - checkConfig.largeColorDifferenceDeviation;
+				BMin = std::clamp(BMin, 0, 255);
+				int BMax = averageB + checkConfig.largeColorDifferenceDeviation;
+				BMax = std::clamp(BMax, 0, 255);
+
+				if (RMin <= currentRGB[0] && currentRGB[0] <= RMax)
+				{
+					isBad = true;
+					_isbad = true;
+				}
+				else
+				{
+					isBad = false;
+					_isbad = false;
+					errorInfo.emplace_back("B数值不在指定范围内");
+				}
+
+				if (GMin <= currentRGB[1] && currentRGB[1] <= GMax)
+				{
+					isBad = true;
+					_isbad = true;
+				}
+				else
+				{
+					isBad = false;
+					_isbad = false;
+					errorInfo.emplace_back("G数值不在指定范围内");
+				}
+
+				if (BMin <= currentRGB[2] && currentRGB[2] <= BMax)
+				{
+					isBad = true;
+					_isbad = true;
+				}
+				else
+				{
+					isBad = false;
+					_isbad = false;
+					errorInfo.emplace_back("B数值不在指定范围内");
+				}
+
+			}
+
+		}
 	}
 
 	//检查外径
